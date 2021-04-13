@@ -14,8 +14,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.frameLayout_home_container, TestStartFragment())
+            .replace(R.id.frameLayout_home_container, HomeFragment())
             .commit()
-
     }
 }

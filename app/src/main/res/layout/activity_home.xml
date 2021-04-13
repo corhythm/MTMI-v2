@@ -8,29 +8,28 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appLayout_home"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
-<!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            app:contentScrim="?attr/colorPrimary"-->
-<!--            app:expandedTitleMarginBottom="28dp"-->
-<!--            app:titleEnabled="false"-->
-<!--            app:collapsedTitleGravity ="bottom|center_horizontal"-->
-<!--            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"-->
-<!--            app:statusBarScrim="?attr/colorPrimaryVariant">-->
+        <!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            app:contentScrim="?attr/colorPrimary"-->
+        <!--            app:expandedTitleMarginBottom="28dp"-->
+        <!--            app:titleEnabled="false"-->
+        <!--            app:collapsedTitleGravity ="bottom|center_horizontal"-->
+        <!--            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"-->
+        <!--            app:statusBarScrim="?attr/colorPrimaryVariant">-->
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/topAppBar_home"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/white"
-                android:elevation="10dp"
-                app:title="MTMI"
-                app:titleCentered="true"
-                app:titleTextColor="@color/black" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar_home"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            app:title="MTMI"
+            app:titleCentered="true"
+            app:titleTextColor="@color/black" />
 
-<!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
+        <!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.bottomappbar.BottomAppBar
@@ -54,7 +53,9 @@
     <FrameLayout
         android:id="@+id/frameLayout_home_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="60dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButtom_home"
