@@ -11,9 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTMIMyeongiTMI">
+        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".LoginActivity" />
         <activity
             android:name=".GetStartedActivity"
-            android:label="@string/title_activity_get_started"
+            android:label="MTMI"
             android:theme="@style/Theme.MTMIMyeongiTMI.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

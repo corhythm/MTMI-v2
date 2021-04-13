@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000" >
+    android:background="#000000">
 
     <ImageView
         android:id="@+id/ending_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginTop="88dp"
-        android:src="@drawable/copyright_white_horse"
+        android:src="@drawable/img_copyright_whitehorse"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.15" />
 
     <TextView
         android:id="@+id/unv_name1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:fontFamily="@font/airbnbcerealbold"
+        android:fontFamily="@font/airbnb_cereal_bold"
         android:text="明知大學校"
         android:textColor="#ffffff"
         android:textSize="30sp"
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/airbnbcerealbold"
+        android:fontFamily="@font/airbnb_cereal_bold"
         android:text="Myongji University"
         android:textColor="#ffffff"
         android:textSize="18sp"
@@ -49,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/airbnbcerealbold"
+        android:fontFamily="@font/airbnb_cereal_bold"
         android:text="Comupter Engineering"
         android:textColor="#ffffff"
         android:textSize="10sp"
@@ -63,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:fontFamily="@font/airbnbcerealbold"
+        android:fontFamily="@font/airbnb_cereal_bold"
         android:text="Choi Jeong Hyun"
         android:textColor="#ffffff"
         android:textSize="15dp"
@@ -77,7 +77,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/airbnbcerealbold"
+        android:fontFamily="@font/airbnb_cereal_bold"
         android:text="Kang Seong Uk"
         android:textColor="#ffffff"
         android:textSize="15dp"
@@ -91,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/airbnbcerealbold"
+        android:fontFamily="@font/airbnb_cereal_bold"
         android:text="Kim Jae Jung"
         android:textColor="#ffffff"
         android:textSize="15dp"
@@ -105,7 +105,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:src="@drawable/copyright_mju_logo"
+        android:src="@drawable/img_copyright_mjulogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/maker3" />
@@ -117,13 +117,14 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mju_logo">
+        app:layout_constraintTop_toBottomOf="@+id/mju_logo"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="40dp"
-            android:fontFamily="@font/airbnbcerealbold"
+            android:fontFamily="@font/airbnb_cereal_bold"
             android:text="Team Project2\n\nProfessor\n        By\nRyu Yeon-Seung"
             android:textColor="#ffffff"
             android:textSize="15sp" />
@@ -137,9 +138,9 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/copyright_copyright"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="40dp"
-            android:layout_marginLeft="40dp"/>
+            android:src="@drawable/img_copyright_right" />
 
     </LinearLayout>
 

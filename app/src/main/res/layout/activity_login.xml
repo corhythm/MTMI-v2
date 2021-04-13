@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6F1F1"
+    tools:context=".LoginActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_login_guildline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="70dp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_login_iamge_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_corner"
+        android:backgroundTint="#F4CECE"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/img_all_mjulogo"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageview_login_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/img_login_horse"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view_login_divider"
+            android:layout_width="300dp"
+            android:layout_height="0.5dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="1dp"
+            android:background="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageview_login_logo" />
+
+        <!--        <Button-->
+        <!--            android:id="@+id/button_login_login"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="10dp"-->
+        <!--            android:backgroundTint="#F4CECE"-->
+        <!--            android:fontFamily="@font/airbnb_cereal_black"-->
+        <!--            android:text="Login"-->
+        <!--            app:layout_constraintEnd_toStartOf="@id/button_login_signup"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/view_login_divider" />-->
+
+        <!--        <Button-->
+        <!--            android:id="@+id/button_login_signup"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="10dp"-->
+        <!--            android:backgroundTint="#F4CECE"-->
+        <!--            android:fontFamily="@font/airbnb_cereal_black"-->
+        <!--            android:text="Sign-Up"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="0.7"-->
+        <!--            app:layout_constraintStart_toEndOf="@id/button_login_login"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/view_login_divider" />-->
+
+        <!--        <View-->
+        <!--            android:id="@+id/view_login_login_button_divider"-->
+        <!--            android:layout_width="70dp"-->
+        <!--            android:layout_height="1dp"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_marginTop="1dp"-->
+        <!--            android:background="#FA4A0C"-->
+        <!--            app:layout_constraintEnd_toStartOf="@id/view_login_signup_button_divider"-->
+        <!--            app:layout_constraintHorizontal_bias="0.1"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/button_login_login" />-->
+
+        <!--        <View-->
+        <!--            android:id="@+id/view_login_signup_button_divider"-->
+        <!--            android:layout_width="70dp"-->
+        <!--            android:layout_height="1dp"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_marginTop="1dp"-->
+        <!--            android:background="#FA4A0C"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toEndOf="@id/view_login_login_button_divider"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/button_login_login" />-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <TextView
+        android:id="@+id/textview_login_email_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="50dp"
+        android:text="Email address"
+        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
+        app:layout_constraintTop_toBottomOf="@id/constraint_login_iamge_frame" />
+
+    <EditText
+        android:id="@+id/edittext_login_email_address"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:hint="이메일 주소를 입력해주세요"
+        app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
+        app:layout_constraintTop_toBottomOf="@id/textview_login_email_address" />
+
+    <TextView
+        android:id="@+id/textview_login_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="44dp"
+        android:text="Password"
+        app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
+        app:layout_constraintTop_toBottomOf="@id/edittext_login_email_address" />
+
+    <EditText
+        android:id="@+id/edittext_login_password"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:hint="비밀번호를 입력해주세요"
+        app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
+        app:layout_constraintTop_toBottomOf="@id/textview_login_password" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="15dp"
+        android:text="Forgot password?"
+        android:textColor="#2DB8F8"
+        app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
+        app:layout_constraintTop_toBottomOf="@id/edittext_login_password" />
+
+    <TextView
+        android:id="@+id/textView_login_forgotpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="15dp"
+        android:text="Forgot password?"
+        android:textColor="#2DB8F8"
+        app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
+        app:layout_constraintTop_toBottomOf="@id/edittext_login_password" />
+
+    <TextView
+        android:id="@+id/textView_login_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="15dp"
+        android:text="아직 MTMI 회원이 아니신가요?"
+        android:textColor="#2DB8F8"
+        app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
+        app:layout_constraintTop_toBottomOf="@id/textView_login_forgotpassword" />
+
+    <Button
+        android:id="@+id/button_login_signin"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/bg_rounded_corner"
+        app:backgroundTint="@null"
+        android:backgroundTint="@color/main_home_color"
+        android:fontFamily="@font/airbnb_cereal_black"
+        android:text="Sign In"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias=".8" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
