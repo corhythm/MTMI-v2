@@ -48,7 +48,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        _binding = null
+        _binding = null // 메모리 릭 방지
     }
 }
 

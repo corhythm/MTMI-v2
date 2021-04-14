@@ -2,8 +2,8 @@
 <resources>
     <array name="mjuSiteImageList">
         <item>@drawable/ic_item_unv_notification</item>
-        <item>@drawable/ic_item_major_home2</item>
-        <item>@drawable/ic_item_library2</item>
+        <item>@drawable/ic_item_major_home</item>
+        <item>@drawable/ic_item_library</item>
         <item>@drawable/ic_item_lms</item>
         <item>@drawable/ic_item_myiweb</item>
         <item>@drawable/ic_item_telephone</item>
