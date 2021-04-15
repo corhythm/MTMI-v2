@@ -23,6 +23,7 @@
             android:name=".GetStartedActivity"
             android:label="MTMI"
             android:theme="@style/Theme.MTMIMyeongiTMI.NoActionBar">
+
         </activity>
     </application>
 

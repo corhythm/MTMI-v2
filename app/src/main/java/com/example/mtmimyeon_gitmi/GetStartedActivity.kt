@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.transition.Slide
+import android.util.Log
 import android.view.Gravity
 import android.view.Window
 import com.example.mtmimyeon_gitmi.databinding.ActivityGetStartedBinding
@@ -28,6 +29,8 @@ class GetStartedActivity : AppCompatActivity() {
         binding.buttonGetstartedGetstarted.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+            finish() // 임시
+            Log.d("로그", "GetStartedActivity -onCreate() called")
         }
     }
 }

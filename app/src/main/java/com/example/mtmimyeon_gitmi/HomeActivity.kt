@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.mtmimyeon_gitmi.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
@@ -34,11 +34,17 @@ class HomeActivity : AppCompatActivity() {
             when (it) {
                 R.id.menu_mbti -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.frameLayout_home_container, TestStartFragment())
+                        .replace(R.id.frameLayout_home_container, MbtiTestStartFragment.getInstance())
                         .commit()
                 }
             }
         }
+    }
+
+    fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+                        .replace(R.id.frameLayout_home_container, fragment)
+                        .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -26,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
         binding.buttonLoginSignin.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+            finish() // 임시
         }
     }
 }
