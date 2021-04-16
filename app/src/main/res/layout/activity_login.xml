@@ -106,7 +106,6 @@
         <!--            app:layout_constraintTop_toBottomOf="@id/button_login_login" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     <TextView
         android:id="@+id/textview_login_email_address"
         android:layout_width="wrap_content"
@@ -179,22 +178,39 @@
         app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
         app:layout_constraintTop_toBottomOf="@id/textView_login_forgotpassword" />
 
-    <Button
+    <!--    <Button-->
+    <!--        android:id="@+id/button_login_signin"-->
+    <!--        android:layout_width="300dp"-->
+    <!--        android:layout_height="60dp"-->
+    <!--        android:layout_marginBottom="20dp"-->
+    <!--        android:background="@drawable/bg_rounded_corner"-->
+    <!--        android:backgroundTint="@color/main_home_color"-->
+    <!--        android:fontFamily="@font/airbnb_cereal_black"-->
+    <!--        android:text="Sign In"-->
+    <!--        android:textColor="#ffffff"-->
+    <!--        android:textSize="30sp"-->
+    <!--        app:backgroundTint="@null"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/textView"-->
+    <!--        app:layout_constraintVertical_bias=".8" />-->
+
+    <com.royrodriguez.transitionbutton.TransitionButton
         android:id="@+id/button_login_signin"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/bg_rounded_corner"
-        app:backgroundTint="@null"
-        android:backgroundTint="@color/main_home_color"
-        android:fontFamily="@font/airbnb_cereal_black"
-        android:text="Sign In"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Sign in"
         android:textColor="#ffffff"
         android:textSize="30sp"
+        app:defaultColor="@color/main_home_color"
+        app:loaderColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.08"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias=".8" />
+        app:layout_constraintVertical_bias=".8"
+        app:layout_constraintWidth_percent="0.8" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

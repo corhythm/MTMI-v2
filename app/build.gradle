@@ -62,9 +62,15 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
 
 
-    // circle imageview
+    // circle imageview: https://github.com/hdodenhof/CircleImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-    // custom EditText
+    // custom EditText: https://github.com/frlgrd/AnimatedEditText
     implementation 'com.github.florent37:materialtextfield:1.0.7'
+
+    // custom spinner: https://github.com/Chivorns/SmartMaterialSpinner
+    implementation 'com.github.chivorns:smartmaterialspinner:1.4.0'
+
+    // custom loding button: https://github.com/roynx98/transition-button-android
+    implementation 'com.royrodriguez:transitionbutton:0.2.0'
 }

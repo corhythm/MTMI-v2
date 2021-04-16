@@ -51,4 +51,19 @@
         <item>건축학과</item>
     </string-array>
 
+    <string-array name="professor">
+        <item>이메일을 보낼 교수님을 선택하세요!</item>
+        <item>문은호 교수&lt;dnr2144@gmail.com&gt;</item>
+        <item>김민호 교수&lt;dnr2144@gmail.com&gt;</item>
+        <item>구은총 교수&lt;dnr2144@gmail.com&gt;</item>
+        <item>최다연 교수&lt;dnr2144@gmail.com&gt;</item>
+        <item>김범진 교수&lt;dnr2144@gmail.com&gt;</item>
+        <item>안희철 교수&lt;dnr2144@gmail.com&gt;</item>
+        <item>류연승 교수&lt;dnr2144@gmail.com&gt;</item>
+        <item>김태우 교수&lt;dnr2144@gmail.com&gt;</item>
+        <item>박민우 교수&lt;dnr2144@gmail.com&gt;</item>
+        <item>김상귀 교수&lt;dnr2144@gmail.com&gt;</item>
+        <item>김진호 교수&lt;dnr2144@gmail.com&gt;</item>
+    </string-array>
+
 </resources>

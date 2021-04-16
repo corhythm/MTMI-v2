@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.example.mtmimyeon_gitmi.databinding.ActivityHomeBinding
 import com.example.mtmimyeon_gitmi.mbti.MbtiTestStartFragment
+import com.example.mtmimyeon_gitmi.myclass.MyClassMailToProfessorFragment
 import com.example.mtmimyeon_gitmi.myclass.MyClassMainFragment
 
 class HomeActivity : AppCompatActivity() {
@@ -31,7 +32,7 @@ class HomeActivity : AppCompatActivity() {
         binding.bottomNavigationViewHome.setOnItemSelectedListener {
             when (it) {
                 R.id.menu_mbti -> {
-                    replaceFragment(MyClassMainFragment.getInstance())
+                    replaceFragment(MyClassMailToProfessorFragment.getInstance())
                 }
             }
         }
