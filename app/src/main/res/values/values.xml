@@ -25,7 +25,30 @@
         <item>major</item>
         <item>major</item>
         <item>major</item>
+    </string-array>
 
+    <string-array name="major">
+        <item>전공을 선택하세요</item>
+        <item>컴퓨터공학과</item>
+        <item>전자공학과</item>
+        <item>통계학과</item>
+        <item>물리학과</item>
+        <item>정보통신공학</item>
+        <item>화학과</item>
+        <item>화학공학과</item>
+        <item>생물학과</item>
+        <item>생명공학과</item>
+        <item>기계공학과</item>
+        <item>자유전공학부</item>
+        <item>바둑학과</item>
+        <item>뮤지컬학과</item>
+        <item>시각디자인학과</item>
+        <item>체육학과</item>
+        <item>교통공학과</item>
+        <item>전기공학과</item>
+        <item>수학과</item>
+        <item>토목공학과</item>
+        <item>건축학과</item>
     </string-array>
 
 </resources>

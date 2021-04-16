@@ -7,6 +7,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.example.mtmimyeon_gitmi.databinding.ActivityHomeBinding
+import com.example.mtmimyeon_gitmi.mbti.MbtiTestStartFragment
+import com.example.mtmimyeon_gitmi.myclass.MyClassMainFragment
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -17,15 +19,11 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.topAppBarHome)
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.frameLayout_home_container, HomeFragment())
-            .commit()
+        replaceFragment(HomeFragment.getInstance())
 
         // 원래 이렇게 하면 안 됨. 시각적으로 보기 위해서 임시로 테스트
         binding.floatingActionButtomHome.setOnClickListener {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.frameLayout_home_container, HomeFragment())
-                .commit()
+            replaceFragment(HomeFragment.getInstance())
             // 아이템 선택된 거 초기화
             binding.bottomNavigationViewHome.setItemSelected(-1)
         }
@@ -33,9 +31,7 @@ class HomeActivity : AppCompatActivity() {
         binding.bottomNavigationViewHome.setOnItemSelectedListener {
             when (it) {
                 R.id.menu_mbti -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.frameLayout_home_container, MbtiTestStartFragment.getInstance())
-                        .commit()
+                    replaceFragment(MyClassMainFragment.getInstance())
                 }
             }
         }
@@ -43,8 +39,8 @@ class HomeActivity : AppCompatActivity() {
 
     fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-                        .replace(R.id.frameLayout_home_container, fragment)
-                        .commit()
+            .replace(R.id.frameLayout_home_container, fragment)
+            .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

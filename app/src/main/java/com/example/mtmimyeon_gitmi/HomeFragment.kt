@@ -13,9 +13,15 @@ import com.example.mtmimyeon_gitmi.databinding.ItemMjuSiteBinding
 import com.example.mtmimyeon_gitmi.item.ItemMjuSite
 import kotlin.reflect.typeOf
 
-class HomeFragment : Fragment() {
+class HomeFragment private constructor() : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    companion object {
+        fun getInstance(): HomeFragment {
+            return HomeFragment()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

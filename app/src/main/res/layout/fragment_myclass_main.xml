@@ -1,15 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/main_home_color">
 
-    <TextView
-        android:id="@+id/textView_myclassMain_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_rounded_corner"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="My Class"
-        android:textSize="50sp" />
+        app:layout_constraintWidth_percent="0.9">
+
+
+        <ImageView
+            android:id="@+id/imageView_myclassMain_verticalDivider"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/divider_line"
+            app:layout_constraintBottom_toBottomOf="@id/textView_myclassMain_subtitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintHorizontal_bias="0.06"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textView_myclassMain_title"
+            app:layout_constraintWidth_percent="0.001" />
+
+        <TextView
+            android:id="@+id/textView_myclassMain_title"
+            android:layout_width="181dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/airbnb_cereal_black"
+            android:text="My Class"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@id/textView_myclassMain_subtitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintHorizontal_bias="0.03"
+            app:layout_constraintStart_toEndOf="@id/imageView_myclassMain_verticalDivider"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.4" />
+
+        <TextView
+            android:id="@+id/textView_myclassMain_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:text="편리한 정보들을 My Class를 이용해\n편리하게 이용해보세요!"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="@id/textView_myclassMain_title"
+            app:layout_constraintStart_toStartOf="@id/textView_myclassMain_title"
+            app:layout_constraintTop_toBottomOf="@id/textView_myclassMain_title" />
+
+
+        <ImageView
+            android:id="@+id/imageView_myclassMain_sujectBoard"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_myclass_main_subject_board"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/imageView_myclassMain_verticalDivider"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.3" />
+
+        <TextView
+            android:id="@+id/textView_myclassMain_subjectBoard"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:fontFamily="@font/airbnb_cereal_black"
+            android:paddingStart="10dp"
+            android:paddingTop="2dp"
+            android:text="강의별 게시판"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@id/imageView_myclassMain_horizontalDivider1"
+            app:layout_constraintHeight_percent="0.07"
+            app:layout_constraintStart_toEndOf="@id/imageView_myclassMain_sujectBoard"
+            app:layout_constraintTop_toTopOf="@id/imageView_myclassMain_sujectBoard"
+            app:layout_constraintVertical_bias="0.3"
+            app:layout_constraintWidth_percent="0.7" />
+
+        <ImageView
+            android:id="@+id/imageView_myclassMain_horizontalDivider1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:paddingStart="10dp"
+            android:src="@drawable/divider_line"
+            app:layout_constraintHeight_percent="0.001"
+            app:layout_constraintStart_toStartOf="@id/textView_myclassMain_subjectBoard"
+            app:layout_constraintTop_toBottomOf="@id/textView_myclassMain_subjectBoard"
+            app:layout_constraintVertical_bias="0.3"
+            app:layout_constraintWidth_percent="0.7" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingStart="10dp"
+            android:paddingTop="2dp"
+            android:text="강의에서 궁금했던 문제들을 공유하세요!"
+            app:layout_constraintHeight_percent="0.04"
+            app:layout_constraintStart_toStartOf="@id/imageView_myclassMain_horizontalDivider1"
+            app:layout_constraintTop_toBottomOf="@id/imageView_myclassMain_horizontalDivider1"
+            app:layout_constraintWidth_percent="0.85" />
+
+        <ImageView
+            android:id="@+id/imageView_myclassMain_professorToMail"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_myclass_main_subject_professor_to_mail"
+            app:layout_constraintBottom_toTopOf="@id/imageView_myclassMain_timetable"
+            app:layout_constraintStart_toStartOf="@id/imageView_myclassMain_sujectBoard"
+            app:layout_constraintTop_toBottomOf="@id/imageView_myclassMain_sujectBoard"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <TextView
+            android:id="@+id/textView_myclassMain_professorToMail"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:fontFamily="@font/airbnb_cereal_black"
+            android:paddingStart="10dp"
+            android:paddingTop="2dp"
+            android:text="교수님 요청 메일(가이드)"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toTopOf="@id/imageView_myclassMain_horizontalDivider2"
+            app:layout_constraintHeight_percent="0.07"
+            app:layout_constraintStart_toEndOf="@id/imageView_myclassMain_professorToMail"
+            app:layout_constraintTop_toTopOf="@id/imageView_myclassMain_professorToMail"
+            app:layout_constraintVertical_bias="0.3"
+            app:layout_constraintWidth_percent="0.85" />
+
+        <ImageView
+            android:id="@+id/imageView_myclassMain_horizontalDivider2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:paddingStart="10dp"
+            android:src="@drawable/divider_line"
+            app:layout_constraintHeight_percent="0.001"
+            app:layout_constraintStart_toStartOf="@id/textView_myclassMain_professorToMail"
+            app:layout_constraintTop_toBottomOf="@id/textView_myclassMain_professorToMail"
+            app:layout_constraintVertical_bias="0.3"
+            app:layout_constraintWidth_percent="0.8" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingStart="10dp"
+            android:paddingTop="2dp"
+            android:text="시간표와 과제를 한 번에 볼 수 있어요!"
+            app:layout_constraintHeight_percent="0.04"
+            app:layout_constraintStart_toStartOf="@id/imageView_myclassMain_horizontalDivider2"
+            app:layout_constraintTop_toBottomOf="@id/imageView_myclassMain_horizontalDivider2"
+            app:layout_constraintWidth_percent="0.85" />
+
+        <ImageView
+            android:id="@+id/imageView_myclassMain_timetable"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_myclass_main_timetable"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/imageView_myclassMain_sujectBoard"
+            app:layout_constraintTop_toTopOf="@id/imageView_myclassMain_professorToMail"
+            app:layout_constraintVertical_bias="0.4" />
+
+        <TextView
+            android:id="@+id/textView_myclassMain_timetable"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:fontFamily="@font/airbnb_cereal_black"
+            android:paddingStart="10dp"
+            android:paddingTop="2dp"
+            android:text="시간표 / 과제"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@id/imageView_myclassMain_horizontalDivider3"
+            app:layout_constraintHeight_percent="0.07"
+            app:layout_constraintStart_toEndOf="@id/imageView_myclassMain_timetable"
+            app:layout_constraintTop_toTopOf="@id/imageView_myclassMain_timetable"
+            app:layout_constraintVertical_bias="0.3"
+            app:layout_constraintWidth_percent="0.7" />
+
+        <ImageView
+            android:id="@+id/imageView_myclassMain_horizontalDivider3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:paddingStart="10dp"
+            android:src="@drawable/divider_line"
+            app:layout_constraintHeight_percent="0.001"
+            app:layout_constraintStart_toStartOf="@id/textView_myclassMain_timetable"
+            app:layout_constraintTop_toBottomOf="@id/textView_myclassMain_timetable"
+            app:layout_constraintVertical_bias="0.3"
+            app:layout_constraintWidth_percent="0.7" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingStart="10dp"
+            android:paddingTop="2dp"
+            android:text="시간표와 과제를 한 번에!!"
+            app:layout_constraintHeight_percent="0.04"
+            app:layout_constraintStart_toStartOf="@id/imageView_myclassMain_horizontalDivider3"
+            app:layout_constraintTop_toBottomOf="@id/imageView_myclassMain_horizontalDivider3"
+            app:layout_constraintWidth_percent="0.85" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

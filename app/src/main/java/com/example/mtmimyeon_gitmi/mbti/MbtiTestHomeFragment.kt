@@ -1,4 +1,4 @@
-package com.example.mtmimyeon_gitmi
+package com.example.mtmimyeon_gitmi.mbti
 
 import android.os.Bundle
 import android.view.LayoutInflater

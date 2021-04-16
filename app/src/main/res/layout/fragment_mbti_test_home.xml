@@ -11,8 +11,10 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
+        android:fontFamily="@font/airbnb_cereal_black"
+        android:gravity="center"
         android:text="Q1. 최정현은 멍청이다?"
-        android:textSize="40dp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,6 +23,7 @@
         android:id="@+id/linearLayout_testHome_true"
         android:layout_width="400dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="40dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,6 +53,7 @@
         android:id="@+id/linearLayout_testHome_false"
         android:layout_width="400dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="50dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:text="아니다, 그는 똥멍청이다"
-            android:textSize="30sp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
 
@@ -85,14 +89,16 @@
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout_testHome_false"/>
+        app:layout_constraintTop_toBottomOf="@id/linearLayout_testHome_false" />
 
     <ProgressBar
         android:id="@+id/progressBar_testHome_status"
         style="@android:style/Widget.Holo.ProgressBar.Horizontal"
-        android:layout_width="400dp"
+        android:layout_width="300dp"
         android:layout_height="50dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:progress="20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

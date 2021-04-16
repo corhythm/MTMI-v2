@@ -1,12 +1,11 @@
-package com.example.mtmimyeon_gitmi
+package com.example.mtmimyeon_gitmi.mbti
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.mtmimyeon_gitmi.databinding.FragmentHomeBinding
+import com.example.mtmimyeon_gitmi.HomeActivity
 import com.example.mtmimyeon_gitmi.databinding.FragmentMbtiTestStartBinding
 
 
