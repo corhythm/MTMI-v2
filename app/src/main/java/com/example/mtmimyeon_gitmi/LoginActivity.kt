@@ -25,6 +25,11 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.textViewLoginSignup.setOnClickListener {
+            val intent = Intent(this, SignUpActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.buttonLoginSignin.setOnClickListener {
             // Start the loading animation when the user tap the button
             binding.buttonLoginSignin.startAnimation()
@@ -36,18 +41,20 @@ class LoginActivity : AppCompatActivity() {
 
                 // Choose a stop animation if your call was succesful or not
                 if (isSuccessful) {
-                   binding.buttonLoginSignin.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND,
-                       TransitionButton.OnAnimationStopEndListener {
-                           val intent = Intent(this, HomeActivity::class.java)
-                           //startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
-                           startActivity(intent)
-                           finish() // 임시
-                       })
+                    binding.buttonLoginSignin.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND,
+                        TransitionButton.OnAnimationStopEndListener {
+                            val intent = Intent(this, HomeActivity::class.java)
+                            //startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+                            startActivity(intent)
+                            finish() // 임시
+                        })
                 } else {
-                    binding.buttonLoginSignin.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null)
+                    binding.buttonLoginSignin.stopAnimation(
+                        TransitionButton.StopAnimationStyle.SHAKE,
+                        null
+                    )
                 }
-            }, 2000)
-
+            }, 300)
 
 
         }

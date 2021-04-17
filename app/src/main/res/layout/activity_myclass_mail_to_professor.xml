@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+        android:id="@+id/spinner_myClassMailToProf_selectMail"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintWidth_percent="0.8"
+        app:smsp_errorText="위 가이드는 어디까지나 가이드이므로 메일을 보낸 것에 대한 책임은 어디까지나 본인에게 있음을 명심하십시오"
+        app:smsp_floatingLabelColor="#1976D2"
+        app:smsp_floatingLabelText="Myoung Ji Unversity"
+        app:smsp_hint="이메일을 보낼 교수님을 선택하세요!"
+        app:smsp_hintColor="#388E3C"
+        app:smsp_isSearchable="true"
+        app:smsp_itemColor="#512DA8"
+        app:smsp_itemListColor="#7C4DFF"
+        app:smsp_itemListHintBackgroundColor="#808080"
+        app:smsp_itemListHintColor="#FFFFFF"
+        app:smsp_multilineError="false"
+        app:smsp_selectedItemListColor="#FF5252" />
+
+
+    <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
+        android:id="@+id/time"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:alignItems="center"
+        app:flexWrap="wrap"
+        app:justifyContent="center"
+        app:alignContent="stretch"
+        app:toggle_selectAnimation="horizontal_window"
+        app:layout_constraintBottom_toTopOf="@id/textView_myClassMailToProf_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinner_myClassMailToProf_selectMail"
+        app:layout_constraintWidth_percent="0.75"
+        app:toggle_selectableAmount="1"> <!-- this attribute is from the underlying FlexboxLayout -->
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/btn1"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            app:toggle_text="과제"
+            app:toggle_textSize="20sp"/>
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/btn2"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            app:toggle_text="증원"
+            app:toggle_textSize="20sp" />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/btn3"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            app:toggle_text="강의 질문"
+            app:toggle_textSize="20sp"/>
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/btn4"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            app:toggle_text="출석 문의"
+            app:toggle_textSize="20sp"/>
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/btn5"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            app:toggle_text="시험 문의"
+            app:toggle_textSize="20sp"/>
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/btn6"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            app:toggle_text="성적 문의"
+            app:toggle_textSize="20sp"/>
+
+    </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
+
+
+    <TextView
+        android:id="@+id/textView_myClassMailToProf_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_rounded_corner_stroke"
+        android:fontFamily="@font/airbnb_cereal_black"
+        android:gravity="center"
+        android:scrollbars="vertical"
+        android:text="@string/dummy"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@id/imageButton_myClassMailToProf_send"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.45"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/time"
+        app:layout_constraintWidth_percent="0.9" />
+
+    <ImageButton
+        android:id="@+id/imageButton_myClassMailToProf_send"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_rounded_corner"
+        android:backgroundTint="@color/main_home_color"
+        android:src="@drawable/ic_myclass_mail_to_professor_send"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_myClassMailToProf_content"
+        app:layout_constraintWidth_percent="0.3" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

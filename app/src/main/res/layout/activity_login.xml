@@ -162,6 +162,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="15dp"
+        android:clickable="true"
         android:text="Forgot password?"
         android:textColor="#2DB8F8"
         app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
@@ -173,6 +174,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="15dp"
+        android:clickable="true"
         android:text="아직 MTMI 회원이 아니신가요?"
         android:textColor="#2DB8F8"
         app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
@@ -204,13 +206,13 @@
         android:textColor="#ffffff"
         android:textSize="30sp"
         app:defaultColor="@color/main_home_color"
-        app:loaderColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.08"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias=".8"
-        app:layout_constraintWidth_percent="0.8" />
+        app:layout_constraintWidth_percent="0.8"
+        app:loaderColor="#ffffff" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

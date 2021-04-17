@@ -20,17 +20,19 @@
 
     <TextView
         android:id="@+id/textview_getstarted_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:text="MTMI\n   For\nEveryone"
         android:textColor="#ffffff"
-        android:textSize="50sp"
+        android:textSize="55sp"
         android:textStyle="bold"
+        app:layout_constraintWidth_percent="0.6"
+        app:layout_constraintHeight_percent="0.24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintVertical_bias="0.16" />
 
     <ImageView
         android:id="@+id/imageview_getstarted_horse_logo"
@@ -44,7 +46,7 @@
 
     <Button
         android:id="@+id/button_getstarted_getstarted"
-        android:layout_width="400dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/bg_rounded_corner"
@@ -57,6 +59,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintWidth_percent="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageview_getstarted_horse_logo" />
 

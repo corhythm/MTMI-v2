@@ -15,4 +15,16 @@
     <color name="navigation_color_profile">#1194AA</color>
     <color name="main_home_color">#4BB8F4</color>
 
+    <string-array name="default_sticker_color">
+        <item>#ecc369</item>
+        <item>#f08676</item>
+        <item>#a7ca70</item>
+        <item>#7dd1c1</item>
+        <item>#7aa5e9</item>
+        <item>#fbaa68</item>
+        <item>#9f86e1</item>
+        <item>#78cb87</item>
+        <item>#d397ed</item>
+    </string-array>
+
 </resources>

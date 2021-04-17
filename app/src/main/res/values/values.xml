@@ -66,4 +66,15 @@
         <item>김진호 교수&lt;dnr2144@gmail.com&gt;</item>
     </string-array>
 
+    <string-array name="my_header_title">
+        <item></item>
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+    </string-array>
+
+
 </resources>
+

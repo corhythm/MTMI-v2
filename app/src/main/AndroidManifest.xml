@@ -11,10 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTMIMyeongiTMI">
-        <activity android:name=".SignUpActivity"
-            android:windowSoftInputMode="adjustPan">
-
-        </activity>
+        <activity android:name=".myclass.MyClassMailToProfessorActivity"/>
+        <activity
+            android:name=".SignUpActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".HomeActivity">
         </activity>
         <activity android:name=".LoginActivity" >
@@ -27,7 +27,7 @@
         <activity
             android:name=".GetStartedActivity"
             android:label="MTMI"
-            android:theme="@style/Theme.MTMIMyeongiTMI.NoActionBar"></activity>
+            android:theme="@style/Theme.MTMIMyeongiTMI.NoActionBar" />
     </application>
 
 </manifest>

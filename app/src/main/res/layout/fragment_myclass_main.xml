@@ -114,7 +114,7 @@
             android:id="@+id/imageView_myclassMain_professorToMail"
             android:layout_width="30dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_myclass_main_subject_professor_to_mail"
+            android:src="@drawable/ic_myclass_main_subject_mail_to_professor"
             app:layout_constraintBottom_toTopOf="@id/imageView_myclassMain_timetable"
             app:layout_constraintStart_toStartOf="@id/imageView_myclassMain_sujectBoard"
             app:layout_constraintTop_toBottomOf="@id/imageView_myclassMain_sujectBoard"

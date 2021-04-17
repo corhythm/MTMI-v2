@@ -73,4 +73,10 @@ dependencies {
 
     // custom loding button: https://github.com/roynx98/transition-button-android
     implementation 'com.royrodriguez:transitionbutton:0.2.0'
+
+    // timetable: https://github.com/tlaabs/TimetableView
+    implementation 'com.github.tlaabs:TimetableView:1.0.3-fx1'
+
+    // themed-toggle-button-group: https://github.com/Bryanx/themed-toggle-button-group
+    implementation 'nl.bryanderidder:themed-toggle-button-group:1.3.4'
 }
