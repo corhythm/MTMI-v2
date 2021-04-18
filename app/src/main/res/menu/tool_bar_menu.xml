@@ -5,7 +5,7 @@
     <item
         android:id="@+id/menu_toolBar_user"
         android:icon="@drawable/ic_toolbar_user"
-        app:cnb_iconColor="@color/navigation_color_chart"
+        app:showAsAction="ifRoom"
         android:title="user"
-        />
+        app:cnb_iconColor="@color/navigation_color_chart" />
 </menu>

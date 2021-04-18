@@ -42,11 +42,15 @@ class MyClassMainFragment private constructor() : Fragment() {
 
     private fun init() {
         binding.textViewMyclassMainTimetable.setOnClickListener {
-            (requireActivity() as HomeActivity).replaceFragment(MyClassTimeTableFragment.getInstance())
+            startActivity(Intent(context, MyClassTimeTableActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
         }
 
         binding.textViewMyclassMainProfessorToMail.setOnClickListener {
             startActivity(Intent(context, MyClassMailToProfessorActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
+        }
+
+        binding.textViewMyclassMainSubjectList.setOnClickListener {
+            startActivity(Intent(context, MyClassSubjectList::class.java), ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
         }
     }
 }

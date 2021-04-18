@@ -11,23 +11,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTMIMyeongiTMI">
-        <activity android:name=".myclass.MyClassMailToProfessorActivity"/>
+        <activity android:name=".myclass.MyClassSubjectList"></activity>
+        <activity android:name=".myclass.MyClassTimeTableActivity" />
+        <activity android:name=".myclass.MyClassMailToProfessorActivity" />
         <activity
             android:name=".SignUpActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".HomeActivity">
+        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".LoginActivity">
+
         </activity>
-        <activity android:name=".LoginActivity" >
+        <activity
+            android:name=".GetStartedActivity"
+            android:label="MTMI"
+            android:theme="@style/Theme.MTMIMyeongiTMI.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".GetStartedActivity"
-            android:label="MTMI"
-            android:theme="@style/Theme.MTMIMyeongiTMI.NoActionBar" />
     </application>
 
 </manifest>

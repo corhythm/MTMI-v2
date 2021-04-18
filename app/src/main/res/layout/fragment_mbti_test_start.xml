@@ -35,21 +35,54 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textview_teststart_title" />
 
-    <Button
+    <com.marozzi.roundbutton.RoundButton
         android:id="@+id/button_teststart_teststart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/bg_rounded_corner"
-        android:backgroundTint="@color/main_home_color"
         android:fontFamily="@font/airbnb_cereal_black"
+        android:gravity="center"
         android:text="Let's Test!"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        app:backgroundTint="@null"
+        android:textSize="35sp"
+        app:layout_constraintWidth_percent="0.7"
+        app:layout_constraintHeight_percent="0.1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_item_subtitle" />
+        app:layout_constraintTop_toBottomOf="@id/textview_item_subtitle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+        app:rb_animation_alpha="false"
+        app:rb_animation_corner_radius="100dp"
+        app:rb_animation_duration="500"
+        app:rb_animation_progress_color="@color/main_home_color"
+        app:rb_animation_progress_padding="8dp"
+        app:rb_animation_progress_style="circle"
+        app:rb_animation_progress_width="2dp"
+        app:rb_background_color="@android:color/transparent"
+        app:rb_background_color_pressed="#3F51B5"
+        app:rb_corner_color="#3F51B5"
+        app:rb_corner_color_pressed="#3F51B5"
+        app:rb_corner_radius="100dp"
+        app:rb_corner_width="1dp"
+        app:rb_success_resource="@drawable/img_mbti_teststarted_done"
+        app:rb_text_color="#3F51B5"
+        app:rb_text_color_pressed="@android:color/white" />
+
+    <!--    <Button-->
+    <!--        android:id="@+id/button_teststart_teststart"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:background="@drawable/bg_rounded_corner"-->
+    <!--        android:backgroundTint="@color/main_home_color"-->
+    <!--        android:fontFamily="@font/airbnb_cereal_black"-->
+    <!--        android:text="Let's Test!"-->
+    <!--        android:textSize="40sp"-->
+    <!--        android:textStyle="bold"-->
+    <!--        app:backgroundTint="@null"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/textview_item_subtitle" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

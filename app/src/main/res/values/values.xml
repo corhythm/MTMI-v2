@@ -11,6 +11,17 @@
         <item>@drawable/ic_item_dormitory</item>
     </array>
 
+    <array name="gradientList">
+        <item>@drawable/bg_rounded_corner_gradient1</item>
+        <item>@drawable/bg_rounded_corner_gradient2</item>
+        <item>@drawable/bg_rounded_corner_gradient3</item>
+        <item>@drawable/bg_rounded_corner_gradient4</item>
+        <item>@drawable/bg_rounded_corner_gradient5</item>
+        <item>@drawable/bg_rounded_corner_gradient6</item>
+        <item>@drawable/bg_rounded_corner_gradient7</item>
+        <item>@drawable/bg_rounded_corner_gradient8</item>
+    </array>
+
     <string-array name="mjuSiteTextList">
         <item>학교홈</item>
         <item>학과홈</item>

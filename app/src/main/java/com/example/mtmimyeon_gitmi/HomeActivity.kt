@@ -34,15 +34,12 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         init()
         setSupportActionBar(binding.topAppBarHome)
         replaceFragment(HomeFragment.getInstance())
     }
 
     private fun init() {
-
 
         // 원래 이렇게 하면 안 됨. 시각적으로 보기 위해서 임시로 테스트
         binding.floatingActionButtomHome.setOnClickListener {
@@ -78,7 +75,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_toolBar_user -> {
-                Log.d("로그", "HomeActivity -onOptionsItemSelected() called")
+                startActivity(Intent(this, SignUpActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
             }
         }
         return true

@@ -4,40 +4,31 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.mtmimyeon_gitmi.databinding.FragmentMyclassTimetableBinding
+import com.example.mtmimyeon_gitmi.databinding.ActivityMyclassTimetableBinding
 import com.github.tlaabs.timetableview.Schedule
 import com.github.tlaabs.timetableview.Time
 
-class MyClassTimeTableFragment : Fragment() {
-    private var _binding: FragmentMyclassTimetableBinding? = null
+class MyClassTimeTableActivity: AppCompatActivity() {
+    private lateinit var binding: ActivityMyclassTimetableBinding
 
     // This property is only valid between onCreateView and OnDestroyView
-    private val binding get() = _binding!!
     private val schedules = ArrayList<Schedule>()
 
     companion object {
-        fun getInstance(): MyClassTimeTableFragment {
-            return MyClassTimeTableFragment()
+        fun getInstance(): MyClassTimeTableActivity {
+            return MyClassTimeTableActivity()
         }
     }
 
-    // 뷰가 생성되었을 때, 프래그먼트와 레이아웃 연결
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        //return super.onCreateView(inflater, container, savedInstanceState)
-        _binding = FragmentMyclassTimetableBinding.inflate(inflater, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMyclassTimetableBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         initTimeTable()
-        return binding.root
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
 
     private fun initTimeTable() {
         binding.timetable.setOnStickerSelectEventListener { idx, schedules ->
