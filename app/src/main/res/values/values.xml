@@ -4,11 +4,15 @@
         <item>@drawable/ic_item_unv_notification</item>
         <item>@drawable/ic_item_major_home</item>
         <item>@drawable/ic_item_library</item>
+        <item>@drawable/ic_item_eclass</item>
         <item>@drawable/ic_item_lms</item>
         <item>@drawable/ic_item_myiweb</item>
+        <item>@drawable/ic_item_myicap</item>
         <item>@drawable/ic_item_telephone</item>
         <item>@drawable/ic_item_ucheck</item>
         <item>@drawable/ic_item_dormitory</item>
+        <item>@drawable/ic_item_covid19_check</item>
+        <item>@drawable/ic_item_register_subject</item>
     </array>
 
     <array name="gradientList">
@@ -26,16 +30,15 @@
         <item>학교홈</item>
         <item>학과홈</item>
         <item>library</item>
+        <item>eclass</item>
         <item>lms</item>
         <item>myiweb</item>
+        <item>myicap</item>
         <item>phone</item>
         <item>ucheck</item>
         <item>기숙사</item>
+        <item>문진표</item>
         <item>수강신청</item>
-        <item>major</item>
-        <item>major</item>
-        <item>major</item>
-        <item>major</item>
     </string-array>
 
     <string-array name="major">
