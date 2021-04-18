@@ -7,21 +7,51 @@
     android:layout_gravity="center"
     tools:context=".myclass.MyClassSubjectList">
 
-    <TextView
-        android:id="@+id/textView_myClassMainSubjectList_title"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:fontFamily="@font/airbnb_cereal_bold"
-        android:gravity="center"
-        android:paddingTop="10dp"
-        android:text="My Class List"
-        android:textSize="35sp"
-        app:layout_constraintBottom_toTopOf="@id/recyclerview_myClassSubjectList_list"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.08"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.7" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView_myClassMainSubjectList_title"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:fontFamily="@font/airbnb_cereal_bold"-->
+<!--        android:gravity="center"-->
+<!--        android:paddingTop="10dp"-->
+<!--        android:text="My Class List"-->
+<!--        android:textSize="35sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/recyclerview_myClassSubjectList_list"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHeight_percent="0.08"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintWidth_percent="0.7" />-->
+
+     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appLayout_myClassSubjectList_appbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintTop_toTopOf="parent">
+
+        <!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            app:contentScrim="?attr/colorPrimary"-->
+        <!--            app:expandedTitleMarginBottom="28dp"-->
+        <!--            app:titleEnabled="false"-->
+        <!--            app:collapsedTitleGravity ="bottom|center_horizontal"-->
+        <!--            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"-->
+        <!--            app:statusBarScrim="?attr/colorPrimaryVariant">-->
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar_home"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            app:title="My Class List"
+            app:titleCentered="true"
+            app:titleTextColor="@color/black" />
+
+        <!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_myClassSubjectList_list"
@@ -32,7 +62,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_myClassMainSubjectList_title"
+        app:layout_constraintTop_toBottomOf="@+id/appLayout_myClassSubjectList_appbarLayout"
         app:layout_constraintWidth_percent="0.8" />
 
 

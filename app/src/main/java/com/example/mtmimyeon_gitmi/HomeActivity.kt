@@ -73,7 +73,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_toolBar_user -> {
-                startActivity(Intent(this, SignUpActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+                startActivity(Intent(this, MyProfileActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
             }
         }
         return true

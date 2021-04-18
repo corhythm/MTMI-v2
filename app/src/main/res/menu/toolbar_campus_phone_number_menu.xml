@@ -7,5 +7,5 @@
         android:icon="@drawable/ic_item_search"
         app:showAsAction="ifRoom"
         android:title="search"
-        app:cnb_iconColor="@color/navigation_color_chart" />
+        app:cnb_iconColor="@color/black" />
 </menu>
