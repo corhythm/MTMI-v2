@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.transition.Slide
 
-import android.util.Log
 import android.view.Gravity
 
 import android.view.Menu
@@ -16,7 +15,6 @@ import android.view.Window
 import androidx.fragment.app.Fragment
 import com.example.mtmimyeon_gitmi.databinding.ActivityHomeBinding
 import com.example.mtmimyeon_gitmi.mbti.MbtiTestStartFragment
-import com.example.mtmimyeon_gitmi.myclass.MyClassMailToProfessorActivity
 import com.example.mtmimyeon_gitmi.myclass.MyClassMainFragment
 
 class HomeActivity : AppCompatActivity() {
@@ -68,7 +66,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 //        return super.onCreateOptionsMenu(menu)
-        menuInflater.inflate(R.menu.tool_bar_menu, menu)
+        menuInflater.inflate(R.menu.toolbar_main_menu, menu)
         return true
     }
 
