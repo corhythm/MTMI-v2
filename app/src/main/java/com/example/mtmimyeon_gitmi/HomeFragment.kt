@@ -11,8 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.databinding.FragmentHomeBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemMjuSiteBinding
-import com.example.mtmimyeon_gitmi.item.ItemMjuSite
-import kotlin.reflect.typeOf
+import com.example.mtmimyeon_gitmi.recyclerview_item.ItemMjuSite
 
 class HomeFragment private constructor() : Fragment(), MjuSiteRecyclerViewInterface {
     private var _binding: FragmentHomeBinding? = null

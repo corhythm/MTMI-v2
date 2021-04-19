@@ -1,13 +1,16 @@
 package com.example.mtmimyeon_gitmi.myclass
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyclassTimetableBinding
 import com.github.tlaabs.timetableview.Schedule
+import com.github.tlaabs.timetableview.Sticker
 import com.github.tlaabs.timetableview.Time
 
 class MyClassTimeTableActivity: AppCompatActivity() {
@@ -31,8 +34,8 @@ class MyClassTimeTableActivity: AppCompatActivity() {
 
 
     private fun initTimeTable() {
-        binding.timetable.setOnStickerSelectEventListener { idx, schedules ->
-            binding.timetable.edit(idx, schedules)
+        binding.timetableViewMyClassTimetableTimetable.setOnStickerSelectEventListener { idx, schedules ->
+            binding.timetableViewMyClassTimetableTimetable.edit(idx, schedules)
         }
 
         // test code
@@ -71,10 +74,21 @@ class MyClassTimeTableActivity: AppCompatActivity() {
         schedule.endTime = Time(3, 50); // sets the end of class time (hour,minute)
         schedules.add(schedule);
 
-
+        schedule = Schedule()
+        schedule.classTitle = "공학수학1"; // sets subject
+        schedule.classPlace = "h1021"; // sets place
+        schedule.professorName = "소순태"; // sets professor
+        schedule.day = 3
+        schedule.startTime = Time(11, 0); // sets the beginning of class time (hour,minute)
+        schedule.endTime = Time(3, 50); // sets the end of class time (hour,minute)
         schedules.add(schedule);
+
+
+
         //.. add one or more schedules
-        binding.timetable.add(schedules);
-        binding.timetable.setHeaderHighlight(2)
+        binding.timetableViewMyClassTimetableTimetable.add(schedules);
+        binding.timetableViewMyClassTimetableTimetable.setHeaderHighlight(2)
+
+        Log.d("로그", binding.timetableViewMyClassTimetableTimetable.allSchedulesInStickers.toString())
     }
 }

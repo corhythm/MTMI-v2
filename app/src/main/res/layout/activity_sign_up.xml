@@ -20,7 +20,7 @@
             android:gravity="center_horizontal"
             android:text="Welcome to MTMI"
             android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@id/textVIew_signUp_subtitle"
+            app:layout_constraintBottom_toTopOf="@id/textView_signUp_subtitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.05"
@@ -30,14 +30,14 @@
             app:layout_constraintWidth_percent="0.8" />
 
         <TextView
-            android:id="@+id/textVIew_signUp_subtitle"
+            android:id="@+id/textView_signUp_subtitle"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fontFamily="@font/airbnb_cereal_medium"
             android:gravity="center_horizontal"
             android:text="Provide your basic imformation below."
             android:textSize="15sp"
-            app:layout_constraintBottom_toTopOf="@id/textVIew_signUp_subtitle"
+            app:layout_constraintBottom_toTopOf="@id/textView_signUp_subtitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.04"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +53,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textVIew_signUp_subtitle"
+            app:layout_constraintTop_toBottomOf="@id/textView_signUp_subtitle"
             app:layout_constraintWidth_percent="0.8"
             app:mtf_image="@drawable/ic_toolbar_user"
             app:mtf_labelColor="@color/main_home_color"
@@ -94,7 +94,7 @@
         </com.github.florent37.materialtextfield.MaterialTextField>
 
         <com.github.florent37.materialtextfield.MaterialTextField
-            android:id="@+id/editText_signUp_confirm_password"
+            android:id="@+id/editText_signUp_confirmPassword"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -123,7 +123,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editText_signUp_confirm_password"
+            app:layout_constraintTop_toBottomOf="@id/editText_signUp_confirmPassword"
             app:layout_constraintWidth_percent="0.8"
             app:mtf_image="@drawable/ic_toolbar_user"
             app:mtf_labelColor="@color/main_home_color"

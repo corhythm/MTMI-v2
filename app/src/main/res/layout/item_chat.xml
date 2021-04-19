@@ -9,14 +9,14 @@
         android:id="@+id/imageView_chat_profileImg"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@drawable/unviersity"
+        android:src="@drawable/squid"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:civ_border_width="1dp"/>
 
     <TextView
-        android:id="@+id/textView_chat_username"
+        android:id="@+id/textView_chat_userName"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Seong Uk Kang"
@@ -32,8 +32,8 @@
         android:layout_height="0dp"
         android:paddingStart="20dp"
         android:text="It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-        app:layout_constraintStart_toStartOf="@id/textView_chat_username"
-        app:layout_constraintTop_toBottomOf="@id/textView_chat_username"
+        app:layout_constraintStart_toStartOf="@id/textView_chat_userName"
+        app:layout_constraintTop_toBottomOf="@id/textView_chat_userName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintWidth_percent="0.8"
         app:layout_constraintHeight_percent="0.65"/>

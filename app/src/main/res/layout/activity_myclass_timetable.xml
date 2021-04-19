@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <com.github.tlaabs.timetableview.TimetableView
-        android:id="@+id/timetable"
+        android:id="@+id/timetableView_myClassTimetable_timetable"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:cell_height="50dp"
@@ -13,7 +13,7 @@
         app:header_highlight_type="color"
         app:header_highlight_color="@color/main_home_color"
         app:header_title="@array/my_header_title"
-        app:sticker_colors="@array/default_sticker_color"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.85"
         app:layout_constraintStart_toStartOf="parent"

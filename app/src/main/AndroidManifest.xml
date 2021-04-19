@@ -11,11 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTMIMyeongiTMI">
-        <activity android:name=".MyChatListActivity"></activity>
+        <activity android:name=".MyChatListActivity"/>
         <activity android:name=".CopyrightActivity" />
         <activity android:name=".MyProfileActivity" />
         <activity android:name=".CampusPhoneNumberActivity" />
-        <activity android:name=".myclass.MyClassSubjectList" />
+        <activity android:name=".myclass.MyClassSubjectListActivity" />
         <activity android:name=".myclass.MyClassTimeTableActivity" />
         <activity android:name=".myclass.MyClassMailToProfessorActivity" />
         <activity

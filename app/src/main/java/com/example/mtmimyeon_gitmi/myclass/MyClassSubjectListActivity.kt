@@ -1,13 +1,9 @@
 package com.example.mtmimyeon_gitmi.myclass
 
 import android.annotation.SuppressLint
-import android.app.Application
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Rect
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.LayerDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,16 +11,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectListBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBinding
-import com.example.mtmimyeon_gitmi.item.ItemSubject
+import com.example.mtmimyeon_gitmi.recyclerview_item.ItemSubject
 
-class MyClassSubjectList : AppCompatActivity() {
+class MyClassSubjectListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyClassSubjectListBinding
     private lateinit var subjectRecyclerAdapter: SubjectListRecyclerAdapter
     private val itemSubjectList = ArrayList<ItemSubject>()
@@ -68,10 +62,10 @@ class MyClassSubjectList : AppCompatActivity() {
         binding.recyclerviewMyClassSubjectListList.apply {
             adapter = subjectRecyclerAdapter
             layoutManager =
-                LinearLayoutManager(this@MyClassSubjectList, LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(this@MyClassSubjectListActivity, LinearLayoutManager.VERTICAL, false)
             addItemDecoration(SubjectRecyclerDecoration())
             //itemAnimator = DefaultItemAnimator()
-            subjectRecyclerAdapter.submit(itemSubjectList, this@MyClassSubjectList)
+            subjectRecyclerAdapter.submit(itemSubjectList, this@MyClassSubjectListActivity)
         }
 
     }

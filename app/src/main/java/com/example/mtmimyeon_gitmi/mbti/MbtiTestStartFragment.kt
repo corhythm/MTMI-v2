@@ -39,12 +39,12 @@ public class MbtiTestStartFragment private constructor() : Fragment() {
     }
 
     private fun init() {
-        binding.buttonTeststartTeststart.setOnClickListener {
-            binding.buttonTeststartTeststart.startAnimation()
+        binding.buttonTestStartGoToTestStart.setOnClickListener {
+            binding.buttonTestStartGoToTestStart.startAnimation()
             Handler().postDelayed({ // delay 후 실행할 코드
-                binding.buttonTeststartTeststart.stopAnimation()
-                binding.buttonTeststartTeststart.setResultState(RoundButton.ResultState.SUCCESS)
-                binding.buttonTeststartTeststart.revertAnimation()
+                binding.buttonTestStartGoToTestStart.stopAnimation()
+                binding.buttonTestStartGoToTestStart.setResultState(RoundButton.ResultState.SUCCESS)
+                binding.buttonTestStartGoToTestStart.revertAnimation()
                 (requireActivity() as HomeActivity).replaceFragment(MbtiTestHomeFragment.getInstance())
             }, 1500)
         }

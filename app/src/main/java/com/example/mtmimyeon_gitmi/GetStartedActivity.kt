@@ -26,7 +26,7 @@ class GetStartedActivity : AppCompatActivity() {
         binding = ActivityGetStartedBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.buttonGetstartedGetstarted.setOnClickListener {
+        binding.buttonGetStartedGoToGetStarted.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
             finish() // 임시

@@ -40,7 +40,7 @@ class HomeActivity : AppCompatActivity() {
     private fun init() {
 
         // 원래 이렇게 하면 안 됨. 시각적으로 보기 위해서 임시로 테스트
-        binding.floatingActionButtomHome.setOnClickListener {
+        binding.floatingActionButtonHome.setOnClickListener {
             replaceFragment(HomeFragment.getInstance())
             // 아이템 선택된 거 초기화
             binding.bottomNavigationViewHome.setItemSelected(-1)

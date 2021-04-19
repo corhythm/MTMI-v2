@@ -59,7 +59,7 @@
         android:layout_marginBottom="60dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButtom_home"
+        android:id="@+id/floatingActionButton_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

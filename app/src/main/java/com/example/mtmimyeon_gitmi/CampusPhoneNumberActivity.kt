@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.databinding.ActivityCampusPhoneNumberBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemTelephoneBinding
-import com.example.mtmimyeon_gitmi.item.ItemCampusPhoneNumber
+import com.example.mtmimyeon_gitmi.recyclerview_item.ItemCampusPhoneNumber
 
 class CampusPhoneNumberActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCampusPhoneNumberBinding
@@ -63,9 +63,9 @@ class CampusPhoneNumberRecyclerAdapter : RecyclerView.Adapter<CampusPhoneNumberV
 // 리사이클러뷰 뷰홀더
 class CampusPhoneNumberViewHolder(private val item: ItemTelephoneBinding) : RecyclerView.ViewHolder(item.root) {
     fun bind(itemCampusPhoneNumber: ItemCampusPhoneNumber) {
-        item.textviewItemName.text = itemCampusPhoneNumber.name
-        item.textviewItemLocation.text = itemCampusPhoneNumber.location
-        item.textviewItemSiteUrl.text = itemCampusPhoneNumber.siteUrl
-        item.textviewItemPhoneNumber.text = itemCampusPhoneNumber.phoneNumber
+        item.textViewItemName.text = itemCampusPhoneNumber.name
+        item.textViewItemLocation.text = itemCampusPhoneNumber.location
+        item.textViewItemSiteUrl.text = itemCampusPhoneNumber.siteUrl
+        item.textViewItemPhoneNumber.text = itemCampusPhoneNumber.phoneNumber
     }
 }

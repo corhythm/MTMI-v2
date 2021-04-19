@@ -15,7 +15,7 @@
         app:layout_constraintGuide_begin="70dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint_login_iamge_frame"
+        android:id="@+id/constraintLayout_login_imageFrame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_rounded_corner"
@@ -35,7 +35,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageview_login_logo"
+            android:id="@+id/imageView_login_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
@@ -54,60 +54,12 @@
             android:background="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageview_login_logo" />
+            app:layout_constraintTop_toBottomOf="@id/imageView_login_logo" />
 
-        <!--        <Button-->
-        <!--            android:id="@+id/button_login_login"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="10dp"-->
-        <!--            android:backgroundTint="#F4CECE"-->
-        <!--            android:fontFamily="@font/airbnb_cereal_black"-->
-        <!--            android:text="Login"-->
-        <!--            app:layout_constraintEnd_toStartOf="@id/button_login_signup"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/view_login_divider" />-->
-
-        <!--        <Button-->
-        <!--            android:id="@+id/button_login_signup"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="10dp"-->
-        <!--            android:backgroundTint="#F4CECE"-->
-        <!--            android:fontFamily="@font/airbnb_cereal_black"-->
-        <!--            android:text="Sign-Up"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintHorizontal_bias="0.7"-->
-        <!--            app:layout_constraintStart_toEndOf="@id/button_login_login"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/view_login_divider" />-->
-
-        <!--        <View-->
-        <!--            android:id="@+id/view_login_login_button_divider"-->
-        <!--            android:layout_width="70dp"-->
-        <!--            android:layout_height="1dp"-->
-        <!--            android:layout_gravity="center"-->
-        <!--            android:layout_marginTop="1dp"-->
-        <!--            android:background="#FA4A0C"-->
-        <!--            app:layout_constraintEnd_toStartOf="@id/view_login_signup_button_divider"-->
-        <!--            app:layout_constraintHorizontal_bias="0.1"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/button_login_login" />-->
-
-        <!--        <View-->
-        <!--            android:id="@+id/view_login_signup_button_divider"-->
-        <!--            android:layout_width="70dp"-->
-        <!--            android:layout_height="1dp"-->
-        <!--            android:layout_gravity="center"-->
-        <!--            android:layout_marginTop="1dp"-->
-        <!--            android:background="#FA4A0C"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toEndOf="@id/view_login_login_button_divider"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/button_login_login" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/textview_login_email_address"
+        android:id="@+id/textView_login_emailAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
@@ -115,49 +67,38 @@
         android:text="Email address"
         app:layout_constraintHorizontal_bias="0.041"
         app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
-        app:layout_constraintTop_toBottomOf="@id/constraint_login_iamge_frame" />
+        app:layout_constraintTop_toBottomOf="@id/constraintLayout_login_imageFrame" />
 
     <EditText
-        android:id="@+id/edittext_login_email_address"
+        android:id="@+id/editText_login_emailAddress"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:hint="이메일 주소를 입력해주세요"
         app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
-        app:layout_constraintTop_toBottomOf="@id/textview_login_email_address" />
+        app:layout_constraintTop_toBottomOf="@id/textView_login_emailAddress" />
 
     <TextView
-        android:id="@+id/textview_login_password"
+        android:id="@+id/textView_login_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="44dp"
         android:text="Password"
         app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
-        app:layout_constraintTop_toBottomOf="@id/edittext_login_email_address" />
+        app:layout_constraintTop_toBottomOf="@id/editText_login_emailAddress" />
 
     <EditText
-        android:id="@+id/edittext_login_password"
+        android:id="@+id/editText_login_password"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:hint="비밀번호를 입력해주세요"
         app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
-        app:layout_constraintTop_toBottomOf="@id/textview_login_password" />
+        app:layout_constraintTop_toBottomOf="@id/textView_login_password" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="15dp"
-        android:text="Forgot password?"
-        android:textColor="#2DB8F8"
-        app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
-        app:layout_constraintTop_toBottomOf="@id/edittext_login_password" />
-
-    <TextView
-        android:id="@+id/textView_login_forgotpassword"
+        android:id="@+id/textView_login_forgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
@@ -166,10 +107,10 @@
         android:text="Forgot password?"
         android:textColor="#2DB8F8"
         app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
-        app:layout_constraintTop_toBottomOf="@id/edittext_login_password" />
+        app:layout_constraintTop_toBottomOf="@id/editText_login_password" />
 
     <TextView
-        android:id="@+id/textView_login_signup"
+        android:id="@+id/textView_login_signUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -178,28 +119,10 @@
         android:text="아직 MTMI 회원이 아니신가요?"
         android:textColor="#2DB8F8"
         app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
-        app:layout_constraintTop_toBottomOf="@id/textView_login_forgotpassword" />
-
-    <!--    <Button-->
-    <!--        android:id="@+id/button_login_signin"-->
-    <!--        android:layout_width="300dp"-->
-    <!--        android:layout_height="60dp"-->
-    <!--        android:layout_marginBottom="20dp"-->
-    <!--        android:background="@drawable/bg_rounded_corner"-->
-    <!--        android:backgroundTint="@color/main_home_color"-->
-    <!--        android:fontFamily="@font/airbnb_cereal_black"-->
-    <!--        android:text="Sign In"-->
-    <!--        android:textColor="#ffffff"-->
-    <!--        android:textSize="30sp"-->
-    <!--        app:backgroundTint="@null"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/textView"-->
-    <!--        app:layout_constraintVertical_bias=".8" />-->
+        app:layout_constraintTop_toBottomOf="@id/textView_login_forgotPassword" />
 
     <com.royrodriguez.transitionbutton.TransitionButton
-        android:id="@+id/button_login_signin"
+        android:id="@+id/button_login_signIn"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Sign in"
@@ -210,7 +133,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.08"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView_login_forgotPassword"
         app:layout_constraintVertical_bias=".8"
         app:layout_constraintWidth_percent="0.8"
         app:loaderColor="#ffffff" />

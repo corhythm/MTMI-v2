@@ -12,7 +12,7 @@
         app:layout_constraintGuide_begin="20dp" />
 
     <TextView
-        android:id="@+id/textview_item_name"
+        android:id="@+id/textView_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -20,76 +20,77 @@
         android:text="[대외협력·홍보위원회]"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.08"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageview_item_location"
+        android:id="@+id/imageView_item_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:src="@drawable/ic_item_location"
         app:layout_constraintStart_toStartOf="@id/guideline_item_baseline"
-        app:layout_constraintTop_toBottomOf="@+id/textview_item_name" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_item_name" />
 
     <TextView
-        android:id="@+id/textview_item_location"
+        android:id="@+id/textView_item_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="15dp"
         android:text="자연 캠퍼스 함박관 2층 2401"
-        app:layout_constraintStart_toEndOf="@id/imageview_item_location"
-        app:layout_constraintTop_toBottomOf="@id/textview_item_name" />
+        app:layout_constraintStart_toEndOf="@id/imageView_item_location"
+        app:layout_constraintTop_toBottomOf="@id/textView_item_name" />
 
     <ImageView
-        android:id="@+id/imageview_item_webaddress"
+        android:id="@+id/imageView_item_siteUrl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:src="@drawable/ic_item_global"
         app:layout_constraintStart_toStartOf="@id/guideline_item_baseline"
-        app:layout_constraintTop_toBottomOf="@+id/imageview_item_location" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView_item_location" />
 
     <TextView
-        android:id="@+id/textview_item_siteUrl"
+        android:id="@+id/textView_item_siteUrl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="15dp"
         android:text="www.mju.ac.kr/main.do"
-        app:layout_constraintStart_toEndOf="@id/imageview_item_webaddress"
-        app:layout_constraintTop_toBottomOf="@id/textview_item_location" />
+        app:layout_constraintStart_toEndOf="@id/imageView_item_siteUrl"
+        app:layout_constraintTop_toBottomOf="@id/textView_item_location" />
 
     <ImageView
-        android:id="@+id/imageview_item_phoneNumber"
+        android:id="@+id/imageView_item_phoneNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:src="@drawable/ic_item_phone"
         app:layout_constraintStart_toStartOf="@id/guideline_item_baseline"
-        app:layout_constraintTop_toBottomOf="@+id/imageview_item_webaddress" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView_item_siteUrl" />
 
     <TextView
-        android:id="@+id/textview_item_phoneNumber"
+        android:id="@+id/textView_item_phoneNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="15dp"
         android:text="031)282-1212"
-        app:layout_constraintStart_toEndOf="@id/imageview_item_phoneNumber"
-        app:layout_constraintTop_toBottomOf="@id/textview_item_siteUrl" />
+        app:layout_constraintStart_toEndOf="@id/imageView_item_phoneNumber"
+        app:layout_constraintTop_toBottomOf="@id/textView_item_siteUrl" />
 
     <View
         android:id="@+id/view_item_divider"
-        android:layout_width="400dp"
+        android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
         android:background="#000000"
+        app:layout_constraintWidth_percent="0.9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_item_phoneNumber" />
+        app:layout_constraintTop_toBottomOf="@id/textView_item_phoneNumber" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

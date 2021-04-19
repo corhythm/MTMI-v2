@@ -25,14 +25,14 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.textViewLoginSignup.setOnClickListener {
+        binding.textViewLoginSignUp.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
 
-        binding.buttonLoginSignin.setOnClickListener {
+        binding.buttonLoginSignIn.setOnClickListener {
             // Start the loading animation when the user tap the button
-            binding.buttonLoginSignin.startAnimation()
+            binding.buttonLoginSignIn.startAnimation()
 
             // Do your networking task or background work here.
             val handler: Handler = Handler()
@@ -41,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
 
                 // Choose a stop animation if your call was succesful or not
                 if (isSuccessful) {
-                    binding.buttonLoginSignin.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND,
+                    binding.buttonLoginSignIn.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND,
                         TransitionButton.OnAnimationStopEndListener {
                             val intent = Intent(this, HomeActivity::class.java)
                             //startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
@@ -49,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
                             finish() // 임시
                         })
                 } else {
-                    binding.buttonLoginSignin.stopAnimation(
+                    binding.buttonLoginSignIn.stopAnimation(
                         TransitionButton.StopAnimationStyle.SHAKE,
                         null
                     )

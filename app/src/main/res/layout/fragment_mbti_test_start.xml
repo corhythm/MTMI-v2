@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageview_teststart_logo"
+        android:id="@+id/imageView_testStart_logo"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:src="@drawable/img_teststart_horse"
@@ -23,10 +23,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageview_teststart_logo" />
+        app:layout_constraintTop_toBottomOf="@id/imageView_testStart_logo" />
 
     <TextView
-        android:id="@+id/textview_item_subtitle"
+        android:id="@+id/textView_item_subtitle"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@id/textview_teststart_title" />
 
     <com.marozzi.roundbutton.RoundButton
-        android:id="@+id/button_teststart_teststart"
+        android:id="@+id/button_testStart_goToTestStart"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
@@ -48,7 +48,7 @@
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_item_subtitle"
+        app:layout_constraintTop_toBottomOf="@id/textView_item_subtitle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.05"
         app:rb_animation_alpha="false"

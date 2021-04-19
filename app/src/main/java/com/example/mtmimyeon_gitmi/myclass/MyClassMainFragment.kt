@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.mtmimyeon_gitmi.HomeActivity
 import com.example.mtmimyeon_gitmi.databinding.FragmentMyclassMainBinding
 
 class MyClassMainFragment private constructor() : Fragment() {
@@ -41,16 +40,16 @@ class MyClassMainFragment private constructor() : Fragment() {
     }
 
     private fun init() {
-        binding.textViewMyclassMainTimetable.setOnClickListener {
+        binding.textViewMyClassMainTimetable.setOnClickListener {
             startActivity(Intent(context, MyClassTimeTableActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
         }
 
-        binding.textViewMyclassMainProfessorToMail.setOnClickListener {
+        binding.textViewMyClassMainProfessorToMail.setOnClickListener {
             startActivity(Intent(context, MyClassMailToProfessorActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
         }
 
-        binding.textViewMyclassMainSubjectList.setOnClickListener {
-            startActivity(Intent(context, MyClassSubjectList::class.java), ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
+        binding.textViewMyClassMainSubjectList.setOnClickListener {
+            startActivity(Intent(context, MyClassSubjectListActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
         }
     }
 }

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyChatListBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemChatBinding
-import com.example.mtmimyeon_gitmi.item.ItemChat
+import com.example.mtmimyeon_gitmi.recyclerview_item.ItemChat
 
 class MyChatListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyChatListBinding
@@ -62,7 +62,7 @@ class MyChatListRecyclerAdapter : RecyclerView.Adapter<MyChatViewHolder>() {
 class MyChatViewHolder(private val item: ItemChatBinding) : RecyclerView.ViewHolder(item.root) {
     fun bind(itemChat: ItemChat) {
         // glide 같은 라이브러리 사용해서 이미지 로딩
-        item.textViewChatUsername.text = itemChat.name
+        item.textViewChatUserName.text = itemChat.name
         item.textViewChatContent.text = itemChat.lastChat
     }
 }
