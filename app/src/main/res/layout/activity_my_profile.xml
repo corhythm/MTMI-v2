@@ -14,44 +14,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            app:contentScrim="?attr/colorPrimary"-->
-        <!--            app:expandedTitleMarginBottom="28dp"-->
-        <!--            app:titleEnabled="false"-->
-        <!--            app:collapsedTitleGravity ="bottom|center_horizontal"-->
-        <!--            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"-->
-        <!--            app:statusBarScrim="?attr/colorPrimaryVariant">-->
+<!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:collapsedTitleGravity="bottom|center_horizontal"-->
+<!--            app:contentScrim="?attr/colorPrimary"-->
+<!--            app:expandedTitleMarginBottom="28dp"-->
+<!--            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"-->
+<!--            app:statusBarScrim="?attr/colorPrimaryVariant"-->
+<!--            app:titleEnabled="false">-->
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_myProfile_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
-            android:paddingStart="30dp"
-            app:title="내 정보"
-            app:titleTextColor="@color/black" />
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar_myProfile_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
+                android:paddingStart="30dp"
+                app:title="내 정보"
+                app:titleTextColor="@color/black" />
 
-        <!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
+<!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout_myProfile_profileInfo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/bg_rounded_corner_stroke"
-        app:layout_constraintHeight_percent="0.09"
+        android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout_myProfile_changeUserInfo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appLayout_myProfile_appbarLayout">
+        app:layout_constraintTop_toBottomOf="@id/appLayout_myProfile_appbarLayout"
+        app:layout_constraintWidth_percent="0.9">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView_myProfile_profileImg"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:src="@drawable/ic_toolbar_user"
             app:civ_border_width="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -93,12 +94,14 @@
         android:id="@+id/linearLayout_myProfile_changeUserInfo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:background="@drawable/bg_rounded_corner_stroke"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@id/linearLayout_myProfile_etc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/constraintLayout_myProfile_profileInfo">
+        app:layout_constraintTop_toBottomOf="@id/constraintLayout_myProfile_profileInfo"
+        app:layout_constraintWidth_percent="0.9">
 
         <TextView
             android:layout_width="wrap_content"
@@ -160,12 +163,13 @@
         android:id="@+id/linearLayout_myProfile_etc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:background="@drawable/bg_rounded_corner_stroke"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout_myProfile_changeUserInfo">
+        app:layout_constraintTop_toBottomOf="@id/linearLayout_myProfile_changeUserInfo"
+        app:layout_constraintWidth_percent="0.9">
 
         <TextView
             android:layout_width="wrap_content"

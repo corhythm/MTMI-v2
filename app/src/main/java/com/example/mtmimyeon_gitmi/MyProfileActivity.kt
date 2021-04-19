@@ -18,5 +18,9 @@ class MyProfileActivity : AppCompatActivity() {
         binding.textViewMyProfileGoToCopyright.setOnClickListener {
             startActivity(Intent(this, CopyrightActivity::class.java))
         }
+
+        binding.textViewMyProfileGoToChat.setOnClickListener {
+            startActivity(Intent(this, MyChatListActivity::class.java))
+        }
     }
 }

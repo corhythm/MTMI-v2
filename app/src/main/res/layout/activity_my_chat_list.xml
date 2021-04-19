@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CampusPhoneNumberActivity">
+    tools:context=".MyChatListActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appLayout_campusPhoneNumber_appbarLayout"
+        android:id="@+id/appLayout_myChatList_appbarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,26 +24,24 @@
 <!--            app:statusBarScrim="?attr/colorPrimaryVariant"-->
 <!--            app:titleEnabled="false">-->
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar_campusPhoneNumber_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/white"
-                app:menu="@menu/toolbar_campus_phone_number_menu"
-                app:title="교내 전화번호"
-                app:titleCentered="true"
-                app:titleTextColor="@color/black" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_myChatList_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            android:paddingStart="30dp"
+            app:title="채팅"
+            app:titleTextColor="@color/black" />
 
-<!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
+        <!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_campusPhoneNumber_list"
+     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_myChatList_chatList"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appLayout_campusPhoneNumber_appbarLayout" />
-
+        app:layout_constraintTop_toBottomOf="@id/appLayout_myChatList_appbarLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,18 +6,20 @@
     android:background="#000000">
 
     <ImageView
-        android:id="@+id/ending_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/imageView_copyright_logoImg1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:src="@drawable/img_copyright_whitehorse"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.15" />
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintWidth_percent="0.8" />
 
     <TextView
-        android:id="@+id/unv_name1"
+        android:id="@+id/textView_copyright_text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -28,10 +30,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ending_logo" />
+        app:layout_constraintTop_toBottomOf="@id/imageView_copyright_logoImg1" />
 
     <TextView
-        android:id="@+id/unv_name2"
+        android:id="@+id/textView_copyright_text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -42,10 +44,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/unv_name1" />
+        app:layout_constraintTop_toBottomOf="@id/textView_copyright_text1" />
 
     <TextView
-        android:id="@+id/major"
+        android:id="@+id/textView_copyright_text3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -56,10 +58,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/unv_name2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_copyright_text2" />
 
     <TextView
-        android:id="@+id/maker1"
+        android:id="@+id/textView_copyright_text4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -70,10 +72,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/major" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_copyright_text3" />
 
     <TextView
-        android:id="@+id/maker2"
+        android:id="@+id/textView_copyright_text5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -84,10 +86,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/maker1" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_copyright_text4" />
 
     <TextView
-        android:id="@+id/maker3"
+        android:id="@+id/textView_copyright_text6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -98,27 +100,29 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/maker2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_copyright_text5" />
 
     <ImageView
-        android:id="@+id/mju_logo"
+        android:id="@+id/imageView_copyright_logoImg2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:src="@drawable/img_copyright_mjulogo"
+        app:layout_constraintBottom_toTopOf="@id/linearLayout_copylight_frame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/maker3" />
+        app:layout_constraintTop_toBottomOf="@id/textView_copyright_text6" />
 
     <LinearLayout
+        android:id="@+id/linearLayout_copylight_frame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mju_logo"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/imageView_copyright_logoImg2">
 
         <TextView
             android:layout_width="wrap_content"
