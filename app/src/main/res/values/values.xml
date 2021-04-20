@@ -63,6 +63,7 @@
         <item>수학과</item>
         <item>토목공학과</item>
         <item>건축학과</item>
+        <item>자유전공학부</item>
     </string-array>
 
     <string-array name="professor">

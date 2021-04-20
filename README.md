@@ -8,9 +8,10 @@ TeamProject 2
 
 # Open source used
 - circle imageview: https://github.com/hdodenhof/CircleImageView
-- custom EditText: https://github.com/frlgrd/AnimatedEditText
+- custom EditText: https://github.com/florent37/MaterialTextField
 - custom spinner: https://github.com/Chivorns/SmartMaterialSpinner
 - custom loading button: https://github.com/roynx98/transition-button-android
+- DxLoadingButton: https://github.com/StevenDXC/DxLoadingButton
 - timetable
   1. https://github.com/tlaabs/TimetableView
   2. https://androidexample365.com/customizable-timetableview-for-android

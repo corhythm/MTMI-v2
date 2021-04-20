@@ -64,7 +64,7 @@ dependencies {
     // circle imageview: https://github.com/hdodenhof/CircleImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-    // custom EditText: https://github.com/frlgrd/AnimatedEditText
+    // custom EditText: https://github.com/florent37/MaterialTextField
     implementation 'com.github.florent37:materialtextfield:1.0.7'
 
     // custom spinner: https://github.com/Chivorns/SmartMaterialSpinner
@@ -81,4 +81,5 @@ dependencies {
 
     // Round Button: https://github.com/JMaroz/RoundButton
     implementation 'com.marozzi.roundbutton:round-button:1.0.7'
+
 }

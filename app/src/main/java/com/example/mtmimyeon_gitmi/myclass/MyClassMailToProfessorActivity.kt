@@ -13,9 +13,6 @@ import com.marozzi.roundbutton.RoundButton
 class MyClassMailToProfessorActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyclassMailToProfessorBinding
 
-    // This property is only valid between onCreateView and OnDestroyView
-    private lateinit var professorList: MutableList<String>
-
     companion object {
         fun getInstance(): MyClassMailToProfessorActivity {
             return MyClassMailToProfessorActivity()
@@ -33,6 +30,7 @@ class MyClassMailToProfessorActivity : AppCompatActivity() {
 
 
     private fun init() { // 자세한 사용법: https://github.com/Chivorns/SmartMaterialSpinner 참조
+
         binding.buttonMyClassMailToProfSend.setOnClickListener {
             binding.buttonMyClassMailToProfSend.startAnimation()
             Handler().postDelayed({ // delay 후 실행할 코드
@@ -42,7 +40,7 @@ class MyClassMailToProfessorActivity : AppCompatActivity() {
             }, 1500)
         }
 
-        professorList = ArrayList()
+        val professorList = ArrayList<String>()
         professorList.add("강성욱")
         professorList.add("최정현")
         professorList.add("김민형")
