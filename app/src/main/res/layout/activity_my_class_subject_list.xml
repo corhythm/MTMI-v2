@@ -7,22 +7,6 @@
     android:layout_gravity="center"
     tools:context=".myclass.MyClassSubjectListActivity">
 
-<!--    <TextView-->
-<!--        android:id="@+id/textView_myClassMainSubjectList_title"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:fontFamily="@font/airbnb_cereal_bold"-->
-<!--        android:gravity="center"-->
-<!--        android:paddingTop="10dp"-->
-<!--        android:text="My Class List"-->
-<!--        android:textSize="35sp"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/recyclerview_myClassSubjectList_list"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHeight_percent="0.08"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintWidth_percent="0.7" />-->
-
      <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appLayout_myClassSubjectList_appbarLayout"
         android:layout_width="match_parent"
@@ -57,8 +41,6 @@
         android:id="@+id/recyclerview_myClassSubjectList_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

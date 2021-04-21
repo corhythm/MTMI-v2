@@ -13,7 +13,7 @@ import com.example.mtmimyeon_gitmi.databinding.FragmentHomeBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemMjuSiteBinding
 import com.example.mtmimyeon_gitmi.recyclerview_item.ItemMjuSite
 
-class HomeFragment private constructor() : Fragment(), MjuSiteRecyclerViewInterface {
+class HomeFragment private constructor() : Fragment(), MjuSiteClickedInterface {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -82,15 +82,15 @@ class HomeFragment private constructor() : Fragment(), MjuSiteRecyclerViewInterf
 // 리사이클러뷰 어댑터
 class MjuSiteRecyclerAdapter() : RecyclerView.Adapter<MjuSiteViewHolder>() {
     private lateinit var itemMjuSiteList: ArrayList<ItemMjuSite>
-    private lateinit var mjuSiteRecyclerViewInterface: MjuSiteRecyclerViewInterface
+    private lateinit var mjuSiteClickedInterface: MjuSiteClickedInterface
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MjuSiteViewHolder {
         val binding = ItemMjuSiteBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MjuSiteViewHolder(binding, mjuSiteRecyclerViewInterface)
+        return MjuSiteViewHolder(binding, mjuSiteClickedInterface)
     }
 
-    constructor(mjuSiteRecyclerViewInterface: MjuSiteRecyclerViewInterface): this() {
-        this.mjuSiteRecyclerViewInterface = mjuSiteRecyclerViewInterface
+    constructor(mjuSiteClickedInterface: MjuSiteClickedInterface): this() {
+        this.mjuSiteClickedInterface = mjuSiteClickedInterface
     }
 
     override fun onBindViewHolder(holder: MjuSiteViewHolder, position: Int) {
@@ -109,15 +109,15 @@ class MjuSiteRecyclerAdapter() : RecyclerView.Adapter<MjuSiteViewHolder>() {
 
 // 리사이클러뷰 뷰홀더
 class MjuSiteViewHolder(private val item: ItemMjuSiteBinding) : RecyclerView.ViewHolder(item.root) {
-    private lateinit var mjuSiteRecyclerViewInterface: MjuSiteRecyclerViewInterface
+    private lateinit var mjuSiteClickedInterface: MjuSiteClickedInterface
 
-    constructor(item: ItemMjuSiteBinding, mjuSiteRecyclerViewInterface: MjuSiteRecyclerViewInterface): this(item) {
-        this.mjuSiteRecyclerViewInterface = mjuSiteRecyclerViewInterface
+    constructor(item: ItemMjuSiteBinding, mjuSiteClickedInterface: MjuSiteClickedInterface): this(item) {
+        this.mjuSiteClickedInterface = mjuSiteClickedInterface
     }
 
     init {
         item.root.setOnClickListener {
-            mjuSiteRecyclerViewInterface.onItemClicked(item.textViewItemMjuText.text.toString())
+            mjuSiteClickedInterface.onItemClicked(item.textViewItemMjuText.text.toString())
             Log.d("로그", item.textViewItemMjuText.text.toString())
         }
     }
@@ -128,7 +128,7 @@ class MjuSiteViewHolder(private val item: ItemMjuSiteBinding) : RecyclerView.Vie
 }
 
 // 리사이클러뷰 내 아이템 클릭 이벤트
-interface MjuSiteRecyclerViewInterface {
+interface MjuSiteClickedInterface {
     fun onItemClicked(item: String)
 }
 

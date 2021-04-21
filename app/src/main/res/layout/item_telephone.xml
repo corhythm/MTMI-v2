@@ -54,13 +54,16 @@
 
     <TextView
         android:id="@+id/textView_item_siteUrl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="15dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="15dp"
         android:text="www.mju.ac.kr/main.do"
         android:clickable="true"
         android:textColor="@color/main_home_color"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintStart_toStartOf="@id/textView_item_location"
         app:layout_constraintStart_toEndOf="@id/imageView_item_siteUrl"
         app:layout_constraintTop_toBottomOf="@id/textView_item_location" />
 

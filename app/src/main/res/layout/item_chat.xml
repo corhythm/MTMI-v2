@@ -31,6 +31,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:paddingStart="20dp"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:text="It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
         app:layout_constraintStart_toStartOf="@id/textView_chat_userName"
         app:layout_constraintTop_toBottomOf="@id/textView_chat_userName"
