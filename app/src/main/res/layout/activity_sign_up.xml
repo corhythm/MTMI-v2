@@ -152,7 +152,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="yyyy/mm/dd"
-                android:hint="생일"
+                android:hint="생년월일 ex)961125"
                 android:inputType="number"
                 android:maxLines="1"
                 android:textSize="15sp" />

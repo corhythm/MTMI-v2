@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTMIMyeongiTMI">
+        <activity android:name=".myclass.MyClassSubjectBulletinBoardActivity"></activity>
         <activity android:name=".MyChatListActivity" />
         <activity android:name=".CopyrightActivity" />
         <activity android:name=".MyProfileActivity" />
