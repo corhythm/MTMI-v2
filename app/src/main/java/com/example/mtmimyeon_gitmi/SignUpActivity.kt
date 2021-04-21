@@ -37,7 +37,6 @@ class SignUpActivity : AppCompatActivity() {
                     }
                 } else {
                     binding.buttonSignUpGoToSignUp.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null)
-
                 }
             }, 300)
         }

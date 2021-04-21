@@ -202,12 +202,12 @@
             android:id="@+id/button_signUp_goToSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="40dp"
             android:layout_gravity="center"
             android:text="Sign Up"
             android:textColor="#ffffff"
             android:textSize="30sp"
-            app:defaultColor="@color/main_home_color"
+            app:defaultColor="#7aa5e9"
             app:loaderColor="#ffffff" />
 
     </LinearLayout>

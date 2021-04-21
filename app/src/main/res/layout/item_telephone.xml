@@ -59,6 +59,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="15dp"
         android:text="www.mju.ac.kr/main.do"
+        android:clickable="true"
+        android:textColor="@color/main_home_color"
         app:layout_constraintStart_toEndOf="@id/imageView_item_siteUrl"
         app:layout_constraintTop_toBottomOf="@id/textView_item_location" />
 
@@ -78,6 +80,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="15dp"
         android:text="031)282-1212"
+        android:textColor="@color/main_home_color"
+        android:clickable="true"
         app:layout_constraintStart_toEndOf="@id/imageView_item_phoneNumber"
         app:layout_constraintTop_toBottomOf="@id/textView_item_siteUrl" />
 

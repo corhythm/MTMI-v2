@@ -3,6 +3,7 @@
     package="com.example.mtmimyeon_gitmi">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTMIMyeongiTMI">
-        <activity android:name=".MyChatListActivity"/>
+        <activity android:name=".MyChatListActivity" />
         <activity android:name=".CopyrightActivity" />
         <activity android:name=".MyProfileActivity" />
         <activity android:name=".CampusPhoneNumberActivity" />
