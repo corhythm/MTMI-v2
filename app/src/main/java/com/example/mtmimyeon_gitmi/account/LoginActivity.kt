@@ -1,13 +1,10 @@
-package com.example.mtmimyeon_gitmi
+package com.example.mtmimyeon_gitmi.account
 
-import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.transition.Slide
-import android.view.Gravity
-import android.view.Window
+import com.example.mtmimyeon_gitmi.HomeActivity
 import com.example.mtmimyeon_gitmi.databinding.ActivityLoginBinding
 import com.royrodriguez.transitionbutton.TransitionButton
 

@@ -1,9 +1,10 @@
-package com.example.mtmimyeon_gitmi
+package com.example.mtmimyeon_gitmi.account
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivitySignUpBinding
 import com.royrodriguez.transitionbutton.TransitionButton
 

@@ -15,18 +15,18 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.R
-import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectListBinding
+import com.example.mtmimyeon_gitmi.databinding.ActivityMyclassSubjectListBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBinding
 import com.example.mtmimyeon_gitmi.recyclerview_item.ItemSubject
 
 class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface {
-    private lateinit var binding: ActivityMyClassSubjectListBinding
+    private lateinit var binding: ActivityMyclassSubjectListBinding
     private lateinit var subjectRecyclerAdapter: SubjectListRecyclerAdapter
     private val itemSubjectList = ArrayList<ItemSubject>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMyClassSubjectListBinding.inflate(layoutInflater)
+        binding = ActivityMyclassSubjectListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
     }

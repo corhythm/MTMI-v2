@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import com.example.mtmimyeon_gitmi.databinding.ActivityHomeBinding
 import com.example.mtmimyeon_gitmi.mbti.MbtiTestStartFragment
 import com.example.mtmimyeon_gitmi.myclass.MyClassMainFragment
+import com.example.mtmimyeon_gitmi.account.MyProfileActivity
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding

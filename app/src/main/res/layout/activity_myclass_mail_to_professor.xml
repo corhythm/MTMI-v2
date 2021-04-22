@@ -30,6 +30,7 @@
         app:smsp_selectedItemListColor="#FF5252" />
 
 
+    <!-- https://github.com/Bryanx/themed-toggle-button-group -->
     <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
         android:id="@+id/buttonGroup_myClassMailToProf_group"
         android:layout_width="0dp"

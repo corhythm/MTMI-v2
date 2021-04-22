@@ -6,17 +6,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectBulletinBoardBinding
+import com.example.mtmimyeon_gitmi.R
+import com.example.mtmimyeon_gitmi.databinding.ActivityMyclassSubjectBulletinBoardBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBulletinBoardBinding
 import com.example.mtmimyeon_gitmi.recyclerview_item.ItemSubjectBulletinBoard
 
 class MyClassSubjectBulletinBoardActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMyClassSubjectBulletinBoardBinding
+    private lateinit var binding: ActivityMyclassSubjectBulletinBoardBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMyClassSubjectBulletinBoardBinding.inflate(layoutInflater)
+        binding = ActivityMyclassSubjectBulletinBoardBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
     }
@@ -31,6 +32,7 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity() {
                 "정말요 제발요 간절해요 너무 어려워요 ㅜㅜㅜ 도와주세요", "2분 전", "익명", "8")
             )
         }
+
 
         binding.recyclerviewMyClassSubjectBulletinBoardBoardList.apply {
             adapter = subjectBulletinBoardRecyclerAdapter

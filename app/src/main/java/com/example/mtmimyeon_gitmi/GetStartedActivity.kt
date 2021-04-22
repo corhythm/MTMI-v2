@@ -2,7 +2,6 @@ package com.example.mtmimyeon_gitmi
 
 import android.app.ActivityOptions
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.transition.Slide
@@ -10,6 +9,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.Window
 import com.example.mtmimyeon_gitmi.databinding.ActivityGetStartedBinding
+import com.example.mtmimyeon_gitmi.account.LoginActivity
 
 class GetStartedActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGetStartedBinding
