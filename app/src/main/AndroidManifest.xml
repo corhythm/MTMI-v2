@@ -1,13 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mtmimyeon_gitmi">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MTMIMyeongiTMI" />
+        android:theme="@style/Theme.MTMIMyeongiTMI">
+        <activity android:name=".myclass.MyClassSubjectBulletinBoardActivity"></activity>
+        <activity android:name=".MyChatListActivity" />
+        <activity android:name=".CopyrightActivity" />
+        <activity android:name=".account.MyProfileActivity" />
+        <activity android:name=".CampusPhoneNumberActivity" />
+        <activity android:name=".myclass.MyClassSubjectListActivity" />
+        <activity android:name=".myclass.MyClassTimeTableActivity" />
+        <activity android:name=".myclass.MyClassMailToProfessorActivity" />
+        <activity
+            android:name=".account.SignUpActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".account.LoginActivity" />
+        <activity
+            android:name=".GetStartedActivity"
+            android:label="MTMI"
+            android:theme="@style/Theme.MTMIMyeongiTMI.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
 
 </manifest>

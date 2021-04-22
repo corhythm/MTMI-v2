@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="mjuSiteImageList">
+        <item>@drawable/ic_item_unv_notification</item>
+        <item>@drawable/ic_item_major_home</item>
+        <item>@drawable/ic_item_library</item>
+        <item>@drawable/ic_item_eclass</item>
+        <item>@drawable/ic_item_lms</item>
+        <item>@drawable/ic_item_myiweb</item>
+        <item>@drawable/ic_item_myicap</item>
+        <item>@drawable/ic_item_telephone</item>
+        <item>@drawable/ic_item_ucheck</item>
+        <item>@drawable/ic_item_dormitory</item>
+        <item>@drawable/ic_item_covid19_check</item>
+        <item>@drawable/ic_item_register_subject</item>
+    </array>
+
+    <array name="gradientList">
+        <item>@drawable/bg_rounded_corner_gradient1</item>
+        <item>@drawable/bg_rounded_corner_gradient2</item>
+        <item>@drawable/bg_rounded_corner_gradient3</item>
+        <item>@drawable/bg_rounded_corner_gradient4</item>
+        <item>@drawable/bg_rounded_corner_gradient5</item>
+        <item>@drawable/bg_rounded_corner_gradient6</item>
+        <item>@drawable/bg_rounded_corner_gradient7</item>
+        <item>@drawable/bg_rounded_corner_gradient8</item>
+    </array>
+
+    <string-array name="mjuSiteTextList">
+        <item>학교홈</item>
+        <item>학과홈</item>
+        <item>library</item>
+        <item>eclass</item>
+        <item>lms</item>
+        <item>myiweb</item>
+        <item>myicap</item>
+        <item>phone</item>
+        <item>ucheck</item>
+        <item>기숙사</item>
+        <item>문진표</item>
+        <item>수강신청</item>
+    </string-array>
+
+    <string-array name="major">
+        <item>전공을 선택하세요</item>
+        <item>컴퓨터공학과</item>
+        <item>전자공학과</item>
+        <item>통계학과</item>
+        <item>물리학과</item>
+        <item>정보통신공학</item>
+        <item>화학과</item>
+        <item>화학공학과</item>
+        <item>생물학과</item>
+        <item>생명공학과</item>
+        <item>기계공학과</item>
+        <item>자유전공학부</item>
+        <item>바둑학과</item>
+        <item>뮤지컬학과</item>
+        <item>시각디자인학과</item>
+        <item>체육학과</item>
+        <item>교통공학과</item>
+        <item>전기공학과</item>
+        <item>수학과</item>
+        <item>토목공학과</item>
+        <item>건축학과</item>
+        <item>자유전공학부</item>
+    </string-array>
+
+    <string-array name="professor">
+        <item>이메일을 보낼 교수님을 선택하세요!</item>
+        <item>문은호 교수&lt;dnr2144@gmail.com&gt;</item>
+        <item>김민호 교수&lt;dnr2144@gmail.com&gt;</item>
+        <item>구은총 교수&lt;dnr2144@gmail.com&gt;</item>
+        <item>최다연 교수&lt;dnr2144@gmail.com&gt;</item>
+        <item>김범진 교수&lt;dnr2144@gmail.com&gt;</item>
+        <item>안희철 교수&lt;dnr2144@gmail.com&gt;</item>
+        <item>류연승 교수&lt;dnr2144@gmail.com&gt;</item>
+        <item>김태우 교수&lt;dnr2144@gmail.com&gt;</item>
+        <item>박민우 교수&lt;dnr2144@gmail.com&gt;</item>
+        <item>김상귀 교수&lt;dnr2144@gmail.com&gt;</item>
+        <item>김진호 교수&lt;dnr2144@gmail.com&gt;</item>
+    </string-array>
+
+    <string-array name="my_header_title">
+        <item></item>
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+    </string-array>
+
+
+</resources>
+

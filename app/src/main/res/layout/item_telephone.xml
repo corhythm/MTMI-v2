@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_item_baseline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <TextView
+        android:id="@+id/textView_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/airbnb_cereal_black"
+        android:text="[대외협력·홍보위원회]"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.08"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView_item_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_item_location"
+        app:layout_constraintBottom_toTopOf="@id/imageView_item_siteUrl"
+        app:layout_constraintStart_toStartOf="@id/guideline_item_baseline"
+        app:layout_constraintTop_toBottomOf="@+id/textView_item_name" />
+
+    <TextView
+        android:id="@+id/textView_item_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:text="자연 캠퍼스 함박관 2층 2401"
+        app:layout_constraintBottom_toTopOf="@id/textView_item_siteUrl"
+        app:layout_constraintStart_toEndOf="@id/imageView_item_location"
+        app:layout_constraintTop_toBottomOf="@id/textView_item_name" />
+
+    <ImageView
+        android:id="@+id/imageView_item_siteUrl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_item_global"
+        app:layout_constraintBottom_toTopOf="@id/imageView_item_phoneNumber"
+        app:layout_constraintStart_toStartOf="@id/guideline_item_baseline"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_item_location" />
+
+    <TextView
+        android:id="@+id/textView_item_siteUrl"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="www.mju.ac.kr/main.do"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginEnd="20dp"
+        android:textColor="@color/main_home_color"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintBottom_toTopOf="@id/textView_item_phoneNumber"
+        app:layout_constraintStart_toStartOf="@id/textView_item_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_item_location"
+         />
+
+    <ImageView
+        android:id="@+id/imageView_item_phoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_item_phone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline_item_baseline"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_item_siteUrl" />
+
+    <TextView
+        android:id="@+id/textView_item_phoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:text="031)282-1212"
+        android:textColor="@color/main_home_color"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageView_item_phoneNumber"
+        app:layout_constraintTop_toBottomOf="@id/textView_item_siteUrl" />
+
+    <View
+        android:id="@+id/view_item_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:background="#000000"
+        app:layout_constraintWidth_percent="0.9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_item_phoneNumber" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

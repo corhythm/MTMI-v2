@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textView_itemSubjectBulletinBoard_title"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/airbnb_cereal_bold"
+        android:maxLines="1"
+        android:text="PT 얼마에요?"
+        android:textSize="15sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.95" />
+
+        <TextView
+        android:id="@+id/textView_itemSubjectBulletinBoard_content"
+        android:layout_width="0dp"
+        android:layout_height="15dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="PT 보통 얼마에요? 5kg 정도 빼면서 몸매 라인 잡고 교정도 하고 했는데 많이 힘드나요"
+        android:textSize="10sp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_itemSubjectBulletinBoard_title"
+        app:layout_constraintWidth_percent="0.95" />
+
+    <TextView
+        android:id="@+id/textView_itemSubjectBulletinBoard_date"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="04/20"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="@id/textView_itemSubjectBulletinBoard_content"
+        app:layout_constraintTop_toBottomOf="@id/textView_itemSubjectBulletinBoard_content" />
+
+    <View
+        android:id="@+id/view_itemSubjectBulletinBoard_verticalDivider"
+        android:layout_width="1dp"
+        android:layout_height="15dp"
+        android:background="@drawable/divider_line"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@id/textView_itemSubjectBulletinBoard_date"
+        app:layout_constraintTop_toTopOf="@id/textView_itemSubjectBulletinBoard_date"
+        app:layout_constraintBottom_toBottomOf="@id/textView_itemSubjectBulletinBoard_date"/>
+
+    <TextView
+        android:id="@+id/textView_itemSubjectBulletinBoard_writer"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="익명"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@id/view_itemSubjectBulletinBoard_verticalDivider"
+        app:layout_constraintTop_toTopOf="@id/textView_itemSubjectBulletinBoard_date"
+        app:layout_constraintBottom_toBottomOf="@id/textView_itemSubjectBulletinBoard_date"/>
+
+    <View
+        android:id="@+id/view_itemSubjectBulletinBoard_horizontalDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_line"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="@id/textView_itemSubjectBulletinBoard_title"
+        app:layout_constraintEnd_toEndOf="@id/textView_itemSubjectBulletinBoard_title"
+        app:layout_constraintTop_toBottomOf="@id/textView_itemSubjectBulletinBoard_date"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageView
+        android:id="@+id/imageView_itemSubjectBulletinBoard_chatIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/textView_itemSubjectBulletinBoard_writer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_itemSubjectBulletinBoard_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        android:src="@drawable/ic_item_chat"/>
+
+    <TextView
+        android:id="@+id/textView_itemSubjectBulletinBoard_chatNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="8"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintTop_toBottomOf="@id/textView_itemSubjectBulletinBoard_content"
+        app:layout_constraintStart_toEndOf="@id/imageView_itemSubjectBulletinBoard_chatIcon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
