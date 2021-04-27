@@ -13,8 +13,10 @@ class MbtiTestHomeFragment private constructor(): Fragment() {
     private val binding get() = _binding!!
 
     companion object {
+        private var INSTANCE: MbtiTestHomeFragment? = null
         fun getInstance(): MbtiTestHomeFragment {
-            return MbtiTestHomeFragment()
+            if(INSTANCE == null) INSTANCE = MbtiTestHomeFragment()
+            return INSTANCE!!
         }
     }
     // 뷰가 생성되었을 때, 프래그먼트와 레이아웃 연결

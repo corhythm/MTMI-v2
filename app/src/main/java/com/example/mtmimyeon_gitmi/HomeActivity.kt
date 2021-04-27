@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.transition.Slide
+import android.util.Log
 
 import android.view.Gravity
 
@@ -53,6 +54,7 @@ class HomeActivity : AppCompatActivity() {
                     replaceFragment(MbtiTestStartFragment.getInstance())
                 }
                 R.id.menu_classlist -> {
+                    Log.d("로그", "HomeActivity -init() called / ${MyClassMainFragment.getInstance()}")
                     replaceFragment(MyClassMainFragment.getInstance())
                 }
             }
@@ -74,7 +76,10 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_toolBar_user -> {
-                startActivity(Intent(this, MyProfileActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+//                startActivity(Intent(this, MyProfileActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+                Intent(this, MyProfileActivity::class.java).also {
+                    startActivity(it, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+                }
             }
         }
         return true
