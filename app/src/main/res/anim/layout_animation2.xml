@@ -2,6 +2,6 @@
 <layoutAnimation xmlns:android="http://schemas.android.com/apk/res/android"
     android:delay="15%"
     android:animationOrder="normal"
-    android:animation="@anim/scale_up">
+    android:animation="@anim/item_slide_right">
 
 </layoutAnimation>
