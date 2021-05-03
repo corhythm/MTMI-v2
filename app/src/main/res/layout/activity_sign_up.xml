@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E3FDFA">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".account.SignUpActivity">
+
+        <TextView
+            android:id="@+id/textView_signUp_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/airbnb_cereal_black"
+            android:gravity="center_horizontal"
+            android:text="Welcome to MTMI"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/textView_signUp_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/airbnb_cereal_medium"
+            android:gravity="center_horizontal"
+            android:text="Provide your basic imformation below."
+            android:textSize="15sp" />
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:id="@+id/editText_signUp_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            app:mtf_image="@drawable/ic_toolbar_user"
+            app:mtf_labelColor="@color/main_home_color"
+            app:mtf_openKeyboardOnFocus="true">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="id"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textSize="15sp" />
+
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:id="@+id/editText_signUp_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            app:mtf_image="@drawable/ic_signup_password"
+            app:mtf_labelColor="@color/main_home_color"
+            app:mtf_openKeyboardOnFocus="true">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:textSize="15sp" />
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:id="@+id/editText_signUp_confirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            app:mtf_image="@drawable/ic_signup_confirm"
+            app:mtf_labelColor="@color/main_home_color"
+            app:mtf_openKeyboardOnFocus="true">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Confirm password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:textSize="15sp" />
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:id="@+id/editText_signUp_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            app:mtf_image="@drawable/ic_signup_name"
+            app:mtf_labelColor="@color/main_home_color"
+            app:mtf_openKeyboardOnFocus="true">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="이름"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textSize="15sp" />
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:id="@+id/editText_signUp_studentId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            app:mtf_image="@drawable/ic_signup_student_id"
+            app:mtf_labelColor="@color/main_home_color"
+            app:mtf_openKeyboardOnFocus="true">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="학번"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textSize="15sp" />
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+            android:id="@+id/spinner_signUp_majorList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:spinnerMode="dropdown"
+            app:smsp_floatingLabelColor="#1976D2"
+            app:smsp_hint="본인의 전공을 선택해주세요!!"
+            app:smsp_hintColor="#388E3C"
+            app:smsp_isSearchable="true"
+            app:smsp_itemColor="#512DA8"
+            app:smsp_itemListColor="#7C4DFF"
+            app:smsp_itemListHintBackgroundColor="#808080"
+            app:smsp_itemListHintColor="#FFFFFF"
+            app:smsp_multilineError="false"
+            app:smsp_selectedItemListColor="#FF5252" />
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:id="@+id/editText_signUp_dateOfBirth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            app:mtf_image="@drawable/ic_signup_birth"
+            app:mtf_labelColor="@color/main_home_color"
+            app:mtf_openKeyboardOnFocus="true">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="yyyy/mm/dd"
+                android:hint="생년월일 ex)961125"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textSize="15sp" />
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+        <RadioGroup
+            android:id="@+id/radioButton_signUp_genderGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="남성" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:text="여성" />
+        </RadioGroup>
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:id="@+id/editText_signUp_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            app:mtf_image="@drawable/ic_signup_email"
+            app:mtf_labelColor="@color/main_home_color"
+            app:mtf_openKeyboardOnFocus="true">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="yyyy/mm/dd"
+                android:hint="email"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textSize="15sp" />
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+        <com.royrodriguez.transitionbutton.TransitionButton
+            android:id="@+id/button_signUp_goToSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="40dp"
+            android:layout_gravity="center"
+            android:text="Sign Up"
+            android:textColor="#ffffff"
+            android:textSize="30sp"
+            app:defaultColor="#7aa5e9"
+            app:loaderColor="#ffffff" />
+
+    </LinearLayout>
+
+</ScrollView>
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    xmlns:tools="http://schemas.android.com/tools"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    android:fillViewport="true">-->
+
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="#E3FDFA"-->
+    <!--        tools:context=".SignUpActivity">-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/textView_signUp_title"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="0dp"-->
+    <!--            android:fontFamily="@font/airbnb_cereal_black"-->
+    <!--            android:gravity="center_horizontal"-->
+    <!--            android:text="Welcome to MTMI"-->
+    <!--            android:textSize="30sp"-->
+    <!--            app:layout_constraintBottom_toTopOf="@id/textView_signUp_subtitle"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintHeight_default="percent"-->
+    <!--            app:layout_constraintHeight_percent="0.05"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent"-->
+    <!--            app:layout_constraintWidth_default="percent"-->
+    <!--            app:layout_constraintWidth_percent="0.8" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/textView_signUp_subtitle"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="0dp"-->
+    <!--            android:fontFamily="@font/airbnb_cereal_medium"-->
+    <!--            android:gravity="center_horizontal"-->
+    <!--            android:text="Provide your basic imformation below."-->
+    <!--            android:textSize="15sp"-->
+    <!--            app:layout_constraintBottom_toTopOf="@id/textView_signUp_subtitle"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintHeight_percent="0.04"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/textView_signUp_title"-->
+    <!--            app:layout_constraintWidth_percent="0.9" />-->
+
+    <!--        <com.github.florent37.materialtextfield.MaterialTextField-->
+    <!--            android:id="@+id/editText_signUp_id"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="0dp"-->
+    <!--            android:layout_marginTop="20dp"-->
+    <!--            app:layout_constraintBottom_toTopOf="@id/editText_signUp_password"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintHeight_percent="0.1"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/textView_signUp_subtitle"-->
+    <!--            app:layout_constraintWidth_percent="0.8"-->
+    <!--            app:mtf_image="@drawable/ic_toolbar_user"-->
+    <!--            app:mtf_labelColor="@color/main_home_color"-->
+    <!--            app:mtf_openKeyboardOnFocus="true">-->
+
+    <!--            <EditText-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:hint="id"-->
+    <!--                android:inputType="text"-->
+    <!--                android:maxLines="1"-->
+    <!--                android:textColor="#ffffff"-->
+    <!--                android:textSize="15sp" />-->
+
+    <!--        </com.github.florent37.materialtextfield.MaterialTextField>-->
+
+    <!--        <com.github.florent37.materialtextfield.MaterialTextField-->
+    <!--            android:id="@+id/editText_signUp_password"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="0dp"-->
+    <!--            app:layout_constraintBottom_toTopOf="@id/editText_signUp_confirmPassword"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintHeight_percent="0.1"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/editText_signUp_id"-->
+    <!--            app:layout_constraintWidth_percent="0.8"-->
+    <!--            app:mtf_image="@drawable/ic_toolbar_user"-->
+    <!--            app:mtf_labelColor="@color/main_home_color"-->
+    <!--            app:mtf_openKeyboardOnFocus="true">-->
+
+    <!--            <EditText-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:hint="Password"-->
+    <!--                android:inputType="textPassword"-->
+    <!--                android:maxLines="1"-->
+    <!--                android:textColor="#ffffff"-->
+    <!--                android:textSize="15sp" />-->
+    <!--        </com.github.florent37.materialtextfield.MaterialTextField>-->
+
+    <!--        <com.github.florent37.materialtextfield.MaterialTextField-->
+    <!--            android:id="@+id/editText_signUp_confirmPassword"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="0dp"-->
+    <!--            app:layout_constraintBottom_toTopOf="@id/editText_signUp_name"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintHeight_percent="0.1"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/editText_signUp_password"-->
+    <!--            app:layout_constraintWidth_percent="0.8"-->
+    <!--            app:mtf_image="@drawable/ic_toolbar_user"-->
+    <!--            app:mtf_labelColor="@color/main_home_color"-->
+    <!--            app:mtf_openKeyboardOnFocus="true">-->
+
+    <!--            <EditText-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:hint="Confirm password"-->
+    <!--                android:inputType="textPassword"-->
+    <!--                android:maxLines="1"-->
+    <!--                android:textColor="#ffffff"-->
+    <!--                android:textSize="15sp" />-->
+    <!--        </com.github.florent37.materialtextfield.MaterialTextField>-->
+
+    <!--        <com.github.florent37.materialtextfield.MaterialTextField-->
+    <!--            android:id="@+id/editText_signUp_name"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="0dp"-->
+    <!--            app:layout_constraintBottom_toTopOf="@id/editText_signUp_studentId"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintHeight_percent="0.1"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/editText_signUp_confirmPassword"-->
+    <!--            app:layout_constraintWidth_percent="0.8"-->
+    <!--            app:mtf_image="@drawable/ic_toolbar_user"-->
+    <!--            app:mtf_labelColor="@color/main_home_color"-->
+    <!--            app:mtf_openKeyboardOnFocus="true">-->
+
+    <!--            <EditText-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:hint="이름"-->
+    <!--                android:inputType="text"-->
+    <!--                android:maxLines="1"-->
+    <!--                android:textColor="#ffffff"-->
+    <!--                android:textSize="15sp" />-->
+    <!--        </com.github.florent37.materialtextfield.MaterialTextField>-->
+
+    <!--        <com.github.florent37.materialtextfield.MaterialTextField-->
+    <!--            android:id="@+id/editText_signUp_studentId"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="0dp"-->
+    <!--            app:layout_constraintBottom_toTopOf="@id/spinner_signUp_majorList"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintHeight_percent="0.1"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/editText_signUp_name"-->
+    <!--            app:layout_constraintWidth_percent="0.8"-->
+    <!--            app:mtf_image="@drawable/ic_toolbar_user"-->
+    <!--            app:mtf_labelColor="@color/main_home_color"-->
+    <!--            app:mtf_openKeyboardOnFocus="true">-->
+
+    <!--            <EditText-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:hint="학번"-->
+    <!--                android:inputType="number"-->
+    <!--                android:maxLines="1"-->
+    <!--                android:textColor="#ffffff"-->
+    <!--                android:textSize="15sp" />-->
+    <!--        </com.github.florent37.materialtextfield.MaterialTextField>-->
+
+    <!--        &lt;!&ndash;        <Spinner&ndash;&gt;-->
+    <!--        &lt;!&ndash;            android:id="@+id/spinner_signUp_major"&ndash;&gt;-->
+    <!--        &lt;!&ndash;            android:layout_width="0dp"&ndash;&gt;-->
+    <!--        &lt;!&ndash;            android:layout_height="0dp"&ndash;&gt;-->
+    <!--        &lt;!&ndash;            android:spinnerMode="dialog"&ndash;&gt;-->
+    <!--        &lt;!&ndash;            android:entries="@array/major"&ndash;&gt;-->
+    <!--        &lt;!&ndash;            app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;-->
+    <!--        &lt;!&ndash;            app:layout_constraintHeight_percent="0.07"&ndash;&gt;-->
+    <!--        &lt;!&ndash;            app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
+    <!--        &lt;!&ndash;            android:layout_marginTop="20dp"&ndash;&gt;-->
+    <!--        &lt;!&ndash;            app:layout_constraintTop_toBottomOf="@id/editText_signUp_studentId"&ndash;&gt;-->
+    <!--        &lt;!&ndash;            app:layout_constraintWidth_percent="0.8" />&ndash;&gt;-->
+
+    <!--        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner-->
+    <!--            android:id="@+id/spinner_signUp_majorList"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="0dp"-->
+    <!--            android:spinnerMode="dropdown"-->
+    <!--            app:layout_constraintBottom_toTopOf="@id/editText_signUp_dateOfBirth"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintHeight_percent="0.08"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/editText_signUp_studentId"-->
+    <!--            app:layout_constraintWidth_percent="0.8"-->
+    <!--            app:smsp_floatingLabelColor="#1976D2"-->
+    <!--            app:smsp_hint="본인의 전공을 선택해주세요!!"-->
+    <!--            app:smsp_hintColor="#388E3C"-->
+    <!--            app:smsp_isSearchable="true"-->
+    <!--            app:smsp_itemColor="#512DA8"-->
+    <!--            app:smsp_itemListColor="#7C4DFF"-->
+    <!--            app:smsp_itemListHintBackgroundColor="#808080"-->
+    <!--            app:smsp_itemListHintColor="#FFFFFF"-->
+    <!--            app:smsp_multilineError="false"-->
+    <!--            app:smsp_selectedItemListColor="#FF5252" />-->
+
+    <!--        &lt;!&ndash;        <com.github.florent37.materialtextfield.MaterialTextField&ndash;&gt;-->
+    <!--        &lt;!&ndash;            android:id="@+id/editText_signUp_major"&ndash;&gt;-->
+    <!--        &lt;!&ndash;            android:layout_width="0dp"&ndash;&gt;-->
+    <!--        &lt;!&ndash;            android:layout_height="0dp"&ndash;&gt;-->
+    <!--        &lt;!&ndash;            app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;-->
+    <!--        &lt;!&ndash;            app:layout_constraintHeight_percent="0.1"&ndash;&gt;-->
+    <!--        &lt;!&ndash;            app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
+    <!--        &lt;!&ndash;            app:layout_constraintTop_toBottomOf="@id/editText_signUp_studentId"&ndash;&gt;-->
+    <!--        &lt;!&ndash;            app:layout_constraintWidth_percent="0.8"&ndash;&gt;-->
+    <!--        &lt;!&ndash;            app:mtf_image="@drawable/ic_toolbar_user"&ndash;&gt;-->
+    <!--        &lt;!&ndash;            app:mtf_labelColor="@color/main_home_color"&ndash;&gt;-->
+    <!--        &lt;!&ndash;            app:mtf_openKeyboardOnFocus="true">&ndash;&gt;-->
+
+    <!--        &lt;!&ndash;            <EditText&ndash;&gt;-->
+    <!--        &lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+    <!--        &lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--        &lt;!&ndash;                android:hint="전공"&ndash;&gt;-->
+    <!--        &lt;!&ndash;                android:inputType="number"&ndash;&gt;-->
+    <!--        &lt;!&ndash;                android:maxLines="1"&ndash;&gt;-->
+    <!--        &lt;!&ndash;                android:textColor="#ffffff"&ndash;&gt;-->
+    <!--        &lt;!&ndash;                android:textSize="15sp" />&ndash;&gt;-->
+    <!--        &lt;!&ndash;        </com.github.florent37.materialtextfield.MaterialTextField>&ndash;&gt;-->
+
+    <!--        <com.github.florent37.materialtextfield.MaterialTextField-->
+    <!--            android:id="@+id/editText_signUp_dateOfBirth"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="0dp"-->
+    <!--            app:layout_constraintBottom_toTopOf="@id/radioButton_signUp_genderGroup"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintHeight_percent="0.1"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/spinner_signUp_majorList"-->
+    <!--            app:layout_constraintWidth_percent="0.8"-->
+    <!--            app:mtf_image="@drawable/ic_toolbar_user"-->
+    <!--            app:mtf_labelColor="@color/main_home_color"-->
+    <!--            app:mtf_openKeyboardOnFocus="true">-->
+
+    <!--            <EditText-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:autofillHints="yyyy/mm/dd"-->
+    <!--                android:hint="생일"-->
+    <!--                android:inputType="number"-->
+    <!--                android:maxLines="1"-->
+    <!--                android:textColor="#ffffff"-->
+    <!--                android:textSize="15sp" />-->
+    <!--        </com.github.florent37.materialtextfield.MaterialTextField>-->
+
+    <!--        <RadioGroup-->
+    <!--            android:id="@+id/radioButton_signUp_genderGroup"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="0dp"-->
+    <!--            android:gravity="center"-->
+    <!--            android:orientation="horizontal"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintHeight_percent="0.05"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintBottom_toTopOf="@id/editText_signUp_email"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/editText_signUp_dateOfBirth"-->
+    <!--            app:layout_constraintWidth_percent="0.8">-->
+
+    <!--            <RadioButton-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="남성" />-->
+
+    <!--            <RadioButton-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginStart="100dp"-->
+    <!--                android:text="여성" />-->
+    <!--        </RadioGroup>-->
+
+    <!--        <com.github.florent37.materialtextfield.MaterialTextField-->
+    <!--            android:id="@+id/editText_signUp_email"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="0dp"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintHeight_percent="0.1"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/radioButton_signUp_genderGroup"-->
+    <!--            app:layout_constraintWidth_percent="0.8"-->
+    <!--            app:layout_constraintBottom_toTopOf="@id/editText_signUp_scrollTest"-->
+    <!--            app:mtf_image="@drawable/ic_toolbar_user"-->
+    <!--            app:mtf_labelColor="@color/main_home_color"-->
+    <!--            app:mtf_openKeyboardOnFocus="true">-->
+
+    <!--            <EditText-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:autofillHints="yyyy/mm/dd"-->
+    <!--                android:hint="email"-->
+    <!--                android:inputType="number"-->
+    <!--                android:maxLines="1"-->
+    <!--                android:textColor="#ffffff"-->
+    <!--                android:textSize="15sp" />-->
+    <!--        </com.github.florent37.materialtextfield.MaterialTextField>-->
+
+    <!--        <com.github.florent37.materialtextfield.MaterialTextField-->
+    <!--            android:id="@+id/editText_signUp_scrollTest"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="0dp"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintHeight_percent="0.1"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/editText_signUp_email"-->
+    <!--            app:layout_constraintWidth_percent="0.8"-->
+    <!--            app:mtf_image="@drawable/ic_toolbar_user"-->
+    <!--            app:mtf_labelColor="@color/main_home_color"-->
+    <!--            app:mtf_openKeyboardOnFocus="true">-->
+
+    <!--            <EditText-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:autofillHints="yyyy/mm/dd"-->
+    <!--                android:hint="scorllTest"-->
+    <!--                android:inputType="number"-->
+    <!--                android:maxLines="1"-->
+    <!--                android:textColor="#ffffff"-->
+    <!--                android:textSize="15sp" />-->
+    <!--        </com.github.florent37.materialtextfield.MaterialTextField>-->
+
+
+    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+    <!--</ScrollView>-->

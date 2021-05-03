@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cnb_unselectedColor="#666666">
+    <item
+        android:id="@+id/menu_toolBar_user"
+        android:icon="@drawable/ic_toolbar_user"
+        app:showAsAction="ifRoom"
+        android:title="user"
+        app:cnb_iconColor="@color/navigation_color_chart" />
+</menu>
