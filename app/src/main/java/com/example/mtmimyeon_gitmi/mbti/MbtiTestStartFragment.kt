@@ -18,8 +18,10 @@ public class MbtiTestStartFragment private constructor() : Fragment() {
     private val binding get() = _binding!!
 
     companion object {
+        private var INSTANCE: MbtiTestStartFragment? = null
         fun getInstance(): MbtiTestStartFragment {
-            return MbtiTestStartFragment()
+            if (INSTANCE == null) INSTANCE = MbtiTestStartFragment()
+            return INSTANCE!!
         }
     }
 
