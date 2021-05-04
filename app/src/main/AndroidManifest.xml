@@ -11,9 +11,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-
         android:theme="@style/Theme.MTMIMyeongiTMI">
-        <activity android:name=".myclass.MyClassSubjectBulletinBoardActivity"/>
+        <activity android:name=".myclass.MyClassSubjectBulletinBoardDetailsActivity"></activity>
+        <activity android:name=".myclass.MyClassSubjectBulletinBoardWritingActivity" />
+        <activity android:name=".myclass.MyClassSubjectBulletinBoardActivity" />
         <activity android:name=".MyChatListActivity" />
         <activity android:name=".CopyrightActivity" />
         <activity android:name=".account.MyProfileActivity" />
@@ -34,7 +35,6 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-
             </intent-filter>
         </activity>
     </application>

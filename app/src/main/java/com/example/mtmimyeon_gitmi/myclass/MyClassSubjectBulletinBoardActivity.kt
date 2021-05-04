@@ -1,9 +1,14 @@
 package com.example.mtmimyeon_gitmi.myclass
 
+import android.app.ActivityOptions
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.transition.Slide
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.Window
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.R
@@ -16,6 +21,16 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyclassSubjectBulletinBoardBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        // activity 옆으로 이동 애니메이션
+        // 이 코드는 반드시 onCreate에서 super.onCreate(savedInstanceState) 위에 있어야 함
+        with(window) {
+            requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
+            // set an slide transition
+            enterTransition = Slide(Gravity.END)
+            exitTransition = Slide(Gravity.START)
+        }
+
         super.onCreate(savedInstanceState)
         binding = ActivityMyclassSubjectBulletinBoardBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -23,6 +38,7 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity() {
     }
 
     private fun init() {
+
         val subjectBulletinBoardRecyclerAdapter = SubjectBulletinBoardRecyclerAdapter()
         val subjectBulletinBoardList = ArrayList<ItemSubjectBulletinBoard>()
         // 임시 데이터 삽입
@@ -33,11 +49,17 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity() {
             )
         }
 
-
         binding.recyclerviewMyClassSubjectBulletinBoardBoardList.apply {
             adapter = subjectBulletinBoardRecyclerAdapter
             layoutManager = LinearLayoutManager(this@MyClassSubjectBulletinBoardActivity, LinearLayoutManager.VERTICAL, false)
             subjectBulletinBoardRecyclerAdapter.submit(subjectBulletinBoardList)
+        }
+
+        // 글 쓰기 버튼 클릭
+        binding.extendFabMyClassSubjectBulletinBoardAddWriting.setOnClickListener {
+            Intent(this, MyClassSubjectBulletinBoardWritingActivity::class.java).also {
+                    startActivity(it, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+                }
         }
     }
 }

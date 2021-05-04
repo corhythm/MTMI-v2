@@ -55,8 +55,8 @@
         android:fontFamily="@font/airbnb_cereal_black"
         android:text="새 글 작성"
         app:background="@drawable/bg_rounded_corner_gradient3"
+        app:icon="@drawable/ic_myclass_subject_bulletin_board_write"
         app:iconTint="@null"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

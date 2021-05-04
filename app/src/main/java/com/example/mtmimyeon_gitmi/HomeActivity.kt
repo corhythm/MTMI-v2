@@ -35,11 +35,13 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         init()
-        setSupportActionBar(binding.topAppBarHome)
-        replaceFragment(HomeFragment.getInstance())
+
     }
 
     private fun init() {
+
+        setSupportActionBar(binding.topAppBarHome)
+        replaceFragment(HomeFragment.getInstance())
 
         // 원래 이렇게 하면 안 됨. 시각적으로 보기 위해서 임시로 테스트
         binding.floatingActionButtonHome.setOnClickListener {
