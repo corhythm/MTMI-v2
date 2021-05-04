@@ -6,7 +6,7 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 
 class Database_M {
-    private var firebaseAuth : FirebaseAuth?=null
+    private var firebaseAuth : FirebaseAuth= FirebaseAuth.getInstance()
 
     fun createEmail(id:String,pw:String,activity:Activity) : Boolean {  // -> 회원가입 메소드
         var check=true

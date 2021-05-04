@@ -32,7 +32,6 @@
             android:textSize="15sp" />
 
         <com.github.florent37.materialtextfield.MaterialTextField
-            android:id="@+id/editText_signUp_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -41,7 +40,7 @@
             app:mtf_openKeyboardOnFocus="true">
 
             <EditText
-                android:id="@+id/editText_signUp_ID"
+                android:id="@+id/editText_signUp_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="id"
@@ -52,7 +51,6 @@
         </com.github.florent37.materialtextfield.MaterialTextField>
 
         <com.github.florent37.materialtextfield.MaterialTextField
-            android:id="@+id/editText_signUp_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -61,7 +59,7 @@
             app:mtf_openKeyboardOnFocus="true">
 
             <EditText
-                android:id="@+id/editText_signUp_PW"
+                android:id="@+id/editText_signUp_pw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
@@ -71,7 +69,6 @@
         </com.github.florent37.materialtextfield.MaterialTextField>
 
         <com.github.florent37.materialtextfield.MaterialTextField
-            android:id="@+id/editText_signUp_confirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -80,6 +77,7 @@
             app:mtf_openKeyboardOnFocus="true">
 
             <EditText
+                android:id="@+id/editText_signUp_confirm_pw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Confirm password"
@@ -89,7 +87,6 @@
         </com.github.florent37.materialtextfield.MaterialTextField>
 
         <com.github.florent37.materialtextfield.MaterialTextField
-            android:id="@+id/editText_signUp_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -98,6 +95,7 @@
             app:mtf_openKeyboardOnFocus="true">
 
             <EditText
+                android:id="@+id/editText_signUp_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="이름"
@@ -107,7 +105,7 @@
         </com.github.florent37.materialtextfield.MaterialTextField>
 
         <com.github.florent37.materialtextfield.MaterialTextField
-            android:id="@+id/editText_signUp_studentId"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -116,6 +114,7 @@
             app:mtf_openKeyboardOnFocus="true">
 
             <EditText
+                android:id="@+id/editText_signUp_studentId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="학번"
@@ -142,7 +141,6 @@
             app:smsp_selectedItemListColor="#FF5252" />
 
         <com.github.florent37.materialtextfield.MaterialTextField
-            android:id="@+id/editText_signUp_dateOfBirth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -151,6 +149,7 @@
             app:mtf_openKeyboardOnFocus="true">
 
             <EditText
+                android:id="@+id/editText_signUp_dateOfBirth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="yyyy/mm/dd"
@@ -169,12 +168,14 @@
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/radioButton_signUp_man"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="남성" />
 
             <RadioButton
+                android:id="@+id/radioButton_signUp_woman"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="100dp"
@@ -182,7 +183,6 @@
         </RadioGroup>
 
         <com.github.florent37.materialtextfield.MaterialTextField
-            android:id="@+id/editText_signUp_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -191,6 +191,7 @@
             app:mtf_openKeyboardOnFocus="true">
 
             <EditText
+                android:id="@+id/editText_signUp_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="yyyy/mm/dd"

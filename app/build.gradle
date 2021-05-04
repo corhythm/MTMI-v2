@@ -43,9 +43,6 @@ android {
 }
 
 dependencies {
-    implementation platform('com.google.firebase:firebase-bom:26.8.0')
-    implementation 'com.google.firebase:firebase-analytics-ktx'
-
     implementation 'org.jsoup:jsoup:1.11.3'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
