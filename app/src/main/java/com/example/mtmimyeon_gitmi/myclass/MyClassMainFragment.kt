@@ -3,6 +3,7 @@ package com.example.mtmimyeon_gitmi.myclass
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,8 +17,11 @@ class MyClassMainFragment private constructor() : Fragment() {
     private val binding get() = _binding!!
 
     companion object {
-        fun getInstance(): MyClassMainFragment {
-            return MyClassMainFragment()
+        private var INSTANCE: MyClassMainFragment? = null
+        fun getInstance(): MyClassMainFragment{
+            Log.d("로그", "MyClassMainFragment -getInstance() called / $INSTANCE")
+            if(INSTANCE == null) INSTANCE = MyClassMainFragment()
+            return INSTANCE!!
         }
     }
 

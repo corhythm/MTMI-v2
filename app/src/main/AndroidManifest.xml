@@ -13,7 +13,7 @@
         android:supportsRtl="true"
 
         android:theme="@style/Theme.MTMIMyeongiTMI">
-        <activity android:name=".myclass.MyClassSubjectBulletinBoardActivity"></activity>
+        <activity android:name=".myclass.MyClassSubjectBulletinBoardActivity"/>
         <activity android:name=".MyChatListActivity" />
         <activity android:name=".CopyrightActivity" />
         <activity android:name=".account.MyProfileActivity" />

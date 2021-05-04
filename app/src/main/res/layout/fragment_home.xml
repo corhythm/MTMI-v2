@@ -45,6 +45,7 @@
         android:id="@+id/recyclerview_main_unvInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layoutAnimation="@anim/layout_animation2"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         app:layout_constraintEnd_toEndOf="parent"
