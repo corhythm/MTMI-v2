@@ -41,6 +41,7 @@
             app:mtf_openKeyboardOnFocus="true">
 
             <EditText
+                android:id="@+id/editText_signUp_ID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="id"
@@ -60,6 +61,7 @@
             app:mtf_openKeyboardOnFocus="true">
 
             <EditText
+                android:id="@+id/editText_signUp_PW"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"

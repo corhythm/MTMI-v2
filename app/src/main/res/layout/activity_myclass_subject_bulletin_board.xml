@@ -55,11 +55,11 @@
         android:text="새 글 작성"
         app:background="@drawable/bg_rounded_corner_gradient3"
         app:iconTint="@null"
-        app:icon="@drawable/ic_myclass_subject_bulletin_board_write"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.96" />
-
+    <!--        app:icon="@drawable/ic_myclass_subject_bulletin_board_write"-->
 </androidx.constraintlayout.widget.ConstraintLayout>
