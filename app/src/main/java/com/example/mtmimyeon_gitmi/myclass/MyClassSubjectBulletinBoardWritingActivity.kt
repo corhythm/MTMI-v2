@@ -1,4 +1,4 @@
-package com.example.mtmimyeon_gitmi.myclass
+package com.example.mtmimyeon_gitmi.myClass
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,8 +20,11 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
 
     private fun init() {
         setSupportActionBar(binding.toolbarMyClassSubjectBulletinBoardToolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_my_class_subject_bulletin_board_writing_back)
+        setSupportActionBar(binding.bottomAppBarMyClassSubjectBulletinBoardBottomAppBar)
+        // 네비게이션 아이콘 클릭 -> 글 쓰기 취소
+        binding.toolbarMyClassSubjectBulletinBoardToolbar.setNavigationOnClickListener {
+            finish()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean { // toolbar inflate
@@ -32,14 +35,6 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.homeAsUp -> {
-                finish()
-                Log.d("로그", "MyClassSubjectBulletinBoardWritingActivity -onOptionsItemSelected() called")
-            }
-            R.id.menu_toolBar_search -> {
-                finish()
-                Log.d("로그", "MyClassSubjectBulletinBoardWritingActivity -onOptionsItemSelected() called")
-            }
             else -> { }
         }
         return true

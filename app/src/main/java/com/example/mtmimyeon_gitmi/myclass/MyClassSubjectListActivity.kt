@@ -1,4 +1,4 @@
-package com.example.mtmimyeon_gitmi.myclass
+package com.example.mtmimyeon_gitmi.myClass
 
 import android.annotation.SuppressLint
 import android.content.Context

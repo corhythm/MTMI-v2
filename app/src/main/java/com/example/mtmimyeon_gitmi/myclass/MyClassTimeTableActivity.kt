@@ -1,16 +1,10 @@
-package com.example.mtmimyeon_gitmi.myclass
+package com.example.mtmimyeon_gitmi.myClass
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassTimetableBinding
 import com.github.tlaabs.timetableview.Schedule
-import com.github.tlaabs.timetableview.Sticker
 import com.github.tlaabs.timetableview.Time
 
 class MyClassTimeTableActivity: AppCompatActivity() {

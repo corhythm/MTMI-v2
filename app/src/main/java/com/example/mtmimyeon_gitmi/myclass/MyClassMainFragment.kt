@@ -1,4 +1,4 @@
-package com.example.mtmimyeon_gitmi.myclass
+package com.example.mtmimyeon_gitmi.myClass
 
 import android.app.ActivityOptions
 import android.content.Intent

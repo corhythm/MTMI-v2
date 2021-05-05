@@ -1,4 +1,4 @@
-package com.example.mtmimyeon_gitmi.myclass
+package com.example.mtmimyeon_gitmi.myClass
 
 import android.app.ActivityOptions
 import android.content.Intent
@@ -11,9 +11,7 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectBulletinBoardBinding
-import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBulletinBoardBinding
 import com.example.mtmimyeon_gitmi.recyclerview_item.ItemSubjectBulletinBoard
 

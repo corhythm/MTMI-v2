@@ -12,16 +12,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTMIMyeongiTMI">
-        <activity android:name=".myclass.MyClassSubjectBulletinBoardDetailsActivity"></activity>
-        <activity android:name=".myclass.MyClassSubjectBulletinBoardWritingActivity" />
-        <activity android:name=".myclass.MyClassSubjectBulletinBoardActivity" />
+        <activity android:name=".myClass.MyClassSubjectBulletinBoardDetailsActivity" />
+        <activity android:name=".myClass.MyClassSubjectBulletinBoardWritingActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".myClass.MyClassSubjectBulletinBoardActivity" />
         <activity android:name=".MyChatListActivity" />
         <activity android:name=".CopyrightActivity" />
         <activity android:name=".account.MyProfileActivity" />
         <activity android:name=".CampusPhoneNumberActivity" />
-        <activity android:name=".myclass.MyClassSubjectListActivity" />
-        <activity android:name=".myclass.MyClassTimeTableActivity" />
-        <activity android:name=".myclass.MyClassMailToProfessorActivity" />
+        <activity android:name=".myClass.MyClassSubjectListActivity" />
+        <activity android:name=".myClass.MyClassTimeTableActivity" />
+        <activity android:name=".myClass.MyClassMailToProfessorActivity" />
         <activity
             android:name=".account.SignUpActivity"
             android:windowSoftInputMode="adjustPan" />

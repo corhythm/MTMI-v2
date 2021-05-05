@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    tools:context=".myclass.MyClassSubjectListActivity">
+    tools:context=".myClass.MyClassSubjectListActivity">
 
      <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appLayout_myClassSubjectList_appbarLayout"

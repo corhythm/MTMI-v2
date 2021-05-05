@@ -1,36 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".myclass.MyClassSubjectBulletinBoardWritingActivity">
+    tools:context=".myClass.MyClassSubjectBulletinBoardWritingActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appLayout_myClassSubjectBulletinBoard_appbarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:elevation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_MyClassSubjectBulletinBoard_toolbar"
+            android:id="@+id/toolbar_myClassSubjectBulletinBoard_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            app:menu="@menu/toolbar_my_class_subject_bulletin_board_writing"
+            app:navigationIcon="@drawable/ic_my_class_subject_bulletin_board_writing_back"
             app:title="글쓰기"
             app:titleCentered="true"
             app:titleTextColor="@color/black" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="100dp"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,13 +43,72 @@
                 android:layout_marginEnd="10dp"
                 android:fontFamily="@font/airbnb_cereal_bold"
                 android:hint="제목"
+                android:inputType="text"
+                android:maxLines="1"
                 android:textSize="20sp" />
 
-            
+            <EditText
+                android:id="@+id/editText_myClassSubjectBulletinBoardWriting_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@android:color/transparent"
+                android:hint="내용을 입력하세요." />
 
+            <TextView
+                android:id="@+id/editText_myClassSubjectBulletinBoardWriting_precautions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="MTMI는 누구나 기분 좋게 참여할 수 있는 커뮤니티를 만들기 위해 커뮤니티 이용규칙을 제정하여 운영하고 있습니다. 위반 시 게시물이 삭제되고 서비스 이용이 일정 기간 제한될 수 있습니다.\n
 
+\n아래는 이 게시판에 해당하는 핵심 내용에 대한 요약 사항이며, 게시물 작성 전 커뮤니티 이용규칙 전문을 반드시 확인하시기 바랍니다.\n
+
+\n※ 정치·사회 관련 행위 금지
+ - 국가기관, 정치 관련 단체, 언론, 시민단체에 대한 언급 혹은 이와 관련한 행위\n
+ - 정책·외교 또는 정치·정파에 대한 의견, 주장 및 이념, 가치관을 드러내는 행위\n
+ - 성별, 종교, 인종, 출신, 지역, 직업, 이념 등 사회적 이슈에 대한 언급 혹은 이와 관련한 행위\n
+ - 위와 같은 내용으로 유추될 수 있는 비유, 은어 사용 행위\n
+
+\n※ 홍보 및 판매 관련 행위 금지\n
+ - 영리 여부와 관계 없이 사업체·기관·단체·개인에게 직간접적으로 영향을 줄 수 있는 게시물 작성 행위\n
+ - 위와 관련된 것으로 의심되거나 예상될 수 있는 바이럴 홍보 및 명칭·단어 언급 행위\n
+
+\n※ 그 밖의 규칙 위반\n
+ - 타인의 권리를 침해하거나 불쾌감을 주는 행위\n
+ - 범죄, 불법 행위 등 법령을 위반하는 행위\n
+ - 욕설, 비하, 차별, 혐오, 자살, 폭력 관련 내용을 포함한 게시물 작성 행위\n
+ - 음란물, 성적 수치심을 유발하는 행위\n
+ - 스포일러, 공포, 속임, 놀라게 하는 행위 "/>
         </LinearLayout>
 
-    </ScrollView>
 
-</LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar__myClassSubjectBulletinBoard_bottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:fabAlignmentMode="end"
+        app:fabCradleMargin="10dp"
+        app:fabCradleRoundedCornerRadius="20dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_myClassSubjectBulletinBoard_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/main_home_color"
+        android:src="@drawable/ic_my_class_subject_bulletin_board_writing_complete"
+        android:textColor="@color/white"
+        app:fabCustomSize="60dp"
+        app:layout_anchor="@id/bottomAppBar__myClassSubjectBulletinBoard_bottomAppBar"
+        app:maxImageSize="40dp"
+        app:tint="@null" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

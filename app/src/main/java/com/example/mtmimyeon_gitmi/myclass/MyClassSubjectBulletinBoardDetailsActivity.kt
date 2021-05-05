@@ -1,4 +1,4 @@
-package com.example.mtmimyeon_gitmi.myclass
+package com.example.mtmimyeon_gitmi.myClass
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

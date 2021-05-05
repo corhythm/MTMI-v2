@@ -16,7 +16,7 @@ import android.view.Window
 import androidx.fragment.app.Fragment
 import com.example.mtmimyeon_gitmi.databinding.ActivityHomeBinding
 import com.example.mtmimyeon_gitmi.mbti.MbtiTestStartFragment
-import com.example.mtmimyeon_gitmi.myclass.MyClassMainFragment
+import com.example.mtmimyeon_gitmi.myClass.MyClassMainFragment
 import com.example.mtmimyeon_gitmi.account.MyProfileActivity
 
 class HomeActivity : AppCompatActivity() {
