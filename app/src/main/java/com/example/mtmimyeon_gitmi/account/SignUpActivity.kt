@@ -32,12 +32,14 @@ class SignUpActivity : AppCompatActivity() {
             Handler().postDelayed(Runnable {
                 var DB_M=Database_M()
 
-                Log.d("id check : ",(binding.editTextSignUpId).text.toString())
-                Log.d("pw check : ",binding.editTextSignUpPw.text.toString())
 
+                Log.d("id check : ", binding.editTextSignUpId.text.toString())
+                Log.d("pw check : ",binding.editTextSignUpPw.text.toString())
+                var db_id:String=binding.editTextSignUpId.text.toString()
+                var db_pw:String=binding.editTextSignUpPw.text.toString()
                 val isSuccessful: Boolean = DB_M.createEmail(binding.editTextSignUpId.text.toString(),binding.editTextSignUpPw.text.toString(),this)
 
-                // Choose a stop animation if your call was succesful or not
+                // Choose a stop animation if your call was successful or not
                 if (isSuccessful) {
                     binding.buttonSignUpGoToSignUp.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND
                     ) {

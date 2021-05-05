@@ -47,7 +47,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="16dp"
             android:background="@android:color/transparent"
-            app:cnb_menuResource="@menu/bottomnav_main_menu"
+            app:cnb_menuResource="@menu/bottomnavbar_main_menu"
             app:itemIconSize="100dp" />
     </com.google.android.material.bottomappbar.BottomAppBar>
 

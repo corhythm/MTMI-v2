@@ -27,8 +27,9 @@ class GetStartedActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.buttonGetStartedGoToGetStarted.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+            Intent(this, LoginActivity::class.java).also {
+                startActivity(it, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+            }
             finish() // 임시
             Log.d("로그", "GetStartedActivity -onCreate() called")
         }
