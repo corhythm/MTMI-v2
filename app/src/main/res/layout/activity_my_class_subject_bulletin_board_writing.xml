@@ -28,14 +28,30 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <EditText
-        android:id="@+id/editText_myClassSubjectBulletinBoardWriting_title"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:fontFamily="@font/airbnb_cereal_bold"
-        android:hint="제목" />
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/editText_myClassSubjectBulletinBoardWriting_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/airbnb_cereal_bold"
+                android:hint="제목"
+                android:textSize="20sp" />
+
+            
+
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

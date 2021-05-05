@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            app:mtf_image="@drawable/ic_signup_password"
+            app:mtf_image="@drawable/ic_sign_up_password"
             app:mtf_labelColor="@color/main_home_color"
             app:mtf_openKeyboardOnFocus="true">
 
@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            app:mtf_image="@drawable/ic_signup_confirm"
+            app:mtf_image="@drawable/ic_sign_up_confirm"
             app:mtf_labelColor="@color/main_home_color"
             app:mtf_openKeyboardOnFocus="true">
 
@@ -90,7 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            app:mtf_image="@drawable/ic_signup_name"
+            app:mtf_image="@drawable/ic_sign_up_name"
             app:mtf_labelColor="@color/main_home_color"
             app:mtf_openKeyboardOnFocus="true">
 
@@ -109,7 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            app:mtf_image="@drawable/ic_signup_student_id"
+            app:mtf_image="@drawable/ic_sign_up_student_id"
             app:mtf_labelColor="@color/main_home_color"
             app:mtf_openKeyboardOnFocus="true">
 
@@ -144,7 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            app:mtf_image="@drawable/ic_signup_birth"
+            app:mtf_image="@drawable/ic_sign_up_birth"
             app:mtf_labelColor="@color/main_home_color"
             app:mtf_openKeyboardOnFocus="true">
 
@@ -186,7 +186,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            app:mtf_image="@drawable/ic_signup_email"
+            app:mtf_image="@drawable/ic_sign_up_email"
             app:mtf_labelColor="@color/main_home_color"
             app:mtf_openKeyboardOnFocus="true">
 

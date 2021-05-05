@@ -10,11 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mtmimyeon_gitmi.R
-import com.example.mtmimyeon_gitmi.databinding.ActivityMyclassMailToProfessorBinding
+import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassMailToProfessorBinding
 import com.marozzi.roundbutton.RoundButton
 
 class MyClassMailToProfessorActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMyclassMailToProfessorBinding
+    private lateinit var binding: ActivityMyClassMailToProfessorBinding
 
     companion object {
         fun getInstance(): MyClassMailToProfessorActivity {
@@ -24,7 +24,7 @@ class MyClassMailToProfessorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMyclassMailToProfessorBinding.inflate(layoutInflater)
+        binding = ActivityMyClassMailToProfessorBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
 

@@ -12,13 +12,13 @@ import android.view.Window
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.R
-import com.example.mtmimyeon_gitmi.databinding.ActivityMyclassSubjectBulletinBoardBinding
+import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectBulletinBoardBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBulletinBoardBinding
 import com.example.mtmimyeon_gitmi.recyclerview_item.ItemSubjectBulletinBoard
 
 class MyClassSubjectBulletinBoardActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMyclassSubjectBulletinBoardBinding
+    private lateinit var binding: ActivityMyClassSubjectBulletinBoardBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -32,7 +32,7 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity() {
         }
 
         super.onCreate(savedInstanceState)
-        binding = ActivityMyclassSubjectBulletinBoardBinding.inflate(layoutInflater)
+        binding = ActivityMyClassSubjectBulletinBoardBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
     }

@@ -8,10 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.mtmimyeon_gitmi.databinding.FragmentMyclassMainBinding
+import com.example.mtmimyeon_gitmi.databinding.FragmentMyClassMainBinding
 
 class MyClassMainFragment private constructor() : Fragment() {
-    private var _binding: FragmentMyclassMainBinding? = null
+    private var _binding: FragmentMyClassMainBinding? = null
 
     // This property is only valid between onCreateView and OnDestroyView
     private val binding get() = _binding!!
@@ -32,7 +32,7 @@ class MyClassMainFragment private constructor() : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         //return super.onCreateView(inflater, container, savedInstanceState)
-        _binding = FragmentMyclassMainBinding.inflate(inflater, container, false)
+        _binding = FragmentMyClassMainBinding.inflate(inflater, container, false)
 
         init()
         return binding.root
