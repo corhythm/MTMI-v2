@@ -19,10 +19,9 @@ class Database_M {
                 .addOnCompleteListener(activity) {
                     if (it.isSuccessful) {
                         val user = firebaseAuth.currentUser
-                        Log.d("createEmail : ", "Sign up Successful")//가입성공
-
+                        Log.d("createEmail: ", "Sign up Successful")//가입성공
                     } else {
-                        Log.d("createEmail : ", "Sign up Failed")//가입실패
+                        Log.d("createEmail: ", "Sign up Failed")//가입실패
                         check = false
                     }
                 }
