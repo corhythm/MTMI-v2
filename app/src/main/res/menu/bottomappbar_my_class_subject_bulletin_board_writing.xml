@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cnb_unselectedColor="#666666">
+
+    <!-- text + checkbox로 수정해야 함-->
+    <item
+        android:id="@+id/menu_bottomAppBar_menu"
+        android:tooltipText="익명"
+        android:orderInCategory="1"
+        app:showAsAction="always|withText|collapseActionView"
+        android:title="익명"
+        android:checkable="true"
+        android:checked="true"
+        app:actionViewClass="android.widget.CheckBox" />
+</menu>

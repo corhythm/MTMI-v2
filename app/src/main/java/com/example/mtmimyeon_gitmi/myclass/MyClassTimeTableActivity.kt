@@ -1,20 +1,14 @@
-package com.example.mtmimyeon_gitmi.myclass
+package com.example.mtmimyeon_gitmi.myClass
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import com.example.mtmimyeon_gitmi.R
-import com.example.mtmimyeon_gitmi.databinding.ActivityMyclassTimetableBinding
+import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassTimetableBinding
 import com.github.tlaabs.timetableview.Schedule
-import com.github.tlaabs.timetableview.Sticker
 import com.github.tlaabs.timetableview.Time
 
 class MyClassTimeTableActivity: AppCompatActivity() {
-    private lateinit var binding: ActivityMyclassTimetableBinding
+    private lateinit var binding: ActivityMyClassTimetableBinding
 
     // This property is only valid between onCreateView and OnDestroyView
     private val schedules = ArrayList<Schedule>()
@@ -27,7 +21,7 @@ class MyClassTimeTableActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMyclassTimetableBinding.inflate(layoutInflater)
+        binding = ActivityMyClassTimetableBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initTimeTable()
     }
