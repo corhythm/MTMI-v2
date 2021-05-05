@@ -12,14 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTMIMyeongiTMI">
-        <activity android:name=".myClass.MyClassSubjectBulletinBoardDetailsActivity" />
-        <activity android:name=".myClass.MyClassSubjectBulletinBoardWritingActivity">
+        <activity android:name=".myClass.MyClassSubjectBulletinBoardDetailsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".myClass.MyClassSubjectBulletinBoardWritingActivity"/>
         <activity android:name=".myClass.MyClassSubjectBulletinBoardActivity" />
         <activity android:name=".MyChatListActivity" />
         <activity android:name=".CopyrightActivity" />
@@ -37,11 +37,7 @@
             android:name=".GetStartedActivity"
             android:label="MTMI"
             android:theme="@style/Theme.MTMIMyeongiTMI.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

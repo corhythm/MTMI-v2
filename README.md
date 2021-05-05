@@ -23,6 +23,7 @@ TeamProject 2
   - reference
     1. https://woovictory.github.io/2020/06/13/Android-FlexBoxLayout/
 - custom button: https://github.com/JMaroz/RoundButton
+- lottie animation: https://github.com/airbnb/lottie-android
 
 <!-- ## Get Started Activity -->
 <!-- ![image](https://user-images.githubusercontent.com/43941383/114131739-1ab4a300-993e-11eb-8497-7c7785d186e0.png)-->

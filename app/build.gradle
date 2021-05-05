@@ -97,4 +97,8 @@ dependencies {
     // Round Button: https://github.com/JMaroz/RoundButton
     implementation 'com.marozzi.roundbutton:round-button:1.0.7'
 
+    // Lottie Animation
+    def lottieVersion = '3.7.0'
+    implementation "com.airbnb.android:lottie:$lottieVersion"
+
 }

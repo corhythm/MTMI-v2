@@ -2,6 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cnb_unselectedColor="#666666">
+
+    <!-- text + checkbox로 수정해야 함-->
     <item
         android:id="@+id/menu_bottomAppBar_menu"
         android:tooltipText="익명"
