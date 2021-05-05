@@ -28,16 +28,16 @@ class Database_M {
         }
         return check
     }
+
     fun loginEmail(id: String, pw: String, activity: Activity): Boolean { // -> 로그인 메소드
         var check = true
         firebaseAuth.signInWithEmailAndPassword(id, pw)
-            .addOnCompleteListener(activity){
-                if(it.isSuccessful) {
-                    Log.d("loginEmail : ","Login Success") //로그인 성공
+            .addOnCompleteListener(activity) {
+                if (it.isSuccessful) {
+                    Log.d("loginEmail : ", "Login Success") //로그인 성공
                     val user = firebaseAuth.currentUser
-                }
-                else {
-                    Log.d("loginEmail : ","Login Failed") //로그인 실패
+                } else {
+                    Log.d("loginEmail : ", "Login Failed") //로그인 실패
                     check = false
                 }
             }
