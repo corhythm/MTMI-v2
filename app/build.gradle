@@ -43,7 +43,20 @@ android {
 }
 
 dependencies {
+<<<<<<< Updated upstream
     implementation 'org.jsoup:jsoup:1.11.3'
+=======
+
+    implementation platform('com.google.firebase:firebase-bom:26.8.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    //코루틴
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.3.9'
+
+
+    implementation 'org.jsoup:jsoup:1.13.1'
+>>>>>>> Stashed changes
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
