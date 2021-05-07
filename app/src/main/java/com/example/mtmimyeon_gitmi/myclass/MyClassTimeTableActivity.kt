@@ -13,21 +13,14 @@ class MyClassTimeTableActivity: AppCompatActivity() {
     // This property is only valid between onCreateView and OnDestroyView
     private val schedules = ArrayList<Schedule>()
 
-    companion object {
-        fun getInstance(): MyClassTimeTableActivity {
-            return MyClassTimeTableActivity()
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyClassTimetableBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initTimeTable()
+        init()
     }
 
-
-    private fun initTimeTable() {
+    private fun init() {
         binding.timetableViewMyClassTimetableTimetable.setOnStickerSelectEventListener { idx, schedules ->
             binding.timetableViewMyClassTimetableTimetable.edit(idx, schedules)
         }

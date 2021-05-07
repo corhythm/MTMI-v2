@@ -20,7 +20,7 @@
             android:background="@color/white"
             app:navigationIcon="@drawable/ic_my_class_subject_bulletin_board_writing_back"
             app:title="(10주차: 04.21 ~ 04.28)"
-
+            app:menu="@menu/toolbar_my_class_common_lms"
             app:titleCentered="true"
             app:titleTextColor="@color/black" />
 

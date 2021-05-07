@@ -11,22 +11,22 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.mtmimyeon_gitmi.databinding.FragmentMyClassMainBinding
 
-class MyClassMainFragment private constructor() : Fragment() {
+class MyClassMainFragment : Fragment() {
     private var _binding: FragmentMyClassMainBinding? = null
 
     // This property is only valid between onCreateView and OnDestroyView
     private val binding get() = _binding!!
 
-    companion object {
-        private var INSTANCE: MyClassMainFragment? = null
-        fun getInstance(): MyClassMainFragment{
-            Log.d("로그", "MyClassMainFragment -getInstance() called / $INSTANCE")
-            if(INSTANCE == null) {
-                INSTANCE = MyClassMainFragment() // 프래그먼트 인스턴스 없을 떄, 인스턴스 생성
-            }
-            return INSTANCE!!
-        }
-    }
+//    companion object {
+//        private var INSTANCE: MyClassMainFragment? = null
+//        fun getInstance(): MyClassMainFragment {
+//            Log.d("로그", "MyClassMainFragment -getInstance() called / $INSTANCE")
+//            if (INSTANCE == null) {
+//                INSTANCE = MyClassMainFragment() // 프래그먼트 인스턴스 없을 떄, 인스턴스 생성
+//            }
+//            return INSTANCE!!
+//        }
+//    }
 
     // 뷰가 생성되었을 때, 프래그먼트와 레이아웃 연결
     override fun onCreateView(
@@ -50,16 +50,29 @@ class MyClassMainFragment private constructor() : Fragment() {
 
         val sharedPref: SharedPreferences = requireContext().getSharedPreferences("userId", 0)
 
-        binding.textViewMyClassMainTimetable.setOnClickListener {
-            startActivity(Intent(context, MyClassTimeTableActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
-        }
-
-        binding.textViewMyClassMainProfessorToMail.setOnClickListener {
-            startActivity(Intent(context, MyClassMailToProfessorActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
-        }
-
+        // 강의별 게시판
         binding.textViewMyClassMainSubjectList.setOnClickListener {
-            startActivity(Intent(context, MyClassSubjectListActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
+
+            startActivity(
+                Intent(context, MyClassSubjectListActivity::class.java),
+                ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle()
+            )
+        }
+
+        // 시간표/과제
+        binding.textViewMyClassMainTimetable.setOnClickListener {
+            startActivity(
+                Intent(context, MyClassTimeTableActivity::class.java),
+                ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle()
+            )
+        }
+
+        // 교슈님 요청 메일(가이드)
+        binding.textViewMyClassMainProfessorToMail.setOnClickListener {
+            startActivity(
+                Intent(context, MyClassMailToProfessorActivity::class.java),
+                ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle()
+            )
         }
     }
 }

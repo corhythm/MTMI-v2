@@ -4,16 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LmsAuthenticationActivity"
-    android:background="">
+    tools:context=".LmsAuthenticationActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="30dp"
         android:background="@drawable/bg_rounded_corner_white"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="30dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView_lmsAuthentication_lmsImage"
@@ -21,17 +20,17 @@
             android:layout_height="150dp"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/img_lms_image"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/img_lms_image"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/editText_lmsAuthentication_id"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
             android:layout_gravity="center"
+            android:layout_marginTop="50dp"
             android:hint="LMS ID를 입력하세요." />
 
         <EditText
@@ -46,13 +45,10 @@
             android:id="@+id/button_lmsAuthentication_getAuthentication"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
             android:layout_gravity="center"
-            android:text="Get Authentication"/>
+            android:layout_marginTop="50dp"
+            android:text="Get Authentication" />
     </LinearLayout>
-
-
-
 
 
 </FrameLayout>

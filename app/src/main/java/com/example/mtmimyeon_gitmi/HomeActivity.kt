@@ -21,6 +21,7 @@ import com.example.mtmimyeon_gitmi.account.MyProfileActivity
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
+    private lateinit var nowFragment: Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -40,24 +41,37 @@ class HomeActivity : AppCompatActivity() {
 
     private fun init() {
 
+        nowFragment = HomeFragment()
+
         setSupportActionBar(binding.topAppBarHome)
-        replaceFragment(HomeFragment.getInstance())
+        replaceFragment(nowFragment)
 
         // 원래 이렇게 하면 안 됨. 시각적으로 보기 위해서 임시로 테스트
+        // 홈 버튼 클릭됐을 떄
         binding.floatingActionButtonHome.setOnClickListener {
-            replaceFragment(HomeFragment.getInstance())
-            // 아이템 선택된 거 초기화
+            if (nowFragment !is HomeFragment) {
+                nowFragment = HomeFragment()
+                replaceFragment(nowFragment)
+                Log.d("로그", "HomeActivity -init() called nowFragment")
+            }
+
+            // 바텀 네비게이션뷰 아이템 선택된 거 초기화
             binding.bottomNavigationViewHome.setItemSelected(-1)
         }
 
         binding.bottomNavigationViewHome.setOnItemSelectedListener {
             when (it) {
-                R.id.menu_mbti -> {
-                    replaceFragment(MbtiTestStartFragment.getInstance())
+                R.id.menu_mbti -> { // mbti tab click
+                    if (nowFragment !is MbtiTestStartFragment) {
+                        nowFragment = MbtiTestStartFragment()
+                        replaceFragment(nowFragment)
+                    }
                 }
-                R.id.menu_classlist -> {
-                    Log.d("로그", "HomeActivity -init() called / ${MyClassMainFragment.getInstance()}")
-                    replaceFragment(MyClassMainFragment.getInstance())
+                R.id.menu_classlist -> { // my class tab click
+                    if (nowFragment !is MyClassMainFragment) {
+                        nowFragment = MyClassMainFragment()
+                        replaceFragment(nowFragment)
+                    }
                 }
             }
         }
