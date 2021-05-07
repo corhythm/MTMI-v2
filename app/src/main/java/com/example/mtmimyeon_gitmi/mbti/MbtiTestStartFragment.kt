@@ -17,20 +17,12 @@ public class MbtiTestStartFragment: Fragment() {
     // This property is only valid between onCreateView and OnDestroyView
     private val binding get() = _binding!!
 
-//    companion object {
-//        private var INSTANCE: MbtiTestStartFragment? = null
-//        fun getInstance(): MbtiTestStartFragment {
-//            if (INSTANCE == null) INSTANCE = MbtiTestStartFragment()
-//            return INSTANCE!!
-//        }
-//    }
-
     // 뷰가 생성되었을 때, 프래그먼트와 레이아웃 연결
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMbtiTestStartBinding.inflate(inflater, container, false)
         init()
         return binding.root

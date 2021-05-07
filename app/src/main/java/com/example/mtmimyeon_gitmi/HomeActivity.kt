@@ -12,6 +12,7 @@ import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.Window
+import android.widget.Toast
 
 import androidx.fragment.app.Fragment
 import com.example.mtmimyeon_gitmi.databinding.ActivityHomeBinding
@@ -22,19 +23,20 @@ import com.example.mtmimyeon_gitmi.account.MyProfileActivity
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var nowFragment: Fragment
+    private var backKeyPressedTime: Long = 0 // 마지막으로 back key를 눌렀던 시간
+    private lateinit var toast: Toast // toast 메시지
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         with(window) { // activity 옆으로 이동 애니메이션
             requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
             // set an slide transition
             enterTransition = Slide(Gravity.END)
             exitTransition = Slide(Gravity.START)
         }
+
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         init()
 
     }
@@ -99,5 +101,21 @@ class HomeActivity : AppCompatActivity() {
             }
         }
         return true
+    }
+
+    override fun onBackPressed() {
+//        super.onBackPressed()
+        if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
+            backKeyPressedTime = System.currentTimeMillis()
+            toast = Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT)
+            toast.show()
+            return;
+        }
+
+        if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
+            finish();
+            toast.cancel();
+        }
+
     }
 }
