@@ -10,6 +10,7 @@ class Database_M {
 
     fun createEmail(id: String, pw: String, activity: Activity): Boolean {  // -> 회원가입 메소드
         var check = true
+
         Log.d(" id and password", "$id, $pw")
         if (id.isEmpty() || pw.isEmpty()) {
             check = false

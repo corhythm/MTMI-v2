@@ -4,6 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appLayout_myClassTimetable_appbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_myClassTimetable_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            app:navigationIcon="@drawable/ic_my_class_subject_bulletin_board_writing_back"
+            app:title="(10주차: 04.21 ~ 04.28)"
+
+            app:titleCentered="true"
+            app:titleTextColor="@color/black" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <com.github.tlaabs.timetableview.TimetableView
         android:id="@+id/timetableView_myClassTimetable_timetable"
         android:layout_width="0dp"
@@ -13,13 +35,13 @@
         app:header_highlight_type="color"
         app:header_highlight_color="@color/main_home_color"
         app:header_title="@array/my_header_title"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.85"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appLayout_myClassTimetable_appbarLayout"
         app:layout_constraintWidth_percent="1"
         app:row_count="12"
         app:side_cell_width="30dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

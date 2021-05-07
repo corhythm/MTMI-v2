@@ -2,6 +2,7 @@ package com.example.mtmimyeon_gitmi.myClass
 
 import android.app.ActivityOptions
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,7 +21,9 @@ class MyClassMainFragment private constructor() : Fragment() {
         private var INSTANCE: MyClassMainFragment? = null
         fun getInstance(): MyClassMainFragment{
             Log.d("로그", "MyClassMainFragment -getInstance() called / $INSTANCE")
-            if(INSTANCE == null) INSTANCE = MyClassMainFragment()
+            if(INSTANCE == null) {
+                INSTANCE = MyClassMainFragment() // 프래그먼트 인스턴스 없을 떄, 인스턴스 생성
+            }
             return INSTANCE!!
         }
     }
@@ -44,6 +47,9 @@ class MyClassMainFragment private constructor() : Fragment() {
     }
 
     private fun init() {
+
+        val sharedPref: SharedPreferences = requireContext().getSharedPreferences("userId", 0)
+
         binding.textViewMyClassMainTimetable.setOnClickListener {
             startActivity(Intent(context, MyClassTimeTableActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
         }

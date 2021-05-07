@@ -111,6 +111,7 @@
                     app:layout_constraintWidth_percent="0.9" />
 
                 <com.airbnb.lottie.LottieAnimationView
+                    android:visibility="gone"
                     android:id="@+id/lottieButton_myClassSubjectBulletinBoardDetails_like"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -123,6 +124,7 @@
                     app:lottie_loop="false" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/textView_myClassSubjectBulletinBoardDetails_likeCount"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
@@ -156,7 +158,7 @@
         <EditText
             android:id="@+id/editText_myClassSubjectBulletinBoardWriting_commentContent"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:background="@android:color/transparent"
             android:hint="댓글을 입력하세요."
             android:paddingStart="20dp"

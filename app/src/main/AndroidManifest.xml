@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTMIMyeongiTMI">
+        <activity android:name=".LmsAuthenticationActivity"></activity>
         <activity android:name=".myClass.MyClassSubjectBulletinBoardDetailsActivity" />
         <activity android:name=".myClass.MyClassSubjectBulletinBoardWritingActivity" />
         <activity android:name=".myClass.MyClassSubjectBulletinBoardActivity" />
