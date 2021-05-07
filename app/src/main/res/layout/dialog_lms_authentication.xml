@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LmsAuthenticationActivity">
+    tools:context=".LmsAuthenticationDialog">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -19,7 +19,6 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
             android:src="@drawable/img_lms_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,8 +29,8 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:hint="LMS ID를 입력하세요." />
+            android:layout_marginTop="30dp"
+            android:hint="LMS ID" />
 
         <EditText
             android:id="@+id/editText_lmsAuthentication_pw"
@@ -39,15 +38,33 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:hint="LMS Password를 입력하세요." />
+            android:hint="LMS Password" />
 
-        <Button
-            android:id="@+id/button_lmsAuthentication_getAuthentication"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:text="Get Authentication" />
+        <com.marozzi.roundbutton.RoundButton
+        android:id="@+id/button_lmsAuthentication_getAuthentication"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/airbnb_cereal_black"
+        android:layout_gravity="center"
+        android:text="Get Authentication"
+        android:textSize="15sp"
+        app:rb_animation_alpha="false"
+        app:rb_animation_corner_radius="100dp"
+        app:rb_animation_duration="500"
+        app:rb_animation_progress_color="@color/main_home_color"
+        app:rb_animation_progress_padding="8dp"
+        app:rb_animation_progress_style="circle"
+        app:rb_animation_progress_width="2dp"
+        app:rb_background_color="@android:color/transparent"
+        app:rb_background_color_pressed="#3F51B5"
+        app:rb_corner_color="#3F51B5"
+        app:rb_corner_color_pressed="#3F51B5"
+        app:rb_corner_radius="100dp"
+        app:rb_corner_width="1dp"
+        app:rb_success_resource="@drawable/img_mbti_teststarted_done"
+        app:rb_text_color="#3F51B5"
+        app:rb_text_color_pressed="@android:color/white" />
     </LinearLayout>
 
 
