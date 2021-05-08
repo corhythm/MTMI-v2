@@ -33,23 +33,6 @@ class SignUpActivity : AppCompatActivity() {
                 var DB_M=Database_M()
                 var isSuccessful:Boolean
 
-<<<<<<< Updated upstream
-                Log.d("id check : ",(binding.editTextSignUpId).text.toString())
-                Log.d("pw check : ",binding.editTextSignUpPw.text.toString())
-
-                val isSuccessful: Boolean = DB_M.createEmail(binding.editTextSignUpId.text.toString(),binding.editTextSignUpPw.text.toString(),this)
-
-                // Choose a stop animation if your call was succesful or not
-                if (isSuccessful) {
-                    binding.buttonSignUpGoToSignUp.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND
-                    ) {
-                        Log.d("로그", binding.editTextSignUpConfirmPw.text.toString())
-                        finish()
-                    }
-                } else {
-                    binding.buttonSignUpGoToSignUp.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null)
-                }
-=======
                 //임시코드: 로그랑 데이터값 확인용 ,삭제예정
                 Log.d("id check : ", binding.editTextSignUpId.text.toString())
                 Log.d("pw check : ",binding.editTextSignUpPw.text.toString())

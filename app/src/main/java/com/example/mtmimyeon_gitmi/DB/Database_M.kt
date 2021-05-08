@@ -10,24 +10,7 @@ import kotlinx.coroutines.*
 class Database_M {
     private var firebaseAuth : FirebaseAuth= FirebaseAuth.getInstance()
 
-<<<<<<< Updated upstream
-    fun createEmail(id:String,pw:String,activity:Activity) : Boolean {  // -> 회원가입 메소드
-        var check=true
-        Log.d(" id and password",id+" , "+pw)
-        if(id.length==0||pw.length==0){
-            check=false
-            Toast.makeText(activity,"아이디 혹은 비밀번호를 입력해주세요.",Toast.LENGTH_LONG).show()
-        }else{
-            firebaseAuth!!.createUserWithEmailAndPassword(id,pw)
-                .addOnCompleteListener(activity) {
-                    if (it.isSuccessful){
-                        val user = firebaseAuth?.currentUser
-                        Log.d("createEmail : ", "Sign up Successful")//가입성공
 
-                    } else {
-                        Log.d("createEmail : ", "Sign up Failed")//가입실패
-                        check=false
-=======
     fun createEmail(id: String, pw: String, activity: Activity,callback: Callback<Boolean>){  // -> 회원가입 메소드
         Log.d(" id and password", "$id, $pw")
         runBlocking {
@@ -47,7 +30,6 @@ class Database_M {
                             callback.onCallback(false)
                             Toast.makeText(activity, "회원가입 오류", Toast.LENGTH_LONG).show()
                         }
->>>>>>> Stashed changes
                     }
             }
         }
