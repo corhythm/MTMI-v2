@@ -5,22 +5,13 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
-import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import com.example.mtmimyeon_gitmi.crawling.CrawlingLmsInfo
 import com.example.mtmimyeon_gitmi.databinding.DialogLmsAuthenticationBinding
-import com.marozzi.roundbutton.RoundButton
 import kotlinx.coroutines.*
-import okhttp3.OkHttp
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import org.jsoup.Connection
-import org.jsoup.Jsoup
 import www.sanju.motiontoast.MotionToast
 
-class LmsAuthenticationDialog(context: Context) : Dialog(context) {
+class LmsAuthenticationDialog(context: Context) : Dialog(context), ObserveCrawling {
     private lateinit var binding: DialogLmsAuthenticationBinding
     private val mContext: Context = context
 
@@ -45,29 +36,33 @@ class LmsAuthenticationDialog(context: Context) : Dialog(context) {
 //                binding.buttonLmsAuthenticationGetAuthentication.revertAnimation()
 //                Toast.makeText(mContext, "사용자 정보를 받아오는 중입니다", Toast.LENGTH_SHORT).show()
 //            }, 1500)
-            CoroutineScope(Dispatchers.Main).launch {
+            CoroutineScope(Dispatchers.IO).launch {
                 // UI 동기
-                // network 비동기
-                val crawlingLmsInfo = CrawlingLmsInfo()
-
-                val stage1 = CoroutineScope(Dispatchers.Default).async { // network 비동기
-
-                }.await()
-
-
-                 MotionToast.createColorToast(
-                    mContext as HomeActivity,
-                    "Authentication",
-                    "시간표 받아오기 성공",
-                    MotionToast.TOAST_SUCCESS,
-                    MotionToast.GRAVITY_BOTTOM,
-                    MotionToast.SHORT_DURATION,
-                    ResourcesCompat.getFont(mContext, R.font.helvetica_regular))
-
-
+                val crawlingLmsInfo = CrawlingLmsInfo(this@LmsAuthenticationDialog)
+                crawlingLmsInfo.startCrawling()
             }
-
         }
     }
 
+    override fun catchCurrentStart(title: String, message: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            MotionToast.createColorToast(
+                mContext as HomeActivity,
+                title,
+                message,
+                MotionToast.TOAST_SUCCESS,
+                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.SHORT_DURATION,
+                ResourcesCompat.getFont(mContext, R.font.helvetica_regular)
+            )
+
+        }
+
+
+    }
+
+}
+
+interface ObserveCrawling {
+    fun catchCurrentStart(title: String, message: String)
 }
