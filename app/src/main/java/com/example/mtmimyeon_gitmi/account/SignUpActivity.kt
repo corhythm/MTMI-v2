@@ -37,15 +37,35 @@ class SignUpActivity : AppCompatActivity() {
                 //임시코드: 로그랑 데이터값 확인용 ,삭제예정
                 Log.d("id check : ", binding.editTextSignUpId.text.toString())
                 Log.d("pw check : ", binding.editTextSignUpPw.text.toString())
+
+                //유저가 기입한 내용
                 var signUp_userId: String = binding.editTextSignUpId.text.toString()
                 var signUp_userPw: String = binding.editTextSignUpPw.text.toString()
+                var signUp_confirmPw: String = binding.editTextSignUpConfirmPw.text.toString()
                 var signUp_userStudentId: String = binding.editTextSignUpStudentId.text.toString()
                 var signUp_userBirth: String = binding.editTextSignUpDateOfBirth.text.toString()
-                var signUp_userMajor: String = binding.spinnerSignUpMajorList.selectedItem.toString()
-                var signUp_userGender: String = binding.radioButtonSignUpGenderGroup.checkedRadioButtonId.toString()
+                var signUp_userName: String = binding.editTextSignUpName.text.toString()
+
+                // 전공 선택시 null 체크
+                var signUp_userMajor: String?
+                if(binding.spinnerSignUpMajorList.selectedItem!=null) {
+                    signUp_userMajor =
+                        binding.spinnerSignUpMajorList.selectedItem.toString()
+                }else{
+                    signUp_userMajor=null
+                }
+                var signUp_userGender: String =
+                    binding.radioButtonSignUpGenderGroup.checkedRadioButtonId.toString()
 
                 // interface로 callback처리함 일단 임시방편용 이후에 문제가 생길경우 다른코드 대안 찾을것.
-                DB_M.createEmail(signUp_userId,signUp_userPw,
+                DB_M.createEmail(signUp_userId,
+                    signUp_userPw,
+                    signUp_confirmPw,
+                    signUp_userName,
+                    signUp_userStudentId,
+                    signUp_userMajor,
+                    signUp_userBirth,
+                    signUp_userGender,
                     this,
                     object : Callback<Boolean> {
                         override fun onCallback(data: Boolean) {
