@@ -61,7 +61,7 @@ class SignUpActivity : AppCompatActivity() {
                         }
                     })
                 Log.d("After callback  : ","Create method exit")
->>>>>>> Stashed changes
+
             }, 300)
         }
     }
