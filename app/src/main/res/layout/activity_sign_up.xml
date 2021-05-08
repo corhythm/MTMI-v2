@@ -43,7 +43,7 @@
                 android:id="@+id/editText_signUp_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="id"
+                android:hint="id (email 형식으로 입력해주세요)"
                 android:inputType="text"
                 android:maxLines="1"
                 android:textSize="15sp" />
@@ -181,25 +181,6 @@
                 android:layout_marginStart="100dp"
                 android:text="여성" />
         </RadioGroup>
-
-        <com.github.florent37.materialtextfield.MaterialTextField
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            app:mtf_image="@drawable/ic_sign_up_email"
-            app:mtf_labelColor="@color/main_home_color"
-            app:mtf_openKeyboardOnFocus="true">
-
-            <EditText
-                android:id="@+id/editText_signUp_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints="yyyy/mm/dd"
-                android:hint="email"
-                android:inputType="number"
-                android:maxLines="1"
-                android:textSize="15sp" />
-        </com.github.florent37.materialtextfield.MaterialTextField>
 
         <com.royrodriguez.transitionbutton.TransitionButton
             android:id="@+id/button_signUp_goToSignUp"
