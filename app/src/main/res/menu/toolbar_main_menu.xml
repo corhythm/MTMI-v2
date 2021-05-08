@@ -8,4 +8,8 @@
         app:showAsAction="ifRoom"
         android:title="user"
         app:cnb_iconColor="@color/navigation_color_chart" />
+    <item
+        android:id="@+id/menu_toolBar_deleteAccount"
+        app:showAsAction="never"
+        android:title="LMS 계정 연결 해지" />
 </menu>

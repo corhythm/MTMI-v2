@@ -6,12 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.transition.Slide
 import android.util.Log
+import android.util.TypedValue
+import android.view.*
+import android.widget.TextView
 
-import android.view.Gravity
-
-import android.view.Menu
-import android.view.MenuItem
-import android.view.Window
 import android.widget.Toast
 
 import androidx.fragment.app.Fragment
@@ -19,6 +17,7 @@ import com.example.mtmimyeon_gitmi.databinding.ActivityHomeBinding
 import com.example.mtmimyeon_gitmi.mbti.MbtiTestStartFragment
 import com.example.mtmimyeon_gitmi.myClass.MyClassMainFragment
 import com.example.mtmimyeon_gitmi.account.MyProfileActivity
+import org.w3c.dom.Text
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -108,6 +107,10 @@ class HomeActivity : AppCompatActivity() {
         if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
             backKeyPressedTime = System.currentTimeMillis()
             toast = Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT)
+            ((toast.view as ViewGroup).getChildAt(0) as TextView).setTextSize(
+                TypedValue.COMPLEX_UNIT_DIP,
+                15F
+            ) // 토스트 메시지 폰트 사이즈 변경
             toast.show()
             return;
         }

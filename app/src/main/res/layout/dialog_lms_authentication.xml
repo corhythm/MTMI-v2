@@ -43,7 +43,7 @@
         <com.marozzi.roundbutton.RoundButton
         android:id="@+id/button_lmsAuthentication_getAuthentication"
         android:layout_width="250dp"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/airbnb_cereal_black"
         android:layout_gravity="center"

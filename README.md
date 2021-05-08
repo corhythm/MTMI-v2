@@ -28,7 +28,7 @@ TeamProject 2
 - coroutine: https://github.com/Kotlin/kotlinx.coroutines
 - okhttp: https://github.com/square/okhttp
 - Motion Toast: https://github.com/Spikeysanju/MotionToast
-
+- google gson: https://github.com/google/gson
 <!-- ## Get Started Activity -->
 <!-- ![image](https://user-images.githubusercontent.com/43941383/114131739-1ab4a300-993e-11eb-8497-7c7785d186e0.png)-->
 

@@ -41,7 +41,7 @@ class MyClassMainFragment : Fragment() {
         // 강의별 게시판
         binding.textViewMyClassMainSubjectList.setOnClickListener {
             // 로컬에 저장된 LMS 계정 정보가 있을 떄
-            if (SharedPrefManager.getLmsUserId().isNotEmpty() && SharedPrefManager.getLmsUserPw().isNotEmpty()) {
+            if (SharedPrefManager.getUserLmsId().isNotEmpty() && SharedPrefManager.getUserLmsPw().isNotEmpty()) {
                 // 강의별 게시판으로 이동
                 startActivity(Intent(context, MyClassSubjectListActivity::class.java),
                     ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
@@ -53,7 +53,7 @@ class MyClassMainFragment : Fragment() {
 
         // 시간표/과제
         binding.textViewMyClassMainTimetable.setOnClickListener {
-             if (SharedPrefManager.getLmsUserId().isNotEmpty() && SharedPrefManager.getLmsUserPw().isNotEmpty()) {
+             if (SharedPrefManager.getUserLmsId().isNotEmpty() && SharedPrefManager.getUserLmsPw().isNotEmpty()) {
                 // 시간표, 과제함으로 이동
                 startActivity(Intent(context, MyClassTimeTableActivity::class.java),
                     ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
