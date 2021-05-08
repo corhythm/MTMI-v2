@@ -8,11 +8,12 @@
     <application
         android:name=".util.App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@mipmap/ic_main"
+        android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MTMIMyeongiTMI">
+        android:theme="@style/Theme.MTMIMyeongiTMI"
+        android:usesCleartextTraffic="true">
         <activity android:name=".myClass.MyClassSubjectBulletinBoardDetailsActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".myClass.MyClassSubjectBulletinBoardWritingActivity"

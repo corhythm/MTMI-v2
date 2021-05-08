@@ -18,7 +18,7 @@
         <!-- Google MDC buttons it may be FAB or MDC Buttons-->
 <!--        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>-->
         <!-- font -->
-        <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
+<!--        <item name="android:textViewStyle">@style/customTextViewFontStyle</item>-->
         <item name="android:buttonStyle">@style/customButtonFontStyle</item>
         <item name="android:editTextStyle">@style/customEditTextFontStyle</item>
         <item name="android:radioButtonStyle">@style/customRadioButtonFontStyle</item>
