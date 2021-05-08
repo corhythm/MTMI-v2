@@ -112,6 +112,7 @@ class SubjectViewHolder(
         item.textViewItemSubjectCode.text = itemSubjectInfo.professor
         item.textViewItemSubjectTime.text = itemSubjectInfo.lectureTime
         item.root.background = ContextCompat.getDrawable(context, drawableId)
+        Log.d("로그", "itemSubjectInto.subjectCode = ${itemSubjectInfo.subjectCode}")
 
         // 게시판 뷰 클릭했을 때, 해당 과목에 해당하는 게시판으로 이동
         item.root.setOnClickListener {
