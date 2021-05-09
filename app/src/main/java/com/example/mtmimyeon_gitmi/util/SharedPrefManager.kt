@@ -2,7 +2,7 @@ package com.example.mtmimyeon_gitmi.util
 
 import android.content.Context
 import android.util.Log
-import com.example.mtmimyeon_gitmi.recyclerview_item.ItemSubjectInfo
+import com.example.mtmimyeon_gitmi.item.ItemSubjectInfo
 import com.google.gson.Gson
 
 object SharedPrefManager {
@@ -50,25 +50,7 @@ object SharedPrefManager {
         return shared.getString(KEY_USER_LMS_PW, "")!!
     }
 
-    fun setUserLmsSubjectInfoList(
-        subjectList: MutableList<String>,
-        professorList: MutableList<String>,
-        lectureTimeList: MutableList<String>,
-        subjectCode: MutableList<String>
-    ) {
-
-        // 리사이클러뷰에 사용되는 아이템 리스트로 데이터 가공 후 JSON으로 변경해서 쉐어드에 저장
-        val itemSubjectInfoList = ArrayList<ItemSubjectInfo>()
-        for (i in 0 until subjectList.size) {
-            itemSubjectInfoList.add(
-                ItemSubjectInfo(
-                    subjectCode = subjectCode[i],
-                    subjectName = subjectList[i],
-                    professor = professorList[i],
-                    lectureTime = lectureTimeList[i]
-                )
-            )
-        }
+    fun setUserLmsSubjectInfoList(itemSubjectInfoList: ArrayList<ItemSubjectInfo>) {
 
         val shared = App.instance.getSharedPreferences(
             SHARED_USER_LMS_INFO,

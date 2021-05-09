@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.core.content.res.ResourcesCompat
 import com.example.mtmimyeon_gitmi.crawling.CrawlingLmsInfo
-import com.example.mtmimyeon_gitmi.crawling.CrawlingStatus
 import com.example.mtmimyeon_gitmi.databinding.DialogLmsAuthenticationBinding
 import kotlinx.coroutines.*
 import www.sanju.motiontoast.MotionToast

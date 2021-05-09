@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import com.example.mtmimyeon_gitmi.DB.Database_M
+import com.example.mtmimyeon_gitmi.db.Database_M
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivitySignUpBinding
 import com.royrodriguez.transitionbutton.TransitionButton

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectBulletinBoardBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBulletinBoardBinding
-import com.example.mtmimyeon_gitmi.recyclerview_item.ItemSubjectBulletinBoard
+import com.example.mtmimyeon_gitmi.item.ItemSubjectBulletinBoard
 
 class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardClickInterface {
     private lateinit var binding: ActivityMyClassSubjectBulletinBoardBinding

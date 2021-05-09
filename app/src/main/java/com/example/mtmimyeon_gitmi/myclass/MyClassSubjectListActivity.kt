@@ -17,12 +17,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectListBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectInfoBinding
-import com.example.mtmimyeon_gitmi.recyclerview_item.ItemSubjectInfo
+import com.example.mtmimyeon_gitmi.item.ItemSubjectInfo
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 
 class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface {
     private lateinit var binding: ActivityMyClassSubjectListBinding
     private lateinit var subjectRecyclerAdapter: SubjectListRecyclerAdapter
+    // SubjectInfo에 더 많은 정보가 있고, 당장은 이 액티비티에서 사용하는 값은 3개밖에 안 되지만,
+    // 추후에 더 사용할 수 있고, SubjectInfo를 이 액티비티에서만 사용하는 게 아니므로 우선은 이 리사이클러뷰 아이템도
+    // SubjectInfo의 정보를 이용해서 사용(별도의 아이템 클래스 생성 시, 중복되는 정보가 많으므로)
+    // 아이템이 많이 생성되면 퍼포먼스에 무리가 가겠지만, 수강 과목이 많아봐야 10개 내외이므로 퍼포먼스에는 크게 무리가 없다.
     private var itemSubjectInfoList = ArrayList<ItemSubjectInfo>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,14 +37,6 @@ class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface 
     }
 
     private fun init() {
-        // 테스트 데이터 삽입
-//        itemSubjectInfoList.add(ItemSubjectInfo("code1", "공학수학", "소순태", "금(09:00-1050), 수(10:00-10:50)"))
-//        itemSubjectInfoList.add(ItemSubjectInfo("code2", "물리학실험1", "이광호", "금(09:00-1050), 수(10:00-10:50)"))
-//        itemSubjectInfoList.add(ItemSubjectInfo("code3", "소프트웨어공학", "장희정", "금(09:00-1050), 수(10:00-10:50)"))
-//        itemSubjectInfoList.add(ItemSubjectInfo("code4", "시스템클라우드보안", "조민경", "금(09:00-1050), 수(10:00-10:50)"))
-//        itemSubjectInfoList.add(ItemSubjectInfo("code5", "운영체제", "류연승", "금(09:00-1050), 수(10:00-10:50)"))
-//        itemSubjectInfoList.add(ItemSubjectInfo("code6", "인공지능", "조민경", "금(09:00-1050), 수(10:00-10:50)"))
-//        itemSubjectInfoList.add(ItemSubjectInfo("code7", "팀프로젝트2", "류연승", "금(09:00-1050), 수(10:00-10:50)"))
         itemSubjectInfoList = SharedPrefManager.getUserLmsSubjectInfoList() as ArrayList<ItemSubjectInfo>
 
         subjectRecyclerAdapter = SubjectListRecyclerAdapter(this)
@@ -93,8 +89,8 @@ class SubjectListRecyclerAdapter(private val subjectClickedInterface: SubjectCli
         return itemSubjectInfoList.size
     }
 
-    fun submit(itemMjuSiteListInfo: ArrayList<ItemSubjectInfo>, context: Context) {
-        this.itemSubjectInfoList = itemMjuSiteListInfo
+    fun submit(mjuSiteListInfoItem: ArrayList<ItemSubjectInfo>, context: Context) {
+        this.itemSubjectInfoList = mjuSiteListInfoItem
         this.mContext = context
         this.gradientList = mContext.resources.obtainTypedArray(R.array.gradientList)
     }
@@ -109,8 +105,8 @@ class SubjectViewHolder(
     @SuppressLint("ResourceType")
     fun bind(itemSubjectInfo: ItemSubjectInfo, context: Context, drawableId: Int) {
         item.textViewItemSubjectName.text = itemSubjectInfo.subjectName
-        item.textViewItemSubjectCode.text = itemSubjectInfo.professor
-        item.textViewItemSubjectTime.text = itemSubjectInfo.lectureTime
+        item.textViewItemProfessor.text = itemSubjectInfo.professorName
+        item.textViewItemLectureTime.text = itemSubjectInfo.lectureTime
         item.root.background = ContextCompat.getDrawable(context, drawableId)
         Log.d("로그", "itemSubjectInto.subjectCode = ${itemSubjectInfo.subjectCode}")
 
