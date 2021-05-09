@@ -30,7 +30,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".myClass.MyClassSubjectListActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".myClass.MyClassTimeTableActivity"
+        <activity android:name=".myClass.MyClassTimetableActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".myClass.MyClassMailToProfessorActivity"
             android:screenOrientation="portrait"/>

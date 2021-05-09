@@ -1,11 +1,19 @@
 package com.example.mtmimyeon_gitmi.myClass
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassTimetableBinding
+import com.example.mtmimyeon_gitmi.databinding.ItemOverallSubjectInfoVerticalBinding
+import com.example.mtmimyeon_gitmi.databinding.ItemSubjectHomeworkHorizontalBinding
+import com.example.mtmimyeon_gitmi.item.Homework
 import com.example.mtmimyeon_gitmi.item.ItemSubjectInfo
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 import com.github.tlaabs.timetableview.Schedule
@@ -14,13 +22,14 @@ import www.sanju.motiontoast.MotionToast
 import java.lang.Exception
 
 
-class MyClassTimeTableActivity : AppCompatActivity() {
+class MyClassTimetableActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyClassTimetableBinding
     private val TAG = "로그"
 
     // This property is only valid between onCreateView and OnDestroyView
     private val schedules = ArrayList<Schedule>()
     private lateinit var itemSubjectInfoList: ArrayList<ItemSubjectInfo>
+    private lateinit var subjectInfoRecyclerAdapter: SubjectInfoRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,14 +102,21 @@ class MyClassTimeTableActivity : AppCompatActivity() {
         }
 
 
-        //.. add one or more schedules
+        // 시간표 TimetableView에 추가
         binding.timetableViewMyClassTimetableTimetable.add(schedules);
-        binding.timetableViewMyClassTimetableTimetable.setHeaderHighlight(2)
+        // binding.timetableViewMyClassTimetableTimetable.setHeaderHighlight(2) (월, 화, 수, 목, 금 중에 하이라이트 할 요일 선택)
 
-        Log.d(
-            "로그",
-            binding.timetableViewMyClassTimetableTimetable.allSchedulesInStickers.toString()
-        )
+        // 리사이클러뷰 초기화
+        subjectInfoRecyclerAdapter = SubjectInfoRecyclerAdapter(this)
+        binding.recyclerviewMyClassTimetableHomeworkList.apply {
+            adapter = subjectInfoRecyclerAdapter
+            layoutManager = LinearLayoutManager(
+                this@MyClassTimetableActivity,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+            subjectInfoRecyclerAdapter.submit(itemSubjectInfoList)
+        }
     }
 
     private fun String.getDay(): Int {
@@ -113,5 +129,118 @@ class MyClassTimeTableActivity : AppCompatActivity() {
             else -> 0
         }
     }
+}
 
+class SubjectInfoRecyclerAdapter(private val mContext: Context) :
+    RecyclerView.Adapter<ItemSubjectInfoViewHolder>() {
+    private lateinit var itemSubjectInfoList: ArrayList<ItemSubjectInfo>
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemSubjectInfoViewHolder {
+        val binding = ItemOverallSubjectInfoVerticalBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return ItemSubjectInfoViewHolder(mContext, binding)
+    }
+
+    override fun onBindViewHolder(holder: ItemSubjectInfoViewHolder, position: Int) {
+        holder.bind(itemSubjectInfoList[position])
+    }
+
+    override fun getItemCount(): Int {
+        return itemSubjectInfoList.size
+    }
+
+    fun submit(itemSubjectInfoList: ArrayList<ItemSubjectInfo>) {
+        this.itemSubjectInfoList = itemSubjectInfoList
+    }
+}
+
+// recyclerview viewHolder
+class ItemSubjectInfoViewHolder(
+    private val mContext: Context,
+    private val item: ItemOverallSubjectInfoVerticalBinding
+) :
+    RecyclerView.ViewHolder(item.root) {
+    private lateinit var homeworkRecyclerView: RecyclerView // nested recyclerview
+
+
+    fun bind(itemSubjectInfo: ItemSubjectInfo) {
+        item.textViewItemOverallSubjectInfoVerticalSubjectName.text = itemSubjectInfo.subjectName
+        item.textViewItemOverallSubjectInfoVerticalProfessorName.text =
+            itemSubjectInfo.professorName
+        item.textViewItemOverallSubjectInfoVerticalLectureTime.text = itemSubjectInfo.lectureTime
+        item.textViewItemOverallSubjectInfoVerticalNowAttendance.text =
+            itemSubjectInfo.nowAttendanceRate
+        item.textViewItemOverallSubjectInfoVerticalTotalAttendance.text =
+            "${itemSubjectInfo.totalAttendanceRate} (전체 출석률)"
+
+        val homeworkRecyclerAdapter = HomeworkRecyclerAdapter()
+        item.recyclerviewItemOverallSubjectInfoVerticalHomeworkList.apply {
+            adapter = homeworkRecyclerAdapter
+            layoutManager = LinearLayoutManager(
+                mContext,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+        }
+        homeworkRecyclerAdapter.submit(itemSubjectInfo.homeworkList)
+    }
+
+//    private fun setHomeworkRecycler(recyclerView: RecyclerView, homeworkList: ArrayList<Homework>) {
+//        val homeworkRecyclerAdapter = HomeworkRecyclerAdapter()
+//        homeworkRecyclerAdapter.submit(homeworkList)
+//        // 리사이클러뷰 초기화
+//        subjectInfoRecyclerAdapter = SubjectInfoRecyclerAdapter()
+//        binding.recyclerviewMyClassTimetableHomeworkList.apply {
+//            adapter = subjectInfoRecyclerAdapter
+//            layoutManager = LinearLayoutManager(
+//                this@MyClassTimetableActivity,
+//                LinearLayoutManager.VERTICAL,
+//                false
+//            )
+//            subjectInfoRecyclerAdapter.submit(itemSubjectInfoList)
+//        }
+//    }
+
+}
+
+// 과제 뷰홀더
+class HomeworkRecyclerAdapter() : RecyclerView.Adapter<HomeworkViewHolder>() {
+    private lateinit var homeworkList: ArrayList<Homework>
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeworkViewHolder {
+        val binding = ItemSubjectHomeworkHorizontalBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return HomeworkViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: HomeworkViewHolder, position: Int) {
+        holder.bind(homeworkList[position])
+    }
+
+    override fun getItemCount(): Int {
+        return homeworkList.size
+    }
+
+    fun submit(homeworkList: ArrayList<Homework>) {
+        this.homeworkList = homeworkList
+    }
+}
+
+// recyclerview viewHolder
+class HomeworkViewHolder(private val item: ItemSubjectHomeworkHorizontalBinding) :
+    RecyclerView.ViewHolder(item.root) {
+
+    fun bind(homework: Homework) {
+        item.textViewItemSubjectHomeworkHorizontalNumber.text = homework.order
+        item.textViewItemSubjectHomeworkHorizontalTitle.text = homework.title
+        item.textViewItemSubjectHomeworkHorizontalMyScoreValue.text = homework.myScore
+        item.textViewItemSubjectHomeworkHorizontalTotalScoreValue.text = homework.totalScore
+        item.textViewItemSubjectHomeworkHorizontalDeadline.text = homework.deadline
+    }
 }

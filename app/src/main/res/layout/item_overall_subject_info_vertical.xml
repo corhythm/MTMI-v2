@@ -6,20 +6,21 @@
 
     <TextView
         android:id="@+id/textView_itemOverallSubjectInfoVertical_subjectName"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
         android:text="공학수학1(KME02103-0281)"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:fontFamily="@font/airbnb_cereal_medium"
         android:gravity="center"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView_itemOverallSubjectInfoVertical_professorImg"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:src="@drawable/ic_my_class_main_subject_mail_to_professor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView_itemOverallSubjectInfoVertical_subjectName"
@@ -39,12 +40,12 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView_itemOverallSubjectInfoVertical_lectureTimeImg"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:src="@drawable/ic_item_clock"
-        app:layout_constraintTop_toBottomOf="@id/textView_itemOverallSubjectInfoVertical_subjectName"
-        app:layout_constraintStart_toEndOf="@id/textView_itemOverallSubjectInfoVertical_professorName"
-        android:layout_marginStart="15dp"/>
+        app:layout_constraintTop_toBottomOf="@id/imageView_itemOverallSubjectInfoVertical_professorImg"
+        app:layout_constraintStart_toStartOf="@id/imageView_itemOverallSubjectInfoVertical_professorImg"
+        android:layout_marginTop="5dp"/>
 
     <TextView
         android:id="@+id/textView_itemOverallSubjectInfoVertical_lectureTime"
@@ -59,12 +60,12 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView_itemOverallSubjectInfoVertical_attendanceImg"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:src="@drawable/ic_item_attendance"
-        app:layout_constraintTop_toBottomOf="@id/textView_itemOverallSubjectInfoVertical_subjectName"
-        app:layout_constraintStart_toEndOf="@id/textView_itemOverallSubjectInfoVertical_lectureTime"
-        android:layout_marginStart="15dp"/>
+        app:layout_constraintTop_toBottomOf="@id/textView_itemOverallSubjectInfoVertical_lectureTime"
+        app:layout_constraintStart_toStartOf="@id/imageView_itemOverallSubjectInfoVertical_lectureTimeImg"
+        android:layout_marginTop="5dp"/>
 
     <TextView
         android:id="@+id/textView_itemOverallSubjectInfoVertical_nowAttendance"
@@ -97,6 +98,15 @@
         android:text="100%(전체 출석률)"
         android:textSize="8sp"
         android:textStyle="bold"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_itemOverallSubjectInfoVertical_homeworkList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/imageView_itemOverallSubjectInfoVertical_attendanceImg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 
 
