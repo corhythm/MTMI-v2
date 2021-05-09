@@ -1,4 +1,4 @@
-package com.example.mtmimyeon_gitmi.recyclerview_item
+package com.example.mtmimyeon_gitmi.item
 
 data class ItemCampusPhoneNumber(
     val name: String,
