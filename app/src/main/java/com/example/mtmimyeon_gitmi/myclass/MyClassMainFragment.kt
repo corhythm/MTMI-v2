@@ -4,10 +4,12 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.mtmimyeon_gitmi.LmsAuthenticationDialog
+import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.FragmentMyClassMainBinding
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 
@@ -41,10 +43,14 @@ class MyClassMainFragment : Fragment() {
         // 강의별 게시판
         binding.textViewMyClassMainSubjectList.setOnClickListener {
             // 로컬에 저장된 LMS 계정 정보가 있을 떄
-            if (SharedPrefManager.getUserLmsId().isNotEmpty() && SharedPrefManager.getUserLmsPw().isNotEmpty()) {
+            if (SharedPrefManager.getUserLmsId().isNotEmpty() && SharedPrefManager.getUserLmsPw()
+                    .isNotEmpty()
+            ) {
                 // 강의별 게시판으로 이동
-                startActivity(Intent(context, MyClassSubjectListActivity::class.java),
-                    ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
+                startActivity(
+                    Intent(context, MyClassSubjectListActivity::class.java),
+                    ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle()
+                )
             } else {
                 val lmsAuthenticationDialog = LmsAuthenticationDialog(requireContext())
                 lmsAuthenticationDialog.show()
@@ -53,10 +59,14 @@ class MyClassMainFragment : Fragment() {
 
         // 시간표/과제
         binding.textViewMyClassMainTimetable.setOnClickListener {
-             if (SharedPrefManager.getUserLmsId().isNotEmpty() && SharedPrefManager.getUserLmsPw().isNotEmpty()) {
+            if (SharedPrefManager.getUserLmsId().isNotEmpty() && SharedPrefManager.getUserLmsPw()
+                    .isNotEmpty()
+            ) {
                 // 시간표, 과제함으로 이동
-                startActivity(Intent(context, MyClassTimetableActivity::class.java),
-                    ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
+                startActivity(
+                    Intent(context, MyClassTimetableActivity::class.java),
+                    ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle()
+                )
             } else {
                 val lmsAuthenticationDialog = LmsAuthenticationDialog(requireContext())
                 lmsAuthenticationDialog.show()

@@ -32,8 +32,8 @@ class LmsAuthenticationDialog(context: Context) : Dialog(context), ObserveCrawli
 
             val crawlingLmsInfo = CrawlingLmsInfo(
                 lmsAuthenticationDialog = this@LmsAuthenticationDialog,
-                myId = "60172121",
-                myPw = "ksu99038485!"
+                myId = binding.editTextLmsAuthenticationId.text.toString(),
+                myPw = binding.editTextLmsAuthenticationPw.text.toString()
             )
             crawlingLmsInfo.startCrawling()
         }

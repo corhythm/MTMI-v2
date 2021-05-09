@@ -2,6 +2,7 @@ package com.example.mtmimyeon_gitmi
 
 import android.app.ActivityOptions
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.transition.Slide
@@ -17,6 +18,7 @@ import com.example.mtmimyeon_gitmi.databinding.ActivityHomeBinding
 import com.example.mtmimyeon_gitmi.mbti.MbtiTestStartFragment
 import com.example.mtmimyeon_gitmi.myClass.MyClassMainFragment
 import com.example.mtmimyeon_gitmi.account.MyProfileActivity
+import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 import org.w3c.dom.Text
 
 class HomeActivity : AppCompatActivity() {
@@ -97,6 +99,9 @@ class HomeActivity : AppCompatActivity() {
                 Intent(this, MyProfileActivity::class.java).also {
                     startActivity(it, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
                 }
+            }
+            R.id.menu_toolBar_deleteAccount -> {
+                SharedPrefManager.clearAllData()
             }
         }
         return true

@@ -1,6 +1,8 @@
 package com.example.mtmimyeon_gitmi.myClass
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -188,22 +190,6 @@ class ItemSubjectInfoViewHolder(
         homeworkRecyclerAdapter.submit(itemSubjectInfo.homeworkList)
     }
 
-//    private fun setHomeworkRecycler(recyclerView: RecyclerView, homeworkList: ArrayList<Homework>) {
-//        val homeworkRecyclerAdapter = HomeworkRecyclerAdapter()
-//        homeworkRecyclerAdapter.submit(homeworkList)
-//        // 리사이클러뷰 초기화
-//        subjectInfoRecyclerAdapter = SubjectInfoRecyclerAdapter()
-//        binding.recyclerviewMyClassTimetableHomeworkList.apply {
-//            adapter = subjectInfoRecyclerAdapter
-//            layoutManager = LinearLayoutManager(
-//                this@MyClassTimetableActivity,
-//                LinearLayoutManager.VERTICAL,
-//                false
-//            )
-//            subjectInfoRecyclerAdapter.submit(itemSubjectInfoList)
-//        }
-//    }
-
 }
 
 // 과제 뷰홀더
@@ -235,12 +221,16 @@ class HomeworkRecyclerAdapter() : RecyclerView.Adapter<HomeworkViewHolder>() {
 // recyclerview viewHolder
 class HomeworkViewHolder(private val item: ItemSubjectHomeworkHorizontalBinding) :
     RecyclerView.ViewHolder(item.root) {
-
+    
     fun bind(homework: Homework) {
         item.textViewItemSubjectHomeworkHorizontalNumber.text = homework.order
         item.textViewItemSubjectHomeworkHorizontalTitle.text = homework.title
         item.textViewItemSubjectHomeworkHorizontalMyScoreValue.text = homework.myScore
         item.textViewItemSubjectHomeworkHorizontalTotalScoreValue.text = homework.totalScore
         item.textViewItemSubjectHomeworkHorizontalDeadline.text = homework.deadline
+
+        if (homework.onGoing == "진행중" && homework.isSubmitted == "미제출") {
+            item.root.setBackgroundResource(R.drawable.bg_rounded_corner_homework)
+        }
     }
 }

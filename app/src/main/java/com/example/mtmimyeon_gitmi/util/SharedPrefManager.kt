@@ -88,7 +88,7 @@ object SharedPrefManager {
 
         // 쉐어드 모든 데이터 삭제
         val accountShared = App.instance.getSharedPreferences(
-            SHARED_USER_LMS_INFO,
+            SHARED_USER_LMS_ACCOUNT,
             Context.MODE_PRIVATE
         ).edit().clear().apply()
 

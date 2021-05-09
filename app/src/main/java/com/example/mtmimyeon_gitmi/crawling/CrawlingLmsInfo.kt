@@ -46,6 +46,7 @@ class CrawlingLmsInfo(
 
     fun startCrawling() {
 
+        Log.d(TAG, "myId = $myId, myPW = $myPw")
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 withContext(Main) {
