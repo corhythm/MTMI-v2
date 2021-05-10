@@ -5,10 +5,15 @@ import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 
 class Database_M {
+
     private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private lateinit var  database: DatabaseReference
 
     //  회원가입 메소드 ( 정보 기입 필요한 )
 //    fun createEmail(
@@ -61,7 +66,7 @@ class Database_M {
         callback: Callback<Boolean>
     ) {  // -> 회원가입 메소드
         Log.d(" id and password", "$id, $pw")
-
+        database =Firebase.database.getReference("user")
         if (id.isEmpty() || pw.isEmpty()) {
             callback.onCallback(false)
             Toast.makeText(activity, "아이디 혹은 비밀번호를 입력해주세요.", Toast.LENGTH_LONG).show()
@@ -71,6 +76,8 @@ class Database_M {
                 .addOnCompleteListener(activity) {
                     if (it.isSuccessful) {
                         val user = firebaseAuth.currentUser
+                        val userdata = UserData(id,pw)
+                        database.child(user.uid).setValue(userdata)
                         callback.onCallback(true)
                         Log.d("createEmail: ", "Sign up Successful")//가입성공
                     } else {
