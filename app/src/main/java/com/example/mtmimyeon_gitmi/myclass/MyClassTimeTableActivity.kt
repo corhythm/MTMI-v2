@@ -3,9 +3,11 @@ package com.example.mtmimyeon_gitmi.myClass
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -231,6 +233,7 @@ class HomeworkViewHolder(private val item: ItemSubjectHomeworkHorizontalBinding)
 
         if (homework.onGoing == "진행중" && homework.isSubmitted == "미제출") {
             item.root.setBackgroundResource(R.drawable.bg_rounded_corner_homework)
+            item.viewItemSubjectHomeworkHorizontalDivider.visibility = View.INVISIBLE
         }
     }
 }

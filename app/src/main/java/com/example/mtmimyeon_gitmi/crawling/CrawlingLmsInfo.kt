@@ -1,7 +1,6 @@
 package com.example.mtmimyeon_gitmi.crawling
 
 import android.util.Log
-import com.example.mtmimyeon_gitmi.LmsAuthenticationDialog
 import com.example.mtmimyeon_gitmi.item.Homework
 import com.example.mtmimyeon_gitmi.item.ItemSubjectInfo
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
