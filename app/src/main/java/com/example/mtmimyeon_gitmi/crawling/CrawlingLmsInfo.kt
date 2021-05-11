@@ -3,6 +3,8 @@ package com.example.mtmimyeon_gitmi.crawling
 import android.util.Log
 import com.example.mtmimyeon_gitmi.item.Homework
 import com.example.mtmimyeon_gitmi.item.ItemSubjectInfo
+import com.example.mtmimyeon_gitmi.util.AES128
+import com.example.mtmimyeon_gitmi.util.Secret
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -44,7 +46,6 @@ class CrawlingLmsInfo(
     }
 
     fun startCrawling() {
-
         Log.d(TAG, "myId = $myId, myPW = $myPw")
         CoroutineScope(Dispatchers.IO).launch {
             try {

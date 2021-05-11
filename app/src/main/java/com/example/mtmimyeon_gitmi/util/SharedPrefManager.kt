@@ -38,16 +38,23 @@ object SharedPrefManager {
             Context.MODE_PRIVATE
         ) // 쉐어드 에디터 가져오기
 
-        val editor = shared.edit() // 쉐어드 에디터 가져오기
+        val encryptedPw = AES128(Secret.USER_INFO_PASSWORD_KEY).encrypt(userPw)
 
-        editor.putString(KEY_USER_LMS_PW, userPw) // 쉐어드에 저장
+        val editor = shared.edit() // 쉐어드 에디터 가져오기
+        editor.putString(KEY_USER_LMS_PW, encryptedPw) // 쉐어드에 저장
         editor.apply() // 변경 사항 저장
     }
 
     fun getUserLmsPw(): String {
         val shared =
             App.instance.getSharedPreferences(SHARED_USER_LMS_ACCOUNT, Context.MODE_PRIVATE)
-        return shared.getString(KEY_USER_LMS_PW, "")!!
+
+        val encryptedPw = shared.getString(KEY_USER_LMS_PW, "")!!
+        Log.d("로그", "SharedPrefManager -getUserLmsPw() called / $encryptedPw")
+        if (encryptedPw != "") {
+            return AES128(Secret.USER_INFO_PASSWORD_KEY).decrypt(encryptedPw)
+        }
+        return encryptedPw
     }
 
     fun setUserLmsSubjectInfoList(itemSubjectInfoList: ArrayList<ItemSubjectInfo>) {
