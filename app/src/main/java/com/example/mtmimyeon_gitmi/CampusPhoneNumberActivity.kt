@@ -4,14 +4,13 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.databinding.ActivityCampusPhoneNumberBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemTelephoneBinding
-import com.example.mtmimyeon_gitmi.recyclerview_item.ItemCampusPhoneNumber
+import com.example.mtmimyeon_gitmi.item.ItemCampusPhoneNumber
 
 class CampusPhoneNumberActivity : AppCompatActivity(), CampusInfoClickedInterface {
     private lateinit var binding: ActivityCampusPhoneNumberBinding

@@ -1,4 +1,4 @@
-package com.example.mtmimyeon_gitmi.DB
+package com.example.mtmimyeon_gitmi.db
 
 import android.app.Activity
 import android.util.Log

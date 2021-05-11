@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import com.example.mtmimyeon_gitmi.DB.Database_M
+import com.example.mtmimyeon_gitmi.db.Database_M
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivitySignUpBinding
 import com.royrodriguez.transitionbutton.TransitionButton
@@ -30,24 +30,31 @@ class SignUpActivity : AppCompatActivity() {
 
             // Do your networking task or background work here.
             Handler().postDelayed(Runnable {
-                var DB_M=Database_M()
-
+                var DB_M = Database_M()
 
                 Log.d("id check : ", binding.editTextSignUpId.text.toString())
-                Log.d("pw check : ",binding.editTextSignUpPw.text.toString())
-                var db_id:String=binding.editTextSignUpId.text.toString()
-                var db_pw:String=binding.editTextSignUpPw.text.toString()
-                val isSuccessful: Boolean = DB_M.createEmail(binding.editTextSignUpId.text.toString(),binding.editTextSignUpPw.text.toString(),this)
+                Log.d("pw check : ", binding.editTextSignUpPw.text.toString())
+                var db_id: String = binding.editTextSignUpId.text.toString()
+                var db_pw: String = binding.editTextSignUpPw.text.toString()
+                val isSuccessful: Boolean = DB_M.createEmail(
+                    binding.editTextSignUpId.text.toString(),
+                    binding.editTextSignUpPw.text.toString(),
+                    this
+                )
 
                 // Choose a stop animation if your call was successful or not
                 if (isSuccessful) {
-                    binding.buttonSignUpGoToSignUp.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND
+                    binding.buttonSignUpGoToSignUp.stopAnimation(
+                        TransitionButton.StopAnimationStyle.EXPAND
                     ) {
                         Log.d("로그", binding.editTextSignUpConfirmPw.text.toString())
                         finish()
                     }
                 } else {
-                    binding.buttonSignUpGoToSignUp.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null)
+                    binding.buttonSignUpGoToSignUp.stopAnimation(
+                        TransitionButton.StopAnimationStyle.SHAKE,
+                        null
+                    )
                 }
             }, 300)
         }

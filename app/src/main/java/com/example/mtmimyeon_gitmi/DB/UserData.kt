@@ -1,4 +1,4 @@
-package com.example.mtmimyeon_gitmi.DB
+package com.example.mtmimyeon_gitmi.db
 
 data class UserData(
     var id: String,

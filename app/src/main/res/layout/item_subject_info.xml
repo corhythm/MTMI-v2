@@ -10,8 +10,7 @@
         android:layout_width="300dp"
         android:layout_height="20dp"
         android:fontFamily="@font/karla_regular"
-        android:text="시스템클라우드보안 - 조민경"
-        android:letterSpacing="0.4"
+        android:text="시스템클라우드보안(KME02103-0291)"
         android:textSize="15sp"
         android:textColor="@color/white"
         android:paddingStart="15dp"
@@ -21,13 +20,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView_item_subjectCode"
+        android:id="@+id/textView_item_professor"
         android:layout_width="200dp"
         android:layout_height="30dp"
-        android:text="KME02103-0281"
+        android:text="장희정"
         android:textSize="20sp"
+        android:letterSpacing="0.4"
         android:textColor="@color/white"
-        android:paddingStart="20dp"
+        android:paddingStart="10dp"
         android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="@id/textView_item_subjectName"
         app:layout_constraintTop_toBottomOf="@id/textView_item_subjectName" />
@@ -35,23 +35,23 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/textView_item_subjectCode"
+        app:layout_constraintStart_toEndOf="@id/textView_item_professor"
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/ic_item_go_subject"
         app:layout_constraintHorizontal_bias="0.9"
         android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toTopOf="@id/textView_item_subjectTime"
+        app:layout_constraintBottom_toTopOf="@id/textView_item_lectureTime"
         app:layout_constraintTop_toBottomOf="@id/textView_item_subjectName"/>
 
     <TextView
-        android:id="@+id/textView_item_subjectTime"
+        android:id="@+id/textView_item_lectureTime"
         android:layout_width="300dp"
         android:layout_height="30dp"
-        android:paddingStart="20dp"
-        app:layout_constraintTop_toBottomOf="@id/textView_item_subjectCode"
+        android:paddingStart="15dp"
+        app:layout_constraintTop_toBottomOf="@id/textView_item_professor"
         android:text="금(09:00-10:50), 수(10:00-10:50)"
         android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="@id/textView_item_subjectCode"/>
+        app:layout_constraintStart_toStartOf="@id/textView_item_professor"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

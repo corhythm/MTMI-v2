@@ -11,17 +11,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.databinding.FragmentHomeBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemMjuSiteBinding
-import com.example.mtmimyeon_gitmi.recyclerview_item.ItemMjuSite
+import com.example.mtmimyeon_gitmi.item.ItemMjuSite
 
-class HomeFragment private constructor() : Fragment(), MjuSiteClickedInterface {
+class HomeFragment: Fragment(), MjuSiteClickedInterface {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    companion object {
-        fun getInstance(): HomeFragment {
-            return HomeFragment()
-        }
-    }
+//    companion object {
+//        fun getInstance(): HomeFragment {
+//            return HomeFragment()
+//        }
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

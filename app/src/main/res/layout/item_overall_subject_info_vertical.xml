@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/textView_itemOverallSubjectInfoVertical_subjectName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        android:text="공학수학1(KME02103-0281)"
+        android:textSize="15sp"
+        android:fontFamily="@font/airbnb_cereal_medium"
+        android:gravity="center"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageView_itemOverallSubjectInfoVertical_professorImg"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/ic_my_class_main_subject_mail_to_professor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_itemOverallSubjectInfoVertical_subjectName"
+        app:civ_border_width="1dp"
+        android:layout_marginStart="30dp"/>
+    <TextView
+        android:id="@+id/textView_itemOverallSubjectInfoVertical_professorName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/imageView_itemOverallSubjectInfoVertical_professorImg"
+        app:layout_constraintTop_toTopOf="@id/imageView_itemOverallSubjectInfoVertical_professorImg"
+        app:layout_constraintBottom_toBottomOf="@id/imageView_itemOverallSubjectInfoVertical_professorImg"
+        android:text="소순태"
+        android:letterSpacing="0.3"
+        android:layout_marginStart="2dp"
+        android:textSize="10sp" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageView_itemOverallSubjectInfoVertical_lectureTimeImg"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/ic_item_clock"
+        app:layout_constraintTop_toBottomOf="@id/imageView_itemOverallSubjectInfoVertical_professorImg"
+        app:layout_constraintStart_toStartOf="@id/imageView_itemOverallSubjectInfoVertical_professorImg"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/textView_itemOverallSubjectInfoVertical_lectureTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/imageView_itemOverallSubjectInfoVertical_lectureTimeImg"
+        app:layout_constraintTop_toTopOf="@id/imageView_itemOverallSubjectInfoVertical_lectureTimeImg"
+        app:layout_constraintBottom_toBottomOf="@id/imageView_itemOverallSubjectInfoVertical_lectureTimeImg"
+        android:text="목(1300-1450),수(1300-1450)"
+        android:textSize="10sp"
+        android:layout_marginStart="4dp"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageView_itemOverallSubjectInfoVertical_attendanceImg"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/ic_item_attendance"
+        app:layout_constraintTop_toBottomOf="@id/textView_itemOverallSubjectInfoVertical_lectureTime"
+        app:layout_constraintStart_toStartOf="@id/imageView_itemOverallSubjectInfoVertical_lectureTimeImg"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/textView_itemOverallSubjectInfoVertical_nowAttendance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/imageView_itemOverallSubjectInfoVertical_attendanceImg"
+        app:layout_constraintTop_toTopOf="@id/imageView_itemOverallSubjectInfoVertical_attendanceImg"
+        app:layout_constraintBottom_toBottomOf="@id/imageView_itemOverallSubjectInfoVertical_attendanceImg"
+        android:text="92%"
+        android:textSize="10sp"
+        android:textColor="#EF0E0E"
+        android:layout_marginStart="3dp"/>
+
+    <TextView
+        android:id="@+id/textView_itemOverallSubjectInfoVertical_slash"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/textView_itemOverallSubjectInfoVertical_nowAttendance"
+        app:layout_constraintTop_toTopOf="@id/textView_itemOverallSubjectInfoVertical_nowAttendance"
+        app:layout_constraintBottom_toBottomOf="@id/textView_itemOverallSubjectInfoVertical_nowAttendance"
+        android:text=" / "/>
+
+    <TextView
+        android:id="@+id/textView_itemOverallSubjectInfoVertical_totalAttendance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/textView_itemOverallSubjectInfoVertical_slash"
+        app:layout_constraintTop_toTopOf="@id/textView_itemOverallSubjectInfoVertical_slash"
+        app:layout_constraintBottom_toBottomOf="@id/textView_itemOverallSubjectInfoVertical_slash"
+        android:text="100%(전체 출석률)"
+        android:textSize="8sp"
+        android:textStyle="bold"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_itemOverallSubjectInfoVertical_homeworkList"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintWidth_percent="0.7"
+        app:layout_constraintTop_toBottomOf="@id/imageView_itemOverallSubjectInfoVertical_attendanceImg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

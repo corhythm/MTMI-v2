@@ -6,36 +6,53 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
+        android:name=".util.App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@mipmap/ic_main"
+        android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MTMIMyeongiTMI">
-        <activity android:name=".myClass.MyClassSubjectBulletinBoardDetailsActivity" />
-        <activity android:name=".myClass.MyClassSubjectBulletinBoardWritingActivity" />
-        <activity android:name=".myClass.MyClassSubjectBulletinBoardActivity" />
-        <activity android:name=".MyChatListActivity" />
-        <activity android:name=".CopyrightActivity" />
-        <activity android:name=".account.MyProfileActivity" />
-        <activity android:name=".CampusPhoneNumberActivity" />
-        <activity android:name=".myClass.MyClassSubjectListActivity" />
-        <activity android:name=".myClass.MyClassTimeTableActivity" />
-        <activity android:name=".myClass.MyClassMailToProfessorActivity" />
+        android:theme="@style/Theme.MTMIMyeongiTMI"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".myClass.MyClassSubjectBulletinBoardDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".myClass.MyClassSubjectBulletinBoardWritingActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".myClass.MyClassSubjectBulletinBoardActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MyChatListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".CopyrightActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".account.MyProfileActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".CampusPhoneNumberActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".myClass.MyClassSubjectListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".myClass.MyClassTimetableActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".myClass.MyClassMailToProfessorActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".account.SignUpActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".account.LoginActivity" />
-        <activity
-            android:name=".GetStartedActivity"
-            android:label="MTMI"
-            android:theme="@style/Theme.MTMIMyeongiTMI.NoActionBar">
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HomeActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".account.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".GetStartedActivity"
+            android:label="MTMI"
+            android:theme="@style/Theme.MTMIMyeongiTMI.NoActionBar"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

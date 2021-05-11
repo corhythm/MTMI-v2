@@ -16,13 +16,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectListBinding
-import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBinding
-import com.example.mtmimyeon_gitmi.recyclerview_item.ItemSubject
+import com.example.mtmimyeon_gitmi.databinding.ItemSubjectInfoBinding
+import com.example.mtmimyeon_gitmi.item.ItemSubjectInfo
+import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 
 class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface {
     private lateinit var binding: ActivityMyClassSubjectListBinding
     private lateinit var subjectRecyclerAdapter: SubjectListRecyclerAdapter
-    private val itemSubjectList = ArrayList<ItemSubject>()
+    // SubjectInfo에 더 많은 정보가 있고, 당장은 이 액티비티에서 사용하는 값은 3개밖에 안 되지만,
+    // 추후에 더 사용할 수 있고, SubjectInfo를 이 액티비티에서만 사용하는 게 아니므로 우선은 이 리사이클러뷰 아이템도
+    // SubjectInfo의 정보를 이용해서 사용(별도의 아이템 클래스 생성 시, 중복되는 정보가 많으므로)
+    // 아이템이 많이 생성되면 퍼포먼스에 무리가 가겠지만, 수강 과목이 많아봐야 10개 내외이므로 퍼포먼스에는 크게 무리가 없다.
+    private var itemSubjectInfoList = ArrayList<ItemSubjectInfo>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,20 +37,7 @@ class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface 
     }
 
     private fun init() {
-        // 테스트 데이터 삽입
-        itemSubjectList.add(ItemSubject(0, "공학수학", "KME02103-0281", "금(09:00-1050), 수(10:00-10:50)"))
-        itemSubjectList.add(ItemSubject(1, "물리학실험1", "KME02113-0328", "금(09:00-1050), 수(10:00-10:50)"))
-        itemSubjectList.add(ItemSubject(2, "소프트웨어공학", "JEJ02447-0864", "금(09:00-1050), 수(10:00-10:50)"))
-        itemSubjectList.add(ItemSubject(3, "시스템클라우드보안", "JEJ02473-0868", "금(09:00-1050), 수(10:00-10:50)"))
-        itemSubjectList.add(ItemSubject(4, "운영체제", "JEJ03407-0854", "금(09:00-1050), 수(10:00-10:50)"))
-        itemSubjectList.add(ItemSubject(5, "인공지능", "JEJ02410-0858", "금(09:00-1050), 수(10:00-10:50)"))
-        itemSubjectList.add(ItemSubject(6, "팀프로젝트2", "JEJ02227-0842", "금(09:00-1050), 수(10:00-10:50)"))
-        itemSubjectList.add(ItemSubject(7, "팀프로젝트2", "JEJ02227-0842", "금(09:00-1050), 수(10:00-10:50)"))
-        itemSubjectList.add(ItemSubject(8, "팀프로젝트2", "JEJ02227-0842", "금(09:00-1050), 수(10:00-10:50)"))
-        itemSubjectList.add(ItemSubject(9, "팀프로젝트2", "JEJ02227-0842", "금(09:00-1050), 수(10:00-10:50)"))
-        itemSubjectList.add(ItemSubject(10, "팀프로젝트2", "JEJ02227-0842", "금(09:00-1050), 수(10:00-10:50)"))
-        itemSubjectList.add(ItemSubject(11, "팀프로젝트2", "JEJ02227-0842", "금(09:00-1050), 수(10:00-10:50)"))
-        itemSubjectList.add(ItemSubject(12, "팀프로젝트2", "JEJ02227-0842", "금(09:00-1050), 수(10:00-10:50)"))
+        itemSubjectInfoList = SharedPrefManager.getUserLmsSubjectInfoList() as ArrayList<ItemSubjectInfo>
 
         subjectRecyclerAdapter = SubjectListRecyclerAdapter(this)
         binding.recyclerviewMyClassSubjectListList.apply {
@@ -57,71 +49,73 @@ class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface 
             )
             addItemDecoration(SubjectRecyclerDecoration())
             //itemAnimator = DefaultItemAnimator()
-            subjectRecyclerAdapter.submit(itemSubjectList, this@MyClassSubjectListActivity)
+            subjectRecyclerAdapter.submit(itemSubjectInfoList, this@MyClassSubjectListActivity)
         }
 
     }
 
-    override fun itemClicked(idx: Int, subjectName: String) {
+    override fun itemClicked(idx: String, subjectName: String) {
         startActivity(Intent(this, MyClassSubjectBulletinBoardActivity::class.java))
     }
 }
 
 interface SubjectClickedInterface {
-    fun itemClicked(idx: Int, subjectName: String)
+    fun itemClicked(idx: String, subjectName: String)
 }
 
 // recyclerview adapter
-class SubjectListRecyclerAdapter() : RecyclerView.Adapter<SubjectViewHolder>() {
-    private lateinit var itemSubjectList: ArrayList<ItemSubject>
+class SubjectListRecyclerAdapter(private val subjectClickedInterface: SubjectClickedInterface) :
+    RecyclerView.Adapter<SubjectViewHolder>() {
+    private lateinit var itemSubjectInfoList: ArrayList<ItemSubjectInfo>
     private lateinit var mContext: Context
     private lateinit var gradientList: TypedArray
     private var count = 0
-    private lateinit var subjectClickedInterface: SubjectClickedInterface
-
-    constructor(subjectClickedInterface: SubjectClickedInterface) : this() {
-        this.subjectClickedInterface = subjectClickedInterface
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubjectViewHolder {
-        val binding = ItemSubjectBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemSubjectInfoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SubjectViewHolder(binding, this.subjectClickedInterface)
     }
 
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
-        holder.bind(itemSubjectList[position], mContext, gradientList.getResourceId(count++ % gradientList.length(), -1))
+        holder.bind(
+            itemSubjectInfoList[position],
+            mContext,
+            gradientList.getResourceId(count++ % gradientList.length(), -1)
+        )
         Log.d("로그", "${(count - 1) % gradientList.length()}")
     }
 
     override fun getItemCount(): Int {
-        return itemSubjectList.size
+        return itemSubjectInfoList.size
     }
 
-    fun submit(itemMjuSiteList: ArrayList<ItemSubject>, context: Context) {
-        this.itemSubjectList = itemMjuSiteList
+    fun submit(mjuSiteListInfoItem: ArrayList<ItemSubjectInfo>, context: Context) {
+        this.itemSubjectInfoList = mjuSiteListInfoItem
         this.mContext = context
         this.gradientList = mContext.resources.obtainTypedArray(R.array.gradientList)
     }
 }
 
 // recyclerview viewHolder
-class SubjectViewHolder(private val item: ItemSubjectBinding) : RecyclerView.ViewHolder(item.root) {
-    private lateinit var subjectClickedInterface: SubjectClickedInterface
-
-    constructor(item: ItemSubjectBinding, subjectClickedInterface: SubjectClickedInterface): this(item) {
-        this.subjectClickedInterface = subjectClickedInterface
-    }
+class SubjectViewHolder(
+    private val item: ItemSubjectInfoBinding,
+    private val subjectClickedInterface: SubjectClickedInterface
+) : RecyclerView.ViewHolder(item.root) {
 
     @SuppressLint("ResourceType")
-    fun bind(itemSubject: ItemSubject, context: Context, drawableId: Int) {
-        item.textViewItemSubjectName.text = itemSubject.subjectName
-        item.textViewItemSubjectCode.text = itemSubject.subjectCode
-        item.textViewItemSubjectTime.text = itemSubject.subjectTime
+    fun bind(itemSubjectInfo: ItemSubjectInfo, context: Context, drawableId: Int) {
+        item.textViewItemSubjectName.text = itemSubjectInfo.subjectName
+        item.textViewItemProfessor.text = itemSubjectInfo.professorName
+        item.textViewItemLectureTime.text = itemSubjectInfo.lectureTime
         item.root.background = ContextCompat.getDrawable(context, drawableId)
+        Log.d("로그", "itemSubjectInto.subjectCode = ${itemSubjectInfo.subjectCode}")
 
         // 게시판 뷰 클릭했을 때, 해당 과목에 해당하는 게시판으로 이동
         item.root.setOnClickListener {
-            this.subjectClickedInterface.itemClicked(itemSubject.subjectIdx, itemSubject.subjectName)
+            this.subjectClickedInterface.itemClicked(
+                itemSubjectInfo.subjectCode,
+                itemSubjectInfo.subjectName
+            )
         }
     }
 }

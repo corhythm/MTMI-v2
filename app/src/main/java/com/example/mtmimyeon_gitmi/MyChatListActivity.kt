@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyChatListBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemChatBinding
-import com.example.mtmimyeon_gitmi.recyclerview_item.ItemChat
+import com.example.mtmimyeon_gitmi.item.ItemChat
 
 class MyChatListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyChatListBinding

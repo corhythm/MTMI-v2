@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectBulletinBoardDetailsBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBulletinBoardCommentBinding
-import com.example.mtmimyeon_gitmi.recyclerview_item.ItemSubjectBulletinBoardComment
+import com.example.mtmimyeon_gitmi.item.ItemSubjectBulletinBoardComment
 
 class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyClassSubjectBulletinBoardDetailsBinding
