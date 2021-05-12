@@ -109,6 +109,10 @@ class DatabaseManager {
                 }
             }
     }
+    fun writePost(subjectBoard: String,title: String,day: String,content: String,writerUid: String){
+        database = Firebase.database.getReference("board")
+//        database.child("subjectBoard").
+    }
 
     //    fun makeRoom(userId: String){
 //        database=Firebase.database.getReference("user")
