@@ -19,14 +19,26 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="w" />
 
+    <View
+        android:id="@+id/guideline"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:visibility="invisible"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintTop_toBottomOf="@id/textView_itemSendChatting_sendMsg"
+        app:layout_constraintEnd_toEndOf="@id/textView_itemSendChatting_sendMsg"
+        app:layout_constraintStart_toStartOf="@id/textView_itemSendChatting_sendMsg"/>
+
     <TextView
         android:id="@+id/textView_itemSendChatting_timeStamp"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         tools:text="2021-05-13 화"
         android:textSize="11sp"
+
+        android:layout_marginTop="2dp"
         android:gravity="end"
-        app:layout_constraintEnd_toStartOf="@id/textView_itemSendChatting_sendMsg"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@id/textView_itemSendChatting_sendMsg"
         android:paddingStart="5dp"/>
 
