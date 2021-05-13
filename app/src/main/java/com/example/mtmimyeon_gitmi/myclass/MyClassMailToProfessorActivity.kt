@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassMailToProfessorBinding
 import com.marozzi.roundbutton.RoundButton
 
@@ -91,6 +92,11 @@ class MyClassMailToProfessorActivity : AppCompatActivity() {
         professorList.add("도날드 도람푸")
 
         binding.spinnerMyClassMailToProfSelectMail.setItem(professorList)
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
     }
 
 

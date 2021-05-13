@@ -131,6 +131,11 @@ class MyClassTimetableActivity : AppCompatActivity() {
             else -> 0
         }
     }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
+    }
 }
 
 class SubjectInfoRecyclerAdapter(private val mContext: Context) :

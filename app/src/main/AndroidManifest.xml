@@ -14,13 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MTMIMyeongiTMI"
         android:usesCleartextTraffic="true">
-        <activity android:name=".chatting.ChattingRoomDetailsActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".chatting.ChattingRoomDetailsActivity" />
         <activity
             android:name=".myClass.MyClassSubjectBulletinBoardDetailsActivity"
             android:screenOrientation="portrait" />
@@ -66,7 +60,11 @@
             android:label="MTMI"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MTMIMyeongiTMI.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

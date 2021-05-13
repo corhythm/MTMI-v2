@@ -59,7 +59,9 @@ class HomeFragment: Fragment(), MjuSiteClickedInterface {
             "myicap" -> { }
             "phone" -> {
                 // test code 추후에 수정
-                (requireContext() as HomeActivity).startActivity(Intent(requireContext(), CampusPhoneNumberActivity::class.java))
+                requireActivity().startActivity(Intent(requireContext(), CampusPhoneNumberActivity::class.java))
+                requireActivity().overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
+
             }
             "ucheck" -> { }
             "기숙사" -> { }

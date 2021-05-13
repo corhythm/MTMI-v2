@@ -53,8 +53,17 @@ class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface 
 
     }
 
+    // 과목 게시판으로 이동
     override fun itemClicked(idx: String, subjectName: String) {
-        startActivity(Intent(this, MyClassSubjectBulletinBoardActivity::class.java))
+        Intent(this, MyClassSubjectBulletinBoardActivity::class.java).also {
+            startActivity(it)
+            overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
+        }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
     }
 }
 

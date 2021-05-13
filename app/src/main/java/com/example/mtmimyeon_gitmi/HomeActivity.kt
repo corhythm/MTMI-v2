@@ -98,6 +98,7 @@ class HomeActivity : AppCompatActivity() {
 //                startActivity(Intent(this, MyProfileActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
                 Intent(this, MyProfileActivity::class.java).also {
                     startActivity(it, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+                    overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
                 }
             }
             R.id.menu_toolBar_deleteAccount -> {

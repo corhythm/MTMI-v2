@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.chatting.ChattingRoomDetailsActivity
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectBulletinBoardDetailsBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBulletinBoardCommentBinding
@@ -23,13 +24,6 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
     private var isLiked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        with(window) { // activity 옆으로 이동 애니메이션
-            requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
-            // set an slide transition
-            enterTransition = Slide(Gravity.END)
-            exitTransition = Slide(Gravity.START)
-        }
-
         super.onCreate(savedInstanceState)
         binding = ActivityMyClassSubjectBulletinBoardDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -75,8 +69,14 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
     override fun sendMessageClicked() {
         // 댓글 단 사람들 중에 채팅 보낼 때
         Intent(this, ChattingRoomDetailsActivity::class.java).also {
-            startActivity(it, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+            startActivity(it)
+            overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
     }
 }
 

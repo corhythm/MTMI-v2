@@ -39,12 +39,24 @@ class CampusPhoneNumberActivity : AppCompatActivity(), CampusInfoClickedInterfac
 
     override fun setPhoneNumberClicked(phoneNumber: String) {
         // 리사이클러 뷰 내의 전화번호 textview 클릭 시, 전화앱으로 연결
-        startActivity(Intent(Intent.ACTION_DIAL, Uri.parse(phoneNumber)))
+        Intent(Intent.ACTION_DIAL, Uri.parse(phoneNumber)).also {
+            startActivity(it)
+            overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
+        }
     }
 
     override fun setSiteUrlClicked(siteUrl: String) {
         // 리사이클러 뷰 내의 사이트 URL 클릭 시, 디바이스 내 브라우저 앱으려 연결
-        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(siteUrl)))
+        Intent(Intent.ACTION_VIEW, Uri.parse(siteUrl)).also {
+            startActivity(it)
+            overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
+        }
+    }
+
+    // slide animation set
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
     }
 }
 

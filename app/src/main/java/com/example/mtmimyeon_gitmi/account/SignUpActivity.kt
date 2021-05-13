@@ -49,6 +49,7 @@ class SignUpActivity : AppCompatActivity() {
                     ) {
                         Log.d("로그", binding.editTextSignUpConfirmPw.text.toString())
                         finish()
+                        overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
                     }
                 } else {
                     binding.buttonSignUpGoToSignUp.stopAnimation(
@@ -58,6 +59,11 @@ class SignUpActivity : AppCompatActivity() {
                 }
             }, 300)
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
     }
 
 

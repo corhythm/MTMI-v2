@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityChattingRoomDetailsBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemReceiveChattingBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSendChattingBinding
@@ -26,7 +27,6 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
     }
 
     private fun init() {
-
         val chattingDataList = ArrayList<ChattingData>()
         this.chattingRoomDetailsRecyclerAdapter =
             ChattingRoomDetailsRecyclerAdapter(chattingDataList)
@@ -114,10 +114,14 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
             )
         )
 
-
         binding.recyclerViewActivityChattingRoomMessageList.apply {
             adapter = chattingRoomDetailsRecyclerAdapter
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
     }
 }
 
