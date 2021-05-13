@@ -53,6 +53,8 @@ interface CampusInfoClickedInterface {
     fun setSiteUrlClicked(siteUrl: String) // 사이트 URL TextView 클릭했을 때, 다른 브라우저 앱으로 연결
 }
 
+
+// recyclerview item
 data class ItemCampusPhoneNumber(
     val name: String,
     val location: String,

@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.mtmimyeon_gitmi.CopyrightActivity
-import com.example.mtmimyeon_gitmi.chatting.MyChatListActivity
+import com.example.mtmimyeon_gitmi.chatting.ChattingRoomListActivity
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyProfileBinding
 
 class MyProfileActivity : AppCompatActivity() {
@@ -22,7 +22,7 @@ class MyProfileActivity : AppCompatActivity() {
         }
 
         binding.textViewMyProfileGoToChat.setOnClickListener {
-            startActivity(Intent(this, MyChatListActivity::class.java))
+            startActivity(Intent(this, ChattingRoomListActivity::class.java))
         }
     }
 }

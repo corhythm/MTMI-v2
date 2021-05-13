@@ -20,7 +20,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".myClass.MyClassSubjectBulletinBoardActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".MyChatListActivity"
+        <activity android:name=".chatting.ChattingRoomListActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".CopyrightActivity"
             android:screenOrientation="portrait"/>

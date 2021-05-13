@@ -16,12 +16,6 @@ class HomeFragment: Fragment(), MjuSiteClickedInterface {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-//    companion object {
-//        fun getInstance(): HomeFragment {
-//            return HomeFragment()
-//        }
-//    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
