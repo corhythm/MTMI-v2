@@ -18,7 +18,7 @@
         <!-- Google MDC buttons it may be FAB or MDC Buttons-->
 <!--        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>-->
         <!-- font -->
-        <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
+<!--        <item name="android:textViewStyle">@style/customTextViewFontStyle</item>-->
         <item name="android:buttonStyle">@style/customButtonFontStyle</item>
         <item name="android:editTextStyle">@style/customEditTextFontStyle</item>
         <item name="android:radioButtonStyle">@style/customRadioButtonFontStyle</item>
@@ -37,4 +37,8 @@
     </style>
     <style name="Theme.MTMIMyeongiTMI.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.MTMIMyeongiTMI.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
+        <item name="cornerSize">10%</item>
+    </style>
 </resources>

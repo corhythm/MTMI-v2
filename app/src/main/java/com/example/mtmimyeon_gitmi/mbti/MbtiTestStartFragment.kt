@@ -11,26 +11,18 @@ import com.example.mtmimyeon_gitmi.databinding.FragmentMbtiTestStartBinding
 import com.marozzi.roundbutton.RoundButton
 
 
-public class MbtiTestStartFragment private constructor() : Fragment() {
+public class MbtiTestStartFragment: Fragment() {
     private var _binding: FragmentMbtiTestStartBinding? = null
 
     // This property is only valid between onCreateView and OnDestroyView
     private val binding get() = _binding!!
-
-    companion object {
-        private var INSTANCE: MbtiTestStartFragment? = null
-        fun getInstance(): MbtiTestStartFragment {
-            if (INSTANCE == null) INSTANCE = MbtiTestStartFragment()
-            return INSTANCE!!
-        }
-    }
 
     // 뷰가 생성되었을 때, 프래그먼트와 레이아웃 연결
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMbtiTestStartBinding.inflate(inflater, container, false)
         init()
         return binding.root
@@ -47,7 +39,7 @@ public class MbtiTestStartFragment private constructor() : Fragment() {
                 binding.buttonTestStartGoToTestStart.stopAnimation()
                 binding.buttonTestStartGoToTestStart.setResultState(RoundButton.ResultState.SUCCESS)
                 binding.buttonTestStartGoToTestStart.revertAnimation()
-                (requireActivity() as HomeActivity).replaceFragment(MbtiTestHomeFragment.getInstance())
+                (requireActivity() as HomeActivity).replaceFragment(MbtiTestHomeFragment())
             }, 1500)
         }
     }

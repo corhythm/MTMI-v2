@@ -55,8 +55,8 @@
         android:id="@+id/frameLayout_home_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="60dp"/>
+        android:layout_marginTop="55dp"
+        android:layout_marginBottom="55dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton_home"

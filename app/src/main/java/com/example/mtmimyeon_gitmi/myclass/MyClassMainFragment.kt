@@ -3,27 +3,20 @@ package com.example.mtmimyeon_gitmi.myClass
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.mtmimyeon_gitmi.crawling.LmsAuthenticationDialog
 import com.example.mtmimyeon_gitmi.databinding.FragmentMyClassMainBinding
+import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 
-class MyClassMainFragment private constructor() : Fragment() {
+class MyClassMainFragment : Fragment() {
     private var _binding: FragmentMyClassMainBinding? = null
 
     // This property is only valid between onCreateView and OnDestroyView
     private val binding get() = _binding!!
 
-    companion object {
-        private var INSTANCE: MyClassMainFragment? = null
-        fun getInstance(): MyClassMainFragment{
-            Log.d("로그", "MyClassMainFragment -getInstance() called / $INSTANCE")
-            if(INSTANCE == null) INSTANCE = MyClassMainFragment()
-            return INSTANCE!!
-        }
-    }
 
     // 뷰가 생성되었을 때, 프래그먼트와 레이아웃 연결
     override fun onCreateView(
@@ -44,16 +37,47 @@ class MyClassMainFragment private constructor() : Fragment() {
     }
 
     private fun init() {
-        binding.textViewMyClassMainTimetable.setOnClickListener {
-            startActivity(Intent(context, MyClassTimeTableActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
-        }
 
-        binding.textViewMyClassMainProfessorToMail.setOnClickListener {
-            startActivity(Intent(context, MyClassMailToProfessorActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
-        }
-
+        // 강의별 게시판
         binding.textViewMyClassMainSubjectList.setOnClickListener {
-            startActivity(Intent(context, MyClassSubjectListActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
+            // 로컬에 저장된 LMS 계정 정보가 있을 떄
+            if (SharedPrefManager.getUserLmsId().isNotEmpty() && SharedPrefManager.getUserLmsPw()
+                    .isNotEmpty()
+            ) {
+                // 강의별 게시판으로 이동
+                startActivity(
+                    Intent(context, MyClassSubjectListActivity::class.java),
+                    ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle()
+                )
+            } else {
+                val lmsAuthenticationDialog = LmsAuthenticationDialog(requireContext())
+                lmsAuthenticationDialog.show()
+            }
+        }
+
+        // 시간표/과제
+        binding.textViewMyClassMainTimetable.setOnClickListener {
+            if (SharedPrefManager.getUserLmsId().isNotEmpty() && SharedPrefManager.getUserLmsPw()
+                    .isNotEmpty()
+            ) {
+                // 시간표, 과제함으로 이동
+                startActivity(
+                    Intent(context, MyClassTimetableActivity::class.java),
+                    ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle()
+                )
+            } else {
+                val lmsAuthenticationDialog = LmsAuthenticationDialog(requireContext())
+                lmsAuthenticationDialog.show()
+            }
+        }
+
+        // 교슈님 요청 메일(가이드)
+        binding.textViewMyClassMainProfessorToMail.setOnClickListener {
+            startActivity(
+                Intent(context, MyClassMailToProfessorActivity::class.java),
+                ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle()
+            )
         }
     }
+
 }

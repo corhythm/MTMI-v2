@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectBulletinBoardBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBulletinBoardBinding
-import com.example.mtmimyeon_gitmi.recyclerview_item.ItemSubjectBulletinBoard
 
 class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardClickInterface {
     private lateinit var binding: ActivityMyClassSubjectBulletinBoardBinding
@@ -68,6 +67,16 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
         }
     }
 }
+
+data class ItemSubjectBulletinBoard(
+    val idx: Int,
+    val title: String,
+    val content: String,
+    val date: String,
+    val writer: String,
+    val chatNum: String
+)
+
 
 class SubjectBulletinBoardRecyclerAdapter() : RecyclerView.Adapter<SubjectBulletinBoardViewHolder>() {
     private lateinit var itemSubjectBulletinBoardList: ArrayList<ItemSubjectBulletinBoard>
