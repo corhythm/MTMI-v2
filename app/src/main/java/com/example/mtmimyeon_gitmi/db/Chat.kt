@@ -1,7 +1,9 @@
 package com.example.mtmimyeon_gitmi.db
 
-data class Chat(var chatRoomId: Int) {
+data class Chat(var chatRoomId: String,var sendUser: String,var receiveUser: String) {
     init {
         this.chatRoomId = chatRoomId //채팅룸 id
+        this.sendUser = sendUser
+        this.receiveUser = receiveUser
     }
 }

@@ -124,8 +124,17 @@ class DatabaseManager {
 //        database=Firebase.database.getReference("chatRoom")
 //        database.setValue()
 //    }
+    fun makeChatRoom(sendUser: String,receiveUser: String,callback: Callback<Boolean>){
+        database=Firebase.database.getReference("chat")
+        var newChat = Chat(sendUser+"-"+receiveUser,sendUser,receiveUser)
+        database.child(newChat.chatRoomId).setValue(newChat).addOnSuccessListener {
+            callback.onCallback(true)
+        }.addOnFailureListener {
+            callback.onCallback(false)
+        }
+    }
     fun sendMessage(chatRoomId: Int, message: String,time: Int, userId: String) {
-        val chat_message = ChatMessage(chatRoomId, userId,message, time)
+        val chat_message = ChatMessage(chatRoomId, userId,message)
         database = Firebase.database.getReference("chatRoom")
         database.child(chatRoomId.toString()).setValue(chat_message)
     }
