@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.mtmimyeon_gitmi.CopyrightActivity
-import com.example.mtmimyeon_gitmi.MyChatListActivity
+import com.example.mtmimyeon_gitmi.chatting.MyChatListActivity
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyProfileBinding
 
 class MyProfileActivity : AppCompatActivity() {

@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectBulletinBoardDetailsBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBulletinBoardCommentBinding
-import com.example.mtmimyeon_gitmi.item.ItemSubjectBulletinBoardComment
 
 class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyClassSubjectBulletinBoardDetailsBinding
@@ -75,6 +74,16 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity() {
         }
     }
 }
+
+
+// recyclerview item
+data class ItemSubjectBulletinBoardComment(
+    val idx: Int,
+    val name: String,
+    val commentContent: String,
+    val profileImgUrl: String,
+    var date: String
+)
 
 class SubjectBulletinBoardCommentRecyclerAdapter() :
     RecyclerView.Adapter<SubjectBulletinBoardCommentViewHolder>() {

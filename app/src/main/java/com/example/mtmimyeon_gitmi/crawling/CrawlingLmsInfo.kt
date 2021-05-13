@@ -1,8 +1,8 @@
 package com.example.mtmimyeon_gitmi.crawling
 
 import android.util.Log
-import com.example.mtmimyeon_gitmi.item.Homework
-import com.example.mtmimyeon_gitmi.item.ItemSubjectInfo
+import com.example.mtmimyeon_gitmi.myClass.Homework
+import com.example.mtmimyeon_gitmi.myClass.ItemSubjectInfo
 import com.example.mtmimyeon_gitmi.util.AES128
 import com.example.mtmimyeon_gitmi.util.Secret
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
@@ -266,7 +266,7 @@ class CrawlingLmsInfo(
                     )
                     lmsAuthenticationDialog.dismiss()
                     // 쉐어드에 저장된 모든 데이터 삭제
-                    SharedPrefManager.clearAllData()
+                    //SharedPrefManager.clearAllData()
                 }
             }
 

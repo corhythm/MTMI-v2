@@ -2,7 +2,7 @@ package com.example.mtmimyeon_gitmi.util
 
 import android.content.Context
 import android.util.Log
-import com.example.mtmimyeon_gitmi.item.ItemSubjectInfo
+import com.example.mtmimyeon_gitmi.myClass.ItemSubjectInfo
 import com.google.gson.Gson
 
 object SharedPrefManager {
