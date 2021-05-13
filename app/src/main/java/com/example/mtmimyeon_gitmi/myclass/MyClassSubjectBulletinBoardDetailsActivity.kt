@@ -1,22 +1,35 @@
 package com.example.mtmimyeon_gitmi.myClass
 
 import android.animation.ValueAnimator
+import android.app.ActivityOptions
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.transition.Slide
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.Window
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mtmimyeon_gitmi.chatting.ChattingRoomDetailsActivity
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectBulletinBoardDetailsBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBulletinBoardCommentBinding
 
-class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity() {
+class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMessageClickInterface {
     private lateinit var binding: ActivityMyClassSubjectBulletinBoardDetailsBinding
     private val itemSubjectBulletinBoardCommentList = ArrayList<ItemSubjectBulletinBoardComment>()
     private lateinit var subjectBulletinBoardCommentRecyclerAdapter: SubjectBulletinBoardCommentRecyclerAdapter
     private var isLiked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        with(window) { // activity 옆으로 이동 애니메이션
+            requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
+            // set an slide transition
+            enterTransition = Slide(Gravity.END)
+            exitTransition = Slide(Gravity.START)
+        }
+
         super.onCreate(savedInstanceState)
         binding = ActivityMyClassSubjectBulletinBoardDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -37,30 +50,9 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity() {
             )
         }
 
-        // 좋아요 버튼 클릭했을 때, DB에 count++하고 하이라이트 표시해줘야 함
-        binding.lottieButtonMyClassSubjectBulletinBoardDetailsLike.setOnClickListener {
-            if (!this.isLiked) { // 좋아요 상태가 아닐 때
-                val animator = ValueAnimator.ofFloat(0f, 1f).setDuration(1500)
-                animator.addUpdateListener {
-                    this.binding.lottieButtonMyClassSubjectBulletinBoardDetailsLike.progress =
-                        animator.animatedValue as Float
-                }
-                this.isLiked = true
-                animator.start()
-            } else { // 좋아요 상태일 때
-                val animator = ValueAnimator.ofFloat(0.5f, 1f).setDuration(300)
-                animator.addUpdateListener {
-                    this.binding.lottieButtonMyClassSubjectBulletinBoardDetailsLike.progress =
-                        animator.animatedValue as Float
-                }
-                this.isLiked = false
-                animator.start()
-            }
-        }
-
-
         this.subjectBulletinBoardCommentRecyclerAdapter =
-            SubjectBulletinBoardCommentRecyclerAdapter()
+            SubjectBulletinBoardCommentRecyclerAdapter(this.itemSubjectBulletinBoardCommentList, this)
+
         binding.recyclerviewMyClassSubjectBulletinBoardCommentList.apply {
             adapter = subjectBulletinBoardCommentRecyclerAdapter
             layoutManager = LinearLayoutManager(
@@ -70,9 +62,26 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity() {
             )
             addItemDecoration(SubjectRecyclerDecoration())
             //itemAnimator = DefaultItemAnimator()
-            subjectBulletinBoardCommentRecyclerAdapter.submit(itemSubjectBulletinBoardCommentList)
+        }
+
+        // 게시글 작성자에게 메시지 보내기, 추후 userIdx 같은 값 추자적으로 보낼 것
+        binding.imageViewMyClassSubjectBulletinBoardDetailsMessage.setOnClickListener {
+            Intent(this, ChattingRoomDetailsActivity::class.java).also {
+                startActivity(it, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+            }
         }
     }
+
+    override fun sendMessageClicked() {
+        // 댓글 단 사람들 중에 채팅 보낼 때
+        Intent(this, ChattingRoomDetailsActivity::class.java).also {
+            startActivity(it, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+        }
+    }
+}
+
+interface sendMessageClickInterface { // 댓글 단 사람들과 채팅
+    fun sendMessageClicked()
 }
 
 
@@ -85,9 +94,10 @@ data class ItemSubjectBulletinBoardComment(
     var date: String
 )
 
-class SubjectBulletinBoardCommentRecyclerAdapter() :
-    RecyclerView.Adapter<SubjectBulletinBoardCommentViewHolder>() {
-    private lateinit var itemSubjectBulletinBoardCommentList: ArrayList<ItemSubjectBulletinBoardComment>
+class SubjectBulletinBoardCommentRecyclerAdapter(
+    private val itemSubjectBulletinBoardCommentList: ArrayList<ItemSubjectBulletinBoardComment>,
+    private val sendMessageClickInterface: sendMessageClickInterface
+) : RecyclerView.Adapter<SubjectBulletinBoardCommentViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -98,7 +108,7 @@ class SubjectBulletinBoardCommentRecyclerAdapter() :
             parent,
             false
         )
-        return SubjectBulletinBoardCommentViewHolder(binding)
+        return SubjectBulletinBoardCommentViewHolder(binding, this.sendMessageClickInterface)
     }
 
     override fun onBindViewHolder(holder: SubjectBulletinBoardCommentViewHolder, position: Int) {
@@ -109,21 +119,23 @@ class SubjectBulletinBoardCommentRecyclerAdapter() :
         return itemSubjectBulletinBoardCommentList.size
     }
 
-    fun submit(itemSubjectBulletinBoardCommentList: ArrayList<ItemSubjectBulletinBoardComment>) {
-        this.itemSubjectBulletinBoardCommentList = itemSubjectBulletinBoardCommentList
-    }
 }
 
 // recyclerview viewHolder
-class SubjectBulletinBoardCommentViewHolder(private val item: ItemSubjectBulletinBoardCommentBinding) :
-    RecyclerView.ViewHolder(item.root) {
-    private var ind = -1
+class SubjectBulletinBoardCommentViewHolder(
+    private val item: ItemSubjectBulletinBoardCommentBinding,
+    private val sendMessageClickInterface: sendMessageClickInterface
+) : RecyclerView.ViewHolder(item.root) {
 
     fun bind(itemSubjectBulletinBoard: ItemSubjectBulletinBoardComment) {
-        // img는 glider로 설정
+        // img는 glide로 설정
         item.textViewItemSubjectBulletinBoardCommentUserName.text = itemSubjectBulletinBoard.name
-        item.textViewItemSubjectBulletinBoardCommentCommentContent.text = itemSubjectBulletinBoard.commentContent
+        item.textViewItemSubjectBulletinBoardCommentCommentContent.text =
+            itemSubjectBulletinBoard.commentContent
         item.textViewItemSubjectBulletinBoardCommentDate.text = itemSubjectBulletinBoard.date
 
+        item.imageViewItemSubjectBulletinBoardCommentMessage.setOnClickListener {
+            this.sendMessageClickInterface.sendMessageClicked()
+        }
     }
 }

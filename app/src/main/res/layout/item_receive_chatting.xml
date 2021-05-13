@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageView_itemReceiveChatting_profileImg"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_my_class_main_subject_mail_to_professor"
+        app:civ_border_width="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/black" />
+
+    <TextView
+        android:id="@+id/textView_itemReceiveChatting_receiverName"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginTop="5dp"
+        android:paddingStart="5dp"
+        android:text="강성욱"
+        app:layout_constraintStart_toEndOf="@id/imageView_itemReceiveChatting_profileImg"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_itemReceiveChatting_receiveMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_send_message"
+        android:maxWidth="250dp"
+        android:padding="16dp"
+        android:textColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="@id/textView_itemReceiveChatting_receiverName"
+        app:layout_constraintTop_toBottomOf="@id/textView_itemReceiveChatting_receiverName"
+        tools:text="Salut les amis j'espere que vous aller bien, mois ca je cerhcuer comprendre" />
+
+    <TextView
+        android:id="@+id/textView_itemReceiveChatting_timeStamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="11sp"
+        app:layout_constraintStart_toEndOf="@id/textView_itemReceiveChatting_receiveMsg"
+        app:layout_constraintTop_toBottomOf="@id/textView_itemReceiveChatting_receiveMsg"
+        tools:text="2021-05-13 화" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
