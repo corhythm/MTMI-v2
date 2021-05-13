@@ -74,7 +74,7 @@ class DatabaseManager {
                 .addOnCompleteListener(activity) {
                     if (it.isSuccessful) {
                         val user = firebaseAuth.currentUser
-                        val userdata = UserData(id, pw)
+                        val userdata = UserData(id, pw,null)
                         database.child(user.uid).setValue(userdata)
                         callback.onCallback(true)
                         Log.d("createEmail: ", "Sign up Successful")//가입성공
@@ -109,8 +109,12 @@ class DatabaseManager {
                 }
             }
     }
-    fun writePost(subjectBoard: String,title: String,day: String,content: String,writerUid: String){
+    fun writePost(subjectCode: String,subjectBoard: String,title: String,day: String,content: String,writerUid: String){
+        var userUid=firebaseAuth.currentUser.uid
+//        var
+//        var board=BoardSubject(subjectCode,title,day,content
         database = Firebase.database.getReference("board")
+//        database.child(subjectBoard).
 //        database.child("subjectBoard").
     }
 
@@ -120,9 +124,9 @@ class DatabaseManager {
 //        database=Firebase.database.getReference("chatRoom")
 //        database.setValue()
 //    }
-    fun sendMessage(messageId: Int, message: String, time: Int, userId: String) {
-        val chat_message = ChatMessage(message, time, userId)
+    fun sendMessage(chatRoomId: Int, message: String,time: Int, userId: String) {
+        val chat_message = ChatMessage(chatRoomId, userId,message, time)
         database = Firebase.database.getReference("chatRoom")
-        database.child(messageId.toString()).setValue(chat_message)
+        database.child(chatRoomId.toString()).setValue(chat_message)
     }
 }
