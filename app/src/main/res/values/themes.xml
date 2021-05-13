@@ -37,4 +37,8 @@
     </style>
     <style name="Theme.MTMIMyeongiTMI.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.MTMIMyeongiTMI.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
+        <item name="cornerSize">10%</item>
+    </style>
 </resources>

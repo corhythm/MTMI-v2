@@ -8,51 +8,65 @@
     <application
         android:name=".util.App"
         android:allowBackup="true"
-        android:label="@string/app_name"
         android:icon="@mipmap/ic_main"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTMIMyeongiTMI"
         android:usesCleartextTraffic="true">
-        <activity android:name=".myClass.MyClassSubjectBulletinBoardDetailsActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".myClass.MyClassSubjectBulletinBoardWritingActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".myClass.MyClassSubjectBulletinBoardActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MyChatListActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".CopyrightActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".account.MyProfileActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".CampusPhoneNumberActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".myClass.MyClassSubjectListActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".myClass.MyClassTimetableActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".myClass.MyClassMailToProfessorActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".account.SignUpActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".HomeActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".chatting.ChattingRoomDetailsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".account.LoginActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".myClass.MyClassSubjectBulletinBoardDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".myClass.MyClassSubjectBulletinBoardWritingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".myClass.MyClassSubjectBulletinBoardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatting.ChattingRoomListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CopyrightActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".account.MyProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CampusPhoneNumberActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".myClass.MyClassSubjectListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".myClass.MyClassTimetableActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".myClass.MyClassMailToProfessorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".account.SignUpActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".account.LoginActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".GetStartedActivity"
             android:label="MTMI"
-            android:theme="@style/Theme.MTMIMyeongiTMI.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MTMIMyeongiTMI.NoActionBar">
+
         </activity>
     </application>
 

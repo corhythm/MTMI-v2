@@ -17,8 +17,6 @@ import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassTimetableBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemOverallSubjectInfoVerticalBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectHomeworkHorizontalBinding
-import com.example.mtmimyeon_gitmi.item.Homework
-import com.example.mtmimyeon_gitmi.item.ItemSubjectInfo
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 import com.github.tlaabs.timetableview.Schedule
 import com.github.tlaabs.timetableview.Time
@@ -193,6 +191,28 @@ class ItemSubjectInfoViewHolder(
     }
 
 }
+
+
+data class Homework(
+    var order: String = "",
+    var title: String = "",
+    var onGoing: String = "",
+    var isSubmitted: String = "",
+    var myScore: String = "",
+    var totalScore: String = "",
+    var deadline: String = ""
+)
+
+data class ItemSubjectInfo(
+    var nowAttendanceRate: String = "",
+    var totalAttendanceRate: String = "",
+    var subjectName: String = "",
+    var professorName: String = "",
+    var lectureTime: String = "",
+    var subjectCode: String = "",
+    val homeworkList: ArrayList<Homework> = ArrayList<Homework>()
+)
+
 
 // 과제 뷰홀더
 class HomeworkRecyclerAdapter() : RecyclerView.Adapter<HomeworkViewHolder>() {

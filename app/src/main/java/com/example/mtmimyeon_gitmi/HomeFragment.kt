@@ -11,17 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.databinding.FragmentHomeBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemMjuSiteBinding
-import com.example.mtmimyeon_gitmi.item.ItemMjuSite
 
 class HomeFragment: Fragment(), MjuSiteClickedInterface {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-
-//    companion object {
-//        fun getInstance(): HomeFragment {
-//            return HomeFragment()
-//        }
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,6 +70,8 @@ class HomeFragment: Fragment(), MjuSiteClickedInterface {
     }
 }
 
+
+data class ItemMjuSite(val mjuImage: Int, val mjuText: String)
 
 // 원래는 파일을 나누는 게 원칙이나 가시성을 위해서 일시적으로 한 파일에서 관리
 // 리사이클러뷰 어댑터

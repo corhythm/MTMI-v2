@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectListBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectInfoBinding
-import com.example.mtmimyeon_gitmi.item.ItemSubjectInfo
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 
 class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface {

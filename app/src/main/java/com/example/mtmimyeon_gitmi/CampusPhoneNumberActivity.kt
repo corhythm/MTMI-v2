@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.databinding.ActivityCampusPhoneNumberBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemTelephoneBinding
-import com.example.mtmimyeon_gitmi.item.ItemCampusPhoneNumber
 
 class CampusPhoneNumberActivity : AppCompatActivity(), CampusInfoClickedInterface {
     private lateinit var binding: ActivityCampusPhoneNumberBinding
@@ -53,6 +52,15 @@ interface CampusInfoClickedInterface {
     fun setPhoneNumberClicked(phoneNumber: String) // 전화번호 TextView 클릭했을 때, 전화앱으로 연결
     fun setSiteUrlClicked(siteUrl: String) // 사이트 URL TextView 클릭했을 때, 다른 브라우저 앱으로 연결
 }
+
+
+// recyclerview item
+data class ItemCampusPhoneNumber(
+    val name: String,
+    val location: String,
+    val siteUrl: String,
+    val phoneNumber: String
+)
 
 class CampusPhoneNumberRecyclerAdapter() : RecyclerView.Adapter<CampusPhoneNumberViewHolder>() {
     private lateinit var itemCampusPhoneNumberList: ArrayList<ItemCampusPhoneNumber>
