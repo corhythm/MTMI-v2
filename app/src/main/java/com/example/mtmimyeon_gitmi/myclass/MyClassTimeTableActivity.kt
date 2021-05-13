@@ -109,7 +109,7 @@ class MyClassTimetableActivity : AppCompatActivity() {
         // binding.timetableViewMyClassTimetableTimetable.setHeaderHighlight(2) (월, 화, 수, 목, 금 중에 하이라이트 할 요일 선택)
 
         // 리사이클러뷰 초기화
-        subjectInfoRecyclerAdapter = SubjectInfoRecyclerAdapter(this)
+        subjectInfoRecyclerAdapter = SubjectInfoRecyclerAdapter(itemSubjectInfoList,this)
         binding.recyclerviewMyClassTimetableHomeworkList.apply {
             adapter = subjectInfoRecyclerAdapter
             layoutManager = LinearLayoutManager(
@@ -117,7 +117,6 @@ class MyClassTimetableActivity : AppCompatActivity() {
                 LinearLayoutManager.VERTICAL,
                 false
             )
-            subjectInfoRecyclerAdapter.submit(itemSubjectInfoList)
         }
     }
 
@@ -138,9 +137,11 @@ class MyClassTimetableActivity : AppCompatActivity() {
     }
 }
 
-class SubjectInfoRecyclerAdapter(private val mContext: Context) :
+class SubjectInfoRecyclerAdapter(
+    private val itemSubjectInfoList: ArrayList<ItemSubjectInfo>,
+    private val mContext: Context
+) :
     RecyclerView.Adapter<ItemSubjectInfoViewHolder>() {
-    private lateinit var itemSubjectInfoList: ArrayList<ItemSubjectInfo>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemSubjectInfoViewHolder {
         val binding = ItemOverallSubjectInfoVerticalBinding.inflate(
@@ -157,10 +158,6 @@ class SubjectInfoRecyclerAdapter(private val mContext: Context) :
 
     override fun getItemCount(): Int {
         return itemSubjectInfoList.size
-    }
-
-    fun submit(itemSubjectInfoList: ArrayList<ItemSubjectInfo>) {
-        this.itemSubjectInfoList = itemSubjectInfoList
     }
 }
 
@@ -248,7 +245,7 @@ class HomeworkRecyclerAdapter() : RecyclerView.Adapter<HomeworkViewHolder>() {
 // recyclerview viewHolder
 class HomeworkViewHolder(private val item: ItemSubjectHomeworkHorizontalBinding) :
     RecyclerView.ViewHolder(item.root) {
-    
+
     fun bind(homework: Homework) {
         item.textViewItemSubjectHomeworkHorizontalNumber.text = homework.order
         item.textViewItemSubjectHomeworkHorizontalTitle.text = homework.title
