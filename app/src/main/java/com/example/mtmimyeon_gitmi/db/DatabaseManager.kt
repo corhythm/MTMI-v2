@@ -3,6 +3,7 @@ package com.example.mtmimyeon_gitmi.db
 import android.app.Activity
 import android.util.Log
 import android.widget.Toast
+import com.example.mtmimyeon_gitmi.DB.UserData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
