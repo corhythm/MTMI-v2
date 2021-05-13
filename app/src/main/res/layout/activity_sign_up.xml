@@ -138,7 +138,7 @@
             app:smsp_itemListHintBackgroundColor="#808080"
             app:smsp_itemListHintColor="#FFFFFF"
             app:smsp_multilineError="false"
-            app:smsp_selectedItemListColor="#FF5252" />
+            app:smsp_selectedItemListColor="#FF5252"/>
 
         <com.github.florent37.materialtextfield.MaterialTextField
             android:layout_width="match_parent"
