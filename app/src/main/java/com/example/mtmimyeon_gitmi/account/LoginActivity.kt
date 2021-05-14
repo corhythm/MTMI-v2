@@ -44,10 +44,9 @@ class LoginActivity : AppCompatActivity() {
                         if (isSuccessful) {
                             binding.buttonLoginSignIn.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND,
                                 TransitionButton.OnAnimationStopEndListener {
-                                    val intent =
-                                        Intent(this@LoginActivity, HomeActivity::class.java)
-                                    //startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
-                                    startActivity(intent)
+                                    Intent(this@LoginActivity, HomeActivity::class.java).also {
+                                        startActivity(it)
+                                    }
                                     finish() // 임시
                                 })
                         } else {
