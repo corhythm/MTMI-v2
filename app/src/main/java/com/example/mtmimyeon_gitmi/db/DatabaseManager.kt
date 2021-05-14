@@ -96,18 +96,23 @@ class DatabaseManager {
         activity: Activity,
         callback: Callback<Boolean>
     ) { // -> 로그인 메소드
-        firebaseAuth!!.signInWithEmailAndPassword(id, pw)
-            .addOnCompleteListener(activity) {
-                if (it.isSuccessful) {
-                    Log.d("loginEmail : ", "Login Success") //로그인 성공
-                    val user = firebaseAuth?.currentUser
-                    callback.onCallback(true)
-                } else {
-                    Log.d("loginEmail : ", "Login Failed") //로그인 실패
-                    Toast.makeText(activity, "아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_LONG).show()
-                    callback.onCallback(false)
+        if(id.isEmpty()|| pw.isEmpty()){
+            callback.onCallback(false)
+        }
+        else {
+            firebaseAuth!!.signInWithEmailAndPassword(id, pw)
+                .addOnCompleteListener(activity) {
+                    if (it.isSuccessful) {
+                        Log.d("loginEmail : ", "Login Success") //로그인 성공
+                        val user = firebaseAuth?.currentUser
+                        callback.onCallback(true)
+                    } else {
+                        Log.d("loginEmail : ", "Login Failed") //로그인 실패
+                        Toast.makeText(activity, "아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_LONG).show()
+                        callback.onCallback(false)
+                    }
                 }
-            }
+        }
     }
     fun writePost(subjectCode: String,subjectBoard: String,title: String,day: String,content: String,writerUid: String){
         var userUid=firebaseAuth.currentUser.uid
@@ -124,8 +129,17 @@ class DatabaseManager {
 //        database=Firebase.database.getReference("chatRoom")
 //        database.setValue()
 //    }
+    fun makeChatRoom(sendUser: String,receiveUser: String,callback: Callback<Boolean>){
+        database=Firebase.database.getReference("chat")
+        var newChat = Chat(sendUser+"-"+receiveUser,sendUser,receiveUser)
+        database.child(newChat.chatRoomId).setValue(newChat).addOnSuccessListener {
+            callback.onCallback(true)
+        }.addOnFailureListener {
+            callback.onCallback(false)
+        }
+    }
     fun sendMessage(chatRoomId: Int, message: String,time: Int, userId: String) {
-        val chat_message = ChatMessage(chatRoomId, userId,message, time)
+        val chat_message = ChatMessage(chatRoomId, userId,message)
         database = Firebase.database.getReference("chatRoom")
         database.child(chatRoomId.toString()).setValue(chat_message)
     }

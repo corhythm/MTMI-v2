@@ -9,7 +9,7 @@ data class UserData(
 //    var birth: String,
 //    var gender: String,
 //    var email: String
-    var chating: Array<Chat>?
+    var chatting: Array<Chat>?
 ) {
     init {
         this.id = id
@@ -18,6 +18,6 @@ data class UserData(
 //        this.birth = birth
 //        this.gender = gender
 //        this.email = email // id와 email에 필요사항 정의 할 필요 있음
-        this.chating = chating
+        this.chatting = chatting
     }
 }
