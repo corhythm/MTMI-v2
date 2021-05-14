@@ -1,6 +1,7 @@
 package com.example.mtmimyeon_gitmi
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -54,45 +55,40 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
     }
 
     override fun onItemClicked(item: String) {
+        var url = ""
+
         when (item) {
-            "학교홈" -> {
-            }
-            "학과홈" -> {
-            }
-            "library" -> {
-            }
-            "eclass" -> {
-            }
-            "lms" -> {
-            }
-            "myiweb" -> {
-            }
-            "myicap" -> {
-            }
             "phone" -> {
-                // test code 추후에 수정
-                requireActivity().startActivity(
-                    Intent(
-                        requireContext(),
-                        CampusPhoneNumberActivity::class.java
-                    )
-                )
+                Intent(requireContext(), CampusPhoneNumberActivity::class.java).also {
+                    requireActivity().startActivity(it)
+                }
                 requireActivity().overridePendingTransition(
                     R.anim.activity_slide_in,
                     R.anim.activity_slide_out
                 )
-
+                return
             }
-            "ucheck" -> {
-            }
-            "기숙사" -> {
-            }
-            "문진표" -> {
-            }
-            "수강신청" -> {
-            }
+            "학교홈" -> url = "https://www.mju.ac.kr/mjukr/index.do"
+            "학과홈" -> url = "https://cs.mju.ac.kr"
+            "library" -> url = "https://lib.mju.ac.kr/index.ax"
+            "eclass" -> url = "https://eclass.mju.ac.kr/user/index.action"
+            "lms" -> url = "https://lms.mju.ac.kr/ilos/main/main_form.acl"
+            "myiweb" -> url = "https://myiweb.mju.ac.kr/servlet/security/MySecurityStart"
+            "myicap" -> url = "https://myicap.mju.ac.kr/"
+            "ucheck" -> url =
+                "https://ucheck.mju.ac.kr/;jsessionid=F35A5F3F48644210CEB08183C2E8D492#"
+            "기숙사" -> url = "https://jw4.mju.ac.kr/user/dorm/index.action"
+            "문진표" -> url = "http://www.mjuqr.kr/view/4b46ea5151336b2f7668b67551b1a511"
+            "수강신청" -> url = "http://http://class.mju.ac.kr/"
             else -> {
             }
+        }
+        Intent(Intent.ACTION_VIEW, Uri.parse(url)).also {
+            startActivity(it)
+            requireActivity().overridePendingTransition(
+                R.anim.activity_slide_in,
+                R.anim.activity_slide_out
+            )
         }
     }
 }
