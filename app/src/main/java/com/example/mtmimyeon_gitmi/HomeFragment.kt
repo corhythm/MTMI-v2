@@ -80,8 +80,7 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
             "기숙사" -> url = "https://jw4.mju.ac.kr/user/dorm/index.action"
             "문진표" -> url = "http://www.mjuqr.kr/view/4b46ea5151336b2f7668b67551b1a511"
             "수강신청" -> url = "http://http://class.mju.ac.kr/"
-            else -> {
-            }
+            else -> url = "https://www.mju.ac.kr/mjukr/index.do"
         }
         Intent(Intent.ACTION_VIEW, Uri.parse(url)).also {
             startActivity(it)

@@ -113,7 +113,7 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
             )
         )
 
-        binding.recyclerViewActivityChattingRoomMessageList.apply {
+        binding.recyclerViewActivityChattingRoomDetailsMessageList.apply {
             adapter = chattingRoomDetailsRecyclerAdapter
         }
     }

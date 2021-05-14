@@ -39,7 +39,7 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
         }
         this.chattingRoomListRecyclerAdapter =
             ChattingRoomListRecyclerAdapter(myChattingRoomList, this)
-        binding.recyclerviewMyChatListChatList.apply {
+        binding.recyclerviewActivityChattingRoomListChatList.apply {
             adapter = chattingRoomListRecyclerAdapter
             layoutManager =
                 LinearLayoutManager(
