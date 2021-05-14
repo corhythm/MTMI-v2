@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.example.mtmimyeon_gitmi.db.Callback
+import com.example.mtmimyeon_gitmi.db.DatabaseManager
 import com.example.mtmimyeon_gitmi.HomeActivity
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityLoginBinding
@@ -11,6 +13,7 @@ import com.royrodriguez.transitionbutton.TransitionButton
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+    var DB_M = DatabaseManager()
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -32,23 +35,32 @@ class LoginActivity : AppCompatActivity() {
             // Do your networking task or background work here.
             val handler: Handler = Handler()
             handler.postDelayed(Runnable {
-                val isSuccessful: Boolean = true
+                var isSuccessful: Boolean
+                var login_userId: String = binding.editTextLoginEmailAddress.text.toString()
+                var login_userPw: String = binding.editTextLoginPassword.text.toString()
+                DB_M.loginEmail(login_userId, login_userPw, this, object : Callback<Boolean> {
+                    override fun onCallback(data: Boolean) {
+                        isSuccessful = data
+                        if (isSuccessful) {
+                            binding.buttonLoginSignIn.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND,
+                                TransitionButton.OnAnimationStopEndListener {
+                                    val intent =
+                                        Intent(this@LoginActivity, HomeActivity::class.java)
+                                    //startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+                                    startActivity(intent)
+                                    finish() // 임시
+                                })
+                        } else {
+                            binding.buttonLoginSignIn.stopAnimation(
+                                TransitionButton.StopAnimationStyle.SHAKE,
+                                null
+                            )
+                        }
+                    }
+                })
+                // Choose a stop animation if your call was succesful or not
 
-                // Choose a stop animation if your call was successful or not
-                if (isSuccessful) {
-                    binding.buttonLoginSignIn.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND,
-                        TransitionButton.OnAnimationStopEndListener {
-                            Intent(this, HomeActivity::class.java).also {
-                                startActivity(it)
-                                finish() // 임시
-                            }
-                        })
-                } else {
-                    binding.buttonLoginSignIn.stopAnimation(
-                        TransitionButton.StopAnimationStyle.SHAKE,
-                        null
-                    )
-                }
+
             }, 300)
 
 
