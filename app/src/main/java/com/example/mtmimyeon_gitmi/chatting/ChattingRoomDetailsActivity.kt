@@ -22,7 +22,6 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         this.binding = ActivityChattingRoomDetailsBinding.inflate(layoutInflater)
         setContentView(this.binding.root)
-
         init()
     }
 

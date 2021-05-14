@@ -5,17 +5,24 @@ import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.transition.Slide
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.chatting.ChattingRoomDetailsActivity
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectBulletinBoardDetailsBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBulletinBoardCommentBinding
+import com.example.mtmimyeon_gitmi.db.Callback
+import com.example.mtmimyeon_gitmi.db.DatabaseManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 
 class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMessageClickInterface {
     private lateinit var binding: ActivityMyClassSubjectBulletinBoardDetailsBinding
@@ -23,6 +30,8 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
     private lateinit var subjectBulletinBoardCommentRecyclerAdapter: SubjectBulletinBoardCommentRecyclerAdapter
     private var isLiked = false
 
+    var database: DatabaseManager = DatabaseManager()
+    var auth: FirebaseAuth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyClassSubjectBulletinBoardDetailsBinding.inflate(layoutInflater)
@@ -31,6 +40,7 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
     }
 
     private fun init() {
+
 
         for (i in 0..30) {
             this.itemSubjectBulletinBoardCommentList.add(
@@ -45,7 +55,10 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
         }
 
         this.subjectBulletinBoardCommentRecyclerAdapter =
-            SubjectBulletinBoardCommentRecyclerAdapter(this.itemSubjectBulletinBoardCommentList, this)
+            SubjectBulletinBoardCommentRecyclerAdapter(
+                this.itemSubjectBulletinBoardCommentList,
+                this
+            )
 
         binding.recyclerviewMyClassSubjectBulletinBoardCommentList.apply {
             adapter = subjectBulletinBoardCommentRecyclerAdapter
@@ -68,10 +81,37 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
 
     override fun sendMessageClicked() {
         // 댓글 단 사람들 중에 채팅 보낼 때
-        Intent(this, ChattingRoomDetailsActivity::class.java).also {
-            startActivity(it)
-            overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
-        }
+        Log.d("댓글단사람들 확인중", "메세지보내기")
+
+
+        database.makeChatRoom(auth.currentUser.uid, "1234", object : Callback<Boolean> {
+            override fun onCallback(data: Boolean) {
+                if (data) {
+                    Toast.makeText(
+                        this@MyClassSubjectBulletinBoardDetailsActivity,
+                        "채팅방 개설 성공",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    Intent(
+                        this@MyClassSubjectBulletinBoardDetailsActivity,
+                        ChattingRoomDetailsActivity::class.java
+                    ).also {
+                        startActivity(
+                            it,
+                            ActivityOptions.makeSceneTransitionAnimation(this@MyClassSubjectBulletinBoardDetailsActivity)
+                                .toBundle()
+                        )
+                    }
+                } else {
+                    Toast.makeText(
+                        this@MyClassSubjectBulletinBoardDetailsActivity,
+                        "채팅방 개설 실패",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        })
+
     }
 
     override fun finish() {

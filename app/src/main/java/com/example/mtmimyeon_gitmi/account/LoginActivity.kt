@@ -35,13 +35,11 @@ class LoginActivity : AppCompatActivity() {
             // Do your networking task or background work here.
             val handler: Handler = Handler()
             handler.postDelayed(Runnable {
-                var isSuccessful: Boolean
                 var login_userId: String = binding.editTextLoginEmailAddress.text.toString()
                 var login_userPw: String = binding.editTextLoginPassword.text.toString()
                 DB_M.loginEmail(login_userId, login_userPw, this, object : Callback<Boolean> {
                     override fun onCallback(data: Boolean) {
-                        isSuccessful = data
-                        if (isSuccessful) {
+                        if (data) {
                             binding.buttonLoginSignIn.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND,
                                 TransitionButton.OnAnimationStopEndListener {
                                     Intent(this@LoginActivity, HomeActivity::class.java).also {
