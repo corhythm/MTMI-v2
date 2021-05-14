@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.databinding.FragmentHomeBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemMjuSiteBinding
 
-class HomeFragment: Fragment(), MjuSiteClickedInterface {
+class HomeFragment : Fragment(), MjuSiteClickedInterface {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -30,14 +30,19 @@ class HomeFragment: Fragment(), MjuSiteClickedInterface {
 
         // 데이터 삽입
         for (i in mjuSiteTextList.indices) {
-            itemMjuSiteList.add(ItemMjuSite(mjuImage = mjuSiteImageList.getResourceId(i, -1), mjuText = mjuSiteTextList[i]))
+            itemMjuSiteList.add(
+                ItemMjuSite(
+                    mjuImage = mjuSiteImageList.getResourceId(i, -1),
+                    mjuText = mjuSiteTextList[i]
+                )
+            )
         }
 
-        val mjuSiteRecyclerAdapter = MjuSiteRecyclerAdapter(this)
+        val mjuSiteRecyclerAdapter = MjuSiteRecyclerAdapter(itemMjuSiteList, this)
         binding.recyclerviewMainUnvInfo.apply {
             adapter = mjuSiteRecyclerAdapter
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            mjuSiteRecyclerAdapter.submit(itemMjuSiteList)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
         return binding.root
@@ -49,23 +54,45 @@ class HomeFragment: Fragment(), MjuSiteClickedInterface {
     }
 
     override fun onItemClicked(item: String) {
-        when(item) {
-            "학교홈" -> { }
-            "학과홈" -> { }
-            "library" -> { }
-            "eclass" -> { }
-            "lms" -> { }
-            "myiweb" -> { }
-            "myicap" -> { }
+        when (item) {
+            "학교홈" -> {
+            }
+            "학과홈" -> {
+            }
+            "library" -> {
+            }
+            "eclass" -> {
+            }
+            "lms" -> {
+            }
+            "myiweb" -> {
+            }
+            "myicap" -> {
+            }
             "phone" -> {
                 // test code 추후에 수정
-                (requireContext() as HomeActivity).startActivity(Intent(requireContext(), CampusPhoneNumberActivity::class.java))
+                requireActivity().startActivity(
+                    Intent(
+                        requireContext(),
+                        CampusPhoneNumberActivity::class.java
+                    )
+                )
+                requireActivity().overridePendingTransition(
+                    R.anim.activity_slide_in,
+                    R.anim.activity_slide_out
+                )
+
             }
-            "ucheck" -> { }
-            "기숙사" -> { }
-            "문진표" -> { }
-            "수강신청" -> { }
-            else -> { }
+            "ucheck" -> {
+            }
+            "기숙사" -> {
+            }
+            "문진표" -> {
+            }
+            "수강신청" -> {
+            }
+            else -> {
+            }
         }
     }
 }
@@ -75,17 +102,14 @@ data class ItemMjuSite(val mjuImage: Int, val mjuText: String)
 
 // 원래는 파일을 나누는 게 원칙이나 가시성을 위해서 일시적으로 한 파일에서 관리
 // 리사이클러뷰 어댑터
-class MjuSiteRecyclerAdapter() : RecyclerView.Adapter<MjuSiteViewHolder>() {
-    private lateinit var itemMjuSiteList: ArrayList<ItemMjuSite>
-    private lateinit var mjuSiteClickedInterface: MjuSiteClickedInterface
+class MjuSiteRecyclerAdapter(
+    private val itemMjuSiteList: ArrayList<ItemMjuSite>,
+    private val mjuSiteClickedInterface: MjuSiteClickedInterface
+) : RecyclerView.Adapter<MjuSiteViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MjuSiteViewHolder {
         val binding = ItemMjuSiteBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MjuSiteViewHolder(binding, mjuSiteClickedInterface)
-    }
-
-    constructor(mjuSiteClickedInterface: MjuSiteClickedInterface): this() {
-        this.mjuSiteClickedInterface = mjuSiteClickedInterface
     }
 
     override fun onBindViewHolder(holder: MjuSiteViewHolder, position: Int) {
@@ -96,19 +120,13 @@ class MjuSiteRecyclerAdapter() : RecyclerView.Adapter<MjuSiteViewHolder>() {
         return itemMjuSiteList.size
     }
 
-    fun submit(itemMjuSiteList: ArrayList<ItemMjuSite>) {
-        this.itemMjuSiteList = itemMjuSiteList
-    }
-
 }
 
 // 리사이클러뷰 뷰홀더
-class MjuSiteViewHolder(private val item: ItemMjuSiteBinding) : RecyclerView.ViewHolder(item.root) {
-    private lateinit var mjuSiteClickedInterface: MjuSiteClickedInterface
-
-    constructor(item: ItemMjuSiteBinding, mjuSiteClickedInterface: MjuSiteClickedInterface): this(item) {
-        this.mjuSiteClickedInterface = mjuSiteClickedInterface
-    }
+class MjuSiteViewHolder(
+    private val item: ItemMjuSiteBinding,
+    private val mjuSiteClickedInterface: MjuSiteClickedInterface
+) : RecyclerView.ViewHolder(item.root) {
 
     init {
         item.root.setOnClickListener {
@@ -116,6 +134,7 @@ class MjuSiteViewHolder(private val item: ItemMjuSiteBinding) : RecyclerView.Vie
             Log.d("로그", item.textViewItemMjuText.text.toString())
         }
     }
+
     fun bind(itemMjuSite: ItemMjuSite) {
         item.imageViewItemMjuSiteImg.setImageResource(itemMjuSite.mjuImage)
         item.textViewItemMjuText.text = itemMjuSite.mjuText

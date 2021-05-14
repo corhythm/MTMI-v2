@@ -15,6 +15,7 @@ import android.view.Window
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.chatting.ChattingRoomDetailsActivity
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectBulletinBoardDetailsBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBulletinBoardCommentBinding
@@ -29,16 +30,9 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
     private lateinit var subjectBulletinBoardCommentRecyclerAdapter: SubjectBulletinBoardCommentRecyclerAdapter
     private var isLiked = false
 
-     var database: DatabaseManager = DatabaseManager()
-     var auth: FirebaseAuth = FirebaseAuth.getInstance()
+    var database: DatabaseManager = DatabaseManager()
+    var auth: FirebaseAuth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
-        with(window) { // activity 옆으로 이동 애니메이션
-            requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
-            // set an slide transition
-            enterTransition = Slide(Gravity.END)
-            exitTransition = Slide(Gravity.START)
-        }
-
         super.onCreate(savedInstanceState)
         binding = ActivityMyClassSubjectBulletinBoardDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -61,7 +55,10 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
         }
 
         this.subjectBulletinBoardCommentRecyclerAdapter =
-            SubjectBulletinBoardCommentRecyclerAdapter(this.itemSubjectBulletinBoardCommentList, this)
+            SubjectBulletinBoardCommentRecyclerAdapter(
+                this.itemSubjectBulletinBoardCommentList,
+                this
+            )
 
         binding.recyclerviewMyClassSubjectBulletinBoardCommentList.apply {
             adapter = subjectBulletinBoardCommentRecyclerAdapter
@@ -84,22 +81,42 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
 
     override fun sendMessageClicked() {
         // 댓글 단 사람들 중에 채팅 보낼 때
-        Log.d("댓글단사람들 확인중","메세지보내기")
-        
+        Log.d("댓글단사람들 확인중", "메세지보내기")
 
-        database.makeChatRoom(auth.currentUser.uid,"1234", object : Callback<Boolean> {
+
+        database.makeChatRoom(auth.currentUser.uid, "1234", object : Callback<Boolean> {
             override fun onCallback(data: Boolean) {
-                if(data){
-                    Toast.makeText(this@MyClassSubjectBulletinBoardDetailsActivity,"채팅방 개설 성공",Toast.LENGTH_SHORT).show()
-                    Intent(this@MyClassSubjectBulletinBoardDetailsActivity, ChattingRoomDetailsActivity::class.java).also {
-                        startActivity(it, ActivityOptions.makeSceneTransitionAnimation(this@MyClassSubjectBulletinBoardDetailsActivity).toBundle())
+                if (data) {
+                    Toast.makeText(
+                        this@MyClassSubjectBulletinBoardDetailsActivity,
+                        "채팅방 개설 성공",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    Intent(
+                        this@MyClassSubjectBulletinBoardDetailsActivity,
+                        ChattingRoomDetailsActivity::class.java
+                    ).also {
+                        startActivity(
+                            it,
+                            ActivityOptions.makeSceneTransitionAnimation(this@MyClassSubjectBulletinBoardDetailsActivity)
+                                .toBundle()
+                        )
                     }
-                }
-                else{
-                    Toast.makeText(this@MyClassSubjectBulletinBoardDetailsActivity,"채팅방 개설 실패",Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        this@MyClassSubjectBulletinBoardDetailsActivity,
+                        "채팅방 개설 실패",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })
+
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
     }
 }
 

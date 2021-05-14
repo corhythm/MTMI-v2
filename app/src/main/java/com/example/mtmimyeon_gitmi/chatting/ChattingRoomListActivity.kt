@@ -9,6 +9,7 @@ import android.transition.Slide
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityChattingRoomListBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemChattingRoomBinding
 
@@ -18,13 +19,6 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
     private lateinit var myChattingRoomList: ArrayList<ItemChattingRoom>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        with(window) { // activity 옆으로 이동 애니메이션
-            requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
-            // set an slide transition
-            enterTransition = Slide(Gravity.END)
-            exitTransition = Slide(Gravity.START)
-        }
-
         super.onCreate(savedInstanceState)
         binding = ActivityChattingRoomListBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -59,8 +53,14 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
     // 특정 채팅방을 클릭했을 때
     override fun chattingRoomClicked(chattingRoomIdx: String) { // 채팅 방 번호 <- 이걸로 채팅방 검색(필요 시 탐색 데이터 추가할 것)
         Intent(this, ChattingRoomDetailsActivity::class.java).also {
-            startActivity(it, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+            startActivity(it)
+            overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
     }
 }
 

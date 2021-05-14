@@ -39,4 +39,9 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
         }
         return true
     }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
+    }
 }

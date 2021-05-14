@@ -109,7 +109,7 @@ class MyClassTimetableActivity : AppCompatActivity() {
         // binding.timetableViewMyClassTimetableTimetable.setHeaderHighlight(2) (월, 화, 수, 목, 금 중에 하이라이트 할 요일 선택)
 
         // 리사이클러뷰 초기화
-        subjectInfoRecyclerAdapter = SubjectInfoRecyclerAdapter(this)
+        subjectInfoRecyclerAdapter = SubjectInfoRecyclerAdapter(itemSubjectInfoList, this)
         binding.recyclerviewMyClassTimetableHomeworkList.apply {
             adapter = subjectInfoRecyclerAdapter
             layoutManager = LinearLayoutManager(
@@ -117,7 +117,6 @@ class MyClassTimetableActivity : AppCompatActivity() {
                 LinearLayoutManager.VERTICAL,
                 false
             )
-            subjectInfoRecyclerAdapter.submit(itemSubjectInfoList)
         }
     }
 
@@ -131,11 +130,18 @@ class MyClassTimetableActivity : AppCompatActivity() {
             else -> 0
         }
     }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
+    }
 }
 
-class SubjectInfoRecyclerAdapter(private val mContext: Context) :
+class SubjectInfoRecyclerAdapter(
+    private val itemSubjectInfoList: ArrayList<ItemSubjectInfo>,
+    private val mContext: Context
+) :
     RecyclerView.Adapter<ItemSubjectInfoViewHolder>() {
-    private lateinit var itemSubjectInfoList: ArrayList<ItemSubjectInfo>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemSubjectInfoViewHolder {
         val binding = ItemOverallSubjectInfoVerticalBinding.inflate(
@@ -153,20 +159,16 @@ class SubjectInfoRecyclerAdapter(private val mContext: Context) :
     override fun getItemCount(): Int {
         return itemSubjectInfoList.size
     }
-
-    fun submit(itemSubjectInfoList: ArrayList<ItemSubjectInfo>) {
-        this.itemSubjectInfoList = itemSubjectInfoList
-    }
 }
 
 // recyclerview viewHolder
 class ItemSubjectInfoViewHolder(
     private val mContext: Context,
-    private val item: ItemOverallSubjectInfoVerticalBinding
+    private val item: ItemOverallSubjectInfoVerticalBinding,
 ) :
     RecyclerView.ViewHolder(item.root) {
-    private lateinit var homeworkRecyclerView: RecyclerView // nested recyclerview
-
+    private lateinit var homeworkRecyclerAdapter: HomeworkRecyclerAdapter
+    private var isUnfolded = false
 
     fun bind(itemSubjectInfo: ItemSubjectInfo) {
         item.textViewItemOverallSubjectInfoVerticalSubjectName.text = itemSubjectInfo.subjectName
@@ -178,16 +180,39 @@ class ItemSubjectInfoViewHolder(
         item.textViewItemOverallSubjectInfoVerticalTotalAttendance.text =
             "${itemSubjectInfo.totalAttendanceRate} (전체 출석률)"
 
-        val homeworkRecyclerAdapter = HomeworkRecyclerAdapter()
-        item.recyclerviewItemOverallSubjectInfoVerticalHomeworkList.apply {
-            adapter = homeworkRecyclerAdapter
-            layoutManager = LinearLayoutManager(
-                mContext,
-                LinearLayoutManager.VERTICAL,
-                false
-            )
+        // 더보기(과제 보기 클릭했을 때)
+        item.imageViewItemOverallSubjectInfoVerticalMore.setOnClickListener {
+            if (!isUnfolded) { // 과제목록 리스트가 접혀있을 때
+                if (itemSubjectInfo.homeworkList.size != 0) {
+                    item.recyclerviewItemOverallSubjectInfoVerticalHomeworkList.visibility = View.VISIBLE
+                    item.recyclerviewItemOverallSubjectInfoVerticalHomeworkList.apply {
+                        adapter = HomeworkRecyclerAdapter(itemSubjectInfo.homeworkList)
+                        layoutManager = LinearLayoutManager(
+                            mContext,
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
+                    }
+                    item.imageViewItemOverallSubjectInfoVerticalMore.setImageResource(R.drawable.ic_item_overall_subject_info_vertical_arrow_up)
+                    isUnfolded = true
+                } else {
+                    MotionToast.createColorToast(
+                        mContext as MyClassTimetableActivity,
+                        "No Information",
+                        "이 과목은 현재 진행중인 과제가 없어요.",
+                        MotionToast.TOAST_INFO,
+                        MotionToast.GRAVITY_BOTTOM,
+                        MotionToast.SHORT_DURATION,
+                        ResourcesCompat.getFont(mContext, R.font.helvetica_regular)
+                    )
+                }
+            } else { // 과제목록 리스트가 펼쳐져 있을 때
+                item.recyclerviewItemOverallSubjectInfoVerticalHomeworkList.visibility = View.GONE
+                item.imageViewItemOverallSubjectInfoVerticalMore.setImageResource(R.drawable.ic_item_overall_subject_info_vertical_arrow_down)
+                isUnfolded = false
+            }
+
         }
-        homeworkRecyclerAdapter.submit(itemSubjectInfo.homeworkList)
     }
 
 }
@@ -215,8 +240,8 @@ data class ItemSubjectInfo(
 
 
 // 과제 뷰홀더
-class HomeworkRecyclerAdapter() : RecyclerView.Adapter<HomeworkViewHolder>() {
-    private lateinit var homeworkList: ArrayList<Homework>
+class HomeworkRecyclerAdapter(private val homeworkList: ArrayList<Homework>) :
+    RecyclerView.Adapter<HomeworkViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeworkViewHolder {
         val binding = ItemSubjectHomeworkHorizontalBinding.inflate(
@@ -234,16 +259,12 @@ class HomeworkRecyclerAdapter() : RecyclerView.Adapter<HomeworkViewHolder>() {
     override fun getItemCount(): Int {
         return homeworkList.size
     }
-
-    fun submit(homeworkList: ArrayList<Homework>) {
-        this.homeworkList = homeworkList
-    }
 }
 
 // recyclerview viewHolder
 class HomeworkViewHolder(private val item: ItemSubjectHomeworkHorizontalBinding) :
     RecyclerView.ViewHolder(item.root) {
-    
+
     fun bind(homework: Homework) {
         item.textViewItemSubjectHomeworkHorizontalNumber.text = homework.order
         item.textViewItemSubjectHomeworkHorizontalTitle.text = homework.title
