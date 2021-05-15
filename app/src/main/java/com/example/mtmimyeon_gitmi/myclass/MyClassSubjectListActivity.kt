@@ -54,7 +54,10 @@ class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface 
     }
 
     override fun itemClicked(idx: String, subjectName: String) {
-        startActivity(Intent(this, MyClassSubjectBulletinBoardActivity::class.java))
+        val intent = Intent(this, MyClassSubjectBulletinBoardActivity::class.java)
+        intent.putExtra(idx,"과목코드")
+        intent.putExtra(subjectName,"과목이름")
+        startActivity(intent)
     }
 }
 
