@@ -41,18 +41,44 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
 
     private fun init() {
 
-
-        for (i in 0..30) {
-            this.itemSubjectBulletinBoardCommentList.add(
-                ItemSubjectBulletinBoardComment(
-                    -1,
-                    "60172121 컴퓨터공학과 강성욱",
-                    "원래 밤에 올라오는게 국룰인데 벌써 올라오네 ㅋㅋㅋ 화이팅해 친구들 난 다함 ㅎ원래 밤에 올라오는게 국룰인데 벌써 올라오네 ㅋㅋㅋ 화이팅해 친구들 난 다함 ㅎ원래 밤에 올라오는게 국룰인데 벌써 올라오네 ㅋㅋㅋ 화이팅해 친구들 난 다함 ㅎ원래 밤에 올라오는게 국룰인데 벌써 올라오네 ㅋㅋㅋ 화이팅해 친구들 난 다함 ㅎ원래 밤에 올라오는게 국룰인데 벌써 올라오네 ㅋㅋㅋ 화이팅해 친구들 난 다함 ㅎ원래 밤에 올라오는게 국룰인데 벌써 올라오네 ㅋㅋㅋ 화이팅해 친구들 난 다함 ㅎ원래 밤에 올라오는게 국룰인데 벌써 올라오네 ㅋㅋㅋ 화이팅해 친구들 난 다함 ㅎ원래 밤에 올라오는게 국룰인데 벌써 올라오네 ㅋㅋㅋ 화이팅해 친구들 난 다함 ㅎ",
-                    "https:~~",
-                    "21.05.02 11:40"
-                )
+        // sample data
+        this.itemSubjectBulletinBoardCommentList.add(
+            ItemSubjectBulletinBoardComment(
+                -1,
+                "60172121 컴퓨터공학과 김지운",
+                "원래 밤에 올라오는게 국룰인데 벌써 올라오네 ㅋㅋㅋ 화이팅해 친구들 난 다함 ㅎ",
+                "https:~~",
+                "21.05.02 11:40"
             )
-        }
+        )
+        this.itemSubjectBulletinBoardCommentList.add(
+            ItemSubjectBulletinBoardComment(
+                -1,
+                "60172132 컴퓨터공학과 강대박",
+                "벌써 다 했어? 대박..",
+                "https:~~",
+                "21.05.01 01:40"
+            )
+        )
+        this.itemSubjectBulletinBoardCommentList.add(
+            ItemSubjectBulletinBoardComment(
+                -1,
+                "60172111 컴퓨터공학과 서태웅",
+                "저도 방법 좀 알려주시면 안 될까요? 이번에 전과해서 하나도 모르겠어요ㅜㅜ 기프티콘 드릴게요 부탁드립니당 ㅎㅎ",
+                "https:~~",
+                "21.04.29 11:40"
+            )
+        )
+        this.itemSubjectBulletinBoardCommentList.add(
+            ItemSubjectBulletinBoardComment(
+                -1,
+                "60142121 컴퓨터공학과 OOO",
+                "후배들아 참 부지런 하구나!",
+                "https:~~",
+                "21.04.27 11:40"
+            )
+        )
+
 
         this.subjectBulletinBoardCommentRecyclerAdapter =
             SubjectBulletinBoardCommentRecyclerAdapter(
