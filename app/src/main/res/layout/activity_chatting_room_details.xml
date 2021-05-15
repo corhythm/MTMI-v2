@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/editText_activityChattingRoom_message"
+        android:id="@+id/editText_activityChattingRoomDetails_message"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -18,12 +18,12 @@
         android:hint="Type your message"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button_activityChattingRoom_send"
+        app:layout_constraintEnd_toStartOf="@+id/button_activityChattingRoomDetails_send"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView_activityChattingRoomDetails_messageList" />
 
     <Button
-        android:id="@+id/button_activityChattingRoom_send"
+        android:id="@+id/button_activityChattingRoomDetails_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -31,17 +31,17 @@
         app:backgroundTint="@null"
         android:text="Send"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/editText_activityChattingRoom_message"
+        app:layout_constraintBottom_toBottomOf="@+id/editText_activityChattingRoomDetails_message"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editText_activityChattingRoom_message" />
+        app:layout_constraintTop_toTopOf="@+id/editText_activityChattingRoomDetails_message" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_activityChattingRoom_messageList"
+        android:id="@+id/recyclerView_activityChattingRoomDetails_messageList"
         tools:itemCount="5"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/editText_activityChattingRoom_message"
+        app:layout_constraintBottom_toTopOf="@+id/editText_activityChattingRoomDetails_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

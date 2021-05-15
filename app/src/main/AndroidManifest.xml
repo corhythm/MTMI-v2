@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MTMIMyeongiTMI"
         android:usesCleartextTraffic="true">
-        <activity android:name=".chatting.ChattingRoomDetailsActivity"/>
+        <activity android:name=".chatting.ChattingRoomDetailsActivity" />
         <activity
             android:name=".myClass.MyClassSubjectBulletinBoardDetailsActivity"
             android:screenOrientation="portrait" />

@@ -25,26 +25,47 @@ class CampusPhoneNumberActivity : AppCompatActivity(), CampusInfoClickedInterfac
 
     private fun init() {
         // 테스트 데이터 삽입
-        for(i in 0..20) {
-            itemCampusPhoneNumberList.add(ItemCampusPhoneNumber("[대외협력·홍보위원회]",
-                "자연 캠퍼스 함박관 2층 2403", "https://www.mju.ac.kr/sites/mjukr/intro/intro.html", "tel:0318981127"))
+        for (i in 0..20) {
+            itemCampusPhoneNumberList.add(
+                ItemCampusPhoneNumber(
+                    "[대외협력·홍보위원회]",
+                    "자연 캠퍼스 함박관 2층 2403",
+                    "https://www.mju.ac.kr/sites/mjukr/intro/intro.html",
+                    "tel:0318981127"
+                )
+            )
         }
-        campusPhoneNumberRecyclerAdapter = CampusPhoneNumberRecyclerAdapter(this)
+        campusPhoneNumberRecyclerAdapter = CampusPhoneNumberRecyclerAdapter(itemCampusPhoneNumberList, this)
         binding.recyclerviewCampusPhoneNumberList.apply {
             adapter = campusPhoneNumberRecyclerAdapter
-            layoutManager = LinearLayoutManager(this@CampusPhoneNumberActivity, LinearLayoutManager.VERTICAL, false)
-            campusPhoneNumberRecyclerAdapter.submit(itemCampusPhoneNumberList)
+            layoutManager = LinearLayoutManager(
+                this@CampusPhoneNumberActivity,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
         }
     }
 
     override fun setPhoneNumberClicked(phoneNumber: String) {
         // 리사이클러 뷰 내의 전화번호 textview 클릭 시, 전화앱으로 연결
-        startActivity(Intent(Intent.ACTION_DIAL, Uri.parse(phoneNumber)))
+        Intent(Intent.ACTION_DIAL, Uri.parse(phoneNumber)).also {
+            startActivity(it)
+            overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
+        }
     }
 
     override fun setSiteUrlClicked(siteUrl: String) {
         // 리사이클러 뷰 내의 사이트 URL 클릭 시, 디바이스 내 브라우저 앱으려 연결
-        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(siteUrl)))
+        Intent(Intent.ACTION_VIEW, Uri.parse(siteUrl)).also {
+            startActivity(it)
+            overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
+        }
+    }
+
+    // slide animation set
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
     }
 }
 
@@ -62,16 +83,14 @@ data class ItemCampusPhoneNumber(
     val phoneNumber: String
 )
 
-class CampusPhoneNumberRecyclerAdapter() : RecyclerView.Adapter<CampusPhoneNumberViewHolder>() {
-    private lateinit var itemCampusPhoneNumberList: ArrayList<ItemCampusPhoneNumber>
-    private lateinit var campusInfoClickedInterface: CampusInfoClickedInterface
-
-    constructor(campusInfoClickedInterface: CampusInfoClickedInterface): this() {
-        this.campusInfoClickedInterface = campusInfoClickedInterface
-    }
+class CampusPhoneNumberRecyclerAdapter(
+    private val itemCampusPhoneNumberList: ArrayList<ItemCampusPhoneNumber>,
+    private val campusInfoClickedInterface: CampusInfoClickedInterface
+) : RecyclerView.Adapter<CampusPhoneNumberViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CampusPhoneNumberViewHolder {
-        val binding = ItemTelephoneBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemTelephoneBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CampusPhoneNumberViewHolder(binding, campusInfoClickedInterface)
     }
 
@@ -83,18 +102,17 @@ class CampusPhoneNumberRecyclerAdapter() : RecyclerView.Adapter<CampusPhoneNumbe
         return itemCampusPhoneNumberList.size
     }
 
-    fun submit(itemCampusPhoneNumberList: ArrayList<ItemCampusPhoneNumber>) {
-        this.itemCampusPhoneNumberList = itemCampusPhoneNumberList
-    }
 
 }
 
 // 리사이클러뷰 뷰홀더
-class CampusPhoneNumberViewHolder(private val item: ItemTelephoneBinding) : RecyclerView.ViewHolder(item.root) {
-    private lateinit var  campusInfoClickedInterface: CampusInfoClickedInterface
+class CampusPhoneNumberViewHolder(
+    private val item: ItemTelephoneBinding,
+    private val campusInfoClickedInterface: CampusInfoClickedInterface
+) :
+    RecyclerView.ViewHolder(item.root) {
 
-    constructor(item: ItemTelephoneBinding, campusInfoClickedInterface: CampusInfoClickedInterface): this(item) {
-        this.campusInfoClickedInterface = campusInfoClickedInterface
+    init {
 
         item.textViewItemPhoneNumber.setOnClickListener {
             this.campusInfoClickedInterface.setPhoneNumberClicked(item.textViewItemPhoneNumber.text.toString())

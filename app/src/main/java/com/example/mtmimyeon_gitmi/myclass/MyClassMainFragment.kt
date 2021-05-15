@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.crawling.LmsAuthenticationDialog
 import com.example.mtmimyeon_gitmi.databinding.FragmentMyClassMainBinding
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
@@ -16,7 +17,6 @@ class MyClassMainFragment : Fragment() {
 
     // This property is only valid between onCreateView and OnDestroyView
     private val binding get() = _binding!!
-
 
     // 뷰가 생성되었을 때, 프래그먼트와 레이아웃 연결
     override fun onCreateView(
@@ -41,14 +41,15 @@ class MyClassMainFragment : Fragment() {
         // 강의별 게시판
         binding.textViewMyClassMainSubjectList.setOnClickListener {
             // 로컬에 저장된 LMS 계정 정보가 있을 떄
-            if (SharedPrefManager.getUserLmsId().isNotEmpty() && SharedPrefManager.getUserLmsPw()
-                    .isNotEmpty()
-            ) {
+            if (SharedPrefManager.getUserLmsId().isNotEmpty() && SharedPrefManager.getUserLmsPw().isNotEmpty()) {
                 // 강의별 게시판으로 이동
-                startActivity(
-                    Intent(context, MyClassSubjectListActivity::class.java),
-                    ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle()
-                )
+                Intent(context, MyClassSubjectListActivity::class.java).also {
+                    startActivity(it)
+                    requireActivity().overridePendingTransition(
+                        R.anim.activity_slide_in,
+                        R.anim.activity_slide_out
+                    )
+                }
             } else {
                 val lmsAuthenticationDialog = LmsAuthenticationDialog(requireContext())
                 lmsAuthenticationDialog.show()
@@ -57,14 +58,15 @@ class MyClassMainFragment : Fragment() {
 
         // 시간표/과제
         binding.textViewMyClassMainTimetable.setOnClickListener {
-            if (SharedPrefManager.getUserLmsId().isNotEmpty() && SharedPrefManager.getUserLmsPw()
-                    .isNotEmpty()
-            ) {
+            if (SharedPrefManager.getUserLmsId().isNotEmpty() && SharedPrefManager.getUserLmsPw().isNotEmpty()) {
                 // 시간표, 과제함으로 이동
-                startActivity(
-                    Intent(context, MyClassTimetableActivity::class.java),
-                    ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle()
-                )
+                Intent(context, MyClassTimetableActivity::class.java).also {
+                    startActivity(it)
+                    requireActivity().overridePendingTransition(
+                        R.anim.activity_slide_in,
+                        R.anim.activity_slide_out
+                    )
+                }
             } else {
                 val lmsAuthenticationDialog = LmsAuthenticationDialog(requireContext())
                 lmsAuthenticationDialog.show()
@@ -73,10 +75,15 @@ class MyClassMainFragment : Fragment() {
 
         // 교슈님 요청 메일(가이드)
         binding.textViewMyClassMainProfessorToMail.setOnClickListener {
-            startActivity(
-                Intent(context, MyClassMailToProfessorActivity::class.java),
-                ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle()
-            )
+
+            Intent(context, MyClassMailToProfessorActivity::class.java).also {
+                startActivity(it)
+                requireActivity().overridePendingTransition(
+                    R.anim.activity_slide_in,
+                    R.anim.activity_slide_out
+                )
+            }
+
         }
     }
 
