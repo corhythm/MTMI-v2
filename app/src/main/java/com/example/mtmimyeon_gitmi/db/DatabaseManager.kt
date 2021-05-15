@@ -158,10 +158,6 @@ class DatabaseManager {
         formatted = current.format(dbSaveFormatter)
         database.child(chatRoomId).child("chatting").child(formatted).setValue(chat_message) //db저장
     }
-<<<<<<< Updated upstream:app/src/main/java/com/example/mtmimyeon_gitmi/db/DatabaseManager.kt
-    fun writePost(userId: String,postTitle: String,postContent: String){
-=======
->>>>>>> Stashed changes:app/src/main/java/com/example/mtmimyeon_gitmi/DB/DatabaseManager.kt
 
     fun writePost(
         idx: String,

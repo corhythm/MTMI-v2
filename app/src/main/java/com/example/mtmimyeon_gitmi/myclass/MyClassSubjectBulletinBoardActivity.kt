@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectBulletinBoardBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBulletinBoardBinding
 
@@ -20,7 +21,6 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
     lateinit var subjectName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
-<<<<<<< Updated upstream
 
         // activity 옆으로 이동 애니메이션
         // 이 코드는 반드시 onCreate에서 super.onCreate(savedInstanceState) 위에 있어야 함
@@ -31,11 +31,9 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
             exitTransition = Slide(Gravity.START)
         }
 
-=======
         var intentExtra = getIntent()
         subjectName = intentExtra.getStringExtra("과목이름") // 과목 이름
-         idx = intentExtra.getStringExtra("과목코드")// 과목 코드
->>>>>>> Stashed changes
+        idx = intentExtra.getStringExtra("과목코드")// 과목 코드
         super.onCreate(savedInstanceState)
         binding = ActivityMyClassSubjectBulletinBoardBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -65,17 +63,12 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
 
         // 글 쓰기 버튼 클릭
         binding.extendFabMyClassSubjectBulletinBoardAddWriting.setOnClickListener {
-<<<<<<< Updated upstream
-            Intent(this, MyClassSubjectBulletinBoardWritingActivity::class.java).also {
-                    startActivity(it, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
-=======
             var intent = Intent(this, MyClassSubjectBulletinBoardWritingActivity::class.java)
             intent.putExtra(idx,"과목코드")
             intent.putExtra(subjectName,"과목이름")
             intent.also {
                 startActivity(it)
                 overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
->>>>>>> Stashed changes
             }
         }
     }
