@@ -55,12 +55,11 @@ class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface 
 
     // 과목 게시판으로 이동
     override fun itemClicked(idx: String, subjectName: String) {
-        Intent(this, MyClassSubjectBulletinBoardActivity::class.java).also {
-            startActivity(it)
-            overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
-        }
+        val intent = Intent(this, MyClassSubjectBulletinBoardActivity::class.java)
+        intent.putExtra(idx, "과목코드")
+        intent.putExtra(subjectName, "과목이름")
+        startActivity(intent)
     }
-
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)

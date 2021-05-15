@@ -7,6 +7,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class DatabaseManager {
 
@@ -66,8 +68,9 @@ class DatabaseManager {
         Log.d(" id and password", "$id, $pw")
         database = Firebase.database.getReference("user")
         if (id.isEmpty() || pw.isEmpty()) {
-            callback.onCallback(false)
             Toast.makeText(activity, "아이디 혹은 비밀번호를 입력해주세요.", Toast.LENGTH_LONG).show()
+            callback.onCallback(false)
+
         } else {
             Log.d("LOG", "회원가입 실행중입니다.")
             firebaseAuth.createUserWithEmailAndPassword(id, pw)
@@ -136,19 +139,25 @@ class DatabaseManager {
 //        database=Firebase.database.getReference("chatRoom")
 //        database.setValue()
 //    }
-    fun makeChatRoom(sendUser: String, receiveUser: String, callback: Callback<Boolean>) {
-        database = Firebase.database.getReference("chat")
-        var newChat = Chat(sendUser + "-" + receiveUser, sendUser, receiveUser)
-        database.child(newChat.chatRoomId).setValue(newChat).addOnSuccessListener {
-            callback.onCallback(true)
-        }.addOnFailureListener {
-            callback.onCallback(false)
-        }
+    fun makeChatRoom(sendUser: String,receiveUser: String): String{
+        var chatRoomId = sendUser+"-"+receiveUser
+        database=Firebase.database.getReference("chat")
+        var newChat = Chat(chatRoomId,sendUser,receiveUser)
+        database.child(newChat.chatRoomId).setValue(newChat)
+        return  chatRoomId
     }
+    fun sendMessage(chatRoomId: String,name: String, message: String, userId: String,imageUri: String) {
+        //밀리초 단위로 메시지 푸쉬
+        val current = LocalDateTime.now() //현재사간
+        val dbSaveFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS") //밀리초 환산
+        val uiFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분")
+        var formatted = current.format(uiFormatter)
+        val chat_message = ChatMessage(chatRoomId,name,userId,message,imageUri,formatted) //메세지내용 전달
+        database = Firebase.database.getReference("chat") //chat reference
+        formatted = current.format(dbSaveFormatter)
+        database.child(chatRoomId).child("chatting").child(formatted).setValue(chat_message) //db저장
+    }
+    fun writePost(userId: String,postTitle: String,postContent: String) {
 
-    fun sendMessage(chatRoomId: Int, message: String, time: Int, userId: String) {
-        val chat_message = ChatMessage(chatRoomId, userId, message)
-        database = Firebase.database.getReference("chatRoom")
-        database.child(chatRoomId.toString()).setValue(chat_message)
     }
 }

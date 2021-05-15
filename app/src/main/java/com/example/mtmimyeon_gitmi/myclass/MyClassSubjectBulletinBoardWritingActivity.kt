@@ -6,15 +6,23 @@ import android.view.Menu
 import android.view.MenuItem
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectBulletinBoardWritingBinding
+import com.example.mtmimyeon_gitmi.db.DatabaseManager
+import com.google.firebase.auth.FirebaseAuth
 
 class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyClassSubjectBulletinBoardWritingBinding
-
+    private var DB = DatabaseManager()
+    private var auth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         binding = ActivityMyClassSubjectBulletinBoardWritingBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
+        binding.fabMyClassSubjectBulletinBoardPost.setOnClickListener{
+            uploadPost()
+            finish()
+        }
     }
 
     private fun init() {
@@ -39,7 +47,12 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
         }
         return true
     }
-
+    fun uploadPost() {
+        var writter = auth.currentUser.uid
+        var title = binding.editTextMyClassSubjectBulletinBoardWritingTitle.text.toString()
+        var content = binding.editTextMyClassSubjectBulletinBoardWritingContent.text.toString()
+        DB.writePost(writter, title, content)
+    }
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)

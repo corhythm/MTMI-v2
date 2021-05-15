@@ -9,6 +9,9 @@ data class BoardSubject(
     var subjectBoardIndex: Int, // 게시물의 인덱스
     var status: Boolean // 게시물 상태 ( 공개-> 비공개 혹은 삭제)
 ) {
+    constructor() : this("","","","","",0,true) {}
+
+
     init {
         this.subjectCode = subjectCode
         this.title = title
@@ -16,6 +19,6 @@ data class BoardSubject(
         this.content = content
         this.writerUid = writerUid
         this.subjectBoardIndex = subjectBoardIndex
-        this.status = status
+        this.status = true
     }
 }

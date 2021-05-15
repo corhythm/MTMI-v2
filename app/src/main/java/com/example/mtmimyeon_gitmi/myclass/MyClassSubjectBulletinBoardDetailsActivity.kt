@@ -99,8 +99,23 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
 
         // 게시글 작성자에게 메시지 보내기, 추후 userIdx 같은 값 추자적으로 보낼 것
         binding.imageViewMyClassSubjectBulletinBoardDetailsMessage.setOnClickListener {
-            Intent(this, ChattingRoomDetailsActivity::class.java).also {
-                startActivity(it, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+            Log.d("클릭리스너 실행", "메시지창 불러오는중")
+            database.makeChatRoom(auth.currentUser.uid, "1234")
+            Toast.makeText(
+                this,
+                "채팅방 개설 성공",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            Intent(
+                this,
+                ChattingRoomDetailsActivity::class.java
+            ).also {
+                startActivity(
+                    it,
+                    ActivityOptions.makeSceneTransitionAnimation(this@MyClassSubjectBulletinBoardDetailsActivity)
+                        .toBundle()
+                )
             }
         }
     }
@@ -108,38 +123,24 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
     override fun sendMessageClicked() {
         // 댓글 단 사람들 중에 채팅 보낼 때
         Log.d("댓글단사람들 확인중", "메세지보내기")
+        database.makeChatRoom(auth.currentUser.uid, "1234")
+        Toast.makeText(
+            this,
+            "채팅방 개설 성공",
+            Toast.LENGTH_SHORT
+        ).show()
 
-
-        database.makeChatRoom(auth.currentUser.uid, "1234", object : Callback<Boolean> {
-            override fun onCallback(data: Boolean) {
-                if (data) {
-                    Toast.makeText(
-                        this@MyClassSubjectBulletinBoardDetailsActivity,
-                        "채팅방 개설 성공",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    Intent(
-                        this@MyClassSubjectBulletinBoardDetailsActivity,
-                        ChattingRoomDetailsActivity::class.java
-                    ).also {
-                        startActivity(
-                            it,
-                            ActivityOptions.makeSceneTransitionAnimation(this@MyClassSubjectBulletinBoardDetailsActivity)
-                                .toBundle()
-                        )
-                    }
-                } else {
-                    Toast.makeText(
-                        this@MyClassSubjectBulletinBoardDetailsActivity,
-                        "채팅방 개설 실패",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        })
-
+        Intent(
+            this,
+            ChattingRoomDetailsActivity::class.java
+        ).also {
+            startActivity(
+                it,
+                ActivityOptions.makeSceneTransitionAnimation(this@MyClassSubjectBulletinBoardDetailsActivity)
+                    .toBundle()
+            )
+        }
     }
-
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
