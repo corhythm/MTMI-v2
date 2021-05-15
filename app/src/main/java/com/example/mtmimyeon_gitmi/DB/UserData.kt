@@ -9,6 +9,7 @@ data class UserData(
 //    var birth: String,
 //    var gender: String,
 //    var email: String
+//    var userProfileImageUrl: String?
     var chatting: Array<Chat>?
 ) {
     init {
@@ -18,6 +19,7 @@ data class UserData(
 //        this.birth = birth
 //        this.gender = gender
 //        this.email = email // id와 email에 필요사항 정의 할 필요 있음
+//        this. userProfileImageUrl = null
         this.chatting = chatting
     }
 }

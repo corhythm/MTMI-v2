@@ -76,9 +76,19 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
 
         // 게시글 작성자에게 메시지 보내기, 추후 userIdx 같은 값 추자적으로 보낼 것
         binding.imageViewMyClassSubjectBulletinBoardDetailsMessage.setOnClickListener {
-            Intent(this, ChattingRoomDetailsActivity::class.java).also {
-                startActivity(it, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
-            }
+            database.makeChatRoom(auth.currentUser.uid,"1234", object : Callback<Boolean> { //메시지 구현은 했으나 추후 board uid 변경
+                override fun onCallback(data: Boolean) {
+                    if(data){
+                        Toast.makeText(this@MyClassSubjectBulletinBoardDetailsActivity,"채팅방 개설 성공",Toast.LENGTH_SHORT).show()
+                        Intent(this@MyClassSubjectBulletinBoardDetailsActivity, ChattingRoomDetailsActivity::class.java).also {
+                            startActivity(it, ActivityOptions.makeSceneTransitionAnimation(this@MyClassSubjectBulletinBoardDetailsActivity).toBundle())
+                        }
+                    }
+                    else{
+                        Toast.makeText(this@MyClassSubjectBulletinBoardDetailsActivity,"채팅방 개설 실패",Toast.LENGTH_SHORT).show()
+                    }
+                }
+            })
         }
     }
 
