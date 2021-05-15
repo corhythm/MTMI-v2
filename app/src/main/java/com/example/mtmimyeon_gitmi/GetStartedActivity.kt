@@ -15,12 +15,6 @@ class GetStartedActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGetStartedBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        with(window) { // activity 옆으로 이동 애니메이션
-            requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
-            // set an slide transition
-            enterTransition = Slide(Gravity.END)
-            exitTransition = Slide(Gravity.START)
-        }
 
         super.onCreate(savedInstanceState)
         binding = ActivityGetStartedBinding.inflate(layoutInflater)
@@ -28,7 +22,8 @@ class GetStartedActivity : AppCompatActivity() {
 
         binding.buttonGetStartedGoToGetStarted.setOnClickListener {
             Intent(this, LoginActivity::class.java).also {
-                startActivity(it, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+                startActivity(it)
+                overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
             }
             finish() // 임시
             Log.d("로그", "GetStartedActivity -onCreate() called")

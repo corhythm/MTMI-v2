@@ -15,6 +15,7 @@ import android.view.Window
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.chatting.ChattingRoomDetailsActivity
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectBulletinBoardDetailsBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBulletinBoardCommentBinding
@@ -32,13 +33,6 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
     var database: DatabaseManager = DatabaseManager()
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
-        with(window) { // activity 옆으로 이동 애니메이션
-            requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
-            // set an slide transition
-            enterTransition = Slide(Gravity.END)
-            exitTransition = Slide(Gravity.START)
-        }
-
         super.onCreate(savedInstanceState)
         binding = ActivityMyClassSubjectBulletinBoardDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -120,6 +114,10 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
                     .toBundle()
             )
         }
+    }
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
     }
 }
 

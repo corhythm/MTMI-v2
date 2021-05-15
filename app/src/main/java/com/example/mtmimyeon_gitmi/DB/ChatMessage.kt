@@ -1,3 +1,4 @@
+
 package com.example.mtmimyeon_gitmi.db
 
 data class ChatMessage(

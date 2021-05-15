@@ -77,7 +77,7 @@ class DatabaseManager {
                 .addOnCompleteListener(activity) {
                     if (it.isSuccessful) {
                         val user = firebaseAuth.currentUser
-                        val userdata = UserData(id, pw,null)
+                        val userdata = UserData(id, pw, null)
                         database.child(user.uid).setValue(userdata)
                         callback.onCallback(true)
                         Log.d("createEmail: ", "Sign up Successful")//가입성공
@@ -99,10 +99,9 @@ class DatabaseManager {
         activity: Activity,
         callback: Callback<Boolean>
     ) { // -> 로그인 메소드
-        if(id.isEmpty()|| pw.isEmpty()){
+        if (id.isEmpty() || pw.isEmpty()) {
             callback.onCallback(false)
-        }
-        else {
+        } else {
             firebaseAuth!!.signInWithEmailAndPassword(id, pw)
                 .addOnCompleteListener(activity) {
                     if (it.isSuccessful) {
@@ -117,8 +116,16 @@ class DatabaseManager {
                 }
         }
     }
-    fun writePost(subjectCode: String,subjectBoard: String,title: String,day: String,content: String,writerUid: String){
-        var userUid=firebaseAuth.currentUser.uid
+
+    fun writePost(
+        subjectCode: String,
+        subjectBoard: String,
+        title: String,
+        day: String,
+        content: String,
+        writerUid: String
+    ) {
+        var userUid = firebaseAuth.currentUser.uid
 //        var
 //        var board=BoardSubject(subjectCode,title,day,content
         database = Firebase.database.getReference("board")

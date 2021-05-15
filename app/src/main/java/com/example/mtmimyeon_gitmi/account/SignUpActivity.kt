@@ -48,11 +48,11 @@ class SignUpActivity : AppCompatActivity() {
 
                 // 전공 선택시 null 체크
                 var signUp_userMajor: String?
-                if(binding.spinnerSignUpMajorList.selectedItem!=null) {
+                if (binding.spinnerSignUpMajorList.selectedItem != null) {
                     signUp_userMajor =
                         binding.spinnerSignUpMajorList.selectedItem.toString()
-                }else{
-                    signUp_userMajor=null
+                } else {
+                    signUp_userMajor = null
                 }
                 var signUp_userGender: String =
                     binding.radioButtonSignUpGenderGroup.checkedRadioButtonId.toString()
@@ -94,6 +94,11 @@ class SignUpActivity : AppCompatActivity() {
 
             }, 300)
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
     }
 
 

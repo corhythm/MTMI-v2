@@ -12,4 +12,9 @@ class CopyrightActivity: AppCompatActivity() {
         binding = ActivityCopyrightBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
+    }
 }

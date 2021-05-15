@@ -4,6 +4,7 @@ import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.transition.Explode
 import android.transition.Slide
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -45,30 +46,39 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
 
     private fun init() {
 
-        val subjectBulletinBoardRecyclerAdapter = SubjectBulletinBoardRecyclerAdapter(this)
+
         val subjectBulletinBoardList = ArrayList<ItemSubjectBulletinBoard>()
         // 임시 데이터 삽입
         for (i in 0..20) {
             subjectBulletinBoardList.add(
-                ItemSubjectBulletinBoard(0, "파이썬 도와주실 천사를 찾습니다",
-                "정말요 제발요 간절해요 너무 어려워요 ㅜㅜㅜ 도와주세요", "2분 전", "익명", "8")
+                ItemSubjectBulletinBoard(
+                    0, "파이썬 도와주실 천사를 찾습니다",
+                    "정말요 제발요 간절해요 너무 어려워요 ㅜㅜㅜ 도와주세요", "2분 전", "익명", "8"
+                )
             )
         }
 
+        val subjectBulletinBoardRecyclerAdapter =
+            SubjectBulletinBoardRecyclerAdapter(subjectBulletinBoardList, this)
         binding.recyclerviewMyClassSubjectBulletinBoardBoardList.apply {
             adapter = subjectBulletinBoardRecyclerAdapter
-            layoutManager = LinearLayoutManager(this@MyClassSubjectBulletinBoardActivity, LinearLayoutManager.VERTICAL, false)
-            subjectBulletinBoardRecyclerAdapter.submit(subjectBulletinBoardList)
+            layoutManager = LinearLayoutManager(
+                this@MyClassSubjectBulletinBoardActivity,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
         }
 
         // 글 쓰기 버튼 클릭
         binding.extendFabMyClassSubjectBulletinBoardAddWriting.setOnClickListener {
             var intent = Intent(this, MyClassSubjectBulletinBoardWritingActivity::class.java)
-            intent.putExtra(idx,"과목코드")
-            intent.putExtra(subjectName,"과목이름")
+            intent.putExtra(idx, "과목코드")
+            intent.putExtra(subjectName, "과목이름")
             intent.also {
-                startActivity(it)
-                overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
+                Intent(this, MyClassSubjectBulletinBoardWritingActivity::class.java).also {
+                    startActivity(it)
+                    overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
+                }
             }
         }
     }
@@ -76,8 +86,14 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
     override fun itemClicked(idx: Int) {
         // 특정 게시글 클릭 시, 해당 게시글 상세 내용 불러오기
         Intent(this, MyClassSubjectBulletinBoardDetailsActivity::class.java).also {
-                    startActivity(it, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+            startActivity(it)
+            overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
     }
 }
 
@@ -91,16 +107,22 @@ data class ItemSubjectBulletinBoard(
 )
 
 
-class SubjectBulletinBoardRecyclerAdapter() : RecyclerView.Adapter<SubjectBulletinBoardViewHolder>() {
-    private lateinit var itemSubjectBulletinBoardList: ArrayList<ItemSubjectBulletinBoard>
-    private lateinit var bulletinBoardClickInterface: BulletinBoardClickInterface
+class SubjectBulletinBoardRecyclerAdapter(
+    private val itemSubjectBulletinBoardList: ArrayList<ItemSubjectBulletinBoard>,
+    private val bulletinBoardClickInterface: BulletinBoardClickInterface
+) :
+    RecyclerView.Adapter<SubjectBulletinBoardViewHolder>() {
 
-    constructor(bulletinBoardClickInterface: BulletinBoardClickInterface): this() {
-        this.bulletinBoardClickInterface = bulletinBoardClickInterface
-    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubjectBulletinBoardViewHolder {
-        val binding = ItemSubjectBulletinBoardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): SubjectBulletinBoardViewHolder {
+        val binding = ItemSubjectBulletinBoardBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return SubjectBulletinBoardViewHolder(binding, bulletinBoardClickInterface)
     }
 
@@ -111,19 +133,17 @@ class SubjectBulletinBoardRecyclerAdapter() : RecyclerView.Adapter<SubjectBullet
     override fun getItemCount(): Int {
         return itemSubjectBulletinBoardList.size
     }
-
-    fun submit(itemSubjectBulletinBoardList: ArrayList<ItemSubjectBulletinBoard>) {
-        this.itemSubjectBulletinBoardList = itemSubjectBulletinBoardList
-    }
 }
 
 // recyclerview viewHolder
-class SubjectBulletinBoardViewHolder(private val item: ItemSubjectBulletinBoardBinding) : RecyclerView.ViewHolder(item.root) {
-    private lateinit var bulletinBoardClickInterface: BulletinBoardClickInterface
+class SubjectBulletinBoardViewHolder(
+    private val item: ItemSubjectBulletinBoardBinding,
+    private val bulletinBoardClickInterface: BulletinBoardClickInterface
+) :
+    RecyclerView.ViewHolder(item.root) {
     private var idx: Int = -1
 
-    constructor(item: ItemSubjectBulletinBoardBinding, bulletinBoardClickInterface: BulletinBoardClickInterface): this(item) {
-        this.bulletinBoardClickInterface = bulletinBoardClickInterface
+    init {
         item.root.setOnClickListener {
             this.bulletinBoardClickInterface.itemClicked(this.idx)
         }
