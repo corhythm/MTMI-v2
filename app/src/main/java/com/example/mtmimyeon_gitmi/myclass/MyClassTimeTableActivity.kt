@@ -181,7 +181,7 @@ class ItemSubjectInfoViewHolder(
             "${itemSubjectInfo.totalAttendanceRate} (전체 출석률)"
 
         // 더보기(과제 보기 클릭했을 때)
-        item.imageViewItemOverallSubjectInfoVerticalMore.setOnClickListener {
+        item.root.setOnClickListener {
             if (!isUnfolded) { // 과제목록 리스트가 접혀있을 때
                 if (itemSubjectInfo.homeworkList.size != 0) {
                     item.recyclerviewItemOverallSubjectInfoVerticalHomeworkList.visibility = View.VISIBLE
