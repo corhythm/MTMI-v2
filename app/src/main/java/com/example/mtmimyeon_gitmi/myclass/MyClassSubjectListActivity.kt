@@ -55,8 +55,13 @@ class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface 
 
     override fun itemClicked(idx: String, subjectName: String) {
         val intent = Intent(this, MyClassSubjectBulletinBoardActivity::class.java)
+<<<<<<< Updated upstream
         intent.putExtra(idx,"과목코드")
         intent.putExtra(subjectName,"과목이름")
+=======
+        intent.putExtra("과목코드", idx)
+        intent.putExtra("과목이름", subjectName)
+>>>>>>> Stashed changes
         startActivity(intent)
     }
 }

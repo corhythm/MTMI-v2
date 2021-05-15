@@ -42,29 +42,33 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
         var DB = DatabaseManager()
         var auth = FirebaseAuth.getInstance()
         val chattingDataList = ArrayList<ChatMessage>()
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         this.chattingRoomDetailsRecyclerAdapter =
             ChattingRoomDetailsRecyclerAdapter(chattingDataList)
-        val childEventListener = object : ChildEventListener{
+        val childEventListener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                Log.d("onChildAddaed@@@@@@@@@@@",snapshot.getKey().toString())
+                Log.d("onChildAddaed@@@@@@@@@@@", snapshot.getKey().toString())
                 val addChatMessage = snapshot.getValue<ChatMessage>()
                 if (addChatMessage != null) {
-                    Log.d("가져온 데이터" , addChatMessage.userId)
+                    Log.d("가져온 데이터", addChatMessage.userId)
                     Log.d("가져온데이터", addChatMessage.name)
                     Log.d("가져온데이터", addChatMessage.message)
                     chattingDataList.add(addChatMessage)
-                    binding.recyclerViewActivityChattingRoomMessageList.apply {
+                    binding.recyclerViewActivityChattingRoomDetailsMessageList.apply {
                         adapter = chattingRoomDetailsRecyclerAdapter
                     }
                 }
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                Log.d("onChildChanged@@@@@@@@@@",snapshot.getKey().toString())
+                Log.d("onChildChanged@@@@@@@@@@", snapshot.getKey().toString())
                 val addChatMessage = snapshot.getValue(ChatMessage::class.java)
                 if (addChatMessage != null) {
                     chattingDataList.add(addChatMessage)
-                    binding.recyclerViewActivityChattingRoomMessageList.apply {
+                    binding.recyclerViewActivityChattingRoomDetailsMessageList.apply {
                         adapter = chattingRoomDetailsRecyclerAdapter
                     }
                 }
@@ -84,6 +88,7 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
             }
 
         }
+<<<<<<< Updated upstream
         database.child("CXG1SrIoS4Mn96vTLqsWPnnUUwO2-1234").child("chatting").addChildEventListener(childEventListener)
 
         binding.recyclerViewActivityChattingRoomMessageList.apply {
@@ -99,6 +104,27 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
                     auth.currentUser.uid,
                     ""
                 )
+=======
+        database.child("CXG1SrIoS4Mn96vTLqsWPnnUUwO2-1234").child("chatting")
+            .addChildEventListener(childEventListener)
+
+        binding.recyclerViewActivityChattingRoomDetailsMessageList.apply {
+            binding.recyclerViewActivityChattingRoomDetailsMessageList.apply {
+                adapter = chattingRoomDetailsRecyclerAdapter
+            }
+            binding.buttonActivityChattingRoomDetailsSend.setOnClickListener {
+                var sendMessageContenet =
+                    binding.editTextActivityChattingRoomDetailsMessage.text.toString()
+                if (sendMessageContenet.isNotEmpty()) {
+                    DB.sendMessage(
+                        roomId,
+                        "정현",
+                        binding.editTextActivityChattingRoomDetailsMessage.text.toString(),
+                        auth.currentUser.uid,
+                        ""
+                    )
+                }
+>>>>>>> Stashed changes
             }
         }
     }

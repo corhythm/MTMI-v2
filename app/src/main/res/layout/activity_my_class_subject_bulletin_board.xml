@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            app:title="팀프로젝트2"
+            app:title=""
             app:titleCentered="true"
             app:titleTextColor="@color/black" />
 

@@ -132,25 +132,53 @@ class DatabaseManager {
 //        database=Firebase.database.getReference("chatRoom")
 //        database.setValue()
 //    }
-    fun makeChatRoom(sendUser: String,receiveUser: String): String{
-        var chatRoomId = sendUser+"-"+receiveUser
-        database=Firebase.database.getReference("chat")
-        var newChat = Chat(chatRoomId,sendUser,receiveUser)
+    fun makeChatRoom(sendUser: String, receiveUser: String): String {
+        var chatRoomId = sendUser + "-" + receiveUser
+        database = Firebase.database.getReference("chat")
+        var newChat = Chat(chatRoomId, sendUser, receiveUser)
         database.child(newChat.chatRoomId).setValue(newChat)
-        return  chatRoomId
+        return chatRoomId
     }
-    fun sendMessage(chatRoomId: String,name: String, message: String, userId: String,imageUri: String) {
+
+    fun sendMessage(
+        chatRoomId: String,
+        name: String,
+        message: String,
+        userId: String,
+        imageUri: String
+    ) {
         //밀리초 단위로 메시지 푸쉬
         val current = LocalDateTime.now() //현재사간
         val dbSaveFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS") //밀리초 환산
         val uiFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분")
         var formatted = current.format(uiFormatter)
-        val chat_message = ChatMessage(chatRoomId,name,userId,message,imageUri,formatted) //메세지내용 전달
+        val chat_message =
+            ChatMessage(chatRoomId, name, userId, message, imageUri, formatted) //메세지내용 전달
         database = Firebase.database.getReference("chat") //chat reference
         formatted = current.format(dbSaveFormatter)
         database.child(chatRoomId).child("chatting").child(formatted).setValue(chat_message) //db저장
     }
+<<<<<<< Updated upstream:app/src/main/java/com/example/mtmimyeon_gitmi/db/DatabaseManager.kt
     fun writePost(userId: String,postTitle: String,postContent: String){
+=======
+>>>>>>> Stashed changes:app/src/main/java/com/example/mtmimyeon_gitmi/DB/DatabaseManager.kt
 
+    fun writePost(
+        idx: String,
+        subjectName: String,
+        userId: String,
+        postTitle: String,
+        postContent: String
+    ) {
+        val current = LocalDateTime.now() //현재사간
+        val uiFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분")
+        var formatted = current.format(uiFormatter)
+        val dbSaveFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS") //밀리초 환산
+        var formatted2 = current.format(dbSaveFormatter)
+        database = Firebase.database.getReference("board")
+        var boardIdx = Board(idx)
+        var boardPost = BoardPost(idx, postTitle,formatted,postContent,userId,formatted2)
+
+        database.child(boardIdx.subjectCode).child(formatted).setValue(boardPost)
     }
 }
