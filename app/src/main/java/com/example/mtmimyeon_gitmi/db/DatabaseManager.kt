@@ -132,14 +132,12 @@ class DatabaseManager {
 //        database=Firebase.database.getReference("chatRoom")
 //        database.setValue()
 //    }
-    fun makeChatRoom(sendUser: String,receiveUser: String,callback: Callback<Boolean>){
+    fun makeChatRoom(sendUser: String,receiveUser: String): String{
+        var chatRoomId = sendUser+"-"+receiveUser
         database=Firebase.database.getReference("chat")
-        var newChat = Chat(sendUser+"-"+receiveUser,sendUser,receiveUser)
-        database.child(newChat.chatRoomId).setValue(newChat).addOnSuccessListener {
-            callback.onCallback(true)
-        }.addOnFailureListener {
-            callback.onCallback(false)
-        }
+        var newChat = Chat(chatRoomId,sendUser,receiveUser)
+        database.child(newChat.chatRoomId).setValue(newChat)
+        return  chatRoomId
     }
     fun sendMessage(chatRoomId: String,name: String, message: String, userId: String,imageUri: String) {
         //밀리초 단위로 메시지 푸쉬
@@ -151,5 +149,8 @@ class DatabaseManager {
         database = Firebase.database.getReference("chat") //chat reference
         formatted = current.format(dbSaveFormatter)
         database.child(chatRoomId).child("chatting").child(formatted).setValue(chat_message) //db저장
+    }
+    fun writePost(userId: String,postTitle: String,postContent: String){
+
     }
 }

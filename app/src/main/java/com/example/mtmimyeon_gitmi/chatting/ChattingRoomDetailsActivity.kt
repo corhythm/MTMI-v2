@@ -41,7 +41,7 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
     private fun init() {
         var DB = DatabaseManager()
         var auth = FirebaseAuth.getInstance()
-        val chattingDataList = ArrayList<ChattingData>()
+        val chattingDataList = ArrayList<ChatMessage>()
         this.chattingRoomDetailsRecyclerAdapter =
             ChattingRoomDetailsRecyclerAdapter(chattingDataList)
         val childEventListener = object : ChildEventListener{
@@ -52,15 +52,7 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
                     Log.d("가져온 데이터" , addChatMessage.userId)
                     Log.d("가져온데이터", addChatMessage.name)
                     Log.d("가져온데이터", addChatMessage.message)
-                    chattingDataList.add(
-                        ChattingData(
-                            addChatMessage.userId,
-                            addChatMessage.name,
-                            addChatMessage.message,
-                            imgUrl = "",
-                            addChatMessage.timeStamp
-                        )
-                    )
+                    chattingDataList.add(addChatMessage)
                     binding.recyclerViewActivityChattingRoomMessageList.apply {
                         adapter = chattingRoomDetailsRecyclerAdapter
                     }
@@ -71,15 +63,7 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
                 Log.d("onChildChanged@@@@@@@@@@",snapshot.getKey().toString())
                 val addChatMessage = snapshot.getValue(ChatMessage::class.java)
                 if (addChatMessage != null) {
-                    chattingDataList.add(
-                        ChattingData(
-                            addChatMessage.userId,
-                            addChatMessage.name,
-                            addChatMessage.message,
-                            imgUrl = "",
-                            addChatMessage.timeStamp
-                        )
-                    )
+                    chattingDataList.add(addChatMessage)
                     binding.recyclerViewActivityChattingRoomMessageList.apply {
                         adapter = chattingRoomDetailsRecyclerAdapter
                     }
@@ -135,7 +119,7 @@ enum class ViewType(val viewNum: Int) {
 }
 
 // recyclerview adapter
-class ChattingRoomDetailsRecyclerAdapter(private val chattingList: ArrayList<ChattingData>) :
+class ChattingRoomDetailsRecyclerAdapter(private val chattingList: ArrayList<ChatMessage>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var auth = FirebaseAuth.getInstance()
     private val uid = auth.currentUser.uid// 임시 유저, 유저 구별 id (나중에 firebase에서 받아올 것)
@@ -171,7 +155,7 @@ class ChattingRoomDetailsRecyclerAdapter(private val chattingList: ArrayList<Cha
     // 메시지 주인 구분
     override fun getItemViewType(position: Int): Int {
         // 여기서 firebase uid로 내가 보낸 채팅인지, 받은 채팅인지 구분
-        return if (this.chattingList[position].uid == uid)
+        return if (this.chattingList[position].userId == uid)
             ViewType.MY_CHATTING.viewNum
         else
             ViewType.OTHERS_CHATTING.viewNum
@@ -181,7 +165,7 @@ class ChattingRoomDetailsRecyclerAdapter(private val chattingList: ArrayList<Cha
 
 class ChattingViewHolder(private val item: ViewBinding) : RecyclerView.ViewHolder(item.root) {
 
-    fun bind(chattingData: ChattingData) { // 내가 보낸 채팅
+    fun bind(chattingData: ChatMessage) { // 내가 보낸 채팅
         if (item is ItemSendChattingBinding) {
             item.textViewItemSendChattingSendMsg.text = chattingData.message
             item.textViewItemSendChattingTimeStamp.text = chattingData.timeStamp
