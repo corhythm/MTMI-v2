@@ -13,11 +13,12 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyClassSubjectBulletinBoardWritingBinding
     private var DB = DatabaseManager()
     private var auth = FirebaseAuth.getInstance()
-    var subjectName: String = intent.getStringExtra("과목이름") // 과목 이름
-    var idx: String = intent.getStringExtra("과목코드")// 과목 코드
-
+    lateinit var subjectName: String
+    lateinit var idx: String
     override fun onCreate(savedInstanceState: Bundle?) {
-
+        var intentExtra = getIntent()
+        subjectName = intentExtra.getStringExtra("과목이름") // 과목 이름
+        idx = intentExtra.getStringExtra("과목코드")// 과목 코드
         super.onCreate(savedInstanceState)
         binding = ActivityMyClassSubjectBulletinBoardWritingBinding.inflate(layoutInflater)
         setContentView(binding.root)

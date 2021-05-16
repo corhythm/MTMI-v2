@@ -4,8 +4,9 @@ import android.app.Activity
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -117,28 +118,7 @@ class DatabaseManager {
         }
     }
 
-    fun writePost(
-        subjectCode: String,
-        subjectBoard: String,
-        title: String,
-        day: String,
-        content: String,
-        writerUid: String
-    ) {
-        var userUid = firebaseAuth.currentUser.uid
-//        var
-//        var board=BoardSubject(subjectCode,title,day,content
-        database = Firebase.database.getReference("board")
-//        database.child(subjectBoard).
-//        database.child("subjectBoard").
-    }
 
-    //    fun makeRoom(userId: String){
-//        database=Firebase.database.getReference("user")
-//
-//        database=Firebase.database.getReference("chatRoom")
-//        database.setValue()
-//    }
     fun makeChatRoom(sendUser: String, receiveUser: String): String {
         var chatRoomId = sendUser + "-" + receiveUser
         database = Firebase.database.getReference("chat")
@@ -179,9 +159,31 @@ class DatabaseManager {
         val dbSaveFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS") //밀리초 환산
         var formatted2 = current.format(dbSaveFormatter)
         database = Firebase.database.getReference("board")
-        var boardIdx = Board(idx)
+        var boardIdx = idx
         var boardPost = BoardPost(idx, postTitle,formatted,postContent,userId,formatted2)
 
-        database.child(boardIdx.subjectCode).child(formatted).setValue(boardPost)
+        database.child(boardIdx).child(formatted2).setValue(boardPost)
+    }
+
+    fun loadPost(idx: String,callback: Callback<ArrayList<BoardPost>>){ // 과목별시판 불러오기
+        Firebase.database.getReference("/board/"+idx).addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var postList = ArrayList<BoardPost>()
+                dataSnapshot.children.forEach{
+                    Log.d("new",it.toString())
+                    Log.d("key",it.key.toString()) // 이건좋음
+                    Log.d("value",it.value.toString())
+                    val post = it.getValue(BoardPost::class.java)
+                    if (post != null) {
+                        postList.add(post)
+                    }
+                }
+                callback.onCallback(postList)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.d("게시물 가져오기실패 :. ","게시물을 가져오기 실패")
+            }
+        })
     }
 }
