@@ -42,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
                         if (data) {
                             binding.buttonLoginSignIn.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND,
                                 TransitionButton.OnAnimationStopEndListener {
-                                    Intent(this@LoginActivity, HomeActivity::class.java).also {
+                                    Intent(this@LoginActivity,HomeActivity::class.java).also {
                                         startActivity(it)
                                     }
                                     finish() // 임시

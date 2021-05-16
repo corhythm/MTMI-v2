@@ -26,5 +26,4 @@ data class ChatMessage(
         this.message = message //메시지 내용
         this.timeStamp = timeStamp//보낸시간
     }
-
 }

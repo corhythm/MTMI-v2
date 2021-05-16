@@ -50,7 +50,6 @@ class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface 
             //itemAnimator = DefaultItemAnimator()
             subjectRecyclerAdapter.submit(itemSubjectInfoList, this@MyClassSubjectListActivity)
         }
-
     }
 
     // 과목 게시판으로 이동
