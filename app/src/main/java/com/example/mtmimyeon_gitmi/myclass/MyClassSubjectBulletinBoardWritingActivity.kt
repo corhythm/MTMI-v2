@@ -13,6 +13,9 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyClassSubjectBulletinBoardWritingBinding
     private var DB = DatabaseManager()
     private var auth = FirebaseAuth.getInstance()
+    var subjectName: String = intent.getStringExtra("과목이름") // 과목 이름
+    var idx: String = intent.getStringExtra("과목코드")// 과목 코드
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -51,7 +54,7 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
         var writter = auth.currentUser.uid
         var title = binding.editTextMyClassSubjectBulletinBoardWritingTitle.text.toString()
         var content = binding.editTextMyClassSubjectBulletinBoardWritingContent.text.toString()
-        DB.writePost(writter, title, content)
+        DB.writePost(idx,subjectName,writter, title, content)
     }
     override fun finish() {
         super.finish()

@@ -18,12 +18,29 @@ import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBulletinBoardBinding
 
 class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardClickInterface {
     private lateinit var binding: ActivityMyClassSubjectBulletinBoardBinding
+    lateinit var idx: String
+    lateinit var subjectName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
+        // activity 옆으로 이동 애니메이션
+        // 이 코드는 반드시 onCreate에서 super.onCreate(savedInstanceState) 위에 있어야 함
+        with(window) {
+            requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
+            // set an slide transition
+            enterTransition = Slide(Gravity.END)
+            exitTransition = Slide(Gravity.START)
+        }
+
+        var intentExtra = getIntent()
+        subjectName = intentExtra.getStringExtra("과목이름") // 과목 이름
+        idx = intentExtra.getStringExtra("과목코드")// 과목 코드
         super.onCreate(savedInstanceState)
         binding = ActivityMyClassSubjectBulletinBoardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        binding.toolbarMyClassSubjectBulletinBoardToolbar.setTitle(subjectName)
         init()
     }
 
@@ -113,9 +130,14 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
 
         // 글 쓰기 버튼 클릭
         binding.extendFabMyClassSubjectBulletinBoardAddWriting.setOnClickListener {
-            Intent(this, MyClassSubjectBulletinBoardWritingActivity::class.java).also {
-                startActivity(it)
-                overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
+            var intent = Intent(this, MyClassSubjectBulletinBoardWritingActivity::class.java)
+            intent.putExtra(idx, "과목코드")
+            intent.putExtra(subjectName, "과목이름")
+            intent.also {
+                Intent(this, MyClassSubjectBulletinBoardWritingActivity::class.java).also {
+                    startActivity(it)
+                    overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
+                }
             }
         }
     }
