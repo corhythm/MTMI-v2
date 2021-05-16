@@ -40,20 +40,9 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
     }
 
     private fun init() {
-<<<<<<< HEAD
         var DB = DatabaseManager()
         var auth = FirebaseAuth.getInstance()
         val chattingDataList = ArrayList<ChatMessage>()
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
-=======
-=======
-        val chattingDataList = ArrayList<ChattingData>()
->>>>>>> f1edf149101ad1cf37d28439ad267db91b98de02
->>>>>>> master
         this.chattingRoomDetailsRecyclerAdapter =
             ChattingRoomDetailsRecyclerAdapter(chattingDataList)
         val childEventListener = object : ChildEventListener {
@@ -95,149 +84,39 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
                 TODO("Not yet implemented")
             }
 
-<<<<<<< HEAD
         }
-<<<<<<< Updated upstream
-        database.child("CXG1SrIoS4Mn96vTLqsWPnnUUwO2-1234").child("chatting").addChildEventListener(childEventListener)
-
-        binding.recyclerViewActivityChattingRoomMessageList.apply {
-=======
-        // insert test data
-        chattingDataList.add(
-            ChattingData(
-                "tempUser",
-                "강성욱",
-                "w",
-                imgUrl = "",
-                timeStamp = "2021-03-21 화"
-            )
-        )
-        chattingDataList.add(
-            ChattingData(
-                "tempUser",
-                "강성욱",
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                imgUrl = "",
-                timeStamp = "2021-03-21 화"
-            )
-        )
-        chattingDataList.add(
-            ChattingData(
-                "other user",
-                "강성욱",
-                "Helloworld",
-                imgUrl = "",
-                timeStamp = "2021-03-21 화"
-            )
-        )
-        chattingDataList.add(
-            ChattingData(
-                "other user",
-                "강성욱",
-                "g",
-                imgUrl = "",
-                timeStamp = "2021-03-21 화"
-            )
-        )
-        chattingDataList.add(
-            ChattingData(
-                "other user",
-                "강성욱",
-                "Helloworld",
-                imgUrl = "",
-                timeStamp = "2021-03-21 화"
-            )
-        )
-        chattingDataList.add(
-            ChattingData(
-                "other user",
-                "강성욱",
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                imgUrl = "",
-                timeStamp = "2021-03-21 화"
-            )
-        )
-        chattingDataList.add(
-            ChattingData(
-                "tempUser",
-                "강성욱",
-                "Helloworld",
-                imgUrl = "",
-                timeStamp = "2021-03-21 화"
-            )
-        )
-        chattingDataList.add(
-            ChattingData(
-                "other user",
-                "강성욱",
-                "Helloworld",
-                imgUrl = "",
-                timeStamp = "2021-03-21 화"
-            )
-        )
-        chattingDataList.add(
-            ChattingData(
-                "other user",
-                "강성욱",
-                "Helloworld",
-                imgUrl = "",
-                timeStamp = "2021-03-21 화"
-            )
-        )
-
-        binding.recyclerViewActivityChattingRoomDetailsMessageList.apply {
->>>>>>> f1edf149101ad1cf37d28439ad267db91b98de02
-            adapter = chattingRoomDetailsRecyclerAdapter
-        }
-        binding.buttonActivityChattingRoomSend.setOnClickListener {
-            var sendMessageContenet = binding.editTextActivityChattingRoomMessage.text.toString()
-            if(sendMessageContenet.isNotEmpty()){
-                DB.sendMessage(
-                    roomId,
-                    "정현",
-                    binding.editTextActivityChattingRoomMessage.text.toString(),
-                    auth.currentUser.uid,
-                    ""
-                )
-=======
         database.child("CXG1SrIoS4Mn96vTLqsWPnnUUwO2-1234").child("chatting")
             .addChildEventListener(childEventListener)
 
+        // insert test data
+
         binding.recyclerViewActivityChattingRoomDetailsMessageList.apply {
-            binding.recyclerViewActivityChattingRoomDetailsMessageList.apply {
-                adapter = chattingRoomDetailsRecyclerAdapter
-            }
-            binding.buttonActivityChattingRoomDetailsSend.setOnClickListener {
-                var sendMessageContenet =
-                    binding.editTextActivityChattingRoomDetailsMessage.text.toString()
-                if (sendMessageContenet.isNotEmpty()) {
-                    DB.sendMessage(
-                        roomId,
-                        "정현",
-                        binding.editTextActivityChattingRoomDetailsMessage.text.toString(),
-                        auth.currentUser.uid,
-                        ""
-                    )
-                }
->>>>>>> Stashed changes
+            adapter = chattingRoomDetailsRecyclerAdapter
+        }
+
+
+        // send시 메세지 보냄
+        binding.buttonActivityChattingRoomDetailsSend.setOnClickListener {
+            var sendMessageContenet =
+                binding.editTextActivityChattingRoomDetailsMessage.text.toString()
+            if (sendMessageContenet.isNotEmpty()) {
+                DB.sendMessage(
+                    roomId,
+                    "정현",
+                    binding.editTextActivityChattingRoomDetailsMessage.text.toString(),
+                    auth.currentUser.uid,
+                    ""
+                )
             }
         }
     }
+
 
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
     }
 }
-
-// recyclerView item
-data class ChattingData(
-    val uid: String,
-    val name: String, // 이름
-    val message: String, // 채팅 메시지
-    var imgUrl: String = "", // 프로필 이미지 url
-    val timeStamp: String // 채팅 시간
-)
 
 // ViewHolder 타입 구분 enum class
 enum class ViewType(val viewNum: Int) {

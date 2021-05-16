@@ -50,32 +50,14 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
         }
         return true
     }
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-    fun uploadPost(){
-            var writter = auth.currentUser.uid
-            var title = binding.editTextMyClassSubjectBulletinBoardWritingTitle.text.toString()
-            var content = binding.editTextMyClassSubjectBulletinBoardWritingContent.text.toString()
-            DB.writePost(writter,title,content)
-=======
-=======
->>>>>>> master
     fun uploadPost() {
         var writter = auth.currentUser.uid
         var title = binding.editTextMyClassSubjectBulletinBoardWritingTitle.text.toString()
         var content = binding.editTextMyClassSubjectBulletinBoardWritingContent.text.toString()
-<<<<<<< HEAD
         DB.writePost(idx,subjectName,writter, title, content)
-=======
-        DB.writePost(writter, title, content)
->>>>>>> master
     }
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> master
     }
 }

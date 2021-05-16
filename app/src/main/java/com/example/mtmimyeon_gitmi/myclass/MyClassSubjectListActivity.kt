@@ -56,18 +56,8 @@ class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface 
     // 과목 게시판으로 이동
     override fun itemClicked(idx: String, subjectName: String) {
         val intent = Intent(this, MyClassSubjectBulletinBoardActivity::class.java)
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-        intent.putExtra(idx,"과목코드")
-        intent.putExtra(subjectName,"과목이름")
-=======
         intent.putExtra("과목코드", idx)
         intent.putExtra("과목이름", subjectName)
->>>>>>> Stashed changes
-=======
-        intent.putExtra(idx, "과목코드")
-        intent.putExtra(subjectName, "과목이름")
->>>>>>> master
         startActivity(intent)
     }
     override fun finish() {
