@@ -101,9 +101,6 @@ class HomeActivity : AppCompatActivity() {
                     overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
                 }
             }
-            R.id.menu_toolBar_deleteAccount -> {
-                SharedPrefManager.clearAllData()
-            }
         }
         return true
     }

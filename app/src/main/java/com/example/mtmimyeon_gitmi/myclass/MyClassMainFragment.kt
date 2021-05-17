@@ -1,6 +1,8 @@
 package com.example.mtmimyeon_gitmi.myClass
 
 import android.app.ActivityOptions
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -37,11 +39,12 @@ class MyClassMainFragment : Fragment() {
     }
 
     private fun init() {
-
         // 강의별 게시판
         binding.textViewMyClassMainSubjectList.setOnClickListener {
             // 로컬에 저장된 LMS 계정 정보가 있을 떄
-            if (SharedPrefManager.getUserLmsId().isNotEmpty() && SharedPrefManager.getUserLmsPw().isNotEmpty()) {
+            if (SharedPrefManager.getUserLmsId().isNotEmpty() && SharedPrefManager.getUserLmsPw()
+                    .isNotEmpty()
+            ) {
                 // 강의별 게시판으로 이동
                 Intent(context, MyClassSubjectListActivity::class.java).also {
                     startActivity(it)
@@ -58,7 +61,9 @@ class MyClassMainFragment : Fragment() {
 
         // 시간표/과제
         binding.textViewMyClassMainTimetable.setOnClickListener {
-            if (SharedPrefManager.getUserLmsId().isNotEmpty() && SharedPrefManager.getUserLmsPw().isNotEmpty()) {
+            if (SharedPrefManager.getUserLmsId().isNotEmpty() && SharedPrefManager.getUserLmsPw()
+                    .isNotEmpty()
+            ) {
                 // 시간표, 과제함으로 이동
                 Intent(context, MyClassTimetableActivity::class.java).also {
                     startActivity(it)
@@ -83,7 +88,21 @@ class MyClassMainFragment : Fragment() {
                     R.anim.activity_slide_out
                 )
             }
+        }
 
+        // lms 계정 해지
+        binding.imageViewMyClassMainRevokeAccount.setOnClickListener {
+
+            val dialogBuilder = AlertDialog.Builder(requireContext())
+            dialogBuilder.setTitle("저장된 LMS 계정을 삭제하시겠습니까?")
+            dialogBuilder.setIcon(R.drawable.ic_warning)
+            dialogBuilder.setPositiveButton("Yes") { _, _ -> // 사용하지 않는 매개변수 _ 처리
+                SharedPrefManager.clearAllData()
+            }
+            dialogBuilder.setNegativeButton("No") { _, _ ->
+                // Nothing
+            }
+            dialogBuilder.show()
         }
     }
 

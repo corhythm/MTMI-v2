@@ -75,7 +75,6 @@ class CrawlingLmsInfo(
                     httpMethod = Connection.Method.POST
                 )
 
-
                 // 3. 데이터 안의 id, pw key값 이름 바꿔주고 redirect_uri 키 추가.
                 data.clear()
                 data["user_id"] = myId
