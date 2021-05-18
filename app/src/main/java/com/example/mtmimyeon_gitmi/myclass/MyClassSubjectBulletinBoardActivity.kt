@@ -36,15 +36,6 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        // activity 옆으로 이동 애니메이션
-        // 이 코드는 반드시 onCreate에서 super.onCreate(savedInstanceState) 위에 있어야 함
-        with(window) {
-            requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
-            // set an slide transition
-            enterTransition = Slide(Gravity.END)
-            exitTransition = Slide(Gravity.START)
-        }
-
         var intentExtra = getIntent()
         subjectName = intentExtra.getStringExtra("과목이름") // 과목 이름
         idx = intentExtra.getStringExtra("과목코드")// 과목 코드
@@ -53,7 +44,7 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
         setContentView(binding.root)
 
 
-        binding.toolbarMyClassSubjectBulletinBoardToolbar.setTitle(subjectName)
+        binding.toolbarMyClassSubjectBulletinBoardToolbar.title = subjectName
         init()
     }
 
@@ -63,87 +54,21 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
         var auth = FirebaseAuth.getInstance()
 //        val subjectBulletinBoardList = ArrayList<BoardPost>()
         // 임시 데이터 삽입
-<<<<<<< HEAD
-        subjectBulletinBoardList.add(
-            ItemSubjectBulletinBoard(
-                0, "파이썬 도와주실 천사를 찾습니다",
-                "정말요 제발요 간절해요 너무 어려워요 ㅜㅜㅜ 도와주세요", "2분 전", "익명", "8"
-            )
-        )
-        subjectBulletinBoardList.add(
-            ItemSubjectBulletinBoard(
-                0, "c언어 ㅈㅅㅎ 교수님 18680",
-                "이해가 안가서 그러는데 p스트링 입력받을때 길이도 같이 입력받는거임? 아니면 문자열만 입력받고 길이는 내가 구하는거임?", "10분 전", "급한불꽃", "3"
-            )
-        )
-        subjectBulletinBoardList.add(
-            ItemSubjectBulletinBoard(
-                0, "한글 파일 설치하는 방법",
-                "최대한 싸게 설치하는 방법 알려주세요~~!!!", "31분 전", "하오리", "1"
-            )
-        )
-        subjectBulletinBoardList.add(
-            ItemSubjectBulletinBoard(
-                0, "와 ㅁㅊ 이제 셤기간 3주 남은거임?",
-                "비통하도다.. 시간이 왜 이렇게 빠른 거지?", "1시간 전", "익명", "0"
-            )
-        )
-        subjectBulletinBoardList.add(
-            ItemSubjectBulletinBoard(
-                0, "[뱃지] 공동구매 폼입니다!",
-                "안녕하세요 학우님들💙 뱃지 공동구매 폼을 들고 오랜만에 찾아왔습니다! 제일 처음 시안을 제작했던 굿즈인만큼 애정이 많이 가네요ㅎㅎ", "2시간 전", "익명", "8"
-            )
-        )
-        subjectBulletinBoardList.add(
-            ItemSubjectBulletinBoard(
-                0, "스승의 날",
-                "매년 연락드린 중학교 선생님한테 오늘도 카톡 보냈는데 읽씹당했다... 원래는 항상 답해주셨는데 그만 보내라는 소리인가..?ㅠㅠ", "5/14", "익명", "19"
-            )
-        )
-        subjectBulletinBoardList.add(
-            ItemSubjectBulletinBoard(
-                0, "영회2 매튜 교수님",
-                "다음주 화요일 수업 없나요?? 따로 언급이 없으셔서요..", "5/11", "익명", "11"
-            )
-        )
-        subjectBulletinBoardList.add(
-            ItemSubjectBulletinBoard(
-                0, "조세형 교수님 과제 18281 하신 분 있으신가요?",
-                "비주얼 스튜디오가 getchar를 인식 못하는데 어떡하죠?", "5/10", "익명", "1"
-            )
-        )
-        subjectBulletinBoardList.add(
-            ItemSubjectBulletinBoard(
-                0, "ㅈㅅㅎ 교수님 강의 이번 주 업로드 됐나요? ",
-                "저만 업로드 안 된 건가요...", "5/09", "익명", "1"
-            )
-        )
-        subjectBulletinBoardList.add(
-            ItemSubjectBulletinBoard(
-                0, "운영체제 책 추천",
-                "이번에 강의 들으면서 계속 운영체제 지식 때문에 발목을 많이 잡히는데 관련해서 책 추천해주실 수 있나요??", "5/01", "cs", "2"
-            )
-        )
-        subjectBulletinBoardList.add(
-            ItemSubjectBulletinBoard(
-                0, "cs 면접 대비",
-                "여러분들은 cs 면접 준비 어떻게 하시나요? 아싸라서 어떻게 해야 할지 모르겠어요...", "4/21", "익명", "11"
-            )
-        )
-
-=======
 //        val subjectBulletinBoardRecyclerAdapter =
 //            SubjectBulletinBoardRecyclerAdapter(subjectBulletinBoardList, this)
 //
 
         DB.loadPost(idx, object : Callback<ArrayList<BoardPost>> {
             override fun onCallback(data: ArrayList<BoardPost>) {
-                if(data != null){
-                    val subjectBulletinBoardList=data
+                if (data != null) {
+                    val subjectBulletinBoardList = data
                     val subjectBulletinBoardRecyclerAdapter =
-                        SubjectBulletinBoardRecyclerAdapter(subjectBulletinBoardList, this@MyClassSubjectBulletinBoardActivity)
+                        SubjectBulletinBoardRecyclerAdapter(
+                            subjectBulletinBoardList,
+                            this@MyClassSubjectBulletinBoardActivity
+                        )
 
-                    Log.d("포스트 데이터 가져옴 : ",data.count().toString())
+                    Log.d("포스트 데이터 가져옴 : ", data.count().toString())
                     binding.recyclerviewMyClassSubjectBulletinBoardBoardList.apply {
                         adapter = subjectBulletinBoardRecyclerAdapter
                         layoutManager = LinearLayoutManager(
@@ -155,7 +80,6 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
                 }
             }
         })
->>>>>>> upstream/master
 
 //        binding.recyclerviewMyClassSubjectBulletinBoardBoardList.apply {
 //            adapter = subjectBulletinBoardRecyclerAdapter
@@ -214,7 +138,7 @@ class SubjectBulletinBoardRecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: SubjectBulletinBoardViewHolder, position: Int) {
-        holder.bind(itemSubjectBulletinBoardList[position],position)
+        holder.bind(itemSubjectBulletinBoardList[position], position)
     }
 
     override fun getItemCount(): Int {
@@ -237,7 +161,7 @@ class SubjectBulletinBoardViewHolder(
         }
     }
 
-    fun bind(BoardPost: BoardPost,position: Int) {
+    fun bind(BoardPost: BoardPost, position: Int) {
         this.idx = position
         item.textViewItemSubjectBulletinBoardTitle.text = BoardPost.title
         item.textViewItemSubjectBulletinBoardContent.text = BoardPost.content

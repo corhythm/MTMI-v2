@@ -1,6 +1,7 @@
 package com.example.mtmimyeon_gitmi.myClass
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.opengl.Visibility
@@ -13,18 +14,26 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.mtmimyeon_gitmi.R
+import com.example.mtmimyeon_gitmi.crawling.CrawlingLmsInfo
+import com.example.mtmimyeon_gitmi.crawling.LmsAuthenticationDialog
+import com.example.mtmimyeon_gitmi.crawling.ObserveCrawlingInterface
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassTimetableBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemOverallSubjectInfoVerticalBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectHomeworkHorizontalBinding
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 import com.github.tlaabs.timetableview.Schedule
 import com.github.tlaabs.timetableview.Time
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import www.sanju.motiontoast.MotionToast
 import java.lang.Exception
 
 
-class MyClassTimetableActivity : AppCompatActivity() {
+class MyClassTimetableActivity : AppCompatActivity(), ObserveCrawlingInterface {
     private lateinit var binding: ActivityMyClassTimetableBinding
     private val TAG = "로그"
 
@@ -44,6 +53,7 @@ class MyClassTimetableActivity : AppCompatActivity() {
         binding.timetableViewMyClassTimetableTimetable.setOnStickerSelectEventListener { idx, schedules ->
             binding.timetableViewMyClassTimetableTimetable.edit(idx, schedules)
         }
+
 
         // sharedPreferences에 저장된 subject info 가져오기
         itemSubjectInfoList =
@@ -118,6 +128,21 @@ class MyClassTimetableActivity : AppCompatActivity() {
                 false
             )
         }
+
+        // update
+        binding.swipeRefreshLayoutMyClassTimetableRefresh.setOnRefreshListener {
+            val crawlingLmsInfo = CrawlingLmsInfo(
+                activityType = MyClassTimetableActivity::class.java,
+                observeCrawlingInterface = this,
+                mContext = this,
+                myId = SharedPrefManager.getUserLmsId(),
+                myPw = SharedPrefManager.getUserLmsPw()
+            )
+
+            CoroutineScope(Dispatchers.IO).launch {
+                val test = crawlingLmsInfo.getLmsData()
+            }
+        }
     }
 
     private fun String.getDay(): Int {
@@ -134,6 +159,15 @@ class MyClassTimetableActivity : AppCompatActivity() {
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
+    }
+
+    override suspend fun isCrawlingFinished(activityType: Class<out Activity>) {
+        withContext(Dispatchers.Main) {
+            init()
+            onResume()
+            binding.swipeRefreshLayoutMyClassTimetableRefresh.isRefreshing = false
+        }
+
     }
 }
 
@@ -184,7 +218,8 @@ class ItemSubjectInfoViewHolder(
         item.root.setOnClickListener {
             if (!isUnfolded) { // 과제목록 리스트가 접혀있을 때
                 if (itemSubjectInfo.homeworkList.size != 0) {
-                    item.recyclerviewItemOverallSubjectInfoVerticalHomeworkList.visibility = View.VISIBLE
+                    item.recyclerviewItemOverallSubjectInfoVerticalHomeworkList.visibility =
+                        View.VISIBLE
                     item.recyclerviewItemOverallSubjectInfoVerticalHomeworkList.apply {
                         adapter = HomeworkRecyclerAdapter(itemSubjectInfo.homeworkList)
                         layoutManager = LinearLayoutManager(
