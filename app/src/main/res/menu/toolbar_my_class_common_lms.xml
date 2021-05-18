@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cnb_unselectedColor="#666666">
-    <item
-        android:id="@+id/menu_toolBar_synchronization"
-        android:icon="@drawable/ic_my_class_synchronization"
-        app:showAsAction="always"
-        android:title="synchronization"
-        app:cnb_iconColor="@color/black" />
+<!--    <item-->
+<!--        android:id="@+id/menu_toolBar_synchronization"-->
+<!--        android:icon="@drawable/ic_my_class_synchronization"-->
+<!--        app:showAsAction="always"-->
+<!--        android:title="synchronization"-->
+<!--        app:cnb_iconColor="@color/black" />-->
 </menu>

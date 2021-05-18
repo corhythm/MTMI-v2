@@ -1,58 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:id="@+id/swipeRefreshLayout_myClassTimetable_refresh">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appLayout_myClassTimetable_appbarLayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:elevation="0dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_myClassTimetable_toolbar"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
-            app:menu="@menu/toolbar_my_class_common_lms"
-            app:navigationIcon="@drawable/ic_my_class_subject_bulletin_board_writing_back"
-            app:title="My Task"
-            app:titleCentered="true"
-            app:titleTextColor="@color/black" />
+            android:layout_height="wrap_content">
 
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.github.tlaabs.timetableview.TimetableView
-                android:id="@+id/timetableView_myClassTimetable_timetable"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="800dp"
-                app:cell_height="65dp"
-                app:column_count="6"
-                app:header_highlight_color="@color/main_home_color"
-                app:header_highlight_type="color"
-                app:header_title="@array/my_header_title"
-                app:row_count="12"
-                app:side_cell_width="35dp" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_myClassTimetable_homeworkList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                <com.github.tlaabs.timetableview.TimetableView
+                    android:id="@+id/timetableView_myClassTimetable_timetable"
+                    android:layout_width="match_parent"
+                    android:layout_height="800dp"
+                    app:cell_height="65dp"
+                    app:column_count="6"
+                    app:header_highlight_color="@color/main_home_color"
+                    app:header_highlight_type="color"
+                    app:header_title="@array/my_header_title"
+                    app:row_count="12"
+                    app:side_cell_width="35dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_myClassTimetable_homeworkList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
 
-        </LinearLayout>
+            </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
