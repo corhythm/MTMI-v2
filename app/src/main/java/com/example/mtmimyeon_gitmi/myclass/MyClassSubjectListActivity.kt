@@ -92,9 +92,13 @@ class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface,
     // 새로고침 끝났을 때
     override suspend fun isCrawlingFinished(activityType: Class<out Activity>) {
         withContext(Dispatchers.Main) {
-            init()
-            onResume()
-            binding.swipeRefreshLayoutMyClassSubjectListRefresh.isRefreshing = false
+            try {
+                init()
+                onResume()
+                binding.swipeRefreshLayoutMyClassSubjectListRefresh.isRefreshing = false
+            } catch (exception: Exception) {
+
+            }
         }
     }
 }

@@ -163,9 +163,13 @@ class MyClassTimetableActivity : AppCompatActivity(), ObserveCrawlingInterface {
 
     override suspend fun isCrawlingFinished(activityType: Class<out Activity>) {
         withContext(Dispatchers.Main) {
-            init()
-            onResume()
-            binding.swipeRefreshLayoutMyClassTimetableRefresh.isRefreshing = false
+            try {
+                init()
+                onResume()
+                binding.swipeRefreshLayoutMyClassTimetableRefresh.isRefreshing = false
+            } catch (exception: Exception) {
+
+            }
         }
 
     }
