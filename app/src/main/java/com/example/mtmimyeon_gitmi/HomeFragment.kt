@@ -12,8 +12,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.databinding.FragmentHomeBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemMjuSiteBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import net.daum.android.map.MapViewEventListener
+import net.daum.mf.map.api.MapPOIItem
+import net.daum.mf.map.api.MapPoint
+import net.daum.mf.map.api.MapView
 
-class HomeFragment : Fragment(), MjuSiteClickedInterface {
+class HomeFragment : Fragment(), MjuSiteClickedInterface, MapView.MapViewEventListener,
+    MapView.POIItemEventListener, MapView.OpenAPIKeyAuthenticationResultListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -23,10 +31,17 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        init()
 
-        // 나중에 firebase에서 데이터를 가지고 올 것이므로 임시로 사용
-        val mjuSiteImageList = requireContext().resources.obtainTypedArray(R.array.mjuSiteImageList)
-        val mjuSiteTextList = requireContext().resources.getStringArray(R.array.mjuSiteTextList)
+        return binding.root
+    }
+
+    private fun init() {
+
+        val mjuSiteImageList =
+            requireContext().resources.obtainTypedArray(R.array.mjuSiteImageList) // mju image list
+        val mjuSiteTextList =
+            requireContext().resources.getStringArray(R.array.mjuSiteTextList)  // mju string list
         val itemMjuSiteList = ArrayList<ItemMjuSite>()
 
         // 데이터 삽입
@@ -39,6 +54,7 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
             )
         }
 
+        // init recycler view
         val mjuSiteRecyclerAdapter = MjuSiteRecyclerAdapter(itemMjuSiteList, this)
         binding.recyclerviewMainUnvInfo.apply {
             adapter = mjuSiteRecyclerAdapter
@@ -46,7 +62,24 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
-        return binding.root
+        // init kakao map
+        val mapView = MapView(requireActivity())
+        mapView.setMapViewEventListener(this)
+        mapView.setPOIItemEventListener(this)
+        mapView.setMapCenterPointAndZoomLevel(
+            MapPoint.mapPointWithGeoCoord(37.21908734301079, 127.18501018579511), 2, false)
+
+        val marker = MapPOIItem()
+        marker.itemName = "건축관"
+        marker.tag = 0
+
+        marker.markerType = MapPOIItem.MarkerType.BluePin
+        marker.selectedMarkerType = MapPOIItem.MarkerType.RedPin
+        mapView.addPOIItem(marker)
+
+        (binding.mapView as ViewGroup).addView(mapView)
+
+
     }
 
     override fun onDestroy() {
@@ -90,6 +123,67 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
             )
         }
     }
+
+    override fun onMapViewInitialized(p0: MapView?) {
+
+    }
+
+    override fun onMapViewCenterPointMoved(p0: MapView?, p1: MapPoint?) {
+
+    }
+
+    override fun onMapViewZoomLevelChanged(p0: MapView?, p1: Int) {
+
+    }
+
+    override fun onMapViewSingleTapped(p0: MapView?, p1: MapPoint?) {
+
+    }
+
+    override fun onMapViewDoubleTapped(p0: MapView?, p1: MapPoint?) {
+
+    }
+
+    override fun onMapViewLongPressed(p0: MapView?, p1: MapPoint?) {
+
+    }
+
+    override fun onMapViewDragStarted(p0: MapView?, p1: MapPoint?) {
+
+    }
+
+    override fun onMapViewDragEnded(p0: MapView?, p1: MapPoint?) {
+
+    }
+
+    override fun onMapViewMoveFinished(p0: MapView?, p1: MapPoint?) {
+
+    }
+
+    override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
+
+    }
+
+    override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {
+
+    }
+
+    override fun onCalloutBalloonOfPOIItemTouched(
+        p0: MapView?,
+        p1: MapPOIItem?,
+        p2: MapPOIItem.CalloutBalloonButtonType?
+    ) {
+
+    }
+
+    override fun onDraggablePOIItemMoved(p0: MapView?, p1: MapPOIItem?, p2: MapPoint?) {
+
+    }
+
+    override fun onDaumMapOpenAPIKeyAuthenticationResult(p0: MapView?, p1: Int, p2: String?) {
+
+    }
+
 }
 
 

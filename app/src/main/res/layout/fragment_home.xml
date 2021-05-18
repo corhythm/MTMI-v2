@@ -1,4 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent">-->
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,19 +13,18 @@
     <LinearLayout
         android:id="@+id/linearLayout_main_mbtiInfo"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/bg_rounded_corner"
         android:backgroundTint="@color/main_home_color"
         android:gravity="center"
         android:orientation="vertical"
-        android:layout_marginTop="40dp"
-        app:layout_constraintVertical_bias="0.2"
-        app:layout_constraintWidth_percent="0.9"
-        app:layout_constraintHeight_percent="0.25"
+        app:layout_constraintBottom_toTopOf="@id/recyclerview_main_unvInfo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/recyclerview_main_unvInfo">
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintWidth_percent="0.9">
 
         <TextView
             android:layout_width="wrap_content"
@@ -45,12 +49,34 @@
         android:id="@+id/recyclerview_main_unvInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layoutAnimation="@anim/layout_animation2"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layoutAnimation="@anim/layout_animation2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/linearLayout_main_mbtiInfo" />
 
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recyclerview_main_unvInfo"
+        app:layout_constraintWidth_percent="0.9"
+        tools:context=".MainActivity">
+
+        <RelativeLayout
+            android:id="@+id/map_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!--</androidx.core.widget.NestedScrollView>-->
