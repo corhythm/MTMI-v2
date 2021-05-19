@@ -85,7 +85,6 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                     R.anim.activity_slide_in,
                     R.anim.activity_slide_out
                 )
-                SharedPrefManager.clearAllPermissionData()
                 return
             }
             "주변건물" -> {
@@ -125,6 +124,7 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
 
     }
 
+    // 위치 정보 권한 처리
     private fun isLocationPermissionGranted(): Boolean {
         val isFirstCheck = SharedPrefManager.getPermissionAccessFineLocation()
         if (ContextCompat.checkSelfPermission(
