@@ -85,6 +85,7 @@
     </string-array>
 
     <string-array name="my_header_title">
+        <item>T</item>
         <item>Mon</item>
         <item>Tue</item>
         <item>Wed</item>

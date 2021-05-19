@@ -1,12 +1,8 @@
 package com.example.mtmimyeon_gitmi.myClass
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.graphics.Color
-import android.opengl.Visibility
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,10 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.crawling.CrawlingLmsInfo
-import com.example.mtmimyeon_gitmi.crawling.LmsAuthenticationDialog
 import com.example.mtmimyeon_gitmi.crawling.ObserveCrawlingInterface
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassTimetableBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemOverallSubjectInfoVerticalBinding
@@ -53,7 +47,6 @@ class MyClassTimetableActivity : AppCompatActivity(), ObserveCrawlingInterface {
         binding.timetableViewMyClassTimetableTimetable.setOnStickerSelectEventListener { idx, schedules ->
             binding.timetableViewMyClassTimetableTimetable.edit(idx, schedules)
         }
-
 
         // sharedPreferences에 저장된 subject info 가져오기
         itemSubjectInfoList =
