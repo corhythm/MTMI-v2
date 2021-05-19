@@ -39,7 +39,7 @@ class MapDetailsActivity : AppCompatActivity(), MapView.MapViewEventListener,
             MapPoint.mapPointWithGeoCoord(37.222103200831285, 127.18643712096329), 3, false
         )
 
-        // 현재 위치 받아오기
+        // 현재 위치 받아오기 (테스트 할 때는 사용하면 안 됨)
 //        mapView.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading
 
 
@@ -52,6 +52,7 @@ class MapDetailsActivity : AppCompatActivity(), MapView.MapViewEventListener,
                     locationLatitudeList[i].toDouble(),
                     locationLongitudeList[i].toDouble()
                 )
+                isCustomImageAutoscale = false
                 markerType = MapPOIItem.MarkerType.CustomImage
                 customImageResourceId = R.drawable.custom_poi_marker_end
                 selectedMarkerType = MapPOIItem.MarkerType.RedPin
@@ -92,7 +93,16 @@ class MapDetailsActivity : AppCompatActivity(), MapView.MapViewEventListener,
                         tag = locationLatitudeList.size + 1
                         markerType = MapPOIItem.MarkerType.RedPin
                     })
+                    mapView.setMapCenterPointAndZoomLevel(markerList[position].mapPoint, 3, true)
                     mapView.addPOIItem(markerList[position])
+//                    mapView.addPOIItem(MapPOIItem().apply {
+//                        itemName = "너랑 가까운 위치 테스트할 때 써봐"
+//                        mapPoint =
+//                            MapPoint.mapPointWithGeoCoord(37.279620656362695, 127.04734012045131)
+//                        tag = locationLatitudeList.size + 1
+//                        markerType = MapPOIItem.MarkerType.CustomImage
+//                        customImageResourceId = R.drawable.custom_poi_marker_end
+//                    })
                     mapView.setZoomLevel(2, true)
                 }
 
