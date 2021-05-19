@@ -8,7 +8,6 @@ import androidx.core.content.res.ResourcesCompat
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.myClass.Homework
 import com.example.mtmimyeon_gitmi.myClass.ItemSubjectInfo
-import com.example.mtmimyeon_gitmi.myClass.MyClassTimetableActivity
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
@@ -279,7 +278,7 @@ class CrawlingLmsInfo(
             }
 
             // 쉐어드에 저장된 모든 데이터 삭제
-            SharedPrefManager.clearAllData()
+            SharedPrefManager.clearAllLmsUserData()
         }
 
 

@@ -16,6 +16,7 @@ import android.widget.TextView
 
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.res.ResourcesCompat
 
 import androidx.fragment.app.Fragment
 import com.example.mtmimyeon_gitmi.databinding.ActivityHomeBinding
@@ -24,6 +25,7 @@ import com.example.mtmimyeon_gitmi.myClass.MyClassMainFragment
 import com.example.mtmimyeon_gitmi.account.MyProfileActivity
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 import org.w3c.dom.Text
+import www.sanju.motiontoast.MotionToast
 import java.security.MessageDigest
 
 class HomeActivity : AppCompatActivity() {
@@ -138,5 +140,38 @@ class HomeActivity : AppCompatActivity() {
             toast.cancel();
         }
 
+    }
+
+    // 권한 승인 체크
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == 1) { // 위치 정보 권한
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) { // 맵 액티비티 실행
+                Log.d("로그", "사용자가 권한 승인 완료")
+                Intent(this, MapDetailsActivity::class.java).also {
+                    startActivity(it)
+                }
+                overridePendingTransition(
+                    R.anim.activity_slide_in,
+                    R.anim.activity_slide_out
+                )
+            } else {
+                Log.d("로그","${grantResults.size}")
+                MotionToast.createColorToast(
+                    this,
+                    "권한 요청 거부됨",
+                    "학교 건물 길찾기를 하기 위해서는 권한 동의가 필요해요",
+                    MotionToast.TOAST_ERROR,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.SHORT_DURATION,
+                    ResourcesCompat.getFont(this, R.font.helvetica_regular)
+                )
+            }
+        }
     }
 }

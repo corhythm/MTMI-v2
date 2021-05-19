@@ -1,27 +1,19 @@
 package com.example.mtmimyeon_gitmi.myClass
 
 import android.app.Activity
-import android.app.ActivityOptions
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.mtmimyeon_gitmi.R
-import com.example.mtmimyeon_gitmi.crawling.CrawlingLmsInfo
 import com.example.mtmimyeon_gitmi.crawling.LmsAuthenticationDialog
 import com.example.mtmimyeon_gitmi.crawling.ObserveCrawlingInterface
 import com.example.mtmimyeon_gitmi.databinding.FragmentMyClassMainBinding
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import www.sanju.motiontoast.MotionToast
 
 class MyClassMainFragment : Fragment(), ObserveCrawlingInterface {
     private var _binding: FragmentMyClassMainBinding? = null
@@ -114,7 +106,7 @@ class MyClassMainFragment : Fragment(), ObserveCrawlingInterface {
             dialogBuilder.setTitle("저장된 LMS 계정을 삭제하시겠습니까?")
             dialogBuilder.setIcon(R.drawable.ic_warning)
             dialogBuilder.setPositiveButton("Yes") { _, _ -> // 사용하지 않는 매개변수 _ 처리
-                SharedPrefManager.clearAllData()
+                SharedPrefManager.clearAllLmsUserData()
             }
             dialogBuilder.setNegativeButton("No") { _, _ ->
                 // Nothing
