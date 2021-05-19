@@ -36,15 +36,6 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        // activity 옆으로 이동 애니메이션
-        // 이 코드는 반드시 onCreate에서 super.onCreate(savedInstanceState) 위에 있어야 함
-        with(window) {
-            requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
-            // set an slide transition
-            enterTransition = Slide(Gravity.END)
-            exitTransition = Slide(Gravity.START)
-        }
-
         var intentExtra = getIntent()
         subjectName = intentExtra.getStringExtra("과목이름") // 과목 이름
         idx = intentExtra.getStringExtra("과목코드")// 과목 코드
@@ -53,7 +44,7 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
         setContentView(binding.root)
 
 
-        binding.toolbarMyClassSubjectBulletinBoardToolbar.setTitle(subjectName)
+        binding.toolbarMyClassSubjectBulletinBoardToolbar.title = subjectName
         init()
     }
 
@@ -69,12 +60,15 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
 
         DB.loadPost(idx, object : Callback<ArrayList<BoardPost>> {
             override fun onCallback(data: ArrayList<BoardPost>) {
-                if(data != null){
-                    val subjectBulletinBoardList=data
+                if (data != null) {
+                    val subjectBulletinBoardList = data
                     val subjectBulletinBoardRecyclerAdapter =
-                        SubjectBulletinBoardRecyclerAdapter(subjectBulletinBoardList, this@MyClassSubjectBulletinBoardActivity)
+                        SubjectBulletinBoardRecyclerAdapter(
+                            subjectBulletinBoardList,
+                            this@MyClassSubjectBulletinBoardActivity
+                        )
 
-                    Log.d("포스트 데이터 가져옴 : ",data.count().toString())
+                    Log.d("포스트 데이터 가져옴 : ", data.count().toString())
                     binding.recyclerviewMyClassSubjectBulletinBoardBoardList.apply {
                         adapter = subjectBulletinBoardRecyclerAdapter
                         layoutManager = LinearLayoutManager(
@@ -144,7 +138,7 @@ class SubjectBulletinBoardRecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: SubjectBulletinBoardViewHolder, position: Int) {
-        holder.bind(itemSubjectBulletinBoardList[position],position)
+        holder.bind(itemSubjectBulletinBoardList[position], position)
     }
 
     override fun getItemCount(): Int {
@@ -167,7 +161,7 @@ class SubjectBulletinBoardViewHolder(
         }
     }
 
-    fun bind(BoardPost: BoardPost,position: Int) {
+    fun bind(BoardPost: BoardPost, position: Int) {
         this.idx = position
         item.textViewItemSubjectBulletinBoardTitle.text = BoardPost.title
         item.textViewItemSubjectBulletinBoardContent.text = BoardPost.content

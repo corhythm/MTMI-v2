@@ -15,6 +15,9 @@ object SharedPrefManager {
     private const val KEY_USER_LMS_SUBJECT_INFO_LIST =
         "USER_LMS_SUBJECT_INFO_LIST" // 과목코드, 과목, 교수, 시간
 
+    private const val SHARED_PERMISSIONS = "PERMISSIONS"
+    private const val KEY_PERMISSION_ACCESS_FINE_LOCATION = "PERMISSION_ACCESS_FINE_LOCATION"
+
     fun setUserLmsId(userId: String) {
         val shared = App.instance.getSharedPreferences(
             SHARED_USER_LMS_ACCOUNT,
@@ -91,7 +94,7 @@ object SharedPrefManager {
         return storedSubjectInfoList
     }
 
-    fun clearAllData() {
+    fun clearAllLmsUserData() {
 
         // 쉐어드 모든 데이터 삭제
         val accountShared = App.instance.getSharedPreferences(
@@ -103,7 +106,34 @@ object SharedPrefManager {
             SHARED_USER_LMS_INFO,
             Context.MODE_PRIVATE
         ).edit().clear().apply()
+    }
 
+    fun getPermissionAccessFineLocation(): Boolean {
+        val shared = App.instance.getSharedPreferences(
+            SHARED_PERMISSIONS,
+            Context.MODE_PRIVATE
+        ) // 쉐어드 가져오기
+
+        return shared.getBoolean(KEY_PERMISSION_ACCESS_FINE_LOCATION, true)
+    }
+
+    fun setPermissionAccessFineLocation(permission: Boolean) {
+         val shared = App.instance.getSharedPreferences(
+            SHARED_PERMISSIONS,
+            Context.MODE_PRIVATE
+        ) // 쉐어드 가져오기
+
+        val editor = shared.edit() // 쉐어드 에디터 가져오기
+        editor.putBoolean(KEY_PERMISSION_ACCESS_FINE_LOCATION, permission) // 쉐어드에 저장
+        editor.apply() // 변경 사항 저장
+    }
+
+    fun clearAllPermissionData() {
+        // 쉐어드 모든 데이터 삭제
+        val accountShared = App.instance.getSharedPreferences(
+            SHARED_PERMISSIONS,
+            Context.MODE_PRIVATE
+        ).edit().clear().apply()
     }
 
 

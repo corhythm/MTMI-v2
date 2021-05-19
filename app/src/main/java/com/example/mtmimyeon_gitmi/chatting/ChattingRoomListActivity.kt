@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityChattingRoomListBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemChattingRoomBinding
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface {
     private lateinit var binding: ActivityChattingRoomListBinding
