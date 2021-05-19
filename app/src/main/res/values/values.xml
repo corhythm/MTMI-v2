@@ -3,6 +3,7 @@
     <array name="mjuSiteImageList">
         <item>@drawable/ic_item_unv_notification</item>
         <item>@drawable/ic_item_major_home</item>
+        <item>@drawable/ic_map</item>
         <item>@drawable/ic_item_library</item>
         <item>@drawable/ic_item_eclass</item>
         <item>@drawable/ic_item_lms</item>
@@ -15,20 +16,10 @@
         <item>@drawable/ic_item_register_subject</item>
     </array>
 
-    <array name="gradientList">
-        <item>@drawable/bg_rounded_corner_gradient1</item>
-        <item>@drawable/bg_rounded_corner_gradient2</item>
-        <item>@drawable/bg_rounded_corner_gradient3</item>
-        <item>@drawable/bg_rounded_corner_gradient4</item>
-        <item>@drawable/bg_rounded_corner_gradient5</item>
-        <item>@drawable/bg_rounded_corner_gradient6</item>
-        <item>@drawable/bg_rounded_corner_gradient7</item>
-        <item>@drawable/bg_rounded_corner_gradient8</item>
-    </array>
-
     <string-array name="mjuSiteTextList">
         <item>학교홈</item>
         <item>학과홈</item>
+        <item>주변건물</item>
         <item>library</item>
         <item>eclass</item>
         <item>lms</item>
@@ -40,6 +31,18 @@
         <item>문진표</item>
         <item>수강신청</item>
     </string-array>
+
+    <array name="gradientList">
+        <item>@drawable/bg_rounded_corner_gradient1</item>
+        <item>@drawable/bg_rounded_corner_gradient2</item>
+        <item>@drawable/bg_rounded_corner_gradient3</item>
+        <item>@drawable/bg_rounded_corner_gradient4</item>
+        <item>@drawable/bg_rounded_corner_gradient5</item>
+        <item>@drawable/bg_rounded_corner_gradient6</item>
+        <item>@drawable/bg_rounded_corner_gradient7</item>
+        <item>@drawable/bg_rounded_corner_gradient8</item>
+    </array>
+
 
     <string-array name="major">
         <item>전공을 선택하세요</item>
@@ -82,12 +85,41 @@
     </string-array>
 
     <string-array name="my_header_title">
-        <item></item>
         <item>Mon</item>
         <item>Tue</item>
         <item>Wed</item>
         <item>Thu</item>
         <item>Fri</item>
+    </string-array>
+
+    <string-array name="campus_location">
+        <item>창조예술관</item>
+        <item>60주년 채플관</item>
+        <item>명진당</item>
+        <item>차세대 과학관</item>
+        <item>실험한옥</item>
+        <item>제1공학관</item>
+        <item>제2공학관(에코바이오관)</item>
+        <item>제3공학관</item>
+        <item>제4공학관</item>
+        <item>제5공학관</item>
+        <item>실내테니스장</item>
+        <item>대운동장</item>
+        <item>예체능관</item>
+        <item>디자인 조형센터</item>
+        <item>함박관</item>
+        <item>학생회관</item>
+        <item>학생복지회관</item>
+        <item>산학현력관</item>
+        <item>방목기념관</item>
+        <item>야외음악당</item>
+        <item>명원</item>
+        <item>하이브리드 구조실험센터</item>
+        <item>공동실험동</item>
+        <item>기숙사</item>
+        <item>명덕관 3동</item>
+        <item>명덕관 4동</item>
+        <item>명덕관 5동</item>
     </string-array>
 
 

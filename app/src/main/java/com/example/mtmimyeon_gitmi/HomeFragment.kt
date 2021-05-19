@@ -12,16 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.databinding.FragmentHomeBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemMjuSiteBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import net.daum.android.map.MapViewEventListener
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
 
-class HomeFragment : Fragment(), MjuSiteClickedInterface, MapView.MapViewEventListener,
-    MapView.POIItemEventListener, MapView.OpenAPIKeyAuthenticationResultListener {
+
+class HomeFragment : Fragment(), MjuSiteClickedInterface {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -62,23 +58,6 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface, MapView.MapViewEventLi
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
-        // init kakao map
-        val mapView = MapView(requireActivity())
-        mapView.setMapViewEventListener(this)
-        mapView.setPOIItemEventListener(this)
-        mapView.setMapCenterPointAndZoomLevel(
-            MapPoint.mapPointWithGeoCoord(37.21908734301079, 127.18501018579511), 2, false)
-
-        val marker = MapPOIItem()
-        marker.itemName = "건축관"
-        marker.tag = 0
-
-        marker.markerType = MapPOIItem.MarkerType.BluePin
-        marker.selectedMarkerType = MapPOIItem.MarkerType.RedPin
-        mapView.addPOIItem(marker)
-
-        (binding.mapView as ViewGroup).addView(mapView)
-
 
     }
 
@@ -93,6 +72,16 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface, MapView.MapViewEventLi
         when (item) {
             "phone" -> {
                 Intent(requireContext(), CampusPhoneNumberActivity::class.java).also {
+                    requireActivity().startActivity(it)
+                }
+                requireActivity().overridePendingTransition(
+                    R.anim.activity_slide_in,
+                    R.anim.activity_slide_out
+                )
+                return
+            }
+            "주변건물" -> {
+                Intent(requireContext(), MapDetailsActivity::class.java).also {
                     requireActivity().startActivity(it)
                 }
                 requireActivity().overridePendingTransition(
@@ -122,66 +111,6 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface, MapView.MapViewEventLi
                 R.anim.activity_slide_out
             )
         }
-    }
-
-    override fun onMapViewInitialized(p0: MapView?) {
-
-    }
-
-    override fun onMapViewCenterPointMoved(p0: MapView?, p1: MapPoint?) {
-
-    }
-
-    override fun onMapViewZoomLevelChanged(p0: MapView?, p1: Int) {
-
-    }
-
-    override fun onMapViewSingleTapped(p0: MapView?, p1: MapPoint?) {
-
-    }
-
-    override fun onMapViewDoubleTapped(p0: MapView?, p1: MapPoint?) {
-
-    }
-
-    override fun onMapViewLongPressed(p0: MapView?, p1: MapPoint?) {
-
-    }
-
-    override fun onMapViewDragStarted(p0: MapView?, p1: MapPoint?) {
-
-    }
-
-    override fun onMapViewDragEnded(p0: MapView?, p1: MapPoint?) {
-
-    }
-
-    override fun onMapViewMoveFinished(p0: MapView?, p1: MapPoint?) {
-
-    }
-
-    override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
-
-    }
-
-    override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {
-
-    }
-
-    override fun onCalloutBalloonOfPOIItemTouched(
-        p0: MapView?,
-        p1: MapPOIItem?,
-        p2: MapPOIItem.CalloutBalloonButtonType?
-    ) {
-
-    }
-
-    override fun onDraggablePOIItemMoved(p0: MapView?, p1: MapPOIItem?, p2: MapPoint?) {
-
-    }
-
-    override fun onDaumMapOpenAPIKeyAuthenticationResult(p0: MapView?, p1: Int, p2: String?) {
-
     }
 
 }
