@@ -154,7 +154,7 @@ class MyClassTimetableActivity : AppCompatActivity(), ObserveCrawlingInterface {
         overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
     }
 
-    override suspend fun isCrawlingFinished(activityType: Class<out Activity>) {
+    override suspend fun isCrawlingFinished(activityType: Class<out Activity>, isSuccess: Boolean) {
         withContext(Dispatchers.Main) {
             try {
                 init()

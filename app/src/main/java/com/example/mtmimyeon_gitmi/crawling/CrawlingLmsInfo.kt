@@ -50,7 +50,7 @@ class CrawlingLmsInfo(
     suspend fun getLmsData() = withContext((Dispatchers.IO)) {
         try {
 
-             withContext(Main) {
+            withContext(Main) {
                 MotionToast.createColorToast(
                     mContext as AppCompatActivity,
                     "Authentication",
@@ -264,6 +264,9 @@ class CrawlingLmsInfo(
             SharedPrefManager.setUserLmsPW(userPw = myPw)
             SharedPrefManager.setUserLmsSubjectInfoList(subjectInfoList)
 
+            // 크롤링 종료(성공)
+            observeCrawlingInterface.isCrawlingFinished(activityType, true)
+
         } catch (exception: Exception) {
             withContext(Main) {
                 MotionToast.createColorToast(
@@ -279,11 +282,11 @@ class CrawlingLmsInfo(
 
             // 쉐어드에 저장된 모든 데이터 삭제
             SharedPrefManager.clearAllLmsUserData()
+            // 크롤링 종료(성공)
+            observeCrawlingInterface.isCrawlingFinished(activityType, false)
         }
 
 
-        // 크롤링 종료
-        observeCrawlingInterface.isCrawlingFinished(activityType)
     }
 
 }

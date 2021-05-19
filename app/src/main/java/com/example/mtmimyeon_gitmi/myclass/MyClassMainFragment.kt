@@ -115,13 +115,15 @@ class MyClassMainFragment : Fragment(), ObserveCrawlingInterface {
         }
     }
 
-    override suspend fun isCrawlingFinished(activityType: Class<out Activity>) {
-        Intent(requireContext(), activityType).also {
-            startActivity(it)
-            requireActivity().overridePendingTransition(
-                R.anim.activity_slide_in,
-                R.anim.activity_slide_out
-            )
+    override suspend fun isCrawlingFinished(activityType: Class<out Activity>, isSuccess: Boolean) {
+        if(isSuccess) {
+            Intent(requireContext(), activityType).also {
+                startActivity(it)
+                requireActivity().overridePendingTransition(
+                    R.anim.activity_slide_in,
+                    R.anim.activity_slide_out
+                )
+            }
         }
     }
 

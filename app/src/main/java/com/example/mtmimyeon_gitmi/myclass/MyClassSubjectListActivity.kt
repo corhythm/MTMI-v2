@@ -90,7 +90,7 @@ class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface,
     }
 
     // 새로고침 끝났을 때
-    override suspend fun isCrawlingFinished(activityType: Class<out Activity>) {
+    override suspend fun isCrawlingFinished(activityType: Class<out Activity>, isSuccess: Boolean) {
         withContext(Dispatchers.Main) {
             try {
                 init()

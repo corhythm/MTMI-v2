@@ -54,15 +54,17 @@ class LmsAuthenticationDialog(
         }
     }
 
-    override suspend fun isCrawlingFinished(activityType: Class<out Activity>) {
+    override suspend fun isCrawlingFinished(activityType: Class<out Activity>, isSuccess: Boolean) {
         withContext(Dispatchers.Main) {
             dismiss()
-            Intent(mContext, activityType).also {
-                mContext.startActivity(it)
-                (mContext as HomeActivity).overridePendingTransition(
-                    R.anim.activity_slide_in,
-                    R.anim.activity_slide_out
-                )
+            if(isSuccess) {
+                Intent(mContext, activityType).also {
+                    mContext.startActivity(it)
+                    (mContext as HomeActivity).overridePendingTransition(
+                        R.anim.activity_slide_in,
+                        R.anim.activity_slide_out
+                    )
+                }
             }
         }
 
@@ -70,5 +72,5 @@ class LmsAuthenticationDialog(
 }
 
 interface ObserveCrawlingInterface {
-    suspend fun isCrawlingFinished(activityType: Class<out Activity>)
+    suspend fun isCrawlingFinished(activityType: Class<out Activity>, isSuccess: Boolean)
 }
