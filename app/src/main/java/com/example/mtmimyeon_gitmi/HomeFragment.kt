@@ -87,7 +87,7 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                 )
                 return
             }
-            "주변건물" -> {
+            "건물찾기" -> {
                 if (isLocationPermissionGranted()) {
                     Intent(requireContext(), MapDetailsActivity::class.java).also {
                         startActivity(it)
