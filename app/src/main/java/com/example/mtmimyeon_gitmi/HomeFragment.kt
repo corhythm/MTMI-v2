@@ -26,6 +26,7 @@ import com.google.android.material.snackbar.Snackbar
 class HomeFragment : Fragment(), MjuSiteClickedInterface {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private var isClicked = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,16 +71,16 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
         binding.recyclerViewFragmentHomeAccessRoadStopoverList.apply {
             adapter = roadAccessStopoverAdapter
             layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
-        // init recyclerView (시내방향 버스 경유지 목록)
+//         init recyclerView (시내방향 버스 경유지 목록)
         val downtownStopoverAdapter =
             StopoverAdapter(requireContext().resources.getStringArray(R.array.downtown_bus_stopover))
         binding.recyclerViewFragmentHomeDowntownStopoverList.apply {
             adapter = downtownStopoverAdapter
             layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
         // 진입로 셔틀
@@ -91,10 +92,10 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
         binding.recyclerViewFragmentHomeToRoadAccessBusTimeList.apply {
             adapter = roadAccessBusTimeAdapter
             layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
-        // 시내 셔틀
+//        // 시내 셔틀
         val downtownBusTimeAdapter =
             BusTimeAdapter(
                 requireContext().resources.getStringArray(R.array.downtown_departure_time),
@@ -103,8 +104,10 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
         binding.recyclerViewFragmentHomeToDowntownBusTimeList.apply {
             adapter = downtownBusTimeAdapter
             layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
+
+
     }
 
     override fun onDestroy() {
@@ -292,10 +295,12 @@ class StopoverAdapter(private val stopoverList: Array<String>) :
     }
 
     override fun onBindViewHolder(holder: StopoverViewHolder, position: Int) {
-        if (position == stopoverList.size - 1)
-            holder.bind(stopoverList[position], true)
+        if (position == stopoverList.lastIndex)
+            holder.bind(false, stopoverList[position], true)
+        if (position == 0)
+            holder.bind(true, stopoverList[position], false)
         else
-            holder.bind(stopoverList[position], false)
+            holder.bind(false, stopoverList[position], false)
     }
 
     override fun getItemCount(): Int {
@@ -306,10 +311,12 @@ class StopoverAdapter(private val stopoverList: Array<String>) :
 // 리사이클러뷰 뷰홀더
 class StopoverViewHolder(private val item: ItemStopoverBinding) :
     RecyclerView.ViewHolder(item.root) {
-    fun bind(stopoverName: String, isLastNode: Boolean) {
+    fun bind(isFirstNode: Boolean, stopoverName: String, isLastNode: Boolean) {
         item.textViewItemStopoverStopoverName.text = stopoverName
+        if (isFirstNode)
+            item.viewItemConnectLineFirst.visibility = View.GONE
         if (isLastNode)
-            item.viewItemConnectLineLine.visibility = View.GONE
+            item.viewItemConnectLineLast.visibility = View.GONE
     }
 }
 

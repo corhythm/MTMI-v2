@@ -3,11 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="50dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -18,7 +17,7 @@
             android:layout_marginTop="40dp"
             android:background="@drawable/bg_rounded_corner"
             android:backgroundTint="@color/main_home_color"
-            android:gravity="start     "
+            android:gravity="start"
             android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@id/recyclerview_main_unvInfo"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,69 +64,92 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recyclerview_main_unvInfo">
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/lottie_busTimeToAccessRoad_accessRoadLottieAni"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_centerInParent="true"
-                android:background="@android:color/white"
-                app:layout_constraintEnd_toStartOf="@id/lottie_busTimeToAccessRoad_downtownLottieAni"
+            <TextView
+                android:id="@+id/textView_fragmentHome_accessRoadTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="진입로 방향"
+                android:layout_marginTop="15dp"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.5"
-                app:lottie_autoPlay="true"
-                app:lottie_fileName="bus2.json"
-                app:lottie_loop="true" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/lottie_busTimeToAccessRoad_downtownLottieAni"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:id="@+id/lottie_fragmentHome_accessRoadLottieAni"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
                 android:layout_centerInParent="true"
                 android:background="@android:color/white"
-                app:layout_constraintBottom_toBottomOf="@id/lottie_busTimeToAccessRoad_accessRoadLottieAni"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1"
-                app:layout_constraintStart_toEndOf="@id/lottie_busTimeToAccessRoad_accessRoadLottieAni"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.5"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView_fragmentHome_accessRoadTitle"
                 app:lottie_autoPlay="true"
-                app:lottie_fileName="bus1.json"
+                app:lottie_fileName="bus2.json"
                 app:lottie_loop="true" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_fragmentHome_accessRoadStopoverList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layoutAnimation="@anim/layout_animation1"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/lottie_busTimeToAccessRoad_accessRoadLottieAni" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView_fragmentHome_downtownStopoverList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.85"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/recyclerView_fragmentHome_accessRoadStopoverList" />
+                app:layout_constraintTop_toBottomOf="@id/lottie_fragmentHome_accessRoadLottieAni" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_fragmentHome_toRoadAccessBusTimeList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recyclerView_fragmentHome_accessRoadStopoverList" />
+
+            <TextView
+                android:id="@+id/textView_fragmentHome_downtownTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/recyclerView_fragmentHome_accessRoadStopoverList"
-                app:layout_constraintEnd_toEndOf="@id/recyclerView_fragmentHome_accessRoadStopoverList"
-                app:layout_constraintTop_toBottomOf="@id/recyclerView_fragmentHome_accessRoadStopoverList"/>
+                android:text="시내 방향"
+                android:layout_marginTop="15dp"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recyclerView_fragmentHome_toRoadAccessBusTimeList" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie_fragmentHome_downtownLottieAni"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_centerInParent="true"
+                android:background="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_fragmentHome_downtownTitle"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="bus1.json"
+                app:lottie_loop="true" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_fragmentHome_downtownStopoverList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layoutAnimation="@anim/layout_animation1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lottie_fragmentHome_downtownLottieAni" />
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_fragmentHome_toDowntownBusTimeList"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/recyclerView_fragmentHome_downtownStopoverList"
-                app:layout_constraintEnd_toEndOf="@id/recyclerView_fragmentHome_downtownStopoverList"
-                app:layout_constraintTop_toBottomOf="@id/recyclerView_fragmentHome_downtownStopoverList"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recyclerView_fragmentHome_downtownStopoverList" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
