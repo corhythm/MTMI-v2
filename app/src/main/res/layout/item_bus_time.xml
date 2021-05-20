@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:background="@drawable/bg_rounded_corner_stroke"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/textView_itemBusTime_departureTimeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="출발시간: "
+        android:textSize="10sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/textView_itemBusTime_departureTimeNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="8:00"
+        android:textSize="10sp"
+        android:fontFamily="@font/airbnb_cerealextra_bold"
+        app:layout_constraintStart_toEndOf="@id/textView_itemBusTime_departureTimeText"
+        app:layout_constraintTop_toTopOf="@id/textView_itemBusTime_departureTimeText"/>
+
+    <TextView
+        android:id="@+id/textView_itemBusTime_roadAccessTimeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="진입로경유시간: "
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_itemBusTime_departureTimeText"/>
+
+    <TextView
+        android:id="@+id/textView_itemBusTime_roadAccessTimeNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="8:15"
+        android:textSize="10sp"
+        android:fontFamily="@font/airbnb_cerealextra_bold"
+        app:layout_constraintStart_toEndOf="@id/textView_itemBusTime_roadAccessTimeText"
+        app:layout_constraintTop_toTopOf="@id/textView_itemBusTime_roadAccessTimeText"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

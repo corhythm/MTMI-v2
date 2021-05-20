@@ -4,25 +4,23 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.opengl.Visibility
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.databinding.FragmentHomeBinding
+import com.example.mtmimyeon_gitmi.databinding.ItemBusTimeBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemMjuSiteBinding
+import com.example.mtmimyeon_gitmi.databinding.ItemStopoverBinding
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 import com.google.android.material.snackbar.Snackbar
-import net.daum.mf.map.api.MapPOIItem
-import net.daum.mf.map.api.MapPoint
-import net.daum.mf.map.api.MapView
 
 
 class HomeFragment : Fragment(), MjuSiteClickedInterface {
@@ -48,7 +46,7 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
             requireContext().resources.getStringArray(R.array.mjuSiteTextList)  // mju string list
         val itemMjuSiteList = ArrayList<ItemMjuSite>()
 
-        // 데이터 삽입
+        // 명지대 아이콘 데이터 삽입
         for (i in mjuSiteTextList.indices) {
             itemMjuSiteList.add(
                 ItemMjuSite(
@@ -58,12 +56,54 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
             )
         }
 
-        // init recycler view
+        // init recycler view(명지대 아이콘)
         val mjuSiteRecyclerAdapter = MjuSiteRecyclerAdapter(itemMjuSiteList, this)
         binding.recyclerviewMainUnvInfo.apply {
             adapter = mjuSiteRecyclerAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        }
+
+        // init recyclerView (진입로방향 버스 경유지 목록)
+        val roadAccessStopoverAdapter =
+            StopoverAdapter(requireContext().resources.getStringArray(R.array.access_road_bus_stopover))
+        binding.recyclerViewFragmentHomeAccessRoadStopoverList.apply {
+            adapter = roadAccessStopoverAdapter
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        }
+
+        // init recyclerView (시내방향 버스 경유지 목록)
+        val downtownStopoverAdapter =
+            StopoverAdapter(requireContext().resources.getStringArray(R.array.downtown_bus_stopover))
+        binding.recyclerViewFragmentHomeDowntownStopoverList.apply {
+            adapter = downtownStopoverAdapter
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        }
+
+        // 진입로 셔틀
+        val roadAccessBusTimeAdapter =
+            BusTimeAdapter(
+                requireContext().resources.getStringArray(R.array.access_road_departure_time),
+                requireContext().resources.getStringArray(R.array.access_road_expectation_time)
+            )
+        binding.recyclerViewFragmentHomeToRoadAccessBusTimeList.apply {
+            adapter = roadAccessBusTimeAdapter
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        }
+
+        // 시내 셔틀
+        val downtownBusTimeAdapter =
+            BusTimeAdapter(
+                requireContext().resources.getStringArray(R.array.downtown_departure_time),
+                requireContext().resources.getStringArray(R.array.downtown_expectation_time)
+            )
+        binding.recyclerViewFragmentHomeToDowntownBusTimeList.apply {
+            adapter = downtownBusTimeAdapter
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
     }
 
@@ -233,5 +273,79 @@ class MjuSiteViewHolder(
 // 리사이클러뷰 내 아이템 클릭 이벤트
 interface MjuSiteClickedInterface {
     fun onItemClicked(item: String)
+}
+
+
+// 경유지 목록 리사이클러뷰 어댑터
+class StopoverAdapter(private val stopoverList: Array<String>) :
+    RecyclerView.Adapter<StopoverViewHolder>() {
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StopoverViewHolder {
+        return StopoverViewHolder(
+            ItemStopoverBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
+    }
+
+    override fun onBindViewHolder(holder: StopoverViewHolder, position: Int) {
+        if (position == stopoverList.size - 1)
+            holder.bind(stopoverList[position], true)
+        else
+            holder.bind(stopoverList[position], false)
+    }
+
+    override fun getItemCount(): Int {
+        return stopoverList.size
+    }
+}
+
+// 리사이클러뷰 뷰홀더
+class StopoverViewHolder(private val item: ItemStopoverBinding) :
+    RecyclerView.ViewHolder(item.root) {
+    fun bind(stopoverName: String, isLastNode: Boolean) {
+        item.textViewItemStopoverStopoverName.text = stopoverName
+        if (isLastNode)
+            item.viewItemConnectLineLine.visibility = View.GONE
+    }
+}
+
+
+// 셔트버스 출발, 진입로 경유 예정시간 어댑터
+class BusTimeAdapter(
+    private val departureTimeList: Array<String>,
+    private val roadAccessExpectationTimeList: Array<String>
+) :
+    RecyclerView.Adapter<BusTimeViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BusTimeViewHolder {
+        return BusTimeViewHolder(
+            ItemBusTimeBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
+    }
+
+    override fun onBindViewHolder(holder: BusTimeViewHolder, position: Int) {
+        holder.bind(departureTimeList[position], roadAccessExpectationTimeList[position])
+    }
+
+    override fun getItemCount(): Int {
+        return departureTimeList.size
+    }
+}
+
+// 리사이클러뷰 뷰홀더
+class BusTimeViewHolder(private val item: ItemBusTimeBinding) :
+    RecyclerView.ViewHolder(item.root) {
+    fun bind(departureTime: String, roadAccessExpectationTime: String) {
+        item.textViewItemBusTimeDepartureTimeNum.text = departureTime
+        item.textViewItemBusTimeRoadAccessTimeNum.text = roadAccessExpectationTime
+    }
 }
 

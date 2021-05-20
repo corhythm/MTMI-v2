@@ -1,64 +1,135 @@
-<?xml version="1.0" encoding="utf-8"?><!--<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent">-->
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/linearLayout_main_mbtiInfo"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/bg_rounded_corner"
-        android:backgroundTint="@color/main_home_color"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/recyclerview_main_unvInfo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2"
-        app:layout_constraintWidth_percent="0.9">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="나는 어떤 명지인일까?"
-            android:textColor="@color/white"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/textview_main_goToMbti"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:paddingStart="10dp"
-            android:text="@string/mbti"
-            android:textColor="@color/white" />
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_main_unvInfo"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:layoutAnimation="@anim/layout_animation2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout_main_mbtiInfo" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout_main_mbtiInfo"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/bg_rounded_corner"
+            android:backgroundTint="@color/main_home_color"
+            android:gravity="start     "
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/recyclerview_main_unvInfo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.2"
+            app:layout_constraintWidth_percent="0.9">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="나는 어떤 명지인일까?"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/textview_main_goToMbti"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:paddingStart="10dp"
+                android:text="@string/mbti"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_main_unvInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layoutAnimation="@anim/layout_animation2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout_main_mbtiInfo" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recyclerview_main_unvInfo">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie_busTimeToAccessRoad_accessRoadLottieAni"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_centerInParent="true"
+                android:background="@android:color/white"
+                app:layout_constraintEnd_toStartOf="@id/lottie_busTimeToAccessRoad_downtownLottieAni"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.5"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="bus2.json"
+                app:lottie_loop="true" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie_busTimeToAccessRoad_downtownLottieAni"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerInParent="true"
+                android:background="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="@id/lottie_busTimeToAccessRoad_accessRoadLottieAni"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toEndOf="@id/lottie_busTimeToAccessRoad_accessRoadLottieAni"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.5"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="bus1.json"
+                app:lottie_loop="true" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_fragmentHome_accessRoadStopoverList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lottie_busTimeToAccessRoad_accessRoadLottieAni" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_fragmentHome_downtownStopoverList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.85"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/recyclerView_fragmentHome_accessRoadStopoverList" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_fragmentHome_toRoadAccessBusTimeList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/recyclerView_fragmentHome_accessRoadStopoverList"
+                app:layout_constraintEnd_toEndOf="@id/recyclerView_fragmentHome_accessRoadStopoverList"
+                app:layout_constraintTop_toBottomOf="@id/recyclerView_fragmentHome_accessRoadStopoverList"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_fragmentHome_toDowntownBusTimeList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/recyclerView_fragmentHome_downtownStopoverList"
+                app:layout_constraintEnd_toEndOf="@id/recyclerView_fragmentHome_downtownStopoverList"
+                app:layout_constraintTop_toBottomOf="@id/recyclerView_fragmentHome_downtownStopoverList"/>
 
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <!--</androidx.core.widget.NestedScrollView>-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
