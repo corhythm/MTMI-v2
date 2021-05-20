@@ -30,9 +30,8 @@ import com.google.firebase.ktx.Firebase
 
 class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardClickInterface {
     private lateinit var binding: ActivityMyClassSubjectBulletinBoardBinding
-    lateinit var idx: String
+    lateinit var subjectCode: String
     lateinit var subjectName: String
-    private var database = Firebase.database.getReference("Board")
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -47,7 +46,7 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
 
         var intentExtra = getIntent()
         subjectName = intentExtra.getStringExtra("과목이름") // 과목 이름
-        idx = intentExtra.getStringExtra("과목코드")// 과목 코드
+        subjectCode = intentExtra.getStringExtra("과목코드")// 과목 코드
         super.onCreate(savedInstanceState)
         binding = ActivityMyClassSubjectBulletinBoardBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -60,14 +59,8 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
     private fun init() {
         var DB = DatabaseManager()
 
-        var auth = FirebaseAuth.getInstance()
-//        val subjectBulletinBoardList = ArrayList<BoardPost>()
-        // 임시 데이터 삽입
-//        val subjectBulletinBoardRecyclerAdapter =
-//            SubjectBulletinBoardRecyclerAdapter(subjectBulletinBoardList, this)
-//
 
-        DB.loadPost(idx, object : Callback<ArrayList<BoardPost>> {
+        DB.loadPostList(subjectCode, object : Callback<ArrayList<BoardPost>> {
             override fun onCallback(data: ArrayList<BoardPost>) {
                 if(data != null){
                     val subjectBulletinBoardList=data
@@ -83,6 +76,7 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
                             false
                         )
                     }
+
                 }
             }
         })
@@ -99,7 +93,7 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
         // 글 쓰기 버튼 클릭
         binding.extendFabMyClassSubjectBulletinBoardAddWriting.setOnClickListener {
             var intent = Intent(this, MyClassSubjectBulletinBoardWritingActivity::class.java)
-            intent.putExtra("과목코드", idx)
+            intent.putExtra("과목코드", subjectCode)
             intent.putExtra("과목이름", subjectName)
             intent.also {
                 startActivity(it)
@@ -109,9 +103,12 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
 
     }
 
-    override fun itemClicked(idx: Int) {
+    override fun itemClicked(idx: Int,BoardPost: BoardPost) {
+        Log.d("클릭한 item :"+idx.toString()," 클릭한 포스트"+BoardPost.title)
         // 특정 게시글 클릭 시, 해당 게시글 상세 내용 불러오기
-        Intent(this, MyClassSubjectBulletinBoardDetailsActivity::class.java).also {
+        var intent = Intent(this, MyClassSubjectBulletinBoardDetailsActivity::class.java)
+        intent.putExtra("과목코드",subjectCode)
+        intent.putExtra("post",BoardPost).also{
             startActivity(it)
             overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
         }
@@ -160,19 +157,21 @@ class SubjectBulletinBoardViewHolder(
 ) :
     RecyclerView.ViewHolder(item.root) {
     private var idx: Int = -1
+    lateinit var postDetail: BoardPost
 
     init {
         item.root.setOnClickListener {
-            this.bulletinBoardClickInterface.itemClicked(this.idx)
+            this.bulletinBoardClickInterface.itemClicked(this.idx,this.postDetail)
         }
     }
 
     fun bind(BoardPost: BoardPost,position: Int) {
         this.idx = position
+        this.postDetail = BoardPost
         item.textViewItemSubjectBulletinBoardTitle.text = BoardPost.title
         item.textViewItemSubjectBulletinBoardContent.text = BoardPost.content
         item.textViewItemSubjectBulletinBoardDate.text = BoardPost.day
-        item.textViewItemSubjectBulletinBoardWriter.text = BoardPost.writerUid
+        item.textViewItemSubjectBulletinBoardWriter.text = BoardPost.writerName
         item.textViewItemSubjectBulletinBoardChatNum.text = BoardPost.subjectBoardIndex
     }
 }
@@ -180,5 +179,5 @@ class SubjectBulletinBoardViewHolder(
 // 특정 게시글 클릭 했을 때, 클릭 감지 리스너
 interface BulletinBoardClickInterface {
     // DB에서 해당 게시글에 대한 index 정보 넘겨줘야 함
-    fun itemClicked(idx: Int)
+    fun itemClicked(idx: Int,BoardPost: BoardPost)
 }

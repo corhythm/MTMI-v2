@@ -70,7 +70,7 @@
 
                 <TextView
                     android:id="@+id/textView_myClassSubjectBulletinBoardDetails_date"
-                    android:layout_width="130dp"
+                    android:layout_width="200dp"
                     android:layout_height="20dp"
                     android:fontFamily="@font/karla_regular"
                     android:text="21.04.24 23:12"

@@ -47,12 +47,12 @@ class SignUpActivity : AppCompatActivity() {
                 var signUp_userName: String = binding.editTextSignUpName.text.toString()
 
                 // 전공 선택시 null 체크
-                var signUp_userMajor: String?
+                var signUp_userMajor: String
                 if (binding.spinnerSignUpMajorList.selectedItem != null) {
                     signUp_userMajor =
                         binding.spinnerSignUpMajorList.selectedItem.toString()
                 } else {
-                    signUp_userMajor = null
+                    signUp_userMajor = ""
                 }
                 var signUp_userGender: String =
                     binding.radioButtonSignUpGenderGroup.checkedRadioButtonId.toString()

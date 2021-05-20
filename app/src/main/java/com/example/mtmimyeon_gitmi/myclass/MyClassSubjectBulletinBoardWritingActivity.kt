@@ -51,7 +51,7 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
         }
         return true
     }
-    fun uploadPost() {
+    private fun uploadPost() {
         var writter = auth.currentUser.uid
         var title = binding.editTextMyClassSubjectBulletinBoardWritingTitle.text.toString()
         var content = binding.editTextMyClassSubjectBulletinBoardWritingContent.text.toString()

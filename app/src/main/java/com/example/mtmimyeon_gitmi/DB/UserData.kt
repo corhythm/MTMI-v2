@@ -5,21 +5,23 @@ import com.example.mtmimyeon_gitmi.db.Chat
 data class UserData(
     var id: String,
     var pw: String,
-//    var student_id: String,
-//    var birth: String,
-//    var gender: String,
-//    var email: String
-//    var userProfileImageUrl: String?
-    var chatting: Array<Chat>?
+    var student_id: String,
+    var userName: String,
+    var birth: String,
+    var gender: String,
+    var major: String,
+    var userProfileImageUrl: String
 ) {
+    constructor() : this("","","","","","","","",){}
+
     init {
         this.id = id
         this.pw = pw
-//        this.student_id = student_id
-//        this.birth = birth
-//        this.gender = gender
-//        this.email = email // id와 email에 필요사항 정의 할 필요 있음
-//        this. userProfileImageUrl = null
-        this.chatting = chatting
+        this.student_id = student_id
+        this.userName = userName
+        this.birth = birth
+        this.gender = gender
+        this.major = major
+        this. userProfileImageUrl = ""
     }
 }
