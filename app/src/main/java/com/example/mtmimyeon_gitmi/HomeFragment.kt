@@ -21,12 +21,19 @@ import com.example.mtmimyeon_gitmi.databinding.ItemMjuSiteBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemStopoverBinding
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class HomeFragment : Fragment(), MjuSiteClickedInterface {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private var isClicked = false
+    private lateinit var mTimer: Timer
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +47,6 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
     }
 
     private fun init() {
-
         val mjuSiteImageList =
             requireContext().resources.obtainTypedArray(R.array.mjuSiteImageList) // mju image list
         val mjuSiteTextList =
@@ -74,6 +80,22 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
+        binding.lottieFragmentHomeAccessRoadLottieAni.setOnClickListener {
+            if (binding.recyclerViewFragmentHomeAccessRoadStopoverList.visibility == View.GONE) {
+               binding.recyclerViewFragmentHomeAccessRoadStopoverList.visibility = View.VISIBLE
+            } else {
+                binding.recyclerViewFragmentHomeAccessRoadStopoverList.visibility = View.GONE
+            }
+        }
+
+        binding.lottieFragmentHomeDowntownLottieAni.setOnClickListener {
+            if (binding.recyclerViewFragmentHomeDowntownStopoverList.visibility == View.GONE) {
+                binding.recyclerViewFragmentHomeDowntownStopoverList.visibility = View.VISIBLE
+            } else {
+                binding.recyclerViewFragmentHomeDowntownStopoverList.visibility = View.GONE
+            }
+        }
+
 //         init recyclerView (시내방향 버스 경유지 목록)
         val downtownStopoverAdapter =
             StopoverAdapter(requireContext().resources.getStringArray(R.array.downtown_bus_stopover))
@@ -89,13 +111,14 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                 requireContext().resources.getStringArray(R.array.access_road_departure_time),
                 requireContext().resources.getStringArray(R.array.access_road_expectation_time)
             )
+
         binding.recyclerViewFragmentHomeToRoadAccessBusTimeList.apply {
             adapter = roadAccessBusTimeAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
-//        // 시내 셔틀
+        // 시내 셔틀
         val downtownBusTimeAdapter =
             BusTimeAdapter(
                 requireContext().resources.getStringArray(R.array.downtown_departure_time),
@@ -107,10 +130,27 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
+        // 타이머 set
+        mTimer = Timer()
+        mTimer.schedule(CustomTimer(), 0, 1000)
+    }
 
+    // 주기적으로 시간 체크
+    inner class CustomTimer : TimerTask() {
+        override fun run() {
+            CoroutineScope(Dispatchers.Default).launch {
+                val simpleDateFormat = SimpleDateFormat("HH:mm:ss")
+                val currentTime = simpleDateFormat.format(Date())
+                withContext(Dispatchers.Main) {
+                    if(currentTime == "19:48:40")
+                        binding.textviewMainGoToMbti.text = currentTime
+                }
+            }
+        }
     }
 
     override fun onDestroy() {
+        mTimer.cancel()
         super.onDestroy()
         _binding = null // 메모리 릭 방지
     }
@@ -227,9 +267,7 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
             return true
         }
     }
-
 }
-
 
 data class ItemMjuSite(val mjuImage: Int, val mjuText: String)
 
@@ -355,4 +393,6 @@ class BusTimeViewHolder(private val item: ItemBusTimeBinding) :
         item.textViewItemBusTimeRoadAccessTimeNum.text = roadAccessExpectationTime
     }
 }
+
+
 
