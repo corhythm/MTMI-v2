@@ -3,15 +3,19 @@ package com.example.mtmimyeon_gitmi
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.Uri
 import android.opengl.Visibility
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ScrollView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,7 +37,25 @@ import kotlin.collections.ArrayList
 class HomeFragment : Fragment(), MjuSiteClickedInterface {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var mTimer: Timer
+    private var mTimer = Timer()
+
+    // 아래 변수들은 CustomTimer inner class 에서 사용하기 위해 클래스 멤버 변수로 선언
+    // 기흥역 방향 셔틀 출발시각, 기흥역 도착 예정시각, 학교 도착 예정시각
+    private lateinit var gihuengStationDepartureTime: Array<String>
+    private lateinit var gihuengStationExpectationTime: Array<String>
+    private lateinit var gihuengStationSchoolArrivalTime: Array<String>
+
+    // 진입로 방향 셔틀 출발시각, 진입로 도착 예정 시각
+    private lateinit var accessRoadDepartureTime: Array<String>
+    private lateinit var accessRoadExpectationTime: Array<String>
+
+    // 시내 방향 셔틀 출발시각, 진입로 도착 예정 시각
+    private lateinit var downtownDepartureTime: Array<String>
+    private lateinit var downtownExpectationTime: Array<String>
+//
+//    // 벼스 시간 리사이클러뷰 어댑터
+//    private lateinit var roadAccessBusTimeAdapter: BusTimeAdapter
+//    private lateinit var downtownBusTimeAdapter: BusTimeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,90 +93,176 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
-        // init recyclerView (진입로방향 버스 경유지 목록)
+        // init recyclerView (기흥역 방향 버스 경유지 목록)
+        val gihuengStationStopoverAdapter =
+            StopoverAdapter(requireContext().resources.getStringArray(R.array.gihueng_station_bus_stopover))
+        binding.recyclerViewFragmentHomeGihuengStopoverList.apply {
+            adapter = gihuengStationStopoverAdapter
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        }
+
+
+        // init recyclerView (진입로 방향 버스 경유지 목록)
         val roadAccessStopoverAdapter =
             StopoverAdapter(requireContext().resources.getStringArray(R.array.access_road_bus_stopover))
         binding.recyclerViewFragmentHomeAccessRoadStopoverList.apply {
             adapter = roadAccessStopoverAdapter
             layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
 
-        binding.lottieFragmentHomeAccessRoadLottieAni.setOnClickListener {
-            if (binding.recyclerViewFragmentHomeAccessRoadStopoverList.visibility == View.GONE) {
-               binding.recyclerViewFragmentHomeAccessRoadStopoverList.visibility = View.VISIBLE
-            } else {
-                binding.recyclerViewFragmentHomeAccessRoadStopoverList.visibility = View.GONE
-            }
-        }
-
-        binding.lottieFragmentHomeDowntownLottieAni.setOnClickListener {
-            if (binding.recyclerViewFragmentHomeDowntownStopoverList.visibility == View.GONE) {
-                binding.recyclerViewFragmentHomeDowntownStopoverList.visibility = View.VISIBLE
-            } else {
-                binding.recyclerViewFragmentHomeDowntownStopoverList.visibility = View.GONE
-            }
-        }
-
-//         init recyclerView (시내방향 버스 경유지 목록)
+        // init recyclerView (시내 방향 버스 경유지 목록)
         val downtownStopoverAdapter =
             StopoverAdapter(requireContext().resources.getStringArray(R.array.downtown_bus_stopover))
         binding.recyclerViewFragmentHomeDowntownStopoverList.apply {
             adapter = downtownStopoverAdapter
             layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
 
-        // 진입로 셔틀
-        val roadAccessBusTimeAdapter =
-            BusTimeAdapter(
-                requireContext().resources.getStringArray(R.array.access_road_departure_time),
-                requireContext().resources.getStringArray(R.array.access_road_expectation_time)
-            )
+//
+//        // 진입로 셔틀 시간 리사이클러뷰 init
+        accessRoadDepartureTime =
+            requireContext().resources.getStringArray(R.array.access_road_departure_time) // 진입로행 셔틀버스 출발시간
+        accessRoadExpectationTime =
+            requireContext().resources.getStringArray(R.array.access_road_expectation_time) // 진입로행 셔틀버스 진입로 도착 예정 시간
 
-        binding.recyclerViewFragmentHomeToRoadAccessBusTimeList.apply {
-            adapter = roadAccessBusTimeAdapter
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//        roadAccessBusTimeAdapter =
+//            BusTimeAdapter(accessRoadDepartureTime, accessRoadExpectationTime, accessRoadIsFastest)
+//
+//        binding.recyclerViewFragmentHomeToRoadAccessBusTimeList.apply {
+//            adapter = roadAccessBusTimeAdapter
+//            layoutManager =
+//                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//        }
+//
+//        // 시내 셔틀 리사이클러뷰 init
+        downtownDepartureTime =
+            requireContext().resources.getStringArray(R.array.downtown_departure_time) // 시내행 셔틀버스 출발시간
+        downtownExpectationTime =
+            requireContext().resources.getStringArray(R.array.downtown_expectation_time) // 시내생 셔틀버스 진입로 도착 예정 시간
+//        val downtownIsFastest = Array(accessRoadDepartureTime.size) { false } // 가장 빠른 버스시간대인지 체크
+//        downtownBusTimeAdapter =
+//            BusTimeAdapter(downtownDepartureTime, downtownExpectationTime, downtownIsFastest)
+//
+//        binding.recyclerViewFragmentHomeToDowntownBusTimeList.apply {
+//            adapter = downtownBusTimeAdapter
+//            layoutManager =
+//                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//        }
+
+        gihuengStationDepartureTime =
+            requireContext().resources.getStringArray(R.array.gihueng_station_departure_time)
+        gihuengStationExpectationTime =
+            requireContext().resources.getStringArray(R.array.gihueng_station_expectation_time)
+        gihuengStationSchoolArrivalTime =
+            requireContext().resources.getStringArray(R.array.gihueng_station_school_arrival_time)
+
+        binding.imageViewFragmentHomeInfo.setOnClickListener {
+            if (binding.recyclerViewFragmentHomeAccessRoadStopoverList.visibility == View.GONE) {
+                binding.recyclerViewFragmentHomeGihuengStopoverList.visibility = View.VISIBLE
+                binding.recyclerViewFragmentHomeDowntownStopoverList.visibility = View.VISIBLE
+                binding.recyclerViewFragmentHomeAccessRoadStopoverList.visibility = View.VISIBLE
+                binding.nestedScrollViewFragmentHomeRootScroll.post {
+                    binding.nestedScrollViewFragmentHomeRootScroll.fullScroll(View.FOCUS_DOWN)
+                }
+            } else {
+                binding.recyclerViewFragmentHomeGihuengStopoverList.visibility = View.GONE
+                binding.recyclerViewFragmentHomeDowntownStopoverList.visibility = View.GONE
+                binding.recyclerViewFragmentHomeAccessRoadStopoverList.visibility = View.GONE
+            }
         }
-
-        // 시내 셔틀
-        val downtownBusTimeAdapter =
-            BusTimeAdapter(
-                requireContext().resources.getStringArray(R.array.downtown_departure_time),
-                requireContext().resources.getStringArray(R.array.downtown_expectation_time)
-            )
-        binding.recyclerViewFragmentHomeToDowntownBusTimeList.apply {
-            adapter = downtownBusTimeAdapter
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        }
-
-        // 타이머 set
-        mTimer = Timer()
-        mTimer.schedule(CustomTimer(), 0, 1000)
+//        mTimer.schedule(customTimer, 0, 1000)
     }
 
     // 주기적으로 시간 체크
-    inner class CustomTimer : TimerTask() {
+    inner class CustomTimerTask : TimerTask() {
         override fun run() {
             CoroutineScope(Dispatchers.Default).launch {
                 val simpleDateFormat = SimpleDateFormat("HH:mm:ss")
-                val currentTime = simpleDateFormat.format(Date())
-                withContext(Dispatchers.Main) {
-                    if(currentTime == "19:48:40")
-                        binding.textviewMainGoToMbti.text = currentTime
+                val currentTime = simpleDateFormat.parse(simpleDateFormat.format(Date()))
+                var gihuengIndex = 0
+                var downtownIndex = 0
+                var accessRoadIndex = 0
+
+
+                for (i in gihuengStationDepartureTime.indices) {
+                    val fastestTime = simpleDateFormat.parse(gihuengStationDepartureTime[i])
+                    if (fastestTime!!.after(currentTime)) {
+                        gihuengIndex = i
+                        break
+                    }
                 }
+
+                for (i in downtownDepartureTime.indices) {
+                    val fastestTime = simpleDateFormat.parse(downtownDepartureTime[i])
+                    if (fastestTime!!.after(currentTime)) {
+                        downtownIndex = i
+                        break
+                    }
+                }
+
+
+                for (i in accessRoadDepartureTime.indices) {
+                    val fastestTime = simpleDateFormat.parse(accessRoadDepartureTime[i])
+                    if (fastestTime!!.after(currentTime)) {
+                        accessRoadIndex = i
+                        break
+                    }
+                }
+                
+
+                // 시간 뷰 최신화
+                withContext(Dispatchers.Main) {
+//                    binding.textViewFragmentHomeGiHeungStationDepartureTime.text = currentTime!!.toString()
+
+                    val gihuengLeftTime =
+                        simpleDateFormat.parse(gihuengStationDepartureTime[gihuengIndex])!!.time - currentTime!!.time
+                    val downTownLeftTime =
+                        simpleDateFormat.parse(downtownDepartureTime[downtownIndex])!!.time - currentTime.time
+                    val accessRoadLeftTime =
+                        simpleDateFormat.parse(accessRoadDepartureTime[accessRoadIndex])!!.time - currentTime.time
+
+                    binding.textViewFragmentHomeGiHeungStationDepartureTime.text =
+                        "${gihuengLeftTime / (60 * 60 * 1000)}:${(gihuengLeftTime % (60 * 60 * 1000)) / (60 * 1000)}:${((gihuengLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000}"
+                    binding.textViewFragmentHomeGiHeungStationExpectationTime.text =
+                        gihuengStationExpectationTime[gihuengIndex]
+                    binding.textViewFragmentHomeGiHeungStationSchoolArrivalTime.text =
+                        gihuengStationSchoolArrivalTime[gihuengIndex]
+
+                    binding.textViewFragmentDowntownDepartureTime.text =
+                        "${downTownLeftTime / (60 * 60 * 1000)}:${(downTownLeftTime % (60 * 60 * 1000)) / (60 * 1000)}:${((downTownLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000}"
+                    binding.textViewFragmentDowntownDepartureExpectationTime.text =
+                        downtownExpectationTime[downtownIndex]
+
+                    binding.textViewFragmentHomeRoadAccessDepartureTime.text =
+                        "${accessRoadLeftTime / (60 * 60 * 1000)}:${(accessRoadLeftTime % (60 * 60 * 1000)) / (60 * 1000)}:${((accessRoadLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000}"
+                    binding.textViewFragmentHomeRoadAccessExpectationTime.text =
+                        accessRoadExpectationTime[accessRoadIndex]
+                }
+
             }
         }
     }
 
     override fun onDestroy() {
-        mTimer.cancel()
         super.onDestroy()
         _binding = null // 메모리 릭 방지
     }
 
+    override fun onStart() {
+        super.onStart()
+        mTimer = Timer()
+        mTimer.schedule(CustomTimerTask(), 0, 1000)
+    }
+
+    override fun onPause() {
+        Log.d("로그", "HomeFragment -onPause() called")
+        mTimer.cancel()
+        mTimer.purge()
+        super.onPause()
+    }
 
     override fun onItemClicked(item: String) {
         var url = ""
@@ -287,9 +395,8 @@ class MjuSiteRecyclerAdapter(
         holder.bind(itemMjuSiteList[position])
     }
 
-    override fun getItemCount(): Int {
-        return itemMjuSiteList.size
-    }
+    override fun getItemCount(): Int = itemMjuSiteList.size
+
 
 }
 
@@ -321,7 +428,6 @@ interface MjuSiteClickedInterface {
 class StopoverAdapter(private val stopoverList: Array<String>) :
     RecyclerView.Adapter<StopoverViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StopoverViewHolder {
         return StopoverViewHolder(
             ItemStopoverBinding.inflate(
@@ -334,27 +440,22 @@ class StopoverAdapter(private val stopoverList: Array<String>) :
 
     override fun onBindViewHolder(holder: StopoverViewHolder, position: Int) {
         if (position == stopoverList.lastIndex)
-            holder.bind(false, stopoverList[position], true)
-        if (position == 0)
-            holder.bind(true, stopoverList[position], false)
+            holder.bind(stopoverList[position], true)
         else
-            holder.bind(false, stopoverList[position], false)
+            holder.bind(stopoverList[position], false)
     }
 
-    override fun getItemCount(): Int {
-        return stopoverList.size
-    }
+    override fun getItemCount(): Int = stopoverList.size
+
 }
 
 // 리사이클러뷰 뷰홀더
 class StopoverViewHolder(private val item: ItemStopoverBinding) :
     RecyclerView.ViewHolder(item.root) {
-    fun bind(isFirstNode: Boolean, stopoverName: String, isLastNode: Boolean) {
+    fun bind(stopoverName: String, isLastNode: Boolean) {
         item.textViewItemStopoverStopoverName.text = stopoverName
-        if (isFirstNode)
-            item.viewItemConnectLineFirst.visibility = View.GONE
         if (isLastNode)
-            item.viewItemConnectLineLast.visibility = View.GONE
+            item.viewItemConnectLineConnectLine.visibility = View.GONE
     }
 }
 
@@ -362,7 +463,8 @@ class StopoverViewHolder(private val item: ItemStopoverBinding) :
 // 셔트버스 출발, 진입로 경유 예정시간 어댑터
 class BusTimeAdapter(
     private val departureTimeList: Array<String>,
-    private val roadAccessExpectationTimeList: Array<String>
+    private val roadAccessExpectationTimeList: Array<String>,
+    private val isFastestTime: Array<Boolean>
 ) :
     RecyclerView.Adapter<BusTimeViewHolder>() {
 
@@ -377,20 +479,37 @@ class BusTimeAdapter(
     }
 
     override fun onBindViewHolder(holder: BusTimeViewHolder, position: Int) {
-        holder.bind(departureTimeList[position], roadAccessExpectationTimeList[position])
+        holder.bind(
+            departureTimeList[position],
+            roadAccessExpectationTimeList[position],
+            isFastestTime[position]
+        )
     }
 
-    override fun getItemCount(): Int {
-        return departureTimeList.size
+    override fun getItemCount(): Int = departureTimeList.size
+
+    fun focusItem(position: Int) { // 현재 시간을 기준으로 가장 빠른 시간대 버스 아이템 포커싱
+        isFastestTime[position] = true
     }
+
+    fun invalidateIsFastestStatus() {
+        for (i in isFastestTime.indices) {
+            isFastestTime[i] = false
+        }
+    }
+
 }
 
 // 리사이클러뷰 뷰홀더
 class BusTimeViewHolder(private val item: ItemBusTimeBinding) :
     RecyclerView.ViewHolder(item.root) {
-    fun bind(departureTime: String, roadAccessExpectationTime: String) {
+    fun bind(departureTime: String, roadAccessExpectationTime: String, isFastest: Boolean) {
         item.textViewItemBusTimeDepartureTimeNum.text = departureTime
         item.textViewItemBusTimeRoadAccessTimeNum.text = roadAccessExpectationTime
+        if (isFastest) {
+            item.textViewItemBusTimeDepartureTimeNum.setTextColor(Color.RED)
+            item.textViewItemBusTimeRoadAccessTimeNum.setTextColor(Color.RED)
+        }
     }
 }
 
