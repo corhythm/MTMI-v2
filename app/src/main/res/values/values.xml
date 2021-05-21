@@ -262,8 +262,8 @@
         <!-- 8--><item>15:00:00</item>
         <!-- 9--><item>16:00:00</item>
         <!-- 10--><item>17:00:00</item>
-        <!-- 11--><item>18:00:00</item>
-        <!-- 12--><item>19:00:00</item>
+<!--        &lt;!&ndash; 11&ndash;&gt;<item>18:00:00</item>-->
+<!--        &lt;!&ndash; 12&ndash;&gt;<item>19:00:00</item>-->
     </string-array>
 
     <string-array name="gihueng_station_expectation_time">
@@ -277,8 +277,8 @@
         <!-- 8--><item>15:15:00</item>
         <!-- 9--><item>16:15:00</item>
         <!-- 10--><item>17:15:00</item>
-        <!-- 11--><item>18:15:00</item>
-        <!-- 12--><item>19:15:00</item>
+<!--        &lt;!&ndash; 11&ndash;&gt;<item>18:15:00</item>-->
+<!--        &lt;!&ndash; 12&ndash;&gt;<item>19:15:00</item>-->
     </string-array>
 
     <string-array name="gihueng_station_school_arrival_time">
@@ -292,8 +292,8 @@
         <!-- 8--><item>15:30:00</item>
         <!-- 9--><item>16:30:00</item>
         <!-- 10--><item>17:30:00</item>
-        <!-- 11--><item>18:30:00</item>
-        <!-- 12--><item>19:30:00</item>
+<!--        &lt;!&ndash; 11&ndash;&gt;<item>18:30:00</item>-->
+<!--        &lt;!&ndash; 12&ndash;&gt;<item>19:30:00</item>-->
     </string-array>
 
     <string-array name="access_road_bus_stopover">

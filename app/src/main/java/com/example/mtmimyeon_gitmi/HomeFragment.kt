@@ -182,11 +182,12 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
             CoroutineScope(Dispatchers.Default).launch {
                 val simpleDateFormat = SimpleDateFormat("HH:mm:ss")
                 val currentTime = simpleDateFormat.parse(simpleDateFormat.format(Date()))
-                var gihuengIndex = 0
-                var downtownIndex = 0
-                var accessRoadIndex = 0
+                var gihuengIndex = -1
+                var downtownIndex = -1
+                var accessRoadIndex = -1
 
 
+                // 기흥역 행 셔틀버스 가장 빠른 시간대 탐색
                 for (i in gihuengStationDepartureTime.indices) {
                     val fastestTime = simpleDateFormat.parse(gihuengStationDepartureTime[i])
                     if (fastestTime!!.after(currentTime)) {
@@ -195,6 +196,7 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                     }
                 }
 
+                // 용인시내 행 셔틀버스 가장 빠른 시간대 탐색
                 for (i in downtownDepartureTime.indices) {
                     val fastestTime = simpleDateFormat.parse(downtownDepartureTime[i])
                     if (fastestTime!!.after(currentTime)) {
@@ -203,7 +205,7 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                     }
                 }
 
-
+                // 진입로 행 셔틀버스 가장 빠른 시간대 탐색
                 for (i in accessRoadDepartureTime.indices) {
                     val fastestTime = simpleDateFormat.parse(accessRoadDepartureTime[i])
                     if (fastestTime!!.after(currentTime)) {
@@ -211,35 +213,60 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                         break
                     }
                 }
-                
+
+                Log.d("TAG", "$gihuengIndex, $downtownIndex, $accessRoadIndex")
+
 
                 // 시간 뷰 최신화
                 withContext(Dispatchers.Main) {
-//                    binding.textViewFragmentHomeGiHeungStationDepartureTime.text = currentTime!!.toString()
 
-                    val gihuengLeftTime =
-                        simpleDateFormat.parse(gihuengStationDepartureTime[gihuengIndex])!!.time - currentTime!!.time
-                    val downTownLeftTime =
-                        simpleDateFormat.parse(downtownDepartureTime[downtownIndex])!!.time - currentTime.time
-                    val accessRoadLeftTime =
-                        simpleDateFormat.parse(accessRoadDepartureTime[accessRoadIndex])!!.time - currentTime.time
-
-                    binding.textViewFragmentHomeGiHeungStationDepartureTime.text =
+                    if (gihuengIndex == -1) { // 금일 더 이상 남은 시간대 버스가 없을 때
+                        binding.textViewFragmentHomeGiHeungStationDepartureTime.text = ""
+                        binding.textViewFragmentHomeGiHeungStationExpectationTime.text = ""
+                        binding.textViewFragmentHomeGiHeungStationSchoolArrivalTime.text = ""
+                        binding.linearLayoutFragmentHomeGihuengStationContainer.background =
+                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_x)
+                    } else { // 기흥역 방향 남은 시간 설정
+                        val gihuengLeftTime =
+                            simpleDateFormat.parse(gihuengStationDepartureTime[gihuengIndex])!!.time - currentTime!!.time
                         "${gihuengLeftTime / (60 * 60 * 1000)}:${(gihuengLeftTime % (60 * 60 * 1000)) / (60 * 1000)}:${((gihuengLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000}"
-                    binding.textViewFragmentHomeGiHeungStationExpectationTime.text =
-                        gihuengStationExpectationTime[gihuengIndex]
-                    binding.textViewFragmentHomeGiHeungStationSchoolArrivalTime.text =
-                        gihuengStationSchoolArrivalTime[gihuengIndex]
+                        binding.textViewFragmentHomeGiHeungStationExpectationTime.text =
+                            gihuengStationExpectationTime[gihuengIndex]
+                        binding.textViewFragmentHomeGiHeungStationSchoolArrivalTime.text =
+                            gihuengStationSchoolArrivalTime[gihuengIndex]
+                    }
 
-                    binding.textViewFragmentDowntownDepartureTime.text =
-                        "${downTownLeftTime / (60 * 60 * 1000)}:${(downTownLeftTime % (60 * 60 * 1000)) / (60 * 1000)}:${((downTownLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000}"
-                    binding.textViewFragmentDowntownDepartureExpectationTime.text =
-                        downtownExpectationTime[downtownIndex]
+                    if (downtownIndex == -1) { // 금일 더 이상 남은 시간대 버스가 없을 때
+                        binding.textViewFragmentDowntownDepartureTime.text = ""
+                        binding.textViewFragmentDowntownDepartureExpectationTime.text = ""
+                        binding.linearLayoutFragmentHomeDowntownContainer.background =
+                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_x)
+                    } else { // 용인 시내 방향 남은 시간 설정
+                        val downTownLeftTime =
+                            simpleDateFormat.parse(downtownDepartureTime[downtownIndex])!!.time - currentTime.time
+                        binding.textViewFragmentDowntownDepartureTime.text =
+                            "${downTownLeftTime / (60 * 60 * 1000)}:${(downTownLeftTime % (60 * 60 * 1000)) / (60 * 1000)}:${((downTownLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000}"
+                        binding.textViewFragmentDowntownDepartureExpectationTime.text =
+                            downtownExpectationTime[downtownIndex]
+                    }
 
-                    binding.textViewFragmentHomeRoadAccessDepartureTime.text =
-                        "${accessRoadLeftTime / (60 * 60 * 1000)}:${(accessRoadLeftTime % (60 * 60 * 1000)) / (60 * 1000)}:${((accessRoadLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000}"
-                    binding.textViewFragmentHomeRoadAccessExpectationTime.text =
-                        accessRoadExpectationTime[accessRoadIndex]
+
+
+                    if (accessRoadIndex == -1) { // 금일 더 이상 남은 시간대 버스가 없을 때
+                        binding.textViewFragmentHomeRoadAccessDepartureTime.text = ""
+                        binding.textViewFragmentHomeRoadAccessExpectationTime.text = ""
+                        binding.linearLayoutFragmentHomeRoadAccessContainer.background =
+                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_x)
+                    } else { // 진입로 방향 남은 시간 설정
+                        val accessRoadLeftTime =
+                            simpleDateFormat.parse(accessRoadDepartureTime[accessRoadIndex])!!.time - currentTime.time
+                        binding.textViewFragmentHomeRoadAccessDepartureTime.text =
+                            "${accessRoadLeftTime / (60 * 60 * 1000)}:${(accessRoadLeftTime % (60 * 60 * 1000)) / (60 * 1000)}:${((accessRoadLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000}"
+                        binding.textViewFragmentHomeRoadAccessExpectationTime.text =
+                            accessRoadExpectationTime[accessRoadIndex]
+                    }
+
+
                 }
 
             }
