@@ -421,7 +421,7 @@
         <!-- 7--><item>15:40:00</item>
         <!-- 9--><item>16:35:00</item>
         <!-- 9--><item>18:10:00</item>
-        <!-- 10--><item>22:19:00</item>
+        <!-- 10--><item>20:00:00</item>
     </string-array>
 
     <string-array name="downtown_expectation_time"> <!-- 운행구분: 시내, 진입로경유 예정시각 -->
