@@ -10,7 +10,7 @@ TeamProject 2
 * 패키지 세분화: myclass, mbti, account ... etc.
 * 리사이클러뷰 관련 클래스(recyclerViewItem, recyclerViewAdapter, viewHolder, decoration .. etc 는 개별 패키지로 관리하지 않고, 편의성을 위해서 activity와 함께 관리)
 
-## Open source used
+## Used open source 
 - circle imageview: https://github.com/hdodenhof/CircleImageView
 - custom EditText: https://github.com/florent37/MaterialTextField
 - custom spinner: https://github.com/Chivorns/SmartMaterialSpinner
