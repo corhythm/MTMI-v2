@@ -27,7 +27,7 @@ import com.google.firebase.ktx.Firebase
 class ChattingRoomDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChattingRoomDetailsBinding
     private lateinit var chattingRoomDetailsRecyclerAdapter: ChattingRoomDetailsRecyclerAdapter
-    private var roomId = "CXG1SrIoS4Mn96vTLqsWPnnUUwO2-1234"
+    private lateinit var roomId : String
     private var database = Firebase.database.getReference("chat")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,18 +36,20 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
         setContentView(this.binding.root)
         //callback 으로 Chat 가져오기 이후 ChatMessage에 채팅 내용 가져오기
         init()
-
     }
 
     private fun init() {
         var DB = DatabaseManager()
         var auth = FirebaseAuth.getInstance()
+        var chatIntent = getIntent()
+        roomId = chatIntent.getStringExtra("chatId")
         val chattingDataList = ArrayList<ChatMessage>()
         this.chattingRoomDetailsRecyclerAdapter =
             ChattingRoomDetailsRecyclerAdapter(chattingDataList)
+        val ChatRomChildEventListener = database.child("")
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                Log.d("onChildAddaed@@@@@@@@@@@", snapshot.getKey().toString())
+                Log.d("onChildAddaed@@@@@@@@@@@", snapshot.key.toString())
                 val addChatMessage = snapshot.getValue<ChatMessage>()
                 if (addChatMessage != null) {
                     Log.d("가져온 데이터", addChatMessage.userId)
@@ -110,6 +112,7 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
             }
         }
     }
+
 
 
     override fun finish() {

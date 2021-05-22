@@ -87,13 +87,20 @@ class DatabaseManager {
     }
 
 
-    fun makeChatRoom(sendUser: String, receiveUser: String): String {
-        var chatRoomId = sendUser + "-" + receiveUser
+    fun makeChatRoom(sendUser: String, receiveUser: String): String { //채팅방 ID 생성 및 단일화
+        var chatId: String
+        if(sendUser > receiveUser){
+            chatId = "$sendUser-$receiveUser"
+        }else
+        {
+            chatId = "$receiveUser-$sendUser"
+        }
         database = Firebase.database.getReference("chat")
-        var newChat = Chat(chatRoomId, sendUser, receiveUser)
-        database.child(newChat.chatRoomId).setValue(newChat)
-        return chatRoomId
+        var newChat = Chat(chatId, sendUser, receiveUser)
+        database.child(chatId).setValue(newChat)
+        return chatId
     }
+
 
     fun sendMessage(
         chatRoomId: String,
@@ -204,7 +211,7 @@ class DatabaseManager {
                     var formatted = current.format(uiFormatter)
                     val dbSaveFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS") //밀리초 환산
                     var formatted2 = current.format(dbSaveFormatter)
-                    val saveIdx = (99999999999999999 - formatted2.toLong()).toString() // 역순출력처리
+                    val saveIdx = formatted2 // 정순 출력 처리
                     if (subjectCode != null && subjectIdx != null) {
                         var commentData = BoardComment(
                             subjectIdx,
@@ -227,7 +234,7 @@ class DatabaseManager {
     }
 
     fun loadPostComment(subjectCode: String?,subjectBoardIdx: String?, callback: Callback<ArrayList<BoardComment>>) {
-        Firebase.database.getReference("/board/$subjectCode/$subjectBoardIdx").addListenerForSingleValueEvent(object: ValueEventListener{
+        Firebase.database.getReference("/board/$subjectCode/$subjectBoardIdx/comment").addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 var commentList = ArrayList<BoardComment>()
                 snapshot.children.forEach {
@@ -238,12 +245,14 @@ class DatabaseManager {
                 }
                 callback.onCallback(commentList)
             }
-
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
         })
+    }
+    fun callChatList(uid: String,callback: Callback<ArrayList<String>>){
+        Firebase.database.getReference("/chat",)
     }
 
 //    fun loadPost()

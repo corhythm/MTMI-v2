@@ -1,10 +1,8 @@
 package com.example.mtmimyeon_gitmi.myClass
 
-import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.transition.Explode
 import android.transition.Slide
 import android.util.Log
 import android.view.Gravity
@@ -16,11 +14,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectBulletinBoardBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBulletinBoardBinding
-import com.example.mtmimyeon_gitmi.db.Board
 import com.example.mtmimyeon_gitmi.db.BoardPost
 import com.example.mtmimyeon_gitmi.db.Callback
 import com.example.mtmimyeon_gitmi.db.DatabaseManager
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -47,26 +43,23 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
         var intentExtra = getIntent()
         subjectName = intentExtra.getStringExtra("과목이름") // 과목 이름
         subjectCode = intentExtra.getStringExtra("과목코드")// 과목 코드
+
         super.onCreate(savedInstanceState)
+
         binding = ActivityMyClassSubjectBulletinBoardBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
-        binding.toolbarMyClassSubjectBulletinBoardToolbar.setTitle(subjectName)
+        binding.toolbarMyClassSubjectBulletinBoardToolbar.title = subjectName
         init()
     }
 
     private fun init() {
         var DB = DatabaseManager()
 
-
         DB.loadPostList(subjectCode, object : Callback<ArrayList<BoardPost>> {
             override fun onCallback(data: ArrayList<BoardPost>) {
                 if(data != null){
-                    val subjectBulletinBoardList=data
                     val subjectBulletinBoardRecyclerAdapter =
-                        SubjectBulletinBoardRecyclerAdapter(subjectBulletinBoardList, this@MyClassSubjectBulletinBoardActivity)
-
+                        SubjectBulletinBoardRecyclerAdapter(data, this@MyClassSubjectBulletinBoardActivity)
                     Log.d("포스트 데이터 가져옴 : ",data.count().toString())
                     binding.recyclerviewMyClassSubjectBulletinBoardBoardList.apply {
                         adapter = subjectBulletinBoardRecyclerAdapter
@@ -104,7 +97,7 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
     }
 
     override fun itemClicked(idx: Int,BoardPost: BoardPost) {
-        Log.d("클릭한 item :"+idx.toString()," 클릭한 포스트"+BoardPost.title)
+        Log.d("클릭한 item :$idx"," 클릭한 포스트"+BoardPost.title)
         // 특정 게시글 클릭 시, 해당 게시글 상세 내용 불러오기
         var intent = Intent(this, MyClassSubjectBulletinBoardDetailsActivity::class.java)
         intent.putExtra("과목코드",subjectCode)

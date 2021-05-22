@@ -1,5 +1,6 @@
 package com.example.mtmimyeon_gitmi.myClass
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -16,7 +17,7 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
     lateinit var subjectName: String
     lateinit var idx: String
     override fun onCreate(savedInstanceState: Bundle?) {
-        var intentExtra = getIntent()
+        var intentExtra = intent
         subjectName = intentExtra.getStringExtra("과목이름") // 과목 이름
         idx = intentExtra.getStringExtra("과목코드")// 과목 코드
         super.onCreate(savedInstanceState)
