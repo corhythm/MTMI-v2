@@ -229,7 +229,8 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                     } else { // 기흥역 방향 남은 시간 설정
                         val gihuengLeftTime =
                             simpleDateFormat.parse(gihuengStationDepartureTime[gihuengIndex])!!.time - currentTime!!.time
-                        "${gihuengLeftTime / (60 * 60 * 1000)}:${(gihuengLeftTime % (60 * 60 * 1000)) / (60 * 1000)}:${((gihuengLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000}"
+                        binding.textViewFragmentHomeGiHeungStationDepartureTime.text =
+                            "${gihuengLeftTime / (60 * 60 * 1000)}:${(gihuengLeftTime % (60 * 60 * 1000)) / (60 * 1000)}:${((gihuengLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000}"
                         binding.textViewFragmentHomeGiHeungStationExpectationTime.text =
                             gihuengStationExpectationTime[gihuengIndex]
                         binding.textViewFragmentHomeGiHeungStationSchoolArrivalTime.text =
