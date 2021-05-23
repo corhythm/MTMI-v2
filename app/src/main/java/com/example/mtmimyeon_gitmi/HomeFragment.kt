@@ -229,8 +229,10 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                     } else { // 기흥역 방향 남은 시간 설정
                         val gihuengLeftTime =
                             simpleDateFormat.parse(gihuengStationDepartureTime[gihuengIndex])!!.time - currentTime!!.time
-                        binding.textViewFragmentHomeGiHeungStationDepartureTime.text =
-                            "${gihuengLeftTime / (60 * 60 * 1000)}:${(gihuengLeftTime % (60 * 60 * 1000)) / (60 * 1000)}:${((gihuengLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000}"
+                        val calculatedLeftTime =
+                            String.format("%02d:%02d:%02d", gihuengLeftTime / (60 * 60 * 1000),
+                                (gihuengLeftTime % (60 * 60 * 1000)) / (60 * 1000), ((gihuengLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000)
+                        binding.textViewFragmentHomeGiHeungStationDepartureTime.text = calculatedLeftTime
                         binding.textViewFragmentHomeGiHeungStationExpectationTime.text =
                             gihuengStationExpectationTime[gihuengIndex]
                         binding.textViewFragmentHomeGiHeungStationSchoolArrivalTime.text =
@@ -245,8 +247,9 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                     } else { // 용인 시내 방향 남은 시간 설정
                         val downTownLeftTime =
                             simpleDateFormat.parse(downtownDepartureTime[downtownIndex])!!.time - currentTime.time
-                        binding.textViewFragmentDowntownDepartureTime.text =
-                            "${downTownLeftTime / (60 * 60 * 1000)}:${(downTownLeftTime % (60 * 60 * 1000)) / (60 * 1000)}:${((downTownLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000}"
+                        val calculatedLeftTime = String.format("%02d:%02d:%02d", downTownLeftTime / (60 * 60 * 1000),
+                                (downTownLeftTime % (60 * 60 * 1000)) / (60 * 1000), ((downTownLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000)
+                        binding.textViewFragmentDowntownDepartureTime.text = calculatedLeftTime
                         binding.textViewFragmentDowntownDepartureExpectationTime.text =
                             downtownExpectationTime[downtownIndex]
                     }
@@ -261,8 +264,9 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                     } else { // 진입로 방향 남은 시간 설정
                         val accessRoadLeftTime =
                             simpleDateFormat.parse(accessRoadDepartureTime[accessRoadIndex])!!.time - currentTime.time
-                        binding.textViewFragmentHomeRoadAccessDepartureTime.text =
-                            "${accessRoadLeftTime / (60 * 60 * 1000)}:${(accessRoadLeftTime % (60 * 60 * 1000)) / (60 * 1000)}:${((accessRoadLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000}"
+                        val calculatedLeftTime = String.format("%02d:%02d:%02d", accessRoadLeftTime / (60 * 60 * 1000),
+                                (accessRoadLeftTime % (60 * 60 * 1000)) / (60 * 1000), ((accessRoadLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000)
+                        binding.textViewFragmentHomeRoadAccessDepartureTime.text = calculatedLeftTime
                         binding.textViewFragmentHomeRoadAccessExpectationTime.text =
                             accessRoadExpectationTime[accessRoadIndex]
                     }
