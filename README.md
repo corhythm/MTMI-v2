@@ -6,11 +6,11 @@ TeamProject 2
     * e.g. GetStartedActivity layout에 쓰인 이미지 파일 -> ic(img)_get_started_filename.png
     * e.g. 'copyright'로 파일 이름이 시작하면 xml(액티비티 아님)에 쓰인 이미지 파일 -> copyright_image.png
 
-## project 관리
+## Project management
 * 패키지 세분화: myclass, mbti, account ... etc.
 * 리사이클러뷰 관련 클래스(recyclerViewItem, recyclerViewAdapter, viewHolder, decoration .. etc 는 개별 패키지로 관리하지 않고, 편의성을 위해서 activity와 함께 관리)
 
-## Open source used
+## Used open source 
 - circle imageview: https://github.com/hdodenhof/CircleImageView
 - custom EditText: https://github.com/florent37/MaterialTextField
 - custom spinner: https://github.com/Chivorns/SmartMaterialSpinner
