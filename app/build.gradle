@@ -135,4 +135,13 @@ dependencies {
 
     // kakao map
     implementation files('libs/libDaumMapAndroid.jar')
+
+    // viewpager indicator
+    implementation 'com.tbuonomo:dotsindicator:4.2'
+
+    // custom progress bar
+    implementation "com.github.skydoves:progressview:1.1.1"
+
+    // custom dialog
+    implementation 'dev.shreyaspatil.MaterialDialog:MaterialDialog:2.2.2'
 }

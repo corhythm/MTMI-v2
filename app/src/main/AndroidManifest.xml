@@ -17,6 +17,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MTMIMyeongiTMI"
         android:usesCleartextTraffic="true">
+        <activity android:name=".mbti.MbtiTestQuestionActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".MapDetailsActivity" />
         <activity android:name=".chatting.ChattingRoomDetailsActivity" />
         <activity
@@ -56,11 +63,7 @@
         <activity
             android:name=".HomeActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".account.LoginActivity"

@@ -1,5 +1,6 @@
 package com.example.mtmimyeon_gitmi.mbti
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.mtmimyeon_gitmi.HomeActivity
+import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.FragmentMbtiTestStartBinding
 import com.marozzi.roundbutton.RoundButton
 
@@ -33,14 +35,31 @@ public class MbtiTestStartFragment: Fragment() {
     }
 
     private fun init() {
+
+
         binding.buttonTestStartGoToTestStart.setOnClickListener {
-            binding.buttonTestStartGoToTestStart.startAnimation()
-            Handler().postDelayed({ // delay 후 실행할 코드
-                binding.buttonTestStartGoToTestStart.stopAnimation()
-                binding.buttonTestStartGoToTestStart.setResultState(RoundButton.ResultState.SUCCESS)
-                binding.buttonTestStartGoToTestStart.revertAnimation()
-                (requireActivity() as HomeActivity).replaceFragment(MbtiTestHomeFragment())
-            }, 1500)
+//            binding.buttonTestStartGoToTestStart.startAnimation()
+//            Handler().postDelayed({ // delay 후 실행할 코드
+//                binding.buttonTestStartGoToTestStart.stopAnimation()
+//                binding.buttonTestStartGoToTestStart.setResultState(RoundButton.ResultState.SUCCESS)
+//                binding.buttonTestStartGoToTestStart.revertAnimation()
+//
+//                Intent(requireContext(), MbtiTestQuestionActivity::class.java).also {
+//                    requireActivity().startActivity(it)
+//                }
+//                requireActivity().overridePendingTransition(
+//                    R.anim.activity_slide_in,
+//                    R.anim.activity_slide_out
+//                )
+//            }, 1000)
+
+             Intent(requireContext(), MbtiTestQuestionActivity::class.java).also {
+                    requireActivity().startActivity(it)
+                }
+                requireActivity().overridePendingTransition(
+                    R.anim.activity_slide_in,
+                    R.anim.activity_slide_out
+                )
         }
     }
 
