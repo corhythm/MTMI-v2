@@ -19,13 +19,7 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".mbti.MbtiResultActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".mbti.MbtiTestQuestionActivity"
             android:screenOrientation="portrait" />
@@ -71,7 +65,13 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".HomeActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".account.LoginActivity"
             android:screenOrientation="portrait" />
