@@ -34,7 +34,7 @@ public class MbtiTestStartFragment : Fragment() {
     private fun init() {
 
         if (SharedPrefManager.getMyMbtiType() != "") { // 이미 MBTI 테스트를 한 번이라도 진행했으면
-            binding.buttonTestStartGoToTestStart.text = "Restart?"
+            binding.buttonTestStartGoToTestStart.text = "MBTI 재검사하기"
             binding.buttonTestStartShowMyMbtiResult.visibility = View.VISIBLE
         }
 
@@ -71,8 +71,6 @@ public class MbtiTestStartFragment : Fragment() {
                 R.anim.activity_slide_in,
                 R.anim.activity_slide_out
             )
-            SharedPrefManager.clearAllMyMbtiData()
-            
         }
     }
 
