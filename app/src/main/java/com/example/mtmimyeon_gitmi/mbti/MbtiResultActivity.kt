@@ -8,6 +8,8 @@ import androidx.core.content.ContextCompat
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityMbtiResultBinding
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
+import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog
+import dev.shreyaspatil.MaterialDialog.model.TextAlignment
 
 class MbtiResultActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMbtiResultBinding
@@ -46,10 +48,46 @@ class MbtiResultActivity : AppCompatActivity() {
 
         val mbtiTitleList = resources.getStringArray(R.array.mbti_title)
         val mbtiTypeCharacteristicsList = resources.getStringArray(R.array.mbti_type_characteristics)
+        val mbtiMyTeamProjectTypeList = resources.getStringArray(R.array.mbti_my_team_project_type)
+        val mbtiTeamProjectTypeWantedList = resources.getStringArray(R.array.mbti_team_project_wanted)
 
+        for (i in mbtiTeamProjectTypeWantedList.indices) {
+            Log.d("로그", "MbtiResultActivity -init() called / ${mbtiTeamProjectTypeWantedList[i]}")
+        }
+
+        // MBTI 이미지 설정
         binding.imageViewActivityMbtiResultMbtiResultImg.setImageResource(mbtiImgList.getResourceId(mbtiIndex[myMbtiResult]!!, -1))
+        // MBTI Type 설정
         binding.textViewActivityMbtiResultMbtiResultTitle.text = mbtiTitleList[mbtiIndex[myMbtiResult]!!]
+        // MBTI 성향 텍스트 설정
         binding.textViewActivityMbtiResultMbtiTypeCharacteristics.text = mbtiTypeCharacteristicsList[mbtiIndex[myMbtiResult]!!]
+        // MBTI 나의 팀프로젝트 성향 설정
+        binding.textViewActivityMbtiResultMbtiResultMyTeamProjectType.text = mbtiMyTeamProjectTypeList[mbtiIndex[myMbtiResult]!!]
+        // MBTI 함께 하면 좋은 팀프로젝트 메이스 설정.
+        binding.textViewActivityMbtiResultMbtiResultTeamProjectTypeWanted.text = mbtiTeamProjectTypeWantedList[mbtiIndex[myMbtiResult]!!]
+
+        // 추천 장소로 이동
+        binding.imageViewActivityMbtiResultRecommendedPlace.setOnClickListener {
+            val recommendedPlaceList = resources.getStringArray(R.array.mbti_recommended_places)
+            val mDialog = BottomSheetMaterialDialog.Builder(this)
+                .setTitle("추천 장소 위치 검색")
+                .setAnimation("go.json")
+                .setMessage(
+                    "추천 장소인 ${recommendedPlaceList[mbtiIndex[myMbtiResult]!!]}로 이동하시겠어요?",
+                    TextAlignment.CENTER
+                )
+                .setPositiveButton("Yes") { dialogInterface, which ->
+
+                }
+                .setNegativeButton("No") { dialogInterface, which ->
+                    dialogInterface.dismiss()
+                }
+                .build();
+
+
+            // Show Dialog
+            mDialog.show();
+        }
 
     }
 
