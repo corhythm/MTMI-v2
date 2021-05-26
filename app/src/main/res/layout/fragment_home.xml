@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    android:id="@+id/nestedScrollView_fragmentHome_rootScroll"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedScrollView_fragmentHome_rootScroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="50dp">
@@ -12,15 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/linearLayout_main_mbtiInfo"
+
+        <RelativeLayout
+            android:id="@+id/linearLayout_main_container"
             android:layout_width="0dp"
             android:layout_height="200dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/bg_rounded_corner"
-            android:backgroundTint="@color/main_home_color"
             android:gravity="center"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@id/recyclerview_main_unvInfo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -28,25 +27,28 @@
             app:layout_constraintVertical_bias="0.2"
             app:layout_constraintWidth_percent="0.9">
 
-            <TextView
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewpager2_main_mainBanner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" />
+
+            <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                android:id="@+id/dotsIndicator_main_indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="나는 어떤 명지인일까?"
-                android:textColor="@color/white"
-                android:textSize="30sp" />
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                app:dotsColor="#F1F1F1"
+                app:dotsCornerRadius="8dp"
+                app:dotsSize="10dp"
+                app:dotsSpacing="3dp"
+                app:dotsWidthFactor="2.5"
+                app:progressMode="true"
+                app:selectedDotColor="#FFC107"
+                android:layout_marginBottom="15dp"/>
 
-            <TextView
-                android:id="@+id/textview_main_goToMbti"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:paddingStart="10dp"
-                android:text="@string/mbti"
-                android:textColor="@color/white" />
-
-        </LinearLayout>
+        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_main_unvInfo"
@@ -57,7 +59,7 @@
             android:layoutAnimation="@anim/layout_animation2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout_main_mbtiInfo" />
+            app:layout_constraintTop_toBottomOf="@id/linearLayout_main_container" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_fragmentHome_lottieAni"
@@ -89,11 +91,11 @@
                 android:id="@+id/imageView_fragmentHome_info"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_info"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                android:src="@drawable/ic_info"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView_fragmentHome_giheungStationText"
@@ -210,15 +212,15 @@
                 android:id="@+id/textView_fragmentHome_roadAccessText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="15dp"
                 android:fontFamily="@font/airbnb_cerealextra_bold"
                 android:gravity="center"
                 android:text="진입로 방향"
-                android:layout_marginTop="10dp"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@id/textView_fragmentHome_downtownText"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textView_fragmentHome_downtownText"
                 app:layout_constraintTop_toBottomOf="@id/imageView_fragmentHome_info" />
 
             <LinearLayout
@@ -262,35 +264,35 @@
             android:id="@+id/recyclerView_fragmentHome_gihuengStopoverList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:layoutAnimation="@anim/layout_animation1"
             android:visibility="gone"
-            android:layout_marginTop="15dp"
+            app:layout_constraintEnd_toEndOf="@id/constraintLayout_fragmentHome_container"
             app:layout_constraintHorizontal_bias="0.12"
             app:layout_constraintStart_toStartOf="@id/constraintLayout_fragmentHome_container"
-            app:layout_constraintTop_toBottomOf="@id/constraintLayout_fragmentHome_container"
-            app:layout_constraintEnd_toEndOf="@id/constraintLayout_fragmentHome_container"/>
+            app:layout_constraintTop_toBottomOf="@id/constraintLayout_fragmentHome_container" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_fragmentHome_downtownStopoverList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:layoutAnimation="@anim/layout_animation1"
             android:visibility="gone"
-            android:layout_marginTop="15dp"
-            app:layout_constraintStart_toEndOf="@id/recyclerView_fragmentHome_gihuengStopoverList"
             app:layout_constraintEnd_toStartOf="@id/recyclerView_fragmentHome_accessRoadStopoverList"
+            app:layout_constraintStart_toEndOf="@id/recyclerView_fragmentHome_gihuengStopoverList"
             app:layout_constraintTop_toBottomOf="@id/constraintLayout_fragmentHome_container" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_fragmentHome_accessRoadStopoverList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:layoutAnimation="@anim/layout_animation1"
             android:visibility="gone"
-            android:layout_marginTop="15dp"
+            app:layout_constraintEnd_toEndOf="@id/constraintLayout_fragmentHome_container"
             app:layout_constraintHorizontal_bias="0.9"
             app:layout_constraintStart_toStartOf="@id/constraintLayout_fragmentHome_container"
-            app:layout_constraintEnd_toEndOf="@id/constraintLayout_fragmentHome_container"
             app:layout_constraintTop_toBottomOf="@id/constraintLayout_fragmentHome_container" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
