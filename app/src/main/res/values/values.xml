@@ -1195,6 +1195,29 @@
         <item>분위기를 고조시키는 우호적 사람들</item>
     </string-array>
 
+
+    <string-array name="mbti_question_banner_text">
+        <item>이 시간까지 코딩하고 있는 너는 INTJ!</item>
+        <item>창의력과 통찰력이 뛰어나니? 난데? INFJ</item>
+        <item>세상의 소금, 완벽주의자 ISTJ</item>
+        <item>혹시 관망하는 걸 좋아하고 모험가적인 기질이 있는 거 아니야? ISTP</item>
+
+        <item>모쏠.... 언제까지? INTP</item>
+        <item>짝사랑만 몇 년째!! INFP</item>
+        <item>수업시간에 필기만 하는 거 아니지? ISFJ</item>
+        <item>한 명이랑만 계속 다니니? ISFP</item>
+
+        <item>시험문제 지적을 잘하는 지도자형 ENTJ</item>
+        <item>어미새 기질이 있는 언변능숙형 ENFJ</item>
+        <item>반장(사교적인 전통주의자) ESTJ</item>
+        <item>또라이(발명가형) ENTP</item>
+
+        <item>양아치(활동가형) ESTP</item>
+        <item>쌉인싸(스파크형) ENFP</item>
+        <item>대화중(친선도모형) ESFJ</item>
+        <item>복도점령(사교형) ESFP</item>
+    </string-array>
+
 </resources>
 
 

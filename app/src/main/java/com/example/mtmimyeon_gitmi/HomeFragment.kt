@@ -13,10 +13,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.example.mtmimyeon_gitmi.databinding.*
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 import com.google.android.material.snackbar.Snackbar
@@ -27,6 +27,7 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.abs
 
 class HomeFragment : Fragment(), MjuSiteClickedInterface {
     private var _binding: FragmentHomeBinding? = null
@@ -73,11 +74,11 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
             R.drawable.bg_rounded_banner3,
             R.drawable.bg_rounded_banner4,
         )
-        val bannerItemList = ArrayList<BannerItem>()
+        val bannerItemList = ArrayList<MainBannerItem>()
 
         for (i in bannerMbtiTitleList.indices) {
             bannerItemList.add(
-                BannerItem(
+                MainBannerItem(
                     mbtiImg = bannerMbtiImgList.getResourceId(i, -1),
                     mbtiTypeTitle = bannerMbtiTitleList[i],
                     mbtiTypeSubtitle = bannerMbtiSubtitleList[i],
@@ -87,14 +88,39 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
         }
 
         // VierPager Adapter 설정
-        val viewPagerAdapter = BannerAdapter(bannerItemList, requireContext())
+        val viewPagerAdapter = MainBannerAdapter(bannerItemList, requireContext())
         binding.viewpager2MainMainBanner.apply {
             adapter = viewPagerAdapter
             binding.dotsIndicatorMainIndicator.setViewPager2(this)
+            setPageTransformer(DepthPageTransformer())
         }
 
-        Log.d("로그", "HomeFragment -init() called / ${binding.dotsIndicatorMainIndicator.size}")
-        Log.d("로그", "HomeFragment -init() called / ${binding.viewpager2MainMainBanner.currentItem}")
+        // ViewPager2 Event Listener Override
+        binding.viewpager2MainMainBanner.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) { // 새로운 페이지가 선택되면 호출
+                Log.d("로그", "HomeFragment -onPageSelected() called / $position 강")
+                super.onPageSelected(position)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) { // 스크롤 상태 바뀔 때 호출
+            Log.d("태그", "HomeFragment -onPageScrollStateChanged() called 성")
+                super.onPageScrollStateChanged(state)
+            }
+
+            override fun onPageScrolled( // 페이지 스크롤 중 호출
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                Log.d("로그", "HomeFragment -onPageScrolled() called 욱 / position = $position, positionOffset = $positionOffset, positionOffsetPixels = $positionOffsetPixels")
+                if(position == 15)
+                    super.onPageScrolled(0, positionOffset, positionOffsetPixels)
+                else
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            }
+        })
+
 
         // 홈 명지대 아이콘 데이터 초기화
         val mjuSiteImageList =
@@ -183,7 +209,6 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                 binding.recyclerViewFragmentHomeAccessRoadStopoverList.visibility = View.GONE
             }
         }
-//        mTimer.schedule(customTimer, 0, 1000)
     }
 
     // 주기적으로 시간 체크
@@ -230,6 +255,7 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                 // 시간 뷰 최신화
                 withContext(Dispatchers.Main) {
 
+                    //binding.viewpager2MainMainBanner.setCurrentItem(binding.viewpager2MainMainBanner.currentItem, true)
                     if (gihuengIndex == -1) { // 금일 더 이상 남은 시간대 버스가 없을 때
                         binding.textViewFragmentHomeGiHeungStationDepartureTime.text = ""
                         binding.textViewFragmentHomeGiHeungStationExpectationTime.text = ""
@@ -294,8 +320,6 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                         binding.textViewFragmentHomeRoadAccessExpectationTime.text =
                             accessRoadExpectationTime[accessRoadIndex]
                     }
-
-
                 }
 
             }
@@ -516,7 +540,7 @@ class StopoverViewHolder(private val item: ItemStopoverBinding) :
 }
 
 // ViewPager main banner data class
-data class BannerItem(
+data class MainBannerItem(
     val mbtiImg: Int,
     val mbtiTypeTitle: String,
     val mbtiTypeSubtitle: String,
@@ -524,13 +548,13 @@ data class BannerItem(
 )
 
 // ViewPager main banner adapter
-class BannerAdapter(
-    private val bannerItemList: ArrayList<BannerItem>,
+class MainBannerAdapter(
+    private val mainBannerItemList: ArrayList<MainBannerItem>,
     private val mContext: Context
 ) :
-    RecyclerView.Adapter<BannerViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BannerViewHolder {
-        return BannerViewHolder(
+    RecyclerView.Adapter<MainBannerViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainBannerViewHolder {
+        return MainBannerViewHolder(
             ItemMainBannerBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -539,24 +563,69 @@ class BannerAdapter(
         )
     }
 
-    override fun onBindViewHolder(holder: BannerViewHolder, position: Int) {
-        holder.bind(this.bannerItemList[position])
+    override fun onBindViewHolder(holderMain: MainBannerViewHolder, position: Int) {
+        holderMain.bind(this.mainBannerItemList[position])
     }
 
-    override fun getItemCount() = this.bannerItemList.size
+    override fun getItemCount() = this.mainBannerItemList.size
+
+    fun getRealPosition(position: Int) = (position / this.mainBannerItemList.size)
 }
 
 // ViewPager main banner ViewHolder
-class BannerViewHolder(private val item: ItemMainBannerBinding, private val mContext: Context) :
+class MainBannerViewHolder(private val item: ItemMainBannerBinding, private val mContext: Context) :
     RecyclerView.ViewHolder(item.root) {
 
-    fun bind(bannerItem: BannerItem) {
+    fun bind(mainBannerItem: MainBannerItem) {
 //        this.item.root.setBackgroundColor(bannerItem.backgroundColor)
         this.item.root.background =
-            ContextCompat.getDrawable(mContext, bannerItem.backgroundColor)
-        this.item.imageViewItemMainBannerImg.setImageResource(bannerItem.mbtiImg) // 이미지
-        this.item.textViewItemMainBannerTitle.text = bannerItem.mbtiTypeTitle // 타이틀
-        this.item.textViewItemMainBannerSubTitle.text = bannerItem.mbtiTypeSubtitle // 서브타이틀
+            ContextCompat.getDrawable(mContext, mainBannerItem.backgroundColor)
+        this.item.imageViewItemMainBannerImg.setImageResource(mainBannerItem.mbtiImg) // 이미지
+        this.item.textViewItemMainBannerTitle.text = mainBannerItem.mbtiTypeTitle // 타이틀
+        this.item.textViewItemMainBannerSubTitle.text = mainBannerItem.mbtiTypeSubtitle // 서브타이틀
+    }
+}
+
+// VierPager 슬라이드 애니메이션
+class DepthPageTransformer : ViewPager2.PageTransformer {
+    private val MIN_SCALE = 0.75f
+
+    override fun transformPage(view: View, position: Float) {
+        view.apply {
+            val pageWidth = width
+            when {
+                position < -1 -> { // [-Infinity,-1)
+                    // This page is way off-screen to the left.
+                    alpha = 0f
+                }
+                position <= 0 -> { // [-1,0]
+                    // Use the default slide transition when moving to the left page
+                    alpha = 1f
+                    translationX = 0f
+                    translationZ = 0f
+                    scaleX = 1f
+                    scaleY = 1f
+                }
+                position <= 1 -> { // (0,1]
+                    // Fade the page out.
+                    alpha = 1 - position
+
+                    // Counteract the default slide transition
+                    translationX = pageWidth * -position
+                    // Move it behind the left page
+                    translationZ = -1f
+
+                    // Scale the page down (between MIN_SCALE and 1)
+                    val scaleFactor = (MIN_SCALE + (1 - MIN_SCALE) * (1 - abs(position)))
+                    scaleX = scaleFactor
+                    scaleY = scaleFactor
+                }
+                else -> { // (1,+Infinity]
+                    // This page is way off-screen to the right.
+                    alpha = 0f
+                }
+            }
+        }
     }
 }
 

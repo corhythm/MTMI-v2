@@ -9,28 +9,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/iamgeView_activityMbtiTestQuestion_randomMbtiImg"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/img_esfp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView_activityMbtiTestQuestion_randomMbtiTitle"
-            android:layout_width="wrap_content"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager2_activityMbtiTestQuestion_banner"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/tvn_bold"
-            android:maxWidth="300dp"
-            android:text="논리적 사색가가 되고 싶니?"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/iamgeView_activityMbtiTestQuestion_randomMbtiImg"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iamgeView_activityMbtiTestQuestion_randomMbtiImg"
-            app:layout_constraintTop_toTopOf="@id/iamgeView_activityMbtiTestQuestion_randomMbtiImg" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.2"
+            app:layout_constraintWidth_percent="0.9"/>
 
         <TextView
             android:id="@+id/textView_activityMbtiTestQuestion_firstQuestion"
@@ -46,7 +34,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iamgeView_activityMbtiTestQuestion_randomMbtiImg"
+            app:layout_constraintTop_toBottomOf="@id/viewPager2_activityMbtiTestQuestion_banner"
             app:layout_constraintVertical_bias="0.15"
             app:layout_constraintWidth_percent="0.9" />
 
@@ -80,30 +68,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView_activityMbtiTestQuestion_vs"
             app:layout_constraintWidth_percent="0.9" />
-
-        <!--        <ProgressBar-->
-        <!--            android:id="@+id/progressBar_activityMbtiTestQuestion_status"-->
-        <!--            style="@android:style/Widget.Holo.ProgressBar.Horizontal"-->
-        <!--            android:layout_width="300dp"-->
-        <!--            android:layout_height="50dp"-->
-        <!--            android:layout_marginStart="20dp"-->
-        <!--            android:layout_marginTop="20dp"-->
-        <!--            android:layout_marginEnd="20dp"-->
-        <!--            android:progress="20"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/textView_activityMbtiTestQuestion_secondQuestion" />-->
-
-
-        <!--        <TextView-->
-        <!--            android:id="@+id/textView_activityMbtiTestQuestion_status"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="1/20"-->
-        <!--            android:textSize="40sp"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/progressBar_activityMbtiTestQuestion_status" />-->
 
 
         <com.skydoves.progressview.ProgressView

@@ -1,11 +1,20 @@
 package com.example.mtmimyeon_gitmi.mbti
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.view.size
+import androidx.recyclerview.widget.RecyclerView
+import com.example.mtmimyeon_gitmi.DepthPageTransformer
+import com.example.mtmimyeon_gitmi.MainBannerItem
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityMbtiTestQuestionBinding
+import com.example.mtmimyeon_gitmi.databinding.ItemQuestionBannerBinding
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog
 import dev.shreyaspatil.MaterialDialog.model.TextAlignment
@@ -30,6 +39,38 @@ class MbtiTestQuestionActivity : AppCompatActivity() {
     }
 
     private fun init() {
+
+        // ViewPager 들어갈 데이터 설정
+        val mbtiImgList = resources.obtainTypedArray(R.array.mbti_img)
+        val mbtiTextList = resources.getStringArray(R.array.mbti_question_banner_text)
+        val questionBannerList = ArrayList<QuestionBannerItem>()
+
+        val bannerColorList = arrayListOf(
+            R.drawable.bg_rounded_banner1,
+            R.drawable.bg_rounded_banner2,
+            R.drawable.bg_rounded_banner3,
+            R.drawable.bg_rounded_banner4,
+        )
+        val bannerItemList = ArrayList<MainBannerItem>()
+
+        for (i in mbtiTextList.indices) {
+            questionBannerList.add(
+                QuestionBannerItem(
+                    imgId = mbtiImgList.getResourceId(i, -1),
+                    text = mbtiTextList[i],
+                    background = bannerColorList[i % 4]
+                )
+            )
+        }
+
+        // 뷰페이저 설정
+        val questionBannerAdapter =
+            QuestionBannerAdapter(mContext = this, questionBannerItemList = questionBannerList)
+        binding.viewPager2ActivityMbtiTestQuestionBanner.apply {
+            setPageTransformer(DepthPageTransformer())
+            adapter = questionBannerAdapter
+        }
+
         // 프로그래스바 설정
         totalQuestionNum = binding.progressBarActivityMbtiTestQuestionStatus.max.toInt()
 
@@ -55,7 +96,14 @@ class MbtiTestQuestionActivity : AppCompatActivity() {
 
     private fun updateMbtiResult(whatType: Int, questionCount: Int) {
         if (nowQuestionStatusCount == totalQuestionNum) return
+
         nowQuestionStatusCount++
+
+        // 뷰페이저 뷰 변경
+        binding.viewPager2ActivityMbtiTestQuestionBanner.setCurrentItem(
+            nowQuestionStatusCount % 16,
+            true
+        )
 
         when (nowQuestionStatusCount) {
             5 -> {
@@ -169,10 +217,11 @@ class MbtiTestQuestionActivity : AppCompatActivity() {
                     "MBTI 테스트를 그만두시겠어요?\n(도중에 테스트를 중단하면 결과가 저장되지 않아요)",
                     TextAlignment.CENTER
                 )
-                .setPositiveButton("Yes") { dialogInterface, which ->
+                .setPositiveButton("Yes") { dialogInterface, _ ->
                     super.onBackPressed()
+                    dialogInterface.dismiss()
                 }
-                .setNegativeButton("No") { dialogInterface, which ->
+                .setNegativeButton("No") { dialogInterface, _ ->
                     dialogInterface.dismiss()
                 }
                 .build();
@@ -183,8 +232,45 @@ class MbtiTestQuestionActivity : AppCompatActivity() {
         }
     }
 
-     override fun finish() {
+    override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
+    }
+}
+
+data class QuestionBannerItem(val imgId: Int, val text: String, val background: Int)
+
+// ViewPager question banner adapter
+class QuestionBannerAdapter(
+    private val questionBannerItemList: ArrayList<QuestionBannerItem>,
+    private val mContext: Context
+) :
+    RecyclerView.Adapter<BannerViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BannerViewHolder {
+        return BannerViewHolder(
+            ItemQuestionBannerBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            ), mContext
+        )
+    }
+
+    override fun onBindViewHolder(holder: BannerViewHolder, position: Int) {
+        holder.bind(this.questionBannerItemList[position])
+    }
+
+    override fun getItemCount() = this.questionBannerItemList.size
+
+}
+
+// ViewPager question banner ViewHolder
+class BannerViewHolder(private val item: ItemQuestionBannerBinding, private val mContext: Context) :
+    RecyclerView.ViewHolder(item.root) {
+
+    fun bind(questionBannerItem: QuestionBannerItem) {
+        item.iamgeViewActivityMbtiTestQuestionRandomMbtiImg.setImageResource(questionBannerItem.imgId)
+        item.textViewActivityMbtiTestQuestionRandomMbtiTitle.text = questionBannerItem.text
+        item.root.background = ContextCompat.getDrawable(mContext, questionBannerItem.background)
     }
 }

@@ -19,7 +19,6 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/bg_rounded_corner"
             android:gravity="center"
-            android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@id/recyclerview_main_unvInfo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
