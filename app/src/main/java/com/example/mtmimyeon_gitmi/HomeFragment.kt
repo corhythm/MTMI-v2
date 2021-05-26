@@ -5,17 +5,14 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
-import android.opengl.Visibility
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ScrollView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -121,36 +118,18 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
 
-//
-//        // 진입로 셔틀 시간 리사이클러뷰 init
+
+        // 진입로 셔틀 시간 리사이클러뷰 init
         accessRoadDepartureTime =
             requireContext().resources.getStringArray(R.array.access_road_departure_time) // 진입로행 셔틀버스 출발시간
         accessRoadExpectationTime =
             requireContext().resources.getStringArray(R.array.access_road_expectation_time) // 진입로행 셔틀버스 진입로 도착 예정 시간
 
-//        roadAccessBusTimeAdapter =
-//            BusTimeAdapter(accessRoadDepartureTime, accessRoadExpectationTime, accessRoadIsFastest)
-//
-//        binding.recyclerViewFragmentHomeToRoadAccessBusTimeList.apply {
-//            adapter = roadAccessBusTimeAdapter
-//            layoutManager =
-//                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-//        }
-//
-//        // 시내 셔틀 리사이클러뷰 init
+        // 시내 셔틀 리사이클러뷰 init
         downtownDepartureTime =
             requireContext().resources.getStringArray(R.array.downtown_departure_time) // 시내행 셔틀버스 출발시간
         downtownExpectationTime =
             requireContext().resources.getStringArray(R.array.downtown_expectation_time) // 시내생 셔틀버스 진입로 도착 예정 시간
-//        val downtownIsFastest = Array(accessRoadDepartureTime.size) { false } // 가장 빠른 버스시간대인지 체크
-//        downtownBusTimeAdapter =
-//            BusTimeAdapter(downtownDepartureTime, downtownExpectationTime, downtownIsFastest)
-//
-//        binding.recyclerViewFragmentHomeToDowntownBusTimeList.apply {
-//            adapter = downtownBusTimeAdapter
-//            layoutManager =
-//                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-//        }
 
         gihuengStationDepartureTime =
             requireContext().resources.getStringArray(R.array.gihueng_station_departure_time)
@@ -488,60 +467,6 @@ class StopoverViewHolder(private val item: ItemStopoverBinding) :
         item.textViewItemStopoverStopoverName.text = stopoverName
         if (isLastNode)
             item.viewItemConnectLineConnectLine.visibility = View.GONE
-    }
-}
-
-
-// 셔트버스 출발, 진입로 경유 예정시간 어댑터
-class BusTimeAdapter(
-    private val departureTimeList: Array<String>,
-    private val roadAccessExpectationTimeList: Array<String>,
-    private val isFastestTime: Array<Boolean>
-) :
-    RecyclerView.Adapter<BusTimeViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BusTimeViewHolder {
-        return BusTimeViewHolder(
-            ItemBusTimeBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
-    }
-
-    override fun onBindViewHolder(holder: BusTimeViewHolder, position: Int) {
-        holder.bind(
-            departureTimeList[position],
-            roadAccessExpectationTimeList[position],
-            isFastestTime[position]
-        )
-    }
-
-    override fun getItemCount(): Int = departureTimeList.size
-
-    fun focusItem(position: Int) { // 현재 시간을 기준으로 가장 빠른 시간대 버스 아이템 포커싱
-        isFastestTime[position] = true
-    }
-
-    fun invalidateIsFastestStatus() {
-        for (i in isFastestTime.indices) {
-            isFastestTime[i] = false
-        }
-    }
-
-}
-
-// 리사이클러뷰 뷰홀더
-class BusTimeViewHolder(private val item: ItemBusTimeBinding) :
-    RecyclerView.ViewHolder(item.root) {
-    fun bind(departureTime: String, roadAccessExpectationTime: String, isFastest: Boolean) {
-        item.textViewItemBusTimeDepartureTimeNum.text = departureTime
-        item.textViewItemBusTimeRoadAccessTimeNum.text = roadAccessExpectationTime
-        if (isFastest) {
-            item.textViewItemBusTimeDepartureTimeNum.setTextColor(Color.RED)
-            item.textViewItemBusTimeRoadAccessTimeNum.setTextColor(Color.RED)
-        }
     }
 }
 
