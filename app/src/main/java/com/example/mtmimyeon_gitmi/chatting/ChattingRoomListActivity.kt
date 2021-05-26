@@ -6,17 +6,24 @@ import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.transition.Slide
+import android.util.Log
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityChattingRoomListBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemChattingRoomBinding
+import com.example.mtmimyeon_gitmi.db.Callback
+import com.example.mtmimyeon_gitmi.db.Chat
+import com.example.mtmimyeon_gitmi.db.DatabaseManager
+import com.google.firebase.auth.FirebaseAuth
 
 class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface {
     private lateinit var binding: ActivityChattingRoomListBinding
     private lateinit var chattingRoomListRecyclerAdapter: ChattingRoomListRecyclerAdapter
     private lateinit var myChattingRoomList: ArrayList<ItemChattingRoom>
+    var database: DatabaseManager = DatabaseManager()
+    var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +33,11 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
     }
 
     private fun init() {
+        database.loadChatList(auth.currentUser.uid, object : Callback<ArrayList<Chat>> {
+            override fun onCallback(data: ArrayList<Chat>) {
+                Log.d("ArrayList data",data[0].chatRoomId)
+            }
+        })
         myChattingRoomList = ArrayList()
         for (i in 1..20) {
             myChattingRoomList.add(
@@ -34,7 +46,7 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
                     name = "라이인드로스테쭈젠댄마리소피아수인레나테엘리자벳피아루이제",
                     lastChat = "It was popularised in the 1960s with the release of Letraset sheets",
                     timeStamp = "2021-05-21 화"
-                )
+                )gf
             )
         }
         this.chattingRoomListRecyclerAdapter =

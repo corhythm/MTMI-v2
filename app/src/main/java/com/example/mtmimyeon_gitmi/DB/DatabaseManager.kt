@@ -263,10 +263,24 @@ class DatabaseManager {
             }
         })
     }
-
-    fun callChatList(uid: String,callback: Callback<ArrayList<String>>){
-        Firebase.database.getReference("/chat",)
+    fun loadChatList(userId: String,callback: Callback<ArrayList<Chat>>){
+        database = Firebase.database.getReference("chat")
+        database.addListenerForSingleValueEvent(object :  ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var chatList = ArrayList<Chat>()
+                snapshot.children.forEach() {
+                    if(it.key.toString().contains(userId)) {
+                        var chat = it.getValue(Chat::class.java)
+                        if (chat != null) {
+                            chatList.add(chat)
+                        }
+                    }
+                }
+                callback.onCallback(chatList)
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("채팅방에러","채팅방 오류")
+            }
+        })
     }
-
-//    fun loadPost()
 }
