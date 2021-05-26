@@ -30,6 +30,10 @@ TeamProject 2
 - Motion Toast: https://github.com/Spikeysanju/MotionToast
 - google gson: https://github.com/google/gson
 - Groupie: https://github.com/lisawray/groupie
+- ViewPagerIndicator: https://github.com/tommybuonomo/dotsindicator
+- Custom Progressbar: https://github.com/skydoves/ProgressView
+- Custom Dialog: https://github.com/PatilShreyas/MaterialDialog-Android
+
 <!-- ## Get Started Activity -->
 <!-- ![image](https://user-images.githubusercontent.com/43941383/114131739-1ab4a300-993e-11eb-8497-7c7785d186e0.png)-->
 

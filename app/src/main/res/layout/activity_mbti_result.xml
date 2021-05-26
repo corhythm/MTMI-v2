@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedScrollView_fragmentHome_rootScroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".mbti.MbtiResultActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageView_activityMbtiResult_recommendedPlace"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_recommend_place"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
+            android:id="@+id/imageView_activityMbtiResult_mbtiResultImg"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:src="@drawable/img_esfp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageView_activityMbtiResult_recommendedPlace" />
+
+        <TextView
+            android:id="@+id/textView_activityMbtiResult_mbtiResultTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/tvn_bold"
+            android:text="INFP"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageView_activityMbtiResult_mbtiResultImg" />
+
+        <TextView
+            android:id="@+id/textView_activityMbtiResult_whatIsMyCharacteristics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/godo_maum"
+            android:text="나의 성향은?"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_activityMbtiResult_mbtiResultTitle" />
+
+
+        <TextView
+            android:id="@+id/textView_activityMbtiResult_mbtiTypeCharacteristics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/nanum"
+            android:paddingStart="15dp"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_activityMbtiResult_whatIsMyCharacteristics" />
+
+        <TextView
+            android:id="@+id/textView_activityMbtiResult_whatIsMyTeamProjectType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/godo_maum"
+            android:text="나의 팀프로젝트 유형은?"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_activityMbtiResult_mbtiTypeCharacteristics" />
+
+        <TextView
+            android:id="@+id/textView_activityMbtiResult_mbtiResultMyTeamProjectType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/nanum"
+            android:paddingStart="15dp"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_activityMbtiResult_whatIsMyTeamProjectType" />
+
+        <TextView
+            android:id="@+id/textView_activityMbtiResult_whoIsMyBestTeamProjectMember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/godo_maum"
+            android:text="누가 나랑 가장 잘 맞을까?"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_activityMbtiResult_mbtiResultMyTeamProjectType" />
+
+        <TextView
+            android:id="@+id/textView_activityMbtiResult_mbtiResultTeamProjectTypeWanted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/godo_rounded_left"
+            android:gravity="center"
+            android:text="ESTP, INFJ"
+            android:textAllCaps="true"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@id/textView_activityMbtiResult_whoIsMyBestTeamProjectMember"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintStart_toEndOf="@id/textView_activityMbtiResult_whoIsMyBestTeamProjectMember"
+            app:layout_constraintTop_toTopOf="@id/textView_activityMbtiResult_whoIsMyBestTeamProjectMember" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

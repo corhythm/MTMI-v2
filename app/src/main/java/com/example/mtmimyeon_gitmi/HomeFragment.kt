@@ -1,28 +1,23 @@
 package com.example.mtmimyeon_gitmi
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.net.Uri
-import android.opengl.Visibility
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ScrollView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mtmimyeon_gitmi.databinding.FragmentHomeBinding
-import com.example.mtmimyeon_gitmi.databinding.ItemBusTimeBinding
-import com.example.mtmimyeon_gitmi.databinding.ItemMjuSiteBinding
-import com.example.mtmimyeon_gitmi.databinding.ItemStopoverBinding
+import androidx.viewpager2.widget.ViewPager2
+import com.example.mtmimyeon_gitmi.databinding.*
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
@@ -32,7 +27,7 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-
+import kotlin.math.abs
 
 class HomeFragment : Fragment(), MjuSiteClickedInterface {
     private var _binding: FragmentHomeBinding? = null
@@ -52,10 +47,6 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
     // 시내 방향 셔틀 출발시각, 진입로 도착 예정 시각
     private lateinit var downtownDepartureTime: Array<String>
     private lateinit var downtownExpectationTime: Array<String>
-//
-//    // 벼스 시간 리사이클러뷰 어댑터
-//    private lateinit var roadAccessBusTimeAdapter: BusTimeAdapter
-//    private lateinit var downtownBusTimeAdapter: BusTimeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,6 +60,69 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
     }
 
     private fun init() {
+
+        // ViewPager 들어갈 데이터 설정
+        val bannerMbtiImgList =
+            requireContext().resources.obtainTypedArray(R.array.mbti_img)
+        val bannerMbtiTitleList =
+            requireContext().resources.getStringArray(R.array.main_banner_mbti_type_title)
+        val bannerMbtiSubtitleList =
+            requireContext().resources.getStringArray(R.array.main_banner_mbti_type_subtitle)
+        val bannerColorList = arrayListOf(
+            R.drawable.bg_rounded_banner1,
+            R.drawable.bg_rounded_banner2,
+            R.drawable.bg_rounded_banner3,
+            R.drawable.bg_rounded_banner4,
+        )
+        val bannerItemList = ArrayList<MainBannerItem>()
+
+        for (i in bannerMbtiTitleList.indices) {
+            bannerItemList.add(
+                MainBannerItem(
+                    mbtiImg = bannerMbtiImgList.getResourceId(i, -1),
+                    mbtiTypeTitle = bannerMbtiTitleList[i],
+                    mbtiTypeSubtitle = bannerMbtiSubtitleList[i],
+                    backgroundColor = bannerColorList[i % 4]
+                )
+            )
+        }
+
+        // VierPager Adapter 설정
+        val viewPagerAdapter = MainBannerAdapter(bannerItemList, requireContext())
+        binding.viewpager2MainMainBanner.apply {
+            adapter = viewPagerAdapter
+            binding.dotsIndicatorMainIndicator.setViewPager2(this)
+            setPageTransformer(DepthPageTransformer())
+        }
+
+        // ViewPager2 Event Listener Override
+        binding.viewpager2MainMainBanner.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) { // 새로운 페이지가 선택되면 호출
+                Log.d("로그", "HomeFragment -onPageSelected() called / $position 강")
+                super.onPageSelected(position)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) { // 스크롤 상태 바뀔 때 호출
+            Log.d("태그", "HomeFragment -onPageScrollStateChanged() called 성")
+                super.onPageScrollStateChanged(state)
+            }
+
+            override fun onPageScrolled( // 페이지 스크롤 중 호출
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                Log.d("로그", "HomeFragment -onPageScrolled() called 욱 / position = $position, positionOffset = $positionOffset, positionOffsetPixels = $positionOffsetPixels")
+                if(position == 15)
+                    super.onPageScrolled(0, positionOffset, positionOffsetPixels)
+                else
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            }
+        })
+
+
+        // 홈 명지대 아이콘 데이터 초기화
         val mjuSiteImageList =
             requireContext().resources.obtainTypedArray(R.array.mjuSiteImageList) // mju image list
         val mjuSiteTextList =
@@ -121,36 +175,18 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
 
-//
-//        // 진입로 셔틀 시간 리사이클러뷰 init
+
+        // 진입로 셔틀 시간 리사이클러뷰 init
         accessRoadDepartureTime =
             requireContext().resources.getStringArray(R.array.access_road_departure_time) // 진입로행 셔틀버스 출발시간
         accessRoadExpectationTime =
             requireContext().resources.getStringArray(R.array.access_road_expectation_time) // 진입로행 셔틀버스 진입로 도착 예정 시간
 
-//        roadAccessBusTimeAdapter =
-//            BusTimeAdapter(accessRoadDepartureTime, accessRoadExpectationTime, accessRoadIsFastest)
-//
-//        binding.recyclerViewFragmentHomeToRoadAccessBusTimeList.apply {
-//            adapter = roadAccessBusTimeAdapter
-//            layoutManager =
-//                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-//        }
-//
-//        // 시내 셔틀 리사이클러뷰 init
+        // 시내 셔틀 리사이클러뷰 init
         downtownDepartureTime =
             requireContext().resources.getStringArray(R.array.downtown_departure_time) // 시내행 셔틀버스 출발시간
         downtownExpectationTime =
             requireContext().resources.getStringArray(R.array.downtown_expectation_time) // 시내생 셔틀버스 진입로 도착 예정 시간
-//        val downtownIsFastest = Array(accessRoadDepartureTime.size) { false } // 가장 빠른 버스시간대인지 체크
-//        downtownBusTimeAdapter =
-//            BusTimeAdapter(downtownDepartureTime, downtownExpectationTime, downtownIsFastest)
-//
-//        binding.recyclerViewFragmentHomeToDowntownBusTimeList.apply {
-//            adapter = downtownBusTimeAdapter
-//            layoutManager =
-//                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-//        }
 
         gihuengStationDepartureTime =
             requireContext().resources.getStringArray(R.array.gihueng_station_departure_time)
@@ -173,7 +209,6 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                 binding.recyclerViewFragmentHomeAccessRoadStopoverList.visibility = View.GONE
             }
         }
-//        mTimer.schedule(customTimer, 0, 1000)
     }
 
     // 주기적으로 시간 체크
@@ -220,6 +255,7 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                 // 시간 뷰 최신화
                 withContext(Dispatchers.Main) {
 
+                    //binding.viewpager2MainMainBanner.setCurrentItem(binding.viewpager2MainMainBanner.currentItem, true)
                     if (gihuengIndex == -1) { // 금일 더 이상 남은 시간대 버스가 없을 때
                         binding.textViewFragmentHomeGiHeungStationDepartureTime.text = ""
                         binding.textViewFragmentHomeGiHeungStationExpectationTime.text = ""
@@ -230,9 +266,14 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                         val gihuengLeftTime =
                             simpleDateFormat.parse(gihuengStationDepartureTime[gihuengIndex])!!.time - currentTime!!.time
                         val calculatedLeftTime =
-                            String.format("%02d:%02d:%02d", gihuengLeftTime / (60 * 60 * 1000),
-                                (gihuengLeftTime % (60 * 60 * 1000)) / (60 * 1000), ((gihuengLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000)
-                        binding.textViewFragmentHomeGiHeungStationDepartureTime.text = calculatedLeftTime
+                            String.format(
+                                "%02d:%02d:%02d",
+                                gihuengLeftTime / (60 * 60 * 1000),
+                                (gihuengLeftTime % (60 * 60 * 1000)) / (60 * 1000),
+                                ((gihuengLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000
+                            )
+                        binding.textViewFragmentHomeGiHeungStationDepartureTime.text =
+                            calculatedLeftTime
                         binding.textViewFragmentHomeGiHeungStationExpectationTime.text =
                             gihuengStationExpectationTime[gihuengIndex]
                         binding.textViewFragmentHomeGiHeungStationSchoolArrivalTime.text =
@@ -247,8 +288,12 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                     } else { // 용인 시내 방향 남은 시간 설정
                         val downTownLeftTime =
                             simpleDateFormat.parse(downtownDepartureTime[downtownIndex])!!.time - currentTime.time
-                        val calculatedLeftTime = String.format("%02d:%02d:%02d", downTownLeftTime / (60 * 60 * 1000),
-                                (downTownLeftTime % (60 * 60 * 1000)) / (60 * 1000), ((downTownLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000)
+                        val calculatedLeftTime = String.format(
+                            "%02d:%02d:%02d",
+                            downTownLeftTime / (60 * 60 * 1000),
+                            (downTownLeftTime % (60 * 60 * 1000)) / (60 * 1000),
+                            ((downTownLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000
+                        )
                         binding.textViewFragmentDowntownDepartureTime.text = calculatedLeftTime
                         binding.textViewFragmentDowntownDepartureExpectationTime.text =
                             downtownExpectationTime[downtownIndex]
@@ -264,14 +309,17 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                     } else { // 진입로 방향 남은 시간 설정
                         val accessRoadLeftTime =
                             simpleDateFormat.parse(accessRoadDepartureTime[accessRoadIndex])!!.time - currentTime.time
-                        val calculatedLeftTime = String.format("%02d:%02d:%02d", accessRoadLeftTime / (60 * 60 * 1000),
-                                (accessRoadLeftTime % (60 * 60 * 1000)) / (60 * 1000), ((accessRoadLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000)
-                        binding.textViewFragmentHomeRoadAccessDepartureTime.text = calculatedLeftTime
+                        val calculatedLeftTime = String.format(
+                            "%02d:%02d:%02d",
+                            accessRoadLeftTime / (60 * 60 * 1000),
+                            (accessRoadLeftTime % (60 * 60 * 1000)) / (60 * 1000),
+                            ((accessRoadLeftTime % (60 * 60 * 1000)) % (60 * 1000)) / 1000
+                        )
+                        binding.textViewFragmentHomeRoadAccessDepartureTime.text =
+                            calculatedLeftTime
                         binding.textViewFragmentHomeRoadAccessExpectationTime.text =
                             accessRoadExpectationTime[accessRoadIndex]
                     }
-
-
                 }
 
             }
@@ -491,59 +539,96 @@ class StopoverViewHolder(private val item: ItemStopoverBinding) :
     }
 }
 
+// ViewPager main banner data class
+data class MainBannerItem(
+    val mbtiImg: Int,
+    val mbtiTypeTitle: String,
+    val mbtiTypeSubtitle: String,
+    val backgroundColor: Int
+)
 
-// 셔트버스 출발, 진입로 경유 예정시간 어댑터
-class BusTimeAdapter(
-    private val departureTimeList: Array<String>,
-    private val roadAccessExpectationTimeList: Array<String>,
-    private val isFastestTime: Array<Boolean>
+// ViewPager main banner adapter
+class MainBannerAdapter(
+    private val mainBannerItemList: ArrayList<MainBannerItem>,
+    private val mContext: Context
 ) :
-    RecyclerView.Adapter<BusTimeViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BusTimeViewHolder {
-        return BusTimeViewHolder(
-            ItemBusTimeBinding.inflate(
+    RecyclerView.Adapter<MainBannerViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainBannerViewHolder {
+        return MainBannerViewHolder(
+            ItemMainBannerBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ), mContext
         )
     }
 
-    override fun onBindViewHolder(holder: BusTimeViewHolder, position: Int) {
-        holder.bind(
-            departureTimeList[position],
-            roadAccessExpectationTimeList[position],
-            isFastestTime[position]
-        )
+    override fun onBindViewHolder(holderMain: MainBannerViewHolder, position: Int) {
+        holderMain.bind(this.mainBannerItemList[position])
     }
 
-    override fun getItemCount(): Int = departureTimeList.size
+    override fun getItemCount() = this.mainBannerItemList.size
 
-    fun focusItem(position: Int) { // 현재 시간을 기준으로 가장 빠른 시간대 버스 아이템 포커싱
-        isFastestTime[position] = true
-    }
-
-    fun invalidateIsFastestStatus() {
-        for (i in isFastestTime.indices) {
-            isFastestTime[i] = false
-        }
-    }
-
+    fun getRealPosition(position: Int) = (position / this.mainBannerItemList.size)
 }
 
-// 리사이클러뷰 뷰홀더
-class BusTimeViewHolder(private val item: ItemBusTimeBinding) :
+// ViewPager main banner ViewHolder
+class MainBannerViewHolder(private val item: ItemMainBannerBinding, private val mContext: Context) :
     RecyclerView.ViewHolder(item.root) {
-    fun bind(departureTime: String, roadAccessExpectationTime: String, isFastest: Boolean) {
-        item.textViewItemBusTimeDepartureTimeNum.text = departureTime
-        item.textViewItemBusTimeRoadAccessTimeNum.text = roadAccessExpectationTime
-        if (isFastest) {
-            item.textViewItemBusTimeDepartureTimeNum.setTextColor(Color.RED)
-            item.textViewItemBusTimeRoadAccessTimeNum.setTextColor(Color.RED)
+
+    fun bind(mainBannerItem: MainBannerItem) {
+//        this.item.root.setBackgroundColor(bannerItem.backgroundColor)
+        this.item.root.background =
+            ContextCompat.getDrawable(mContext, mainBannerItem.backgroundColor)
+        this.item.imageViewItemMainBannerImg.setImageResource(mainBannerItem.mbtiImg) // 이미지
+        this.item.textViewItemMainBannerTitle.text = mainBannerItem.mbtiTypeTitle // 타이틀
+        this.item.textViewItemMainBannerSubTitle.text = mainBannerItem.mbtiTypeSubtitle // 서브타이틀
+    }
+}
+
+// VierPager 슬라이드 애니메이션
+class DepthPageTransformer : ViewPager2.PageTransformer {
+    private val MIN_SCALE = 0.75f
+
+    override fun transformPage(view: View, position: Float) {
+        view.apply {
+            val pageWidth = width
+            when {
+                position < -1 -> { // [-Infinity,-1)
+                    // This page is way off-screen to the left.
+                    alpha = 0f
+                }
+                position <= 0 -> { // [-1,0]
+                    // Use the default slide transition when moving to the left page
+                    alpha = 1f
+                    translationX = 0f
+                    translationZ = 0f
+                    scaleX = 1f
+                    scaleY = 1f
+                }
+                position <= 1 -> { // (0,1]
+                    // Fade the page out.
+                    alpha = 1 - position
+
+                    // Counteract the default slide transition
+                    translationX = pageWidth * -position
+                    // Move it behind the left page
+                    translationZ = -1f
+
+                    // Scale the page down (between MIN_SCALE and 1)
+                    val scaleFactor = (MIN_SCALE + (1 - MIN_SCALE) * (1 - abs(position)))
+                    scaleX = scaleFactor
+                    scaleY = scaleFactor
+                }
+                else -> { // (1,+Infinity]
+                    // This page is way off-screen to the right.
+                    alpha = 0f
+                }
+            }
         }
     }
 }
+
 
 
 
