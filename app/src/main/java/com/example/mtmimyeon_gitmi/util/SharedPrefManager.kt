@@ -15,8 +15,12 @@ object SharedPrefManager {
     private const val KEY_USER_LMS_SUBJECT_INFO_LIST =
         "USER_LMS_SUBJECT_INFO_LIST" // 과목코드, 과목, 교수, 시간
 
+    // 앱 사용 권한 (위치, 전화, 카메라 ... etc)
     private const val SHARED_PERMISSIONS = "PERMISSIONS"
     private const val KEY_PERMISSION_ACCESS_FINE_LOCATION = "PERMISSION_ACCESS_FINE_LOCATION"
+
+    private const val SHARED_MBTI_TYPE = "MBTI_TYPE"
+    private const val KEY_MY_MBTI_TYPE = "MY_MBTI_TYPE"
 
     fun setUserLmsId(userId: String) {
         val shared = App.instance.getSharedPreferences(
@@ -132,6 +136,31 @@ object SharedPrefManager {
         // 쉐어드 모든 데이터 삭제
         val accountShared = App.instance.getSharedPreferences(
             SHARED_PERMISSIONS,
+            Context.MODE_PRIVATE
+        ).edit().clear().apply()
+    }
+
+    fun setMyMbtiType(mbtiType: String) {
+        val shared = App.instance.getSharedPreferences(
+            SHARED_MBTI_TYPE,
+            Context.MODE_PRIVATE
+        ) // 쉐어드 가져오기
+
+        val editor = shared.edit() // 쉐어드 에디터 가져오기
+        editor.putString(KEY_MY_MBTI_TYPE, mbtiType) // 쉐어드에 저장
+        editor.apply() // 변경 사항 저장
+    }
+
+    fun getMyMbtiType(): String {
+        val shared =
+            App.instance.getSharedPreferences(SHARED_MBTI_TYPE, Context.MODE_PRIVATE)
+        return shared.getString(KEY_MY_MBTI_TYPE, "")!!
+    }
+
+    fun clearAllMyMbtiData() {
+        // 쉐어드 모든 데이터 삭제
+        val accountShared = App.instance.getSharedPreferences(
+            SHARED_MBTI_TYPE,
             Context.MODE_PRIVATE
         ).edit().clear().apply()
     }

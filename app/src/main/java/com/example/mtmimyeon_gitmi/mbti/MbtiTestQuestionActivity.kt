@@ -1,10 +1,12 @@
 package com.example.mtmimyeon_gitmi.mbti
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityMbtiTestQuestionBinding
+import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog
 import dev.shreyaspatil.MaterialDialog.model.TextAlignment
 
@@ -49,11 +51,6 @@ class MbtiTestQuestionActivity : AppCompatActivity() {
             updateMbtiResult(B_TYPE, bTypeMbtiQuestionCount)
         }
 
-    }
-
-    override fun finish() {
-        super.finish()
-        overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
     }
 
     private fun updateMbtiResult(whatType: Int, questionCount: Int) {
@@ -127,8 +124,13 @@ class MbtiTestQuestionActivity : AppCompatActivity() {
                     oppositeSideSpelling = "J"
                 }
                 decideMbtiSpellingType(questionCount, mySideSpelling, oppositeSideSpelling)
-
+                SharedPrefManager.setMyMbtiType(myMbtiResult) // 내 mbti 결과 SharedPreferences에 저장
                 Log.d("로그", "myMbtiResulit = $myMbtiResult")
+                Intent(this, MbtiResultActivity::class.java).also {
+                    startActivity(it)
+                }
+                overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
+                finish()
                 return
             }
 
@@ -179,5 +181,10 @@ class MbtiTestQuestionActivity : AppCompatActivity() {
             // Show Dialog
             mDialog.show();
         }
+    }
+
+     override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
     }
 }
