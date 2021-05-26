@@ -46,7 +46,8 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
         val chattingDataList = ArrayList<ChatMessage>()
         this.chattingRoomDetailsRecyclerAdapter =
             ChattingRoomDetailsRecyclerAdapter(chattingDataList)
-        val ChatRomChildEventListener = database.child("")
+
+        //리스터 firebase 위치랑 연동하기
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 Log.d("onChildAddaed@@@@@@@@@@@", snapshot.key.toString())
@@ -63,14 +64,7 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                Log.d("onChildChanged@@@@@@@@@@", snapshot.getKey().toString())
-                val addChatMessage = snapshot.getValue(ChatMessage::class.java)
-                if (addChatMessage != null) {
-                    chattingDataList.add(addChatMessage)
-                    binding.recyclerViewActivityChattingRoomDetailsMessageList.apply {
-                        adapter = chattingRoomDetailsRecyclerAdapter
-                    }
-                }
+
                 TODO("Not yet implemented")
             }
 
@@ -87,7 +81,7 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
             }
 
         }
-        database.child("CXG1SrIoS4Mn96vTLqsWPnnUUwO2-1234").child("chatting")
+        database.child(roomId).child("chatting")
             .addChildEventListener(childEventListener)
 
         // insert test data
@@ -131,7 +125,7 @@ class ChattingRoomDetailsRecyclerAdapter(private val chattingList: ArrayList<Cha
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var auth = FirebaseAuth.getInstance()
     private val uid = auth.currentUser.uid// 임시 유저, 유저 구별 id (나중에 firebase에서 받아올 것)
-    private val receiceUser = "1234"
+//    private val receiceUser = "1234"
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == ViewType.MY_CHATTING.viewNum) // 내가 보낸 채팅일 때
             ChattingViewHolder(

@@ -40,7 +40,7 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
             exitTransition = Slide(Gravity.START)
         }
 
-        var intentExtra = getIntent()
+        var intentExtra = intent
         subjectName = intentExtra.getStringExtra("과목이름") // 과목 이름
         subjectCode = intentExtra.getStringExtra("과목코드")// 과목 코드
 

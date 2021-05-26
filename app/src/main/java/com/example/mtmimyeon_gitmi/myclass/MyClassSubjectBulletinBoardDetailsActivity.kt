@@ -69,7 +69,7 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
                     comment,
                     currentUser
                 )
-                ////코멘트 갱신화작업
+                // 코멘트 갱신화작업
                 subjectBulletinBoardCommentRecyclerAdapter.notifyItemRangeRemoved(
                     0,
                     itemSubjectBulletinBoardCommentList.size - 1
@@ -81,17 +81,18 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
             }
         }
 
-        // 게시글 작성자에게 메시지 보내기, 추후 userIdx 같은 값 추자적으로 보낼 것
+        // 게시글 작성자에게 메시지 보내기
         binding.imageViewMyClassSubjectBulletinBoardDetailsMessage.setOnClickListener {
             Log.d("클릭리스너 실행", "메시지창 불러오는중")
-            var chatId = database.makeChatRoom(auth.currentUser.uid, "1234")
+            var chatId = database.makeChatRoom(auth.currentUser.uid, pathData.writerUid.toString())
             Toast.makeText(
                 this,
                 "채팅방 개설 성공",
                 Toast.LENGTH_SHORT
             ).show()
-            var chatIntent = intent
-            chatIntent = Intent(
+
+
+            var chatIntent = Intent(
                 this,
                 ChattingRoomDetailsActivity::class.java
             )
@@ -149,10 +150,11 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
             Toast.LENGTH_SHORT
         ).show()
 
-        Intent(
+        var chatIntent = Intent(
             this,
             ChattingRoomDetailsActivity::class.java
-        ).also {
+        )
+        chatIntent.putExtra("chatId",chatId).also {
             startActivity(
                 it,
                 ActivityOptions.makeSceneTransitionAnimation(this@MyClassSubjectBulletinBoardDetailsActivity)

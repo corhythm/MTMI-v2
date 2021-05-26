@@ -85,6 +85,10 @@ class DatabaseManager {
                 }
         }
     }
+    // if 채팅방 존재여부 체크
+    //    채팅방 중복생성 방지
+    //els 채팅방 존재할경우 채팅방 데이터 가져오기
+
 
 
     fun makeChatRoom(sendUser: String, receiveUser: String): String { //채팅방 ID 생성 및 단일화
@@ -95,11 +99,31 @@ class DatabaseManager {
         {
             chatId = "$receiveUser-$sendUser"
         }
+
         database = Firebase.database.getReference("chat")
         var newChat = Chat(chatId, sendUser, receiveUser)
         database.child(chatId).setValue(newChat)
         return chatId
     }
+    // 채팅 중복 찾기 일단 보류
+//    private fun checkChat(chatRoomId: String): Boolean{
+//        database = Firebase.database.getReference("chat")
+//        database.addListenerForSingleValueEvent(object :  ValueEventListener{
+//            override fun onDataChange(snapshot: DataSnapshot) {
+////                var chatIdList: ArrayList<String> = ArrayList<String>()
+//                snapshot.children.forEach(){
+//                    var chatId:String = it.value as String
+//                    if(chatId == chatRoomId){
+//                    }
+//                }
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                TODO("Not yet implemented")
+//            }
+//
+//        })
+//    }
 
 
     fun sendMessage(
@@ -155,7 +179,7 @@ class DatabaseManager {
         })
     }
 
-    fun callUserData(userUid: String, callback: Callback<UserData>) {
+    private fun callUserData(userUid: String, callback: Callback<UserData>) {
         Firebase.database.getReference("user").child(userUid)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -175,7 +199,7 @@ class DatabaseManager {
     }
 
     fun loadPostList(idx: String, callback: Callback<ArrayList<BoardPost>>) { // 과목별시판 불러오기
-        Firebase.database.getReference("/board/" + idx)
+        Firebase.database.getReference("/board/$idx")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     var postList = ArrayList<BoardPost>()
@@ -248,9 +272,9 @@ class DatabaseManager {
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-
         })
     }
+
     fun callChatList(uid: String,callback: Callback<ArrayList<String>>){
         Firebase.database.getReference("/chat",)
     }

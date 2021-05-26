@@ -54,8 +54,18 @@ class SignUpActivity : AppCompatActivity() {
                 } else {
                     signUp_userMajor = ""
                 }
-                var signUp_userGender: String =
-                    binding.radioButtonSignUpGenderGroup.checkedRadioButtonId.toString()
+
+                var signUp_userGender ="남성" // 젠더 초기값
+                binding.radioButtonSignUpGenderGroup.setOnCheckedChangeListener{ radioGroup,checkedId->
+                    when(checkedId){
+                        R.id.radioButton_signUp_man->{
+                            signUp_userGender="남성"
+                        }
+                        R.id.radioButton_signUp_woman->{
+                            signUp_userGender="여성"
+                        }
+                    }
+                }
 
                 // interface로 callback처리함 일단 임시방편용 이후에 문제가 생길경우 다른코드 대안 찾을것.
                 DB_M.createEmail(signUp_userId,
