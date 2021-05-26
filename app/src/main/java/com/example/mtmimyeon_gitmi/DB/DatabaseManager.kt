@@ -85,45 +85,34 @@ class DatabaseManager {
                 }
         }
     }
-    // if 채팅방 존재여부 체크
-    //    채팅방 중복생성 방지
-    //els 채팅방 존재할경우 채팅방 데이터 가져오기
 
-
-
-    fun makeChatRoom(sendUser: String, receiveUser: String): String { //채팅방 ID 생성 및 단일화
-        var chatId: String
-        if(sendUser > receiveUser){
-            chatId = "$sendUser-$receiveUser"
-        }else
-        {
-            chatId = "$receiveUser-$sendUser"
-        }
-
+    fun makeChatRoom(sendUser:String,receiveUser:String,chatRoomId: String) { //채팅방 ID 생성 및 단일화
         database = Firebase.database.getReference("chat")
-        var newChat = Chat(chatId, sendUser, receiveUser)
-        database.child(chatId).setValue(newChat)
-        return chatId
+        var newChat = Chat(chatRoomId, sendUser, receiveUser)
+        database.child(chatRoomId).setValue(newChat)
     }
-    // 채팅 중복 찾기 일단 보류
-//    private fun checkChat(chatRoomId: String): Boolean{
-//        database = Firebase.database.getReference("chat")
-//        database.addListenerForSingleValueEvent(object :  ValueEventListener{
-//            override fun onDataChange(snapshot: DataSnapshot) {
-////                var chatIdList: ArrayList<String> = ArrayList<String>()
-//                snapshot.children.forEach(){
-//                    var chatId:String = it.value as String
-//                    if(chatId == chatRoomId){
-//                    }
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                TODO("Not yet implemented")
-//            }
-//
-//        })
-//    }
+
+//     채팅 중복 찾기
+    fun checkChat(chatRoomId: String,callback: Callback<Boolean>){
+        database = Firebase.database.getReference("chat")
+        var check = true
+        database.addListenerForSingleValueEvent(object :  ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach(){
+                    var chatId:String = it.key as String
+                    Log.d("가져온 키",chatId)
+                    if(chatId == chatRoomId){
+                        check = false
+                    }
+                }
+                callback.onCallback(check)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("채팅방에러","채팅방 오류")
+            }
+        })
+    }
 
 
     fun sendMessage(

@@ -24,6 +24,7 @@ import com.example.mtmimyeon_gitmi.db.BoardPost
 import com.example.mtmimyeon_gitmi.db.Callback
 import com.example.mtmimyeon_gitmi.db.DatabaseManager
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import okhttp3.internal.notifyAll
 
@@ -32,7 +33,7 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
     private val itemSubjectBulletinBoardCommentList = ArrayList<BoardComment>()
     private lateinit var subjectBulletinBoardCommentRecyclerAdapter: SubjectBulletinBoardCommentRecyclerAdapter
     private var isLiked = false
-
+    lateinit var pathData: BoardPost
     var database: DatabaseManager = DatabaseManager()
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
@@ -45,7 +46,7 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
 
     private fun init() {
 
-        val pathData: BoardPost = intent.getSerializableExtra("post") as BoardPost
+        pathData = intent.getSerializableExtra("post") as BoardPost
         Log.d("가져오 게시물 제목", pathData.title)
         postDetailDataLoad(pathData)
         postDetailCommentLoad(pathData)
@@ -84,7 +85,7 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
         // 게시글 작성자에게 메시지 보내기
         binding.imageViewMyClassSubjectBulletinBoardDetailsMessage.setOnClickListener {
             Log.d("클릭리스너 실행", "메시지창 불러오는중")
-            var chatId = database.makeChatRoom(auth.currentUser.uid, pathData.writerUid.toString())
+            var chatId = makeChat(auth.currentUser.uid, pathData.writerUid.toString())
             Toast.makeText(
                 this,
                 "채팅방 개설 성공",
@@ -106,6 +107,21 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
         }
     }
 
+    private fun makeChat(sendUser: String,receiveUser: String): String{
+        var chatId: String = if(sendUser > receiveUser){
+            "$sendUser-$receiveUser"
+        }else {
+            "$receiveUser-$sendUser"
+        }
+        database.checkChat(chatId, object : Callback<Boolean> {
+            override fun onCallback(data: Boolean) {
+                if(data){
+                    database.makeChatRoom(sendUser,receiveUser,chatId)
+                }
+            }
+        })
+        return chatId
+    }
     private fun postDetailDataLoad(
         BoardPost: BoardPost
     ) {
@@ -143,12 +159,14 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
     override fun sendMessageClicked() {
         // 댓글 단 사람들 중에 채팅 보낼 때
         Log.d("댓글단사람들 확인중", "메세지보내기")
-        var chatId = database.makeChatRoom(auth.currentUser.uid, "1234")
+        Log.d("클릭리스너 실행", "메시지창 불러오는중")
+        var chatId = makeChat(auth.currentUser.uid, pathData.writerUid.toString())
         Toast.makeText(
             this,
             "채팅방 개설 성공",
             Toast.LENGTH_SHORT
         ).show()
+
 
         var chatIntent = Intent(
             this,

@@ -62,7 +62,6 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
                     }
                 }
             }
-
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
 
                 TODO("Not yet implemented")

@@ -22,6 +22,6 @@ data class UserData(
         this.birth = birth
         this.gender = gender
         this.major = major
-        this. userProfileImageUrl = ""
+        this.userProfileImageUrl = ""
     }
 }
