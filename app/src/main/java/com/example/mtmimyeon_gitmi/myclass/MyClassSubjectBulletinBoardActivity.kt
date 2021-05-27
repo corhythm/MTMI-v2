@@ -1,5 +1,6 @@
 package com.example.mtmimyeon_gitmi.myClass
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,7 +23,9 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
     private lateinit var binding: ActivityMyClassSubjectBulletinBoardBinding
     lateinit var subjectCode: String
     lateinit var subjectName: String
-
+    lateinit var subjectBulletinBoardRecyclerAdapter: SubjectBulletinBoardRecyclerAdapter
+    lateinit var subjectBulletinBoardList: ArrayList<BoardPost>
+    var database = DatabaseManager()
     override fun onCreate(savedInstanceState: Bundle?) {
 
         // activity 옆으로 이동 애니메이션
@@ -47,32 +50,7 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
     }
 
     private fun init() {
-        var DB = DatabaseManager()
-
-        DB.loadPostList(subjectCode, object : Callback<ArrayList<BoardPost>> {
-            override fun onCallback(data: ArrayList<BoardPost>) {
-                if (data != null) {
-                    val subjectBulletinBoardList = data
-                    val subjectBulletinBoardRecyclerAdapter =
-                        SubjectBulletinBoardRecyclerAdapter(
-                            subjectBulletinBoardList,
-                            this@MyClassSubjectBulletinBoardActivity
-                        )
-
-                    Log.d("포스트 데이터 가져옴 : ", data.count().toString())
-                    binding.recyclerviewMyClassSubjectBulletinBoardBoardList.apply {
-                        adapter = subjectBulletinBoardRecyclerAdapter
-                        layoutManager = LinearLayoutManager(
-                            this@MyClassSubjectBulletinBoardActivity,
-                            LinearLayoutManager.VERTICAL,
-                            false
-                        )
-                    }
-
-                }
-            }
-        })
-
+       postListLoad()
 //        binding.recyclerviewMyClassSubjectBulletinBoardBoardList.apply {
 //            adapter = subjectBulletinBoardRecyclerAdapter
 //            layoutManager = LinearLayoutManager(
@@ -88,13 +66,49 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
             intent.putExtra("과목코드", subjectCode)
             intent.putExtra("과목이름", subjectName)
             intent.also {
-                startActivity(it)
+                startActivityForResult(it,100)
                 overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
             }
         }
 
     }
+    private fun postListLoad(){
+        database.loadPostList(subjectCode, object : Callback<ArrayList<BoardPost>> {
+            override fun onCallback(data: ArrayList<BoardPost>) {
+                if (data != null) {
+                    subjectBulletinBoardList = data
+                    subjectBulletinBoardRecyclerAdapter =
+                        SubjectBulletinBoardRecyclerAdapter(
+                            subjectBulletinBoardList,
+                            this@MyClassSubjectBulletinBoardActivity
+                        )
+                    Log.d("포스트 데이터 가져옴 : ", data.count().toString())
+                    binding.recyclerviewMyClassSubjectBulletinBoardBoardList.apply {
+                        adapter = subjectBulletinBoardRecyclerAdapter
+                        layoutManager = LinearLayoutManager(
+                            this@MyClassSubjectBulletinBoardActivity,
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
+                    }
 
+                }
+            }
+        })
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == Activity.RESULT_OK) {
+            Log.d("데이터받기","성공")
+            subjectBulletinBoardRecyclerAdapter.notifyItemRangeRemoved(
+                0,
+                subjectBulletinBoardList.size - 1
+            )
+            subjectBulletinBoardRecyclerAdapter.notifyDataSetChanged()
+            subjectBulletinBoardList.clear()
+            postListLoad()
+        }
+    }
     override fun itemClicked(idx: Int,BoardPost: BoardPost) {
         Log.d("클릭한 item :$idx"," 클릭한 포스트"+BoardPost.title)
         // 특정 게시글 클릭 시, 해당 게시글 상세 내용 불러오기

@@ -1,5 +1,6 @@
 package com.example.mtmimyeon_gitmi.myClass
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -26,6 +27,9 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
         init()
         binding.fabMyClassSubjectBulletinBoardPost.setOnClickListener{
             uploadPost()
+            val intent = Intent()
+            intent.putExtra("upload",true)
+            setResult(Activity.RESULT_OK,intent)
             finish()
         }
     }
