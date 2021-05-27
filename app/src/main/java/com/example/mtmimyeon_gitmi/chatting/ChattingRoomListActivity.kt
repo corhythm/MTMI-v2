@@ -19,7 +19,7 @@ import kotlin.collections.ArrayList
 class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface {
     private lateinit var binding: ActivityChattingRoomListBinding
     private lateinit var chattingRoomListRecyclerAdapter: ChattingRoomListRecyclerAdapter
-    private  var myChattingRoomList = ArrayList<ChatListForm>()
+    private var myChattingRoomList = ArrayList<ChatListForm>()
     var database: DatabaseManager = DatabaseManager()
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
@@ -33,23 +33,23 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
     private fun init() {
         database.loadChatList(auth.currentUser.uid, object : Callback<ArrayList<Chat>> {
             override fun onCallback(data: ArrayList<Chat>) {
-               for(i in 0 until data.count()){
-                   database.loadLastChat(data[i].chatRoomId, object : Callback<ChatListForm> {
-                       override fun onCallback(data: ChatListForm) {
+                for (i in 0 until data.count()) {
+                    database.loadLastChat(data[i].chatRoomId, object : Callback<ChatListForm> {
+                        override fun onCallback(data: ChatListForm) {
                             myChattingRoomList.add(data)
-                           Log.d("data",data.timeStamp)
-                           binding.recyclerviewActivityChattingRoomListChatList.apply {
-                               adapter = chattingRoomListRecyclerAdapter
-                               layoutManager =
-                                   LinearLayoutManager(
-                                       this@ChattingRoomListActivity,
-                                       LinearLayoutManager.VERTICAL,
-                                       false
-                                   )
-                           }
-                       }
-                   })
-               }
+                            Log.d("data", data.timeStamp)
+                            binding.recyclerviewActivityChattingRoomListChatList.apply {
+                                adapter = chattingRoomListRecyclerAdapter
+                                layoutManager =
+                                    LinearLayoutManager(
+                                        this@ChattingRoomListActivity,
+                                        LinearLayoutManager.VERTICAL,
+                                        false
+                                    )
+                            }
+                        }
+                    })
+                }
 //                binding.recyclerviewActivityChattingRoomListChatList.apply {
 //                    adapter = chattingRoomListRecyclerAdapter
 //                    layoutManager =
@@ -73,8 +73,8 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
 
     // 특정 채팅방을 클릭했을 때
     override fun chattingRoomClicked(chattingRoomIdx: String) { // 채팅 방 번호 <- 이걸로 채팅방 검색(필요 시 탐색 데이터 추가할 것)
-        Log.d("클릭","클릭@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-        Log.d("chattingRoomIdx 체크",chattingRoomIdx)
+        Log.d("클릭", "클릭@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+        Log.d("chattingRoomIdx 체크", chattingRoomIdx)
         var chatIntent = Intent(
             this,
             ChattingRoomDetailsActivity::class.java
@@ -136,7 +136,7 @@ class ChattingRoomViewHolder(
         item.textViewItemChattingRoomTimeStamp.text = itemChattingRoom.timeStamp
 
         item.root.setOnClickListener {
-            Log.d("채팅방 아이디 확인",itemChattingRoom.chatRoomId)
+            Log.d("채팅방 아이디 확인", itemChattingRoom.chatRoomId)
             this.ChattingRoomClickInterface.chattingRoomClicked(itemChattingRoom.chatRoomId)
         }
     }

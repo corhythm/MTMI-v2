@@ -147,11 +147,11 @@ class MbtiTestQuestionActivity : AppCompatActivity() {
                 var oppositeSideSpelling = ""
 
                 if (whatType == A_TYPE) { // 사고
-                    mySideSpelling = "T"
-                    oppositeSideSpelling = "F"
-                } else { // 감정
                     mySideSpelling = "F"
                     oppositeSideSpelling = "T"
+                } else { // 감정
+                    mySideSpelling = "T"
+                    oppositeSideSpelling = "F"
                 }
                 decideMbtiSpellingType(questionCount, mySideSpelling, oppositeSideSpelling)
             }

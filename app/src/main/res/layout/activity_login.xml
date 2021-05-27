@@ -108,7 +108,7 @@
         android:text="Forgot password?"
         android:textColor="#2DB8F8"
         app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
-        app:layout_constraintTop_toBottomOf="@id/editText_log:w:wqin_password" />
+        app:layout_constraintTop_toBottomOf="@id/editText_login_password" />
 
     <TextView
         android:id="@+id/textView_login_signUp"
