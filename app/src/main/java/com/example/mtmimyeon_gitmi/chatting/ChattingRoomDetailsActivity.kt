@@ -101,6 +101,7 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
                     auth.currentUser.uid,
                     ""
                 )
+                binding.editTextActivityChattingRoomDetailsMessage.text.clear()
             }
         }
     }

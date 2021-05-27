@@ -94,6 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:hint="비밀번호를 입력해주세요"
+        android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
         app:layout_constraintTop_toBottomOf="@id/textView_login_password" />
 
