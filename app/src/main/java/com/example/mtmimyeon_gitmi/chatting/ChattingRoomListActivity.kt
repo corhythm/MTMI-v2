@@ -1,11 +1,8 @@
 package com.example.mtmimyeon_gitmi.chatting
 
-import android.app.ActivityOptions
 import android.content.Intent
-import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.transition.Slide
 import android.util.Log
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityChattingRoomListBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemChattingRoomBinding
+import com.example.mtmimyeon_gitmi.db.BoardComment
 import com.example.mtmimyeon_gitmi.db.Callback
 import com.example.mtmimyeon_gitmi.db.Chat
 import com.example.mtmimyeon_gitmi.db.DatabaseManager

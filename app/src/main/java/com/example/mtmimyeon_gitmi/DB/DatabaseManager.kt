@@ -253,6 +253,7 @@ class DatabaseManager {
                 var commentList = ArrayList<BoardComment>()
                 snapshot.children.forEach {
                     val comment = it.getValue(BoardComment::class.java)
+                    Log.d("코멘트",comment.toString())
                     if (comment != null) {
                         Log.d("코멘트 리스트",comment.content)
                         commentList.add(comment)
@@ -262,7 +263,7 @@ class DatabaseManager {
                 callback.onCallback(commentList)
             }
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.d("comment","not data")
             }
         })
     }

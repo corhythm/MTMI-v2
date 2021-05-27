@@ -1,17 +1,12 @@
 package com.example.mtmimyeon_gitmi.myClass
 
-import android.animation.ValueAnimator
 import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.transition.Slide
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,9 +19,6 @@ import com.example.mtmimyeon_gitmi.db.BoardPost
 import com.example.mtmimyeon_gitmi.db.Callback
 import com.example.mtmimyeon_gitmi.db.DatabaseManager
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import okhttp3.internal.notifyAll
 
 class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMessageClickInterface {
     private lateinit var binding: ActivityMyClassSubjectBulletinBoardDetailsBinding
@@ -51,11 +43,11 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
         postDetailDataLoad(pathData)
         postDetailCommentLoad(pathData)
         Log.d("댓글 가져옴", "성공")
-//        this.subjectBulletinBoardCommentRecyclerAdapter =
-//            SubjectBulletinBoardCommentRecyclerAdapter(
-//                this.itemSubjectBulletinBoardCommentList,
-//                this
-//            )
+        this.subjectBulletinBoardCommentRecyclerAdapter =
+            SubjectBulletinBoardCommentRecyclerAdapter(
+                this.itemSubjectBulletinBoardCommentList,
+                this
+            )
         Log.d("연결중", "성공")
 
 
@@ -163,11 +155,11 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
         Log.d("postDetailCommentLoad","post comment 로드 종료")
     }
 
-    override fun sendMessageClicked() {
+    override fun sendMessageClicked(commentIdx: Int) {
         // 댓글 단 사람들 중에 채팅 보낼 때
         Log.d("댓글단사람들 확인중", "메세지보내기")
         Log.d("클릭리스너 실행", "메시지창 불러오는중")
-        var chatId = makeChat(auth.currentUser.uid, pathData.writerUid.toString())
+        var chatId = makeChat(auth.currentUser.uid, itemSubjectBulletinBoardCommentList[commentIdx].commenterUid)
         Toast.makeText(
             this,
             "채팅방 개설 성공",
@@ -195,7 +187,7 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
 }
 
 interface sendMessageClickInterface { // 댓글 단 사람들과 채팅
-    fun sendMessageClicked()
+    fun sendMessageClicked(commentIdx: Int)
 }
 
 class SubjectBulletinBoardCommentRecyclerAdapter(
@@ -239,7 +231,8 @@ class SubjectBulletinBoardCommentViewHolder(
         item.textViewItemSubjectBulletinBoardCommentDate.text = boardComment.day
 
         item.imageViewItemSubjectBulletinBoardCommentMessage.setOnClickListener {
-            this.sendMessageClickInterface.sendMessageClicked()
+            this.sendMessageClickInterface.sendMessageClicked(adapterPosition)
+            Log.d("클릭한 아이템",adapterPosition.toString())
         }
     }
 }
