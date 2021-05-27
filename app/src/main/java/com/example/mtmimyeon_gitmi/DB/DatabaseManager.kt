@@ -293,8 +293,10 @@ class DatabaseManager {
         database = Firebase.database.getReference("chat/$chatRoomId/lastChat")
         database.addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                var lastChat: ChatListForm = snapshot.getValue<ChatListForm>()!!
-                callback.onCallback(lastChat)
+                var lastChat: ChatListForm? = snapshot.getValue<ChatListForm>()
+                if (lastChat != null) {
+                    callback.onCallback(lastChat)
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
