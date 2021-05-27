@@ -104,37 +104,11 @@
 \n레포트 질문은 일절 안할테니까 제발 출석 과제만이라도 도와주실분 부탁드려요 ㅠㅠㅠ\n제발 가르쳐 주실분... 깊티 드리겠습니다....
 \n레포트 질문은 일절 안할테니까 제발 출석 과제만이라도 도와주실분 부탁드려요 ㅠㅠㅠ"
                     android:textSize="13sp"
-                    app:layout_constraintBottom_toTopOf="@id/lottieButton_myClassSubjectBulletinBoardDetails_like"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textView_myClassSubjectBulletinBoardDetails_title"
                     app:layout_constraintWidth_percent="0.9" />
 
-                <com.airbnb.lottie.LottieAnimationView
-                    android:visibility="gone"
-                    android:id="@+id/lottieButton_myClassSubjectBulletinBoardDetails_like"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_centerInParent="true"
-                    android:background="@android:color/white"
-                    app:layout_constraintStart_toStartOf="@id/textView_myClassSubjectBulletinBoardDetails_content"
-                    app:layout_constraintTop_toBottomOf="@id/textView_myClassSubjectBulletinBoardDetails_content"
-                    app:lottie_autoPlay="false"
-                    app:lottie_fileName="like.json"
-                    app:lottie_loop="false" />
-
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/textView_myClassSubjectBulletinBoardDetails_likeCount"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginTop="2dp"
-                    android:gravity="start|center"
-                    android:text="12"
-                    app:layout_constraintBottom_toBottomOf="@id/lottieButton_myClassSubjectBulletinBoardDetails_like"
-                    app:layout_constraintStart_toEndOf="@id/lottieButton_myClassSubjectBulletinBoardDetails_like"
-                    app:layout_constraintTop_toBottomOf="@id/textView_myClassSubjectBulletinBoardDetails_content"
-                    app:layout_constraintVertical_bias="0.43" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

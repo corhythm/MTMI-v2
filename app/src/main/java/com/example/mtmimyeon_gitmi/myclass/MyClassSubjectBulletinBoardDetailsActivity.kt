@@ -51,11 +51,11 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
         postDetailDataLoad(pathData)
         postDetailCommentLoad(pathData)
         Log.d("댓글 가져옴", "성공")
-//        this.subjectBulletinBoardCommentRecyclerAdapter =
-//            SubjectBulletinBoardCommentRecyclerAdapter(
-//                this.itemSubjectBulletinBoardCommentList,
-//                this
-//            )
+        this.subjectBulletinBoardCommentRecyclerAdapter =
+            SubjectBulletinBoardCommentRecyclerAdapter(
+                this.itemSubjectBulletinBoardCommentList,
+                this
+            )
         Log.d("연결중", "성공")
 
 
@@ -135,7 +135,7 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
     }
 
     private fun postDetailCommentLoad(boardPost: BoardPost) {
-        Log.d("코멘트 로딩","체크")
+        Log.d("코멘트 로딩", "체크")
         database.loadPostComment(boardPost.subjectCode, boardPost.subjectBoardIndex,
             object : Callback<ArrayList<BoardComment>> {
                 override fun onCallback(data: ArrayList<BoardComment>) {
@@ -154,13 +154,13 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
                             //itemAnimator = DefaultItemAnimator()
                         }
 
-                    }else{
-                        Log.d("load comment","error")
+                    } else {
+                        Log.d("load comment", "error")
                     }
                 }
 
             })
-        Log.d("postDetailCommentLoad","post comment 로드 종료")
+        Log.d("postDetailCommentLoad", "post comment 로드 종료")
     }
 
     override fun sendMessageClicked() {
