@@ -129,9 +129,11 @@ class DatabaseManager {
         var formatted = current.format(uiFormatter)
         val chat_message =
             ChatMessage(chatRoomId, name, userId, message, imageUri, formatted) //메세지내용 전달
+        val chatListForm = ChatListForm("",name,message,formatted,chatRoomId)
         database = Firebase.database.getReference("chat") //chat reference
         formatted = current.format(dbSaveFormatter)
         database.child(chatRoomId).child("chatting").child(formatted).setValue(chat_message) //db저장
+        database.child(chatRoomId).child("lastChat").setValue(chatListForm)
     }
 
     fun writePost(
@@ -253,6 +255,7 @@ class DatabaseManager {
                 var commentList = ArrayList<BoardComment>()
                 snapshot.children.forEach {
                     val comment = it.getValue(BoardComment::class.java)
+                    Log.d("코멘트",comment.toString())
                     if (comment != null) {
                         Log.d("코멘트 리스트",comment.content)
                         commentList.add(comment)
@@ -262,7 +265,7 @@ class DatabaseManager {
                 callback.onCallback(commentList)
             }
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.d("comment","not data")
             }
         })
     }
@@ -284,6 +287,20 @@ class DatabaseManager {
             override fun onCancelled(error: DatabaseError) {
                 Log.d("채팅방에러","채팅방 오류")
             }
+        })
+    }
+    fun loadLastChat(chatRoomId: String,callback: Callback<ChatListForm>){
+        database = Firebase.database.getReference("chat/$chatRoomId/lastChat")
+        database.addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var lastChat: ChatListForm = snapshot.getValue<ChatListForm>()!!
+                callback.onCallback(lastChat)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("채팅방 리스트","error")
+            }
+
         })
     }
 }

@@ -2,10 +2,8 @@ package com.example.mtmimyeon_gitmi.chatting
 
 import android.app.ActivityOptions
 import android.content.Intent
-import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.transition.Slide
 import android.util.Log
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,9 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityChattingRoomListBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemChattingRoomBinding
-import com.example.mtmimyeon_gitmi.db.Callback
-import com.example.mtmimyeon_gitmi.db.Chat
-import com.example.mtmimyeon_gitmi.db.DatabaseManager
+import com.example.mtmimyeon_gitmi.db.*
 import com.google.firebase.auth.FirebaseAuth
 import java.util.*
 import kotlin.collections.ArrayList
@@ -23,7 +19,7 @@ import kotlin.collections.ArrayList
 class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface {
     private lateinit var binding: ActivityChattingRoomListBinding
     private lateinit var chattingRoomListRecyclerAdapter: ChattingRoomListRecyclerAdapter
-    private lateinit var myChattingRoomList: ArrayList<ItemChattingRoom>
+    private  var myChattingRoomList = ArrayList<ChatListForm>()
     var database: DatabaseManager = DatabaseManager()
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
@@ -37,36 +33,54 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
     private fun init() {
         database.loadChatList(auth.currentUser.uid, object : Callback<ArrayList<Chat>> {
             override fun onCallback(data: ArrayList<Chat>) {
-                Log.d("ArrayList data",data[0].chatRoomId)
+               for(i in 0 until data.count()){
+                   database.loadLastChat(data[i].chatRoomId, object : Callback<ChatListForm> {
+                       override fun onCallback(data: ChatListForm) {
+                            myChattingRoomList.add(data)
+                           Log.d("data",data.timeStamp)
+                           binding.recyclerviewActivityChattingRoomListChatList.apply {
+                               adapter = chattingRoomListRecyclerAdapter
+                               layoutManager =
+                                   LinearLayoutManager(
+                                       this@ChattingRoomListActivity,
+                                       LinearLayoutManager.VERTICAL,
+                                       false
+                                   )
+                           }
+                       }
+                   })
+               }
+//                binding.recyclerviewActivityChattingRoomListChatList.apply {
+//                    adapter = chattingRoomListRecyclerAdapter
+//                    layoutManager =
+//                        LinearLayoutManager(
+//                            this@ChattingRoomListActivity,
+//                            LinearLayoutManager.VERTICAL,
+//                            false
+//                        )
+//                }
+//                Log.d("체크",myChattingRoomList[0].timeStamp)
+
+
             }
         })
-        myChattingRoomList = ArrayList()
-        for (i in 1..20) {
-            myChattingRoomList.add(
-                ItemChattingRoom(
-                    imgUrl = "https://imgurl~~~",
-                    name = "라이인드로스테쭈젠댄마리소피아수인레나테엘리자벳피아루이제",
-                    lastChat = "It was popularised in the 1960s with the release of Letraset sheets",
-                    timeStamp = "2021-05-21 화"
-                )
-            )
-        }
-        this.chattingRoomListRecyclerAdapter =
+//        Log.d("체크",myChattingRoomList[0].timeStamp)
+        chattingRoomListRecyclerAdapter =
             ChattingRoomListRecyclerAdapter(myChattingRoomList, this)
-        binding.recyclerviewActivityChattingRoomListChatList.apply {
-            adapter = chattingRoomListRecyclerAdapter
-            layoutManager =
-                LinearLayoutManager(
-                    this@ChattingRoomListActivity,
-                    LinearLayoutManager.VERTICAL,
-                    false
-                )
-        }
+
+
     }
 
     // 특정 채팅방을 클릭했을 때
     override fun chattingRoomClicked(chattingRoomIdx: String) { // 채팅 방 번호 <- 이걸로 채팅방 검색(필요 시 탐색 데이터 추가할 것)
-        Intent(this, ChattingRoomDetailsActivity::class.java).also {
+        Log.d("클릭","클릭@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+        Log.d("chattingRoomIdx 체크",chattingRoomIdx)
+        var chatIntent = Intent(
+            this,
+            ChattingRoomDetailsActivity::class.java
+        )
+
+        chatIntent.putExtra("chatId", chattingRoomIdx).also {
             startActivity(it)
             overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
         }
@@ -78,16 +92,16 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
     }
 }
 
-data class ItemChattingRoom(
-    var chattingRoomIdx: String = "",
-    val imgUrl: String,
-    val name: String,
-    val lastChat: String,
-    val timeStamp: String
-)
+//data class ItemChattingRoom(
+//    var chattingRoomIdx: String = "",
+//    val imgUrl: String,
+//    val name: String,
+//    val lastChat: String,
+//    val timeStamp: String
+//)
 
 class ChattingRoomListRecyclerAdapter(
-    private val itemChattingRoomList: ArrayList<ItemChattingRoom>,
+    private val itemChattingRoomList: ArrayList<ChatListForm>,
     private val chattingRoomClickInterface: ChattingRoomClickInterface
 ) : RecyclerView.Adapter<ChattingRoomViewHolder>() {
 
@@ -115,14 +129,15 @@ class ChattingRoomViewHolder(
 ) :
     RecyclerView.ViewHolder(item.root) {
 
-    fun bind(itemChattingRoom: ItemChattingRoom) {
+    fun bind(itemChattingRoom: ChatListForm) {
         // glide 같은 라이브러리 사용해서 이미지 로딩
         item.textViewItemChattingRoomUserName.text = itemChattingRoom.name
         item.textViewItemChattingRoomLastMessage.text = itemChattingRoom.lastChat
         item.textViewItemChattingRoomTimeStamp.text = itemChattingRoom.timeStamp
 
         item.root.setOnClickListener {
-            this.ChattingRoomClickInterface.chattingRoomClicked(itemChattingRoom.chattingRoomIdx)
+            Log.d("채팅방 아이디 확인",itemChattingRoom.chatRoomId)
+            this.ChattingRoomClickInterface.chattingRoomClicked(itemChattingRoom.chatRoomId)
         }
     }
 }

@@ -46,7 +46,6 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
         val chattingDataList = ArrayList<ChatMessage>()
         this.chattingRoomDetailsRecyclerAdapter =
             ChattingRoomDetailsRecyclerAdapter(chattingDataList)
-
         //리스터 firebase 위치랑 연동하기
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
