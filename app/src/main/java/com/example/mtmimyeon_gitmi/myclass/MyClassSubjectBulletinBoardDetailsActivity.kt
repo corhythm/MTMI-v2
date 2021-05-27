@@ -50,17 +50,18 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
         Log.d("가져오 게시물 제목", pathData.title)
         postDetailDataLoad(pathData)
         postDetailCommentLoad(pathData)
-        this.subjectBulletinBoardCommentRecyclerAdapter =
-            SubjectBulletinBoardCommentRecyclerAdapter(
-                this.itemSubjectBulletinBoardCommentList,
-                this
-            )
-
+        Log.d("댓글 가져옴", "성공")
+//        this.subjectBulletinBoardCommentRecyclerAdapter =
+//            SubjectBulletinBoardCommentRecyclerAdapter(
+//                this.itemSubjectBulletinBoardCommentList,
+//                this
+//            )
+        Log.d("연결중", "성공")
 
 
         // 코멘트 작성
         binding.buttonMyClassSubjectBulletinBoardWritingPostComment.setOnClickListener {
-            if(!binding.editTextMyClassSubjectBulletinBoardWritingCommentContent.text.isEmpty()) {
+            if (binding.editTextMyClassSubjectBulletinBoardWritingCommentContent.text.isNotEmpty()) {
                 var currentUser = auth.currentUser.uid
                 var comment =
                     binding.editTextMyClassSubjectBulletinBoardWritingCommentContent.text.toString()
@@ -97,7 +98,7 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
                 this,
                 ChattingRoomDetailsActivity::class.java
             )
-            chatIntent.putExtra("chatId",chatId).also {
+            chatIntent.putExtra("chatId", chatId).also {
                 startActivity(
                     it,
                     ActivityOptions.makeSceneTransitionAnimation(this@MyClassSubjectBulletinBoardDetailsActivity)
@@ -107,21 +108,22 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
         }
     }
 
-    private fun makeChat(sendUser: String,receiveUser: String): String{
-        var chatId: String = if(sendUser > receiveUser){
+    private fun makeChat(sendUser: String, receiveUser: String): String {
+        var chatId: String = if (sendUser > receiveUser) {
             "$sendUser-$receiveUser"
-        }else {
+        } else {
             "$receiveUser-$sendUser"
         }
         database.checkChat(chatId, object : Callback<Boolean> {
             override fun onCallback(data: Boolean) {
-                if(data){
-                    database.makeChatRoom(sendUser,receiveUser,chatId)
+                if (data) {
+                    database.makeChatRoom(sendUser, receiveUser, chatId)
                 }
             }
         })
         return chatId
     }
+
     private fun postDetailDataLoad(
         BoardPost: BoardPost
     ) {
@@ -131,12 +133,14 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
         binding.textViewMyClassSubjectBulletinBoardDetailsContent.text = BoardPost.content
 
     }
-    private fun postDetailCommentLoad(boardPost: BoardPost){
+
+    private fun postDetailCommentLoad(boardPost: BoardPost) {
+        Log.d("코멘트 로딩","체크")
         database.loadPostComment(boardPost.subjectCode, boardPost.subjectBoardIndex,
             object : Callback<ArrayList<BoardComment>> {
                 override fun onCallback(data: ArrayList<BoardComment>) {
                     if (data != null) {
-                        Log.d("callback","코멘트추가완료")
+                        Log.d("callback", "코멘트추가완료")
                         for (i in 0 until data.count())
                             itemSubjectBulletinBoardCommentList.add(data[i])
                         binding.recyclerviewMyClassSubjectBulletinBoardCommentList.apply {
@@ -150,10 +154,13 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
                             //itemAnimator = DefaultItemAnimator()
                         }
 
+                    }else{
+                        Log.d("load comment","error")
                     }
                 }
 
             })
+        Log.d("postDetailCommentLoad","post comment 로드 종료")
     }
 
     override fun sendMessageClicked() {
@@ -172,7 +179,7 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
             this,
             ChattingRoomDetailsActivity::class.java
         )
-        chatIntent.putExtra("chatId",chatId).also {
+        chatIntent.putExtra("chatId", chatId).also {
             startActivity(
                 it,
                 ActivityOptions.makeSceneTransitionAnimation(this@MyClassSubjectBulletinBoardDetailsActivity)

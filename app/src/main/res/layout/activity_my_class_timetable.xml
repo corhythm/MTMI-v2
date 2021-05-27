@@ -1,29 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipeRefreshLayout_myClassTimetable_refresh"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appLayout_myClassTimetable_appbarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:elevation="0dp">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_myClassTimetable_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
-            app:menu="@menu/toolbar_my_class_common_lms"
-            app:navigationIcon="@drawable/ic_my_class_subject_bulletin_board_writing_back"
-            app:title="My Task"
-            app:titleCentered="true"
-            app:titleTextColor="@color/black" />
-
-    </com.google.android.material.appbar.AppBarLayout>
+    android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -55,4 +36,4 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -57,10 +57,15 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
 
         DB.loadPostList(subjectCode, object : Callback<ArrayList<BoardPost>> {
             override fun onCallback(data: ArrayList<BoardPost>) {
-                if(data != null){
+                if (data != null) {
+                    val subjectBulletinBoardList = data
                     val subjectBulletinBoardRecyclerAdapter =
-                        SubjectBulletinBoardRecyclerAdapter(data, this@MyClassSubjectBulletinBoardActivity)
-                    Log.d("포스트 데이터 가져옴 : ",data.count().toString())
+                        SubjectBulletinBoardRecyclerAdapter(
+                            subjectBulletinBoardList,
+                            this@MyClassSubjectBulletinBoardActivity
+                        )
+
+                    Log.d("포스트 데이터 가져옴 : ", data.count().toString())
                     binding.recyclerviewMyClassSubjectBulletinBoardBoardList.apply {
                         adapter = subjectBulletinBoardRecyclerAdapter
                         layoutManager = LinearLayoutManager(
@@ -134,7 +139,7 @@ class SubjectBulletinBoardRecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: SubjectBulletinBoardViewHolder, position: Int) {
-        holder.bind(itemSubjectBulletinBoardList[position],position)
+        holder.bind(itemSubjectBulletinBoardList[position], position)
     }
 
     override fun getItemCount(): Int {
@@ -158,7 +163,7 @@ class SubjectBulletinBoardViewHolder(
         }
     }
 
-    fun bind(BoardPost: BoardPost,position: Int) {
+    fun bind(BoardPost: BoardPost, position: Int) {
         this.idx = position
         this.postDetail = BoardPost
         item.textViewItemSubjectBulletinBoardTitle.text = BoardPost.title

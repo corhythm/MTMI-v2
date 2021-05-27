@@ -179,6 +179,3 @@ class ChattingViewHolder(private val item: ViewBinding) : RecyclerView.ViewHolde
         }
     }
 }
-
-
-

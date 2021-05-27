@@ -1,6 +1,7 @@
 package com.example.mtmimyeon_gitmi.myClass
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.TypedArray
@@ -15,13 +16,21 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.R
+import com.example.mtmimyeon_gitmi.crawling.CrawlingLmsInfo
+import com.example.mtmimyeon_gitmi.crawling.ObserveCrawlingInterface
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectListBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectInfoBinding
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface {
+class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface,
+    ObserveCrawlingInterface {
     private lateinit var binding: ActivityMyClassSubjectListBinding
     private lateinit var subjectRecyclerAdapter: SubjectListRecyclerAdapter
+
     // SubjectInfo에 더 많은 정보가 있고, 당장은 이 액티비티에서 사용하는 값은 3개밖에 안 되지만,
     // 추후에 더 사용할 수 있고, SubjectInfo를 이 액티비티에서만 사용하는 게 아니므로 우선은 이 리사이클러뷰 아이템도
     // SubjectInfo의 정보를 이용해서 사용(별도의 아이템 클래스 생성 시, 중복되는 정보가 많으므로)
@@ -36,7 +45,8 @@ class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface 
     }
 
     private fun init() {
-        itemSubjectInfoList = SharedPrefManager.getUserLmsSubjectInfoList() as ArrayList<ItemSubjectInfo>
+        itemSubjectInfoList =
+            SharedPrefManager.getUserLmsSubjectInfoList() as ArrayList<ItemSubjectInfo>
 
         subjectRecyclerAdapter = SubjectListRecyclerAdapter(this)
         binding.recyclerviewMyClassSubjectListList.apply {
@@ -51,6 +61,19 @@ class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface 
             subjectRecyclerAdapter.submit(itemSubjectInfoList, this@MyClassSubjectListActivity)
         }
 
+        binding.swipeRefreshLayoutMyClassSubjectListRefresh.setOnRefreshListener {
+            val crawlingLmsInfo = CrawlingLmsInfo(
+                activityType = MyClassSubjectListActivity::class.java,
+                observeCrawlingInterface = this,
+                mContext = this,
+                myId = SharedPrefManager.getUserLmsId(),
+                myPw = SharedPrefManager.getUserLmsPw()
+            )
+
+            CoroutineScope(Dispatchers.IO).launch {
+                val test = crawlingLmsInfo.getLmsData()
+            }
+        }
     }
 
     // 과목 게시판으로 이동
@@ -60,9 +83,23 @@ class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface 
         intent.putExtra("과목이름", subjectName)
         startActivity(intent)
     }
+
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
+    }
+
+    // 새로고침 끝났을 때
+    override suspend fun isCrawlingFinished(activityType: Class<out Activity>, isSuccess: Boolean) {
+        withContext(Dispatchers.Main) {
+            try {
+                init()
+                onResume()
+                binding.swipeRefreshLayoutMyClassSubjectListRefresh.isRefreshing = false
+            } catch (exception: Exception) {
+
+            }
+        }
     }
 }
 
@@ -79,7 +116,8 @@ class SubjectListRecyclerAdapter(private val subjectClickedInterface: SubjectCli
     private var count = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubjectViewHolder {
-        val binding = ItemSubjectInfoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemSubjectInfoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SubjectViewHolder(binding, this.subjectClickedInterface)
     }
 

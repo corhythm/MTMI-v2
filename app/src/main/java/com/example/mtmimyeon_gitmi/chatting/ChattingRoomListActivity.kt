@@ -17,6 +17,8 @@ import com.example.mtmimyeon_gitmi.db.Callback
 import com.example.mtmimyeon_gitmi.db.Chat
 import com.example.mtmimyeon_gitmi.db.DatabaseManager
 import com.google.firebase.auth.FirebaseAuth
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface {
     private lateinit var binding: ActivityChattingRoomListBinding
@@ -46,7 +48,7 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
                     name = "라이인드로스테쭈젠댄마리소피아수인레나테엘리자벳피아루이제",
                     lastChat = "It was popularised in the 1960s with the release of Letraset sheets",
                     timeStamp = "2021-05-21 화"
-                )gf
+                )
             )
         }
         this.chattingRoomListRecyclerAdapter =

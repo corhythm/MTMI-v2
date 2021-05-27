@@ -4,17 +4,31 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".util.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_main"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTMIMyeongiTMI"
         android:usesCleartextTraffic="true">
-        <activity android:name=".chatting.ChattingRoomDetailsActivity" />
+        <activity
+            android:name=".mbti.MbtiResultActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mbti.MbtiTestQuestionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MapDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatting.ChattingRoomDetailsActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".myClass.MyClassSubjectBulletinBoardDetailsActivity"
             android:screenOrientation="portrait" />
@@ -52,6 +66,7 @@
         <activity
             android:name=".HomeActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".account.LoginActivity"
             android:screenOrientation="portrait" />
@@ -66,6 +81,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="639b14fa12c1620f6ab962bff4254a89" />
     </application>
 
 </manifest>

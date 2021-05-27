@@ -247,15 +247,18 @@ class DatabaseManager {
     }
 
     fun loadPostComment(subjectCode: String?,subjectBoardIdx: String?, callback: Callback<ArrayList<BoardComment>>) {
+        Log.d("loadPostComment","실행중")
         Firebase.database.getReference("/board/$subjectCode/$subjectBoardIdx/comment").addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 var commentList = ArrayList<BoardComment>()
                 snapshot.children.forEach {
                     val comment = it.getValue(BoardComment::class.java)
                     if (comment != null) {
+                        Log.d("코멘트 리스트",comment.content)
                         commentList.add(comment)
                     }
                 }
+                Log.d("loadPostComment","callback")
                 callback.onCallback(commentList)
             }
             override fun onCancelled(error: DatabaseError) {

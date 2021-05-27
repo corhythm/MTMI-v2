@@ -3,5 +3,4 @@
     android:delay="15%"
     android:animationOrder="normal"
     android:animation="@anim/item_slide_right">
-
 </layoutAnimation>

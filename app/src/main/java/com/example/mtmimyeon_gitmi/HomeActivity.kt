@@ -3,15 +3,20 @@ package com.example.mtmimyeon_gitmi
 import android.app.ActivityOptions
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.transition.Slide
+import android.util.Base64
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.widget.TextView
 
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.content.res.ResourcesCompat
 
 import androidx.fragment.app.Fragment
 import com.example.mtmimyeon_gitmi.databinding.ActivityHomeBinding
@@ -20,6 +25,8 @@ import com.example.mtmimyeon_gitmi.myClass.MyClassMainFragment
 import com.example.mtmimyeon_gitmi.account.MyProfileActivity
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 import org.w3c.dom.Text
+import www.sanju.motiontoast.MotionToast
+import java.security.MessageDigest
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -27,18 +34,29 @@ class HomeActivity : AppCompatActivity() {
     private var backKeyPressedTime: Long = 0 // 마지막으로 back key를 눌렀던 시간
     private lateinit var toast: Toast // toast 메시지
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
-        with(window) { // activity 옆으로 이동 애니메이션
-            requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
-            // set an slide transition
-            enterTransition = Slide(Gravity.END)
-            exitTransition = Slide(Gravity.START)
-        }
 
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
+
+        try {
+            val info =
+                packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNING_CERTIFICATES)
+            val signatures = info.signingInfo.apkContentsSigners
+            val md = MessageDigest.getInstance("SHA")
+            for (signature in signatures) {
+                val md: MessageDigest = MessageDigest.getInstance("SHA")
+                md.update(signature.toByteArray())
+                val key = String(Base64.encode(md.digest(), 0))
+                Log.d("Hash key: ", key)
+            }
+        } catch (e: Exception) {
+            Log.d("name not found", e.toString())
+        }
+
 
     }
 
@@ -95,14 +113,10 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_toolBar_user -> {
-//                startActivity(Intent(this, MyProfileActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
                 Intent(this, MyProfileActivity::class.java).also {
                     startActivity(it)
                     overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
                 }
-            }
-            R.id.menu_toolBar_deleteAccount -> {
-                SharedPrefManager.clearAllData()
             }
         }
         return true
@@ -126,5 +140,38 @@ class HomeActivity : AppCompatActivity() {
             toast.cancel();
         }
 
+    }
+
+    // 권한 승인 체크
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == 1) { // 위치 정보 권한
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) { // 맵 액티비티 실행
+                Log.d("로그", "사용자가 권한 승인 완료")
+                Intent(this, MapDetailsActivity::class.java).also {
+                    startActivity(it)
+                }
+                overridePendingTransition(
+                    R.anim.activity_slide_in,
+                    R.anim.activity_slide_out
+                )
+            } else {
+                Log.d("로그","${grantResults.size}")
+                MotionToast.createColorToast(
+                    this,
+                    "권한 요청 거부됨",
+                    "학교 건물 길찾기를 하기 위해서는 권한 동의가 필요해요",
+                    MotionToast.TOAST_ERROR,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.SHORT_DURATION,
+                    ResourcesCompat.getFont(this, R.font.helvetica_regular)
+                )
+            }
+        }
     }
 }
