@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
     <application
         android:name=".util.App"
@@ -17,6 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MTMIMyeongiTMI"
         android:usesCleartextTraffic="true">
+        <activity android:name=".account.EditProfileActivity" />
         <activity
             android:name=".mbti.MbtiResultActivity"
             android:screenOrientation="portrait" />
@@ -65,14 +68,9 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".HomeActivity"
-            android:screenOrientation="portrait" >
-              <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:screenOrientation="portrait">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-
         <activity
             android:name=".account.LoginActivity"
             android:screenOrientation="portrait" />
@@ -81,7 +79,11 @@
             android:label="MTMI"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MTMIMyeongiTMI.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <meta-data

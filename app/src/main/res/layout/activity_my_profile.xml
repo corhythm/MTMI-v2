@@ -1,214 +1,258 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedScrollView_fragmentHome_rootScroll"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".account.MyProfileActivity">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appLayout_myProfile_appbarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_myProfile_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
-            android:paddingStart="30dp"
-            app:title="내 정보"
-            app:titleTextColor="@color/black" />
-
-    </com.google.android.material.appbar.AppBarLayout>
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout_myProfile_profileInfo"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/bg_rounded_corner_stroke"
-        android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout_myProfile_changeUserInfo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appLayout_myProfile_appbarLayout"
-        app:layout_constraintWidth_percent="0.9">
+        tools:context=".account.MyProfileActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout_myProfile_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_profile_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appLayout_myProfile_appbarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_home_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/toolbar_myProfile_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:navigationIcon="@drawable/back"
+                    app:menu="@menu/toolbar_account_edit"
+                    app:titleTextColor="@color/black" />
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <TextView
+                android:id="@+id/textView_myProfile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/maple_story_bold"
+                android:text="강성욱"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/appLayout_myProfile_appbarLayout" />
+
+            <TextView
+                android:id="@+id/textView_myProfile_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/maple_story_light"
+                android:text="dnr2144@gmail.com"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="@id/textView_myProfile_name"
+                app:layout_constraintTop_toBottomOf="@id/textView_myProfile_name" />
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageView_myProfile_profileImg"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/img_estj"
+                app:civ_border_color="#DCD6D6"
+                app:civ_border_width="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.77"
+                app:layout_constraintStart_toEndOf="@id/textView_myProfile_email"
+                app:layout_constraintTop_toTopOf="@id/textView_myProfile_name" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageView_myProfile_profileImg"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/ic_toolbar_user"
-            app:civ_border_width="1dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView_myProfile_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/maple_story_bold"
-            android:text="dnr2144"
-            android:textSize="20sp"
+            android:id="@+id/imageView_myProfile_majorImg"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/unviersity"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.03"
-            app:layout_constraintStart_toEndOf="@id/imageView_myProfile_profileImg"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/constraintLayout_myProfile_container" />
 
         <TextView
-            android:id="@+id/textView_myProfile_name"
+            android:id="@+id/textView_myProfile_majorGuideText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/maple_story_bold"
-            android:text="강성욱 / 띵무위키"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@id/textView_myProfile_id"
-            app:layout_constraintTop_toBottomOf="@id/textView_myProfile_id" />
+            android:layout_marginStart="15dp"
+            android:fontFamily="@font/maple_story_light"
+            android:text="Major"
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@id/imageView_myProfile_majorImg"
+            app:layout_constraintTop_toTopOf="@id/imageView_myProfile_majorImg" />
 
         <TextView
-            android:id="@+id/textView_myProfile_StudentNum"
+            android:id="@+id/textView_myProfile_majorValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
             android:fontFamily="@font/maple_story_bold"
+            android:letterSpacing="0.15"
+            android:text="컴퓨터공학과"
+            app:layout_constraintStart_toStartOf="@id/textView_myProfile_majorGuideText"
+            app:layout_constraintTop_toBottomOf="@id/textView_myProfile_majorGuideText" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageView_myProfile_studentIdImg"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/ic_student_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageView_myProfile_majorImg" />
+
+        <TextView
+            android:id="@+id/textView_myProfile_studentIdGuideText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:fontFamily="@font/maple_story_light"
+            android:text="학번"
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@id/imageView_myProfile_studentIdImg"
+            app:layout_constraintTop_toTopOf="@id/imageView_myProfile_studentIdImg" />
+
+        <TextView
+            android:id="@+id/textView_myProfile_studentIdValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/maple_story_bold"
+            android:letterSpacing="0.1"
             android:text="60172121"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@id/textView_myProfile_id"
-            app:layout_constraintTop_toBottomOf="@id/textView_myProfile_name" />
+            app:layout_constraintStart_toStartOf="@id/textView_myProfile_studentIdGuideText"
+            app:layout_constraintTop_toBottomOf="@id/textView_myProfile_studentIdGuideText" />
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageView_myProfile_birthdayImg"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/ic_birthday_cake"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageView_myProfile_studentIdImg" />
+
+        <TextView
+            android:id="@+id/textView_myProfile_birthdayGuideText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:fontFamily="@font/maple_story_light"
+            android:text="Birthday"
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@id/imageView_myProfile_birthdayImg"
+            app:layout_constraintTop_toTopOf="@id/imageView_myProfile_birthdayImg" />
+
+        <TextView
+            android:id="@+id/textView_myProfile_birthdayValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/maple_story_bold"
+            android:letterSpacing="0.1"
+            android:text="19961125"
+            app:layout_constraintStart_toStartOf="@id/textView_myProfile_birthdayGuideText"
+            app:layout_constraintTop_toBottomOf="@id/textView_myProfile_birthdayGuideText" />
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout_myProfile_etc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bg_rounded_corner_stroke"
+            android:orientation="vertical"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_myProfile_birthdayValue"
+            app:layout_constraintWidth_percent="0.9">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/maple_story_bold"
+                android:paddingStart="20dp"
+                android:text="기타"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/textView_myProfile_goToChat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:clickable="true"
+                android:fontFamily="@font/maple_story_light"
+                android:paddingStart="15sp"
+                android:text="쪽지 보관함"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView_myProfile_withdrawAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:clickable="true"
+                android:fontFamily="@font/maple_story_light"
+                android:paddingStart="15sp"
+                android:text="회원 탈퇴"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView_myProfile_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:clickable="true"
+                android:fontFamily="@font/maple_story_light"
+                android:paddingStart="15sp"
+                android:text="로그아웃"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView_myProfile_goToCopyright"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:fontFamily="@font/maple_story_light"
+                android:paddingStart="15sp"
+                android:text="\@copyright"
+                android:textSize="20sp" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout_myProfile_changeUserInfo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/bg_rounded_corner_stroke"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/linearLayout_myProfile_etc"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/constraintLayout_myProfile_profileInfo"
-        app:layout_constraintWidth_percent="0.9">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/maple_story_bold"
-            android:paddingStart="20dp"
-            android:text="계정"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/textView_myProfile_changeEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:clickable="true"
-            android:fontFamily="@font/maple_story_light"
-            android:paddingStart="15sp"
-            android:text="이메일변경"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/textView_myProfile_changeNickname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:fontFamily="@font/maple_story_light"
-            android:paddingStart="15sp"
-            android:text="닉네임 변경"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/textView_myProfile_changeProfileImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:fontFamily="@font/maple_story_light"
-            android:paddingStart="15sp"
-            android:text="프로필 이미지 변경"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/textView_myProfile_changePassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:fontFamily="@font/maple_story_light"
-            android:paddingStart="15sp"
-            android:text="비밀번호 변경"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/textView_myProfile_goToChat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:clickable="true"
-            android:fontFamily="@font/maple_story_light"
-            android:paddingStart="15sp"
-            android:text="쪽지 보관함"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout_myProfile_etc"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/bg_rounded_corner_stroke"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout_myProfile_changeUserInfo"
-        app:layout_constraintWidth_percent="0.9">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/maple_story_bold"
-            android:paddingStart="20dp"
-            android:text="기타"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/textView_myProfile_withdrawAccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:clickable="true"
-            android:fontFamily="@font/maple_story_light"
-            android:paddingStart="15sp"
-            android:text="회원 탈퇴"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/textView_myProfile_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:fontFamily="@font/maple_story_light"
-            android:paddingStart="15sp"
-            android:text="로그아웃"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/textView_myProfile_goToCopyright"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:clickable="true"
-            android:fontFamily="@font/maple_story_light"
-            android:paddingStart="15sp"
-            android:text="\@copyright"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

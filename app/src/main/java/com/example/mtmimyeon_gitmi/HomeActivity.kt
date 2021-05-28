@@ -36,34 +36,16 @@ class HomeActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
-
-        try {
-            val info =
-                packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNING_CERTIFICATES)
-            val signatures = info.signingInfo.apkContentsSigners
-            val md = MessageDigest.getInstance("SHA")
-            for (signature in signatures) {
-                val md: MessageDigest = MessageDigest.getInstance("SHA")
-                md.update(signature.toByteArray())
-                val key = String(Base64.encode(md.digest(), 0))
-                Log.d("Hash key: ", key)
-            }
-        } catch (e: Exception) {
-            Log.d("name not found", e.toString())
-        }
-
-
     }
 
     private fun init() {
-
         nowFragment = HomeFragment()
 
+        // toolbar appbar로 지정
         setSupportActionBar(binding.topAppBarHome)
         replaceFragment(nowFragment)
 
@@ -79,8 +61,7 @@ class HomeActivity : AppCompatActivity() {
             binding.bottomNavigationViewHome.setItemSelected(-1)
         }
 
-
-
+        // 바텀네비게이션 뷰 메뉴 클릭했을 때
         binding.bottomNavigationViewHome.setOnItemSelectedListener {
             when (it) {
                 R.id.menu_mbti -> { // mbti tab click
