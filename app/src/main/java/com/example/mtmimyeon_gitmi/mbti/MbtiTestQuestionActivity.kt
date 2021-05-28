@@ -6,18 +6,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.view.size
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mtmimyeon_gitmi.DepthPageTransformer
-import com.example.mtmimyeon_gitmi.MainBannerItem
+import androidx.viewpager2.widget.ViewPager2
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityMbtiTestQuestionBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemQuestionBannerBinding
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog
 import dev.shreyaspatil.MaterialDialog.model.TextAlignment
+import kotlin.math.abs
 
 class MbtiTestQuestionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMbtiTestQuestionBinding
@@ -51,7 +51,7 @@ class MbtiTestQuestionActivity : AppCompatActivity() {
             R.drawable.bg_rounded_banner3,
             R.drawable.bg_rounded_banner4,
         )
-        val bannerItemList = ArrayList<MainBannerItem>()
+        val bannerItemList = ArrayList<QuestionBannerItem>()
 
         for (i in mbtiTextList.indices) {
             questionBannerList.add(
@@ -272,5 +272,48 @@ class BannerViewHolder(private val item: ItemQuestionBannerBinding, private val 
         item.iamgeViewActivityMbtiTestQuestionRandomMbtiImg.setImageResource(questionBannerItem.imgId)
         item.textViewActivityMbtiTestQuestionRandomMbtiTitle.text = questionBannerItem.text
         item.root.background = ContextCompat.getDrawable(mContext, questionBannerItem.background)
+    }
+}
+
+// VierPager 슬라이드 애니메이션
+class DepthPageTransformer : ViewPager2.PageTransformer {
+    private val MIN_SCALE = 0.75f
+
+    override fun transformPage(view: View, position: Float) {
+        view.apply {
+            val pageWidth = width
+            when {
+                position < -1 -> { // [-Infinity,-1)
+                    // This page is way off-screen to the left.
+                    alpha = 0f
+                }
+                position <= 0 -> { // [-1,0]
+                    // Use the default slide transition when moving to the left page
+                    alpha = 1f
+                    translationX = 0f
+                    translationZ = 0f
+                    scaleX = 1f
+                    scaleY = 1f
+                }
+                position <= 1 -> { // (0,1]
+                    // Fade the page out.
+                    alpha = 1 - position
+
+                    // Counteract the default slide transition
+                    translationX = pageWidth * -position
+                    // Move it behind the left page
+                    translationZ = -1f
+
+                    // Scale the page down (between MIN_SCALE and 1)
+                    val scaleFactor = (MIN_SCALE + (1 - MIN_SCALE) * (1 - abs(position)))
+                    scaleX = scaleFactor
+                    scaleY = scaleFactor
+                }
+                else -> { // (1,+Infinity]
+                    // This page is way off-screen to the right.
+                    alpha = 0f
+                }
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.mtmimyeon_gitmi.databinding.*
+import com.example.mtmimyeon_gitmi.mbti.MbtiTestStartFragment
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
@@ -62,68 +64,67 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
 
     private fun init() {
 
-        // ViewPager 들어갈 데이터 설정
-        val bannerMbtiImgList =
-            requireContext().resources.obtainTypedArray(R.array.mbti_img)
-        val bannerMbtiTitleList =
-            requireContext().resources.getStringArray(R.array.main_banner_mbti_type_title)
-        val bannerMbtiSubtitleList =
-            requireContext().resources.getStringArray(R.array.main_banner_mbti_type_subtitle)
-        val bannerColorList = arrayListOf(
-            R.drawable.bg_rounded_banner1,
-            R.drawable.bg_rounded_banner2,
-            R.drawable.bg_rounded_banner3,
-            R.drawable.bg_rounded_banner4,
-        )
-        val bannerItemList = ArrayList<MainBannerItem>()
+        // main banner init
+        val myMbtiResult = SharedPrefManager.getMyMbtiType()
 
-        for (i in bannerMbtiTitleList.indices) {
-            bannerItemList.add(
-                MainBannerItem(
-                    mbtiImg = bannerMbtiImgList.getResourceId(i, -1),
-                    mbtiTypeTitle = bannerMbtiTitleList[i],
-                    mbtiTypeSubtitle = bannerMbtiSubtitleList[i],
-                    backgroundColor = bannerColorList[i % 4]
+        if (myMbtiResult != "") { // mbti 테스트를 이미 했으면
+            binding.linearLayoutFragmentHomeGoToMbtiContainer.visibility = View.GONE
+
+            val mbtiImgList = resources.obtainTypedArray(R.array.mbti_img)
+            // 해당 mbti에 해당하는 values.xml index 매칭 HashMap
+            val mbtiIndex = hashMapOf(
+                "INTJ" to 0,
+                "INFJ" to 1,
+                "ISTJ" to 2,
+                "ISTP" to 3,
+                "INTP" to 4,
+                "INFP" to 5,
+                "ISFJ" to 6,
+                "ISFP" to 7,
+                "ENTJ" to 8,
+                "ENFJ" to 9,
+                "ESTJ" to 10,
+                "ESTP" to 11,
+                "ENTP" to 12,
+                "ENFP" to 13,
+                "ESFJ" to 14,
+                "ESFP" to 15
+            )
+
+            val bannerColorList = arrayListOf(
+                R.drawable.bg_rounded_banner1,
+                R.drawable.bg_rounded_banner2,
+                R.drawable.bg_rounded_banner3,
+                R.drawable.bg_rounded_banner4,
+            )
+
+            // MBTI 이미지 설정
+            binding.imageViewFragmentHomeMbtiImg.setImageResource(
+                mbtiImgList.getResourceId(
+                    mbtiIndex[myMbtiResult]!!,
+                    -1
                 )
             )
-        }
+            // MBTI 배경 설정
+            binding.constraintLayoutFragmentHomeMyMbtiContainer.background =
+                ContextCompat.getDrawable(requireContext(), bannerColorList[mbtiIndex[myMbtiResult]!! % bannerColorList.size])
+            // MBTI Title 설정
+            binding.textViewFragmentHomeMbtiTypeTitle.text =
+                requireContext().resources.getStringArray(R.array.main_banner_mbti_type_title)[mbtiIndex[myMbtiResult]!!]
+            // MBTI Subtitle 설정
+            binding.textViewFragmentHomeMbtiTypeSubTitle.text =
+                requireContext().resources.getStringArray(R.array.main_banner_mbti_type_subtitle)[mbtiIndex[myMbtiResult]!!]
 
-        // VierPager Adapter 설정
-        val viewPagerAdapter = MainBannerAdapter(bannerItemList, requireContext())
-        binding.viewpager2MainMainBanner.apply {
-            adapter = viewPagerAdapter
-            binding.dotsIndicatorMainIndicator.setViewPager2(this)
-            setPageTransformer(DepthPageTransformer())
-        }
-
-        // ViewPager2 Event Listener Override
-        binding.viewpager2MainMainBanner.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) { // 새로운 페이지가 선택되면 호출
-                Log.d("로그", "HomeFragment -onPageSelected() called / $position 강")
-                super.onPageSelected(position)
-            }
-
-            override fun onPageScrollStateChanged(state: Int) { // 스크롤 상태 바뀔 때 호출
-                Log.d("태그", "HomeFragment -onPageScrollStateChanged() called 성")
-                super.onPageScrollStateChanged(state)
-            }
-
-            override fun onPageScrolled( // 페이지 스크롤 중 호출
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                Log.d(
-                    "로그",
-                    "HomeFragment -onPageScrolled() called 욱 / position = $position, positionOffset = $positionOffset, positionOffsetPixels = $positionOffsetPixels"
+        } else { // mbti 테스트를 한 번도 안 했으면
+            binding.constraintLayoutFragmentHomeMyMbtiContainer.visibility = View.GONE
+            // main banner 클릭 시, mbti 메뉴로 이동
+            binding.textviewMainGoToMbti.setOnClickListener {
+                (requireActivity() as HomeActivity).binding.bottomNavigationViewHome.setItemSelected(
+                    R.id.menu_mbti,
+                    true
                 )
-                if (position == 15)
-                    super.onPageScrolled(0, positionOffset, positionOffsetPixels)
-                else
-                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
             }
-        })
+        }
 
 
         // 홈 명지대 아이콘 데이터 초기화
@@ -145,7 +146,7 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
 
         // init recycler view(명지대 아이콘)
         val mjuSiteRecyclerAdapter = MjuSiteRecyclerAdapter(itemMjuSiteList, this)
-        binding.recyclerviewMainUnvInfo.apply {
+        binding.recyclerviewFragmentHomeUnvInfo.apply {
             adapter = mjuSiteRecyclerAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -286,6 +287,7 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
 
                     if (gihuengIndex == -1) { // 기흥역 금일 더 이상 남은 시간대 버스가 없을 때
                         binding.textViewFragmentHomeGihuengStationBusTime.text = "No Bus"
+                        binding.textViewFragmentHomeGihuengStationBusTime.setTextColor(Color.RED)
                     } else { // 기흥역 방향 남은 시간 설정
                         binding.textViewFragmentHomeGihuengStationBusTime.text =
                             gihuengBusTime[gihuengIndex]
@@ -293,6 +295,7 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
 
                     if (downtownIndex == -1) { // 시내 금일 더 이상 남은 시간대 버스가 없을 때
                         binding.textViewFragmentHomeDowntownBusTime.text = "No Bus"
+                        binding.textViewFragmentHomeDowntownBusTime.setTextColor(Color.RED)
                     } else { // 용인 시내 방향 남은 시간 설정
                         binding.textViewFragmentHomeDowntownBusTime.text =
                             downtownBusTime[downtownIndex]
@@ -301,6 +304,7 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
 
                     if (accessRoadIndex == -1) { // 진입로 금일 더 이상 남은 시간대 버스가 없을 때
                         binding.textViewFragmentHomeRoadAccessBusTime.text = "No Bus"
+                        binding.textViewFragmentHomeRoadAccessBusTime.setTextColor(Color.RED)
                     } else { // 진입로 방향 남은 시간 설정
                         binding.textViewFragmentHomeRoadAccessBusTime.text =
                             accessRoadBusTime[accessRoadIndex]
@@ -523,95 +527,6 @@ class StopoverViewHolder(private val item: ItemStopoverBinding) :
         item.textViewItemStopoverStopoverName.text = stopoverName
         if (isLastNode)
             item.viewItemConnectLineConnectLine.visibility = View.GONE
-    }
-}
-
-// ViewPager main banner data class
-data class MainBannerItem(
-    val mbtiImg: Int,
-    val mbtiTypeTitle: String,
-    val mbtiTypeSubtitle: String,
-    val backgroundColor: Int
-)
-
-// ViewPager main banner adapter
-class MainBannerAdapter(
-    private val mainBannerItemList: ArrayList<MainBannerItem>,
-    private val mContext: Context
-) :
-    RecyclerView.Adapter<MainBannerViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainBannerViewHolder {
-        return MainBannerViewHolder(
-            ItemMainBannerBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            ), mContext
-        )
-    }
-
-    override fun onBindViewHolder(holderMain: MainBannerViewHolder, position: Int) {
-        holderMain.bind(this.mainBannerItemList[position])
-    }
-
-    override fun getItemCount() = this.mainBannerItemList.size
-
-}
-
-// ViewPager main banner ViewHolder
-class MainBannerViewHolder(private val item: ItemMainBannerBinding, private val mContext: Context) :
-    RecyclerView.ViewHolder(item.root) {
-
-    fun bind(mainBannerItem: MainBannerItem) {
-//        this.item.root.setBackgroundColor(bannerItem.backgroundColor)
-        this.item.root.background =
-            ContextCompat.getDrawable(mContext, mainBannerItem.backgroundColor)
-        this.item.imageViewItemMainBannerImg.setImageResource(mainBannerItem.mbtiImg) // 이미지
-        this.item.textViewItemMainBannerTitle.text = mainBannerItem.mbtiTypeTitle // 타이틀
-        this.item.textViewItemMainBannerSubTitle.text = mainBannerItem.mbtiTypeSubtitle // 서브타이틀
-    }
-}
-
-// VierPager 슬라이드 애니메이션
-class DepthPageTransformer : ViewPager2.PageTransformer {
-    private val MIN_SCALE = 0.75f
-
-    override fun transformPage(view: View, position: Float) {
-        view.apply {
-            val pageWidth = width
-            when {
-                position < -1 -> { // [-Infinity,-1)
-                    // This page is way off-screen to the left.
-                    alpha = 0f
-                }
-                position <= 0 -> { // [-1,0]
-                    // Use the default slide transition when moving to the left page
-                    alpha = 1f
-                    translationX = 0f
-                    translationZ = 0f
-                    scaleX = 1f
-                    scaleY = 1f
-                }
-                position <= 1 -> { // (0,1]
-                    // Fade the page out.
-                    alpha = 1 - position
-
-                    // Counteract the default slide transition
-                    translationX = pageWidth * -position
-                    // Move it behind the left page
-                    translationZ = -1f
-
-                    // Scale the page down (between MIN_SCALE and 1)
-                    val scaleFactor = (MIN_SCALE + (1 - MIN_SCALE) * (1 - abs(position)))
-                    scaleX = scaleFactor
-                    scaleY = scaleFactor
-                }
-                else -> { // (1,+Infinity]
-                    // This page is way off-screen to the right.
-                    alpha = 0f
-                }
-            }
-        }
     }
 }
 
