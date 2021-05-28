@@ -105,7 +105,7 @@ class MyClassMainFragment : Fragment(), ObserveCrawlingInterface {
         binding.imageViewMyClassMainRevokeAccount.setOnClickListener {
             if (SharedPrefManager.getUserLmsId() != "") {
                 val mDialog = BottomSheetMaterialDialog.Builder(requireActivity())
-                    .setTitle("Stop?")
+                    .setTitle("Delete your account?")
                     .setAnimation("question2.json")
                     .setMessage(
                         "등록된 LMS 계정을 삭제하시겠어요?",
