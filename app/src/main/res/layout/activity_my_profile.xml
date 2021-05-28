@@ -36,7 +36,8 @@
                     android:layout_height="?attr/actionBarSize"
                     app:navigationIcon="@drawable/back"
                     app:menu="@menu/toolbar_account_edit"
-                    app:titleTextColor="@color/black" />
+                    app:title="내 정보"
+                    app:titleTextColor="@color/white" />
             </com.google.android.material.appbar.AppBarLayout>
 
             <TextView
