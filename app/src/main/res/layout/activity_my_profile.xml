@@ -14,26 +14,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-<!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            app:collapsedTitleGravity="bottom|center_horizontal"-->
-<!--            app:contentScrim="?attr/colorPrimary"-->
-<!--            app:expandedTitleMarginBottom="28dp"-->
-<!--            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"-->
-<!--            app:statusBarScrim="?attr/colorPrimaryVariant"-->
-<!--            app:titleEnabled="false">-->
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_myProfile_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            android:paddingStart="30dp"
+            app:title="내 정보"
+            app:titleTextColor="@color/black" />
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar_myProfile_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/white"
-                android:paddingStart="30dp"
-                app:title="내 정보"
-                app:titleTextColor="@color/black" />
-
-<!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,6 +52,7 @@
             android:id="@+id/textView_myProfile_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/maple_story_bold"
             android:text="dnr2144"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -74,6 +64,7 @@
             android:id="@+id/textView_myProfile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/maple_story_bold"
             android:text="강성욱 / 띵무위키"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@id/textView_myProfile_id"
@@ -83,6 +74,7 @@
             android:id="@+id/textView_myProfile_StudentNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/maple_story_bold"
             android:text="60172121"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@id/textView_myProfile_id"
@@ -107,6 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/maple_story_bold"
             android:paddingStart="20dp"
             android:text="계정"
             android:textSize="30sp" />
@@ -117,6 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:clickable="true"
+            android:fontFamily="@font/maple_story_light"
             android:paddingStart="15sp"
             android:text="이메일변경"
             android:textSize="20sp" />
@@ -126,6 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
+            android:fontFamily="@font/maple_story_light"
             android:paddingStart="15sp"
             android:text="닉네임 변경"
             android:textSize="20sp" />
@@ -135,6 +130,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
+            android:fontFamily="@font/maple_story_light"
             android:paddingStart="15sp"
             android:text="프로필 이미지 변경"
             android:textSize="20sp" />
@@ -144,6 +140,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
+            android:fontFamily="@font/maple_story_light"
             android:paddingStart="15sp"
             android:text="비밀번호 변경"
             android:textSize="20sp" />
@@ -154,6 +151,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:clickable="true"
+            android:fontFamily="@font/maple_story_light"
             android:paddingStart="15sp"
             android:text="쪽지 보관함"
             android:textSize="20sp" />
@@ -175,6 +173,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/maple_story_bold"
             android:paddingStart="20dp"
             android:text="기타"
             android:textSize="30sp" />
@@ -185,6 +184,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:clickable="true"
+            android:fontFamily="@font/maple_story_light"
             android:paddingStart="15sp"
             android:text="회원 탈퇴"
             android:textSize="20sp" />
@@ -194,6 +194,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
+            android:fontFamily="@font/maple_story_light"
             android:paddingStart="15sp"
             android:text="로그아웃"
             android:textSize="20sp" />
@@ -204,6 +205,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:clickable="true"
+            android:fontFamily="@font/maple_story_light"
             android:paddingStart="15sp"
             android:text="\@copyright"
             android:textSize="20sp" />
