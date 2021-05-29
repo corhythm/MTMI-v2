@@ -5,8 +5,11 @@ import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import androidx.core.widget.addTextChangedListener
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityEditProfileBinding
 import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog
@@ -36,9 +39,30 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
         binding.imageViewActivityEditProfileProfileImg.setOnClickListener(this)
         binding.fabActivityEditProfileCamera.setOnClickListener(this)
 
+        // 비밀번호, 비밀번호 확인 EditText 텍스트 변경 감지
+        val textWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { // 텍스트 변경 감지
+                if (binding.editTextActivityEditProfilePwValue.text.toString() == binding.editTextActivityEditProfilePwConfirmValue.text.toString()) { // 비밀번호가 일치할 때
+                    binding.imageViewActivityEditProfileCheckPassword.setImageResource(R.drawable.ic_pw_check)
+                } else { // 비밀번호가 일치하지 않을 때
+                    binding.imageViewActivityEditProfileCheckPassword.setImageResource(R.drawable.ic_x)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        }
+
+        // 비밀번호, 비밀번호 확인 일치여부 체크 리스너 등록
+        binding.editTextActivityEditProfilePwConfirmValue.addTextChangedListener(textWatcher)
+        binding.editTextActivityEditProfilePwValue.addTextChangedListener(textWatcher)
+
+
+
         // 업데이트 버튼 누르면 --> 프로필 업데이트
         binding.buttonActivityEditProfileUpdateProfile.setOnClickListener {
-
+            binding.editTextActivityEditProfilePwConfirmValue.setText("dnr2144")
         }
     }
 
