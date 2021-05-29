@@ -14,6 +14,8 @@ import com.example.mtmimyeon_gitmi.crawling.LmsAuthenticationDialog
 import com.example.mtmimyeon_gitmi.crawling.ObserveCrawlingInterface
 import com.example.mtmimyeon_gitmi.databinding.FragmentMyClassMainBinding
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
+import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog
+import dev.shreyaspatil.MaterialDialog.model.TextAlignment
 
 class MyClassMainFragment : Fragment(), ObserveCrawlingInterface {
     private var _binding: FragmentMyClassMainBinding? = null
@@ -99,24 +101,31 @@ class MyClassMainFragment : Fragment(), ObserveCrawlingInterface {
             }
         }
 
-        // lms 계정 해지
+        // lms 계정 해지 버튼 클릭
         binding.imageViewMyClassMainRevokeAccount.setOnClickListener {
+            if (SharedPrefManager.getUserLmsId() != "") {
+                val mDialog = BottomSheetMaterialDialog.Builder(requireActivity())
+                    .setTitle("Delete your account?")
+                    .setAnimation("question2.json")
+                    .setMessage(
+                        "등록된 LMS 계정을 삭제하시겠어요?",
+                        TextAlignment.CENTER
+                    )
+                    .setPositiveButton("Yes") { dialogInterface, _ ->
+                        SharedPrefManager.clearAllLmsUserData()
+                        dialogInterface.dismiss()
+                    }
+                    .setNegativeButton("No") { dialogInterface, _ -> dialogInterface.dismiss() }
+                    .build();
 
-            val dialogBuilder = AlertDialog.Builder(requireContext())
-            dialogBuilder.setTitle("저장된 LMS 계정을 삭제하시겠습니까?")
-            dialogBuilder.setIcon(R.drawable.ic_warning)
-            dialogBuilder.setPositiveButton("Yes") { _, _ -> // 사용하지 않는 매개변수 _ 처리
-                SharedPrefManager.clearAllLmsUserData()
+                // Show Dialog
+                mDialog.show();
             }
-            dialogBuilder.setNegativeButton("No") { _, _ ->
-                // Nothing
-            }
-            dialogBuilder.show()
         }
     }
 
     override suspend fun isCrawlingFinished(activityType: Class<out Activity>, isSuccess: Boolean) {
-        if(isSuccess) {
+        if (isSuccess) {
             Intent(requireContext(), activityType).also {
                 startActivity(it)
                 requireActivity().overridePendingTransition(
@@ -126,5 +135,4 @@ class MyClassMainFragment : Fragment(), ObserveCrawlingInterface {
             }
         }
     }
-
 }

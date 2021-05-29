@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nestedScrollView_fragmentHome_rootScroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appLayout_activityEditProfile_appbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar_activityEditProfile_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
+                app:navigationIcon="@drawable/ic_my_class_subject_bulletin_board_writing_back"
+                app:title="Edit Profile"
+                app:titleCentered="true"
+                app:titleTextColor="@color/black" />
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout_activityEditProfile_imgContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appLayout_activityEditProfile_appbarLayout">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageView_activityEditProfile_profileImg"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/img_entj" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_activityEditProfile_camera"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_camera"
+                app:maxImageSize="20dp"
+                app:fabCustomSize="40dp"
+                app:tint="@null"
+                android:backgroundTint="@color/main_home_color"
+                android:scaleType="center"
+                android:layout_alignEnd="@id/imageView_activityEditProfile_profileImg"
+                android:layout_alignBottom="@id/imageView_activityEditProfile_profileImg"/>
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/textView_activityEditProfile_idGuideText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/baemin_hanna_air"
+            android:text="ID (Email Address)"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/relativeLayout_activityEditProfile_imgContainer" />
+
+        <EditText
+            android:id="@+id/editText_activityEditProfile_idValue"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@id/textView_activityEditProfile_idGuideText"
+            app:layout_constraintTop_toBottomOf="@id/textView_activityEditProfile_idGuideText" />
+
+        <TextView
+            android:id="@+id/textView_activityEditProfile_pwGuideText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/baemin_hanna_air"
+            android:text="Password"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@id/textView_activityEditProfile_idGuideText"
+            app:layout_constraintTop_toBottomOf="@id/editText_activityEditProfile_idValue" />
+
+        <EditText
+            android:id="@+id/editText_activityEditProfile_pwValue"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:text="dnr2144"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@id/textView_activityEditProfile_pwGuideText"
+            app:layout_constraintTop_toBottomOf="@id/textView_activityEditProfile_pwGuideText" />
+
+        <TextView
+            android:id="@+id/textView_activityEditProfile_pwConfirmGuideText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/baemin_hanna_air"
+            android:text="Password Confirm"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@id/textView_activityEditProfile_idGuideText"
+            app:layout_constraintTop_toBottomOf="@id/editText_activityEditProfile_pwValue" />
+
+        <EditText
+            android:id="@+id/editText_activityEditProfile_pwConfirmValue"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:text="dnr2144"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@id/textView_activityEditProfile_pwGuideText"
+            app:layout_constraintTop_toBottomOf="@id/textView_activityEditProfile_pwConfirmGuideText" />
+
+        <ImageView
+            android:id="@+id/imageView_activityEditProfile_checkPassword"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_x"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintTop_toTopOf="@id/editText_activityEditProfile_pwConfirmValue"
+            app:layout_constraintBottom_toBottomOf="@id/editText_activityEditProfile_pwConfirmValue"
+            app:layout_constraintStart_toEndOf="@id/editText_activityEditProfile_pwConfirmValue"/>
+
+        <TextView
+            android:id="@+id/textView_activityEditProfile_nameGuideText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/baemin_hanna_air"
+            android:text="Name"
+            android:textColor="@color/main_home_color"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@id/textView_activityEditProfile_idGuideText"
+            app:layout_constraintTop_toBottomOf="@id/editText_activityEditProfile_pwConfirmValue" />
+
+        <EditText
+            android:id="@+id/editText_activityEditProfile_nameValue"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="dnr2144"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@id/textView_activityEditProfile_pwGuideText"
+            app:layout_constraintTop_toBottomOf="@id/textView_activityEditProfile_nameGuideText" />
+
+        <TextView
+            android:id="@+id/textView_activityEditProfile_studentIdGuideText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/baemin_hanna_air"
+            android:text="학번"
+            android:textColor="@color/main_home_color"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@id/textView_activityEditProfile_idGuideText"
+            app:layout_constraintTop_toBottomOf="@id/editText_activityEditProfile_nameValue" />
+
+        <EditText
+            android:id="@+id/editText_activityEditProfile_studentIdValue"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="dnr2144"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@id/textView_activityEditProfile_pwGuideText"
+            app:layout_constraintTop_toBottomOf="@id/textView_activityEditProfile_studentIdGuideText" />
+
+        <TextView
+            android:id="@+id/textView_activityEditProfile_birthGuideText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/baemin_hanna_air"
+            android:text="생일"
+            android:textColor="@color/main_home_color"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@id/textView_activityEditProfile_idGuideText"
+            app:layout_constraintTop_toBottomOf="@id/editText_activityEditProfile_studentIdValue" />
+
+        <EditText
+            android:id="@+id/editText_activityEditProfile_birthValue"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="dnr2144"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@id/textView_activityEditProfile_pwGuideText"
+            app:layout_constraintTop_toBottomOf="@id/textView_activityEditProfile_birthGuideText" />
+
+        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+            android:id="@+id/spinner_activityEditProfile_major"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:spinnerMode="dropdown"
+            app:layout_constraintStart_toStartOf="@id/editText_activityEditProfile_birthValue"
+            app:layout_constraintTop_toBottomOf="@id/editText_activityEditProfile_birthValue"
+            app:smsp_floatingLabelColor="#1976D2"
+            app:smsp_hint="본인의 전공을 선택해주세요!!"
+            app:smsp_hintColor="@color/main_home_color"
+            app:smsp_isSearchable="true"
+            app:smsp_itemColor="#512DA8"
+            app:smsp_itemListColor="#7C4DFF"
+            app:smsp_itemListHintBackgroundColor="#808080"
+            app:smsp_itemListHintColor="#FFFFFF"
+            app:smsp_multilineError="false"
+            app:smsp_selectedItemListColor="#FF5252" />
+
+        <com.marozzi.roundbutton.RoundButton
+            android:id="@+id/button_activityEditProfile_updateProfile"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:fontFamily="@font/airbnb_cereal_black"
+            android:gravity="center"
+            android:text="UPDATE PROFILE"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/spinner_activityEditProfile_major"
+            app:layout_constraintHeight_percent="0.06"
+            app:layout_constraintStart_toStartOf="@id/spinner_activityEditProfile_major"
+            app:layout_constraintTop_toBottomOf="@id/spinner_activityEditProfile_major"
+            app:rb_animation_alpha="false"
+            app:rb_animation_corner_radius="100dp"
+            app:rb_animation_duration="500"
+            app:rb_animation_progress_color="@color/main_home_color"
+            app:rb_animation_progress_padding="8dp"
+            app:rb_animation_progress_style="circle"
+            app:rb_animation_progress_width="2dp"
+            app:rb_background_color="@android:color/transparent"
+            app:rb_background_color_pressed="#3F51B5"
+            app:rb_corner_color="#3F51B5"
+            app:rb_corner_color_pressed="#3F51B5"
+            app:rb_corner_radius="100dp"
+            app:rb_corner_width="1dp"
+            app:rb_success_resource="@drawable/img_mbti_teststarted_done"
+            app:rb_text_color="#3F51B5"
+            app:rb_text_color_pressed="@android:color/white" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

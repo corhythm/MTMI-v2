@@ -11,46 +11,99 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
-        <RelativeLayout
-            android:id="@+id/linearLayout_main_container"
+        <FrameLayout
+            android:id="@+id/frameLayout_fragmentHome_mainBannerContainer"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/bg_rounded_corner"
             android:gravity="center"
-            app:layout_constraintBottom_toTopOf="@id/recyclerview_main_unvInfo"
+            app:layout_constraintBottom_toTopOf="@id/recyclerview_fragmentHome_unvInfo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.2"
             app:layout_constraintWidth_percent="0.9">
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewpager2_main_mainBanner"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout_fragmentHome_myMbtiContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal" />
+                android:background="@drawable/bg_rounded_banner4"
+                android:padding="10dp">
 
-            <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
-                android:id="@+id/dotsIndicator_main_indicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                app:dotsColor="#F1F1F1"
-                app:dotsCornerRadius="8dp"
-                app:dotsSize="10dp"
-                app:dotsSpacing="3dp"
-                app:dotsWidthFactor="2.5"
-                app:progressMode="true"
-                app:selectedDotColor="#FFC107"
-                android:layout_marginBottom="15dp"/>
+                <ImageView
+                    android:id="@+id/imageView_fragmentHome_mbtiImg"
+                    android:layout_width="130dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/img_esfp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/textView_fragmentHome_mbtiTypeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:fontFamily="@font/maple_story_bold"
+                    android:text="ISTJ - 세상의 소금형"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/imageView_fragmentHome_mbtiImg"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView_fragmentHome_mbtiTypeSubTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/maple_story_bold"
+                    android:text="한번 시작한 일은 끝까지 해내는 사람들"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/imageView_fragmentHome_mbtiImg"
+                    app:layout_constraintTop_toBottomOf="@id/textView_fragmentHome_mbtiTypeTitle"
+                    app:layout_constraintWidth_percent="0.6" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout_fragmentHome_goToMbtiContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_rounded_corner"
+                android:backgroundTint="@color/main_home_color"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/maple_story_bold"
+                    android:text="나는 어떤 명지인일까?"
+                    android:textColor="@color/white"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/textview_main_goToMbti"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:textAlignment="center"
+                    android:clickable="true"
+                    android:fontFamily="@font/maple_story_light"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:textSize="17sp"
+                    android:text="@string/mbti"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+        </FrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_main_unvInfo"
+            android:id="@+id/recyclerview_fragmentHome_unvInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -58,7 +111,7 @@
             android:layoutAnimation="@anim/layout_animation2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout_main_container" />
+            app:layout_constraintTop_toBottomOf="@id/frameLayout_fragmentHome_mainBannerContainer" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_fragmentHome_lottieAni"
@@ -69,9 +122,9 @@
             android:background="@android:color/white"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recyclerview_main_unvInfo"
+            app:layout_constraintTop_toBottomOf="@id/recyclerview_fragmentHome_unvInfo"
             app:lottie_autoPlay="true"
-            app:lottie_fileName="bus1.json"
+            app:lottie_fileName="bus.json"
             app:lottie_loop="true" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -97,115 +150,82 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/textView_fragmentHome_changeDestination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:background="@drawable/bg_rounded_corner_gradient7"
+                android:clickable="true"
+                android:fontFamily="@font/maple_story_bold"
+                android:padding="5dp"
+                android:text="학교→도착지"
+                app:layout_constraintBottom_toBottomOf="@id/imageView_fragmentHome_info"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/imageView_fragmentHome_info" />
+
+            <TextView
                 android:id="@+id/textView_fragmentHome_giheungStationText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:fontFamily="@font/airbnb_cerealextra_bold"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/maple_story_bold"
                 android:gravity="center"
-                android:text="기흥역 방향"
+                android:text="기흥역"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@id/textView_fragmentHome_downtownText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/textView_fragmentHome_roadAccessText" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout_fragmentHome_gihuengStationContainer"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+
+            <TextView
+                android:id="@+id/textView_fragmentHome_gihuengStationBusTime"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/bg_rounded_corner"
+                android:fontFamily="@font/maple_story_bold"
                 android:gravity="center"
-                android:orientation="vertical"
+                android:padding="10dp"
+                android:text="No Bus"
+                android:textColor="#F8B195"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/textView_fragmentHome_giheungStationText"
                 app:layout_constraintStart_toStartOf="@id/textView_fragmentHome_giheungStationText"
-                app:layout_constraintTop_toBottomOf="@id/textView_fragmentHome_giheungStationText">
-
-                <TextView
-                    android:id="@+id/textView_fragmentHome_giHeungStationDepartureTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/karla_regular"
-                    android:gravity="center"
-                    android:text="13:59:00"
-                    android:textColor="#F30B25"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView_fragmentHome_giHeungStationExpectationTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/karla_regular"
-                    android:gravity="center"
-                    android:text="13:59:00"
-                    android:textColor="#015A95"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView_fragmentHome_giHeungStationSchoolArrivalTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/karla_regular"
-                    android:gravity="center"
-                    android:text="13:59:00"
-                    android:textColor="#015A95"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                app:layout_constraintTop_toBottomOf="@id/textView_fragmentHome_giheungStationText" />
 
             <TextView
                 android:id="@+id/textView_fragmentHome_downtownText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/airbnb_cerealextra_bold"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/maple_story_bold"
                 android:gravity="center"
-                android:text="시내 방향"
+                android:text="시내"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@id/textView_fragmentHome_roadAccessText"
                 app:layout_constraintStart_toEndOf="@id/textView_fragmentHome_giheungStationText"
                 app:layout_constraintTop_toTopOf="@id/textView_fragmentHome_roadAccessText" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout_fragmentHome_downtownContainer"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+            <TextView
+                android:id="@+id/textView_fragmentHome_downtownBusTime"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/bg_rounded_corner"
+                android:fontFamily="@font/maple_story_bold"
                 android:gravity="center"
-                android:orientation="vertical"
+                android:padding="10dp"
+                android:text="13:58"
+                android:textColor="#6C5B7B"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="@id/textView_fragmentHome_downtownText"
                 app:layout_constraintStart_toStartOf="@id/textView_fragmentHome_downtownText"
-                app:layout_constraintTop_toBottomOf="@id/textView_fragmentHome_downtownText">
-
-                <TextView
-                    android:id="@+id/textView_fragment_downtownDepartureTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/karla_regular"
-                    android:gravity="center"
-                    android:text="13:59:00"
-                    android:textColor="#F30B25"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView_fragment_downtownDepartureExpectationTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/karla_regular"
-                    android:gravity="center"
-                    android:text="13:59:00"
-                    android:textColor="#015A95"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
+                app:layout_constraintTop_toBottomOf="@id/textView_fragmentHome_downtownText" />
 
             <TextView
                 android:id="@+id/textView_fragmentHome_roadAccessText"
@@ -213,50 +233,31 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="15dp"
-                android:fontFamily="@font/airbnb_cerealextra_bold"
+                android:fontFamily="@font/maple_story_bold"
                 android:gravity="center"
-                android:text="진입로 방향"
+                android:text="진입로"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/textView_fragmentHome_downtownText"
                 app:layout_constraintTop_toBottomOf="@id/imageView_fragmentHome_info" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout_fragmentHome_roadAccessContainer"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+            <TextView
+                android:id="@+id/textView_fragmentHome_roadAccessBusTime"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
                 android:background="@drawable/bg_rounded_corner"
+                android:fontFamily="@font/maple_story_bold"
                 android:gravity="center"
-                android:orientation="vertical"
+                android:padding="10dp"
+                android:text="14:00"
+                android:textColor="#99B898"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="@id/textView_fragmentHome_roadAccessText"
                 app:layout_constraintStart_toStartOf="@id/textView_fragmentHome_roadAccessText"
-                app:layout_constraintTop_toBottomOf="@id/textView_fragmentHome_roadAccessText">
+                app:layout_constraintTop_toBottomOf="@id/textView_fragmentHome_roadAccessText" />
 
-                <TextView
-                    android:id="@+id/textView_fragmentHome_roadAccessDepartureTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/karla_regular"
-                    android:gravity="center"
-                    android:text="13:59:00"
-                    android:textColor="#F30B25"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView_fragmentHome_roadAccessExpectationTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/karla_regular"
-                    android:gravity="center"
-                    android:text="13:59:00"
-                    android:textColor="#015A95"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView

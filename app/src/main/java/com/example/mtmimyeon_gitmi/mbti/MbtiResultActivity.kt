@@ -20,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar
 import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog
 import dev.shreyaspatil.MaterialDialog.model.TextAlignment
 
+
 class MbtiResultActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMbtiResultBinding
     private val myMbtiResult = SharedPrefManager.getMyMbtiType() // 내 mbti 결과 가져오기
@@ -54,7 +55,6 @@ class MbtiResultActivity : AppCompatActivity() {
         mbtiIndex["ENFP"] = 13
         mbtiIndex["ESFJ"] = 14
         mbtiIndex["ESFP"] = 15
-
 
         // MBTI 이미지 설정
         binding.imageViewActivityMbtiResultMbtiResultImg.setImageResource(

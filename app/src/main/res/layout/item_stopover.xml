@@ -18,7 +18,7 @@
         android:id="@+id/textView_itemStopover_stopoverName"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/airbnb_cerealextra_bold"
+        android:fontFamily="@font/maple_story_bold"
         android:gravity="center"
         android:text="버스관리사무소 정류장"
         android:textSize="7sp"

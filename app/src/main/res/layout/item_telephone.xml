@@ -16,8 +16,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/airbnb_cereal_black"
         android:text="[대외협력·홍보위원회]"
+        android:fontFamily="@font/maple_story_bold"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.08"
@@ -41,6 +41,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"
         android:text="자연 캠퍼스 함박관 2층 2401"
+        android:fontFamily="@font/maple_story_bold"
         app:layout_constraintBottom_toTopOf="@id/textView_item_siteUrl"
         app:layout_constraintStart_toEndOf="@id/imageView_item_location"
         app:layout_constraintTop_toBottomOf="@id/textView_item_name" />

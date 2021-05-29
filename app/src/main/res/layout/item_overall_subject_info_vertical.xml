@@ -13,9 +13,9 @@
         app:layout_constraintEnd_toEndOf="@id/imageView_itemOverallSubjectInfoVertical_more"
         app:layout_constraintBottom_toTopOf="@id/textView_itemOverallSubjectInfoVertical_professorName"
         app:layout_constraintHorizontal_bias="0.4"
+        android:fontFamily="@font/maple_story_bold"
         android:text="공학수학1(KME02103-0281)"
-        android:textSize="15sp"
-        android:fontFamily="@font/airbnb_cereal_medium" />
+        android:textSize="15sp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView_itemOverallSubjectInfoVertical_professorImg"
@@ -37,6 +37,7 @@
         app:layout_constraintTop_toTopOf="@id/imageView_itemOverallSubjectInfoVertical_professorImg"
         app:layout_constraintBottom_toBottomOf="@id/imageView_itemOverallSubjectInfoVertical_professorImg"
         android:text="소순태"
+        android:fontFamily="@font/maple_story_bold"
         android:letterSpacing="0.3"
         android:layout_marginStart="2dp"
         android:textSize="10sp" />
@@ -58,6 +59,7 @@
         app:layout_constraintTop_toTopOf="@id/imageView_itemOverallSubjectInfoVertical_lectureTimeImg"
         app:layout_constraintBottom_toBottomOf="@id/imageView_itemOverallSubjectInfoVertical_lectureTimeImg"
         android:text="목(1300-1450),수(1300-1450)"
+        android:fontFamily="@font/maple_story_bold"
         android:textSize="10sp"
         android:layout_marginStart="4dp"/>
 
@@ -88,6 +90,7 @@
         app:layout_constraintTop_toTopOf="@id/imageView_itemOverallSubjectInfoVertical_attendanceImg"
         app:layout_constraintBottom_toBottomOf="@id/imageView_itemOverallSubjectInfoVertical_attendanceImg"
         android:text="92%"
+        android:fontFamily="@font/maple_story_bold"
         android:textSize="10sp"
         android:textColor="#EF0E0E"
         android:layout_marginStart="3dp"/>
@@ -99,6 +102,7 @@
         app:layout_constraintStart_toEndOf="@id/textView_itemOverallSubjectInfoVertical_nowAttendance"
         app:layout_constraintTop_toTopOf="@id/textView_itemOverallSubjectInfoVertical_nowAttendance"
         app:layout_constraintBottom_toBottomOf="@id/textView_itemOverallSubjectInfoVertical_nowAttendance"
+        android:fontFamily="@font/maple_story_bold"
         android:text=" / "/>
 
     <TextView
@@ -109,6 +113,7 @@
         app:layout_constraintTop_toTopOf="@id/textView_itemOverallSubjectInfoVertical_slash"
         app:layout_constraintBottom_toBottomOf="@id/textView_itemOverallSubjectInfoVertical_slash"
         android:text="100%(전체 출석률)"
+        android:fontFamily="@font/maple_story_bold"
         android:textSize="8sp"
         android:textStyle="bold"/>
 

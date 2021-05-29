@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cnb_unselectedColor="#666666">
+    <item
+        android:id="@+id/menu_edit_account"
+        android:icon="@drawable/ic_edit"
+        android:title="edit"
+        app:showAsAction="always"
+        app:cnb_iconColor="@color/navigation_color_mood" />
+
+</menu>

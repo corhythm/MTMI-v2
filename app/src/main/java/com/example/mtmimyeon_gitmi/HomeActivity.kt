@@ -29,45 +29,26 @@ import www.sanju.motiontoast.MotionToast
 import java.security.MessageDigest
 
 class HomeActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityHomeBinding
+    lateinit var binding: ActivityHomeBinding
     private lateinit var nowFragment: Fragment
     private var backKeyPressedTime: Long = 0 // 마지막으로 back key를 눌렀던 시간
     private lateinit var toast: Toast // toast 메시지
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
-
-        try {
-            val info =
-                packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNING_CERTIFICATES)
-            val signatures = info.signingInfo.apkContentsSigners
-            val md = MessageDigest.getInstance("SHA")
-            for (signature in signatures) {
-                val md: MessageDigest = MessageDigest.getInstance("SHA")
-                md.update(signature.toByteArray())
-                val key = String(Base64.encode(md.digest(), 0))
-                Log.d("Hash key: ", key)
-            }
-        } catch (e: Exception) {
-            Log.d("name not found", e.toString())
-        }
-
-
     }
 
     private fun init() {
-
         nowFragment = HomeFragment()
 
+        // toolbar appbar로 지정
         setSupportActionBar(binding.topAppBarHome)
         replaceFragment(nowFragment)
 
-        // 원래 이렇게 하면 안 됨. 시각적으로 보기 위해서 임시로 테스트
         // 홈 버튼 클릭됐을 떄
         binding.floatingActionButtonHome.setOnClickListener {
             if (nowFragment !is HomeFragment) {
@@ -80,6 +61,7 @@ class HomeActivity : AppCompatActivity() {
             binding.bottomNavigationViewHome.setItemSelected(-1)
         }
 
+        // 바텀네비게이션 뷰 메뉴 클릭했을 때
         binding.bottomNavigationViewHome.setOnItemSelectedListener {
             when (it) {
                 R.id.menu_mbti -> { // mbti tab click
@@ -98,7 +80,8 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    fun replaceFragment(fragment: Fragment) {
+
+    private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.frameLayout_home_container, fragment)
             .commit()
@@ -161,7 +144,7 @@ class HomeActivity : AppCompatActivity() {
                     R.anim.activity_slide_out
                 )
             } else {
-                Log.d("로그","${grantResults.size}")
+                Log.d("로그", "${grantResults.size}")
                 MotionToast.createColorToast(
                     this,
                     "권한 요청 거부됨",
