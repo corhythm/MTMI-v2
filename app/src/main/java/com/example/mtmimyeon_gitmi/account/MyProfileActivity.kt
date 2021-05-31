@@ -6,13 +6,20 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import com.bumptech.glide.Glide
 import com.example.mtmimyeon_gitmi.CopyrightActivity
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.chatting.ChattingRoomListActivity
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyProfileBinding
+import com.example.mtmimyeon_gitmi.db.Callback
+import com.example.mtmimyeon_gitmi.db.DatabaseManager
+import com.example.mtmimyeon_gitmi.db.UserData
+import com.google.firebase.auth.FirebaseAuth
 
 class MyProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyProfileBinding
+    private var auth = FirebaseAuth.getInstance()
+    private var db = DatabaseManager()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyProfileBinding.inflate(layoutInflater)
@@ -22,6 +29,21 @@ class MyProfileActivity : AppCompatActivity() {
 
     private fun init() {
 
+        var currentUid = auth.uid.toString()
+
+        db.callUserData(currentUid, object : Callback<UserData> {
+            override fun onCallback(data: UserData) {
+                if(data != null){
+                    binding.textViewMyProfileName.text = data.userName
+                    binding.textViewMyProfileEmail.text = data.id
+                    binding.textViewMyProfileStudentIdValue.text = data.student_id
+                    binding.textViewMyProfileMajorValue.text = data.major
+                    binding.textViewMyProfileBirthdayValue.text = data.birth
+//                    binding.imageViewMyProfileBirthdayImg
+//                    Glide.
+                }
+            }
+        })
         // copyright 이동
         binding.textViewMyProfileGoToCopyright.setOnClickListener {
             Intent(this, CopyrightActivity::class.java).also {
@@ -50,7 +72,6 @@ class MyProfileActivity : AppCompatActivity() {
             finish()
         }
     }
-
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)

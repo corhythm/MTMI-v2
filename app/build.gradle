@@ -79,6 +79,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation platform('com.google.firebase:firebase-bom:27.1.0')
     implementation 'com.google.firebase:firebase-database-ktx:20.0.0'
+    implementation 'com.google.firebase:firebase-storage-ktx'
 
     // 바텀 네비게이션 커스텀
     implementation 'com.ismaeldivita.chipnavigation:chip-navigation-bar:1.3.0'

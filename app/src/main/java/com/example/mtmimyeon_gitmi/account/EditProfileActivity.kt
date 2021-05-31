@@ -2,6 +2,7 @@ package com.example.mtmimyeon_gitmi.account
 
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -12,12 +13,14 @@ import android.view.View
 import androidx.core.widget.addTextChangedListener
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityEditProfileBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
 import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog
 import dev.shreyaspatil.MaterialDialog.model.TextAlignment
 
 class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityEditProfileBinding
-
+    private lateinit var profileImage: Uri
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
@@ -62,11 +65,12 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
 
         // 업데이트 버튼 누르면 --> 프로필 업데이트
         binding.buttonActivityEditProfileUpdateProfile.setOnClickListener {
-            binding.editTextActivityEditProfilePwConfirmValue.setText("dnr2144")
+            Intent(this, MyProfileActivity::class.java).also {
+                startActivity(it)
+                overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
+            }
         }
     }
-
-
     // 갤러리에서 사진 불러오기
     override fun onClick(v: View?) {
         Intent(Intent.ACTION_PICK).also {
@@ -79,6 +83,7 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 0 && resultCode == RESULT_OK) { // 이미지 불러오기 성공했을 때, 프로필 이미지 변경
+            profileImage = data!!.data!!
             binding.imageViewActivityEditProfileProfileImg.setImageURI(data!!.data!!)
         }
 

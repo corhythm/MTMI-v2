@@ -1,6 +1,7 @@
 package com.example.mtmimyeon_gitmi.db
 
 import android.app.Activity
+import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
@@ -8,6 +9,8 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -17,7 +20,8 @@ class DatabaseManager {
 
     private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private lateinit var database: DatabaseReference
-
+    private var storageRef = FirebaseStorage.getInstance()
+    private var storage = Firebase.storage
     //      회원가입 메소드 ( 정보 기입 필요한 )
     fun createEmail(
         id: String,
@@ -114,7 +118,6 @@ class DatabaseManager {
         })
     }
 
-
     fun sendMessage(
         chatRoomId: String,
         name: String,
@@ -170,7 +173,7 @@ class DatabaseManager {
         })
     }
 
-    private fun callUserData(userUid: String, callback: Callback<UserData>) {
+    fun callUserData(userUid: String, callback: Callback<UserData>) {
         Firebase.database.getReference("user").child(userUid)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -305,4 +308,12 @@ class DatabaseManager {
 
         })
     }
+    fun editUserData(filePath: Uri){
+        var userUid = firebaseAuth.uid.toString()
+        var imageFileName = "IMAGE_$userUid.png"
+        FirebaseStorage.getInstance().reference.child("image/").child(imageFileName).putFile(filePath).addOnSuccessListener {
+            Log.d("이미지 파일업로드","성공") // 이 부분에 유저 업데이트 들어가야함
+        }.addOnFailureListener{
+            Log.d("이미지 파일업로드","실패")
+        }}
 }
