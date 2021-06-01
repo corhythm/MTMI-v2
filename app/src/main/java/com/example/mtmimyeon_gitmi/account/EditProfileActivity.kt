@@ -65,7 +65,8 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
         binding.imageViewActivityEditProfileProfileImg.setOnClickListener(this)
         binding.fabActivityEditProfileCamera.setOnClickListener(this)
 
-        // 비밀번호, 비밀번호 확인 EditText 텍스트 변경 감지
+
+        // 비밀번호, 비밀번호 확인 EditText 텍스트 변경 감지 리스너
         val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
