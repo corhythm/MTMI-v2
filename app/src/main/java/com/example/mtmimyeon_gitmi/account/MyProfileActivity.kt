@@ -15,6 +15,7 @@ import com.example.mtmimyeon_gitmi.db.Callback
 import com.example.mtmimyeon_gitmi.db.DatabaseManager
 import com.example.mtmimyeon_gitmi.db.UserData
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
 
 class MyProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyProfileBinding
@@ -30,7 +31,7 @@ class MyProfileActivity : AppCompatActivity() {
     private fun init() {
 
         var currentUid = auth.uid.toString()
-
+        loadProfileImage()
         db.callUserData(currentUid, object : Callback<UserData> {
             override fun onCallback(data: UserData) {
                 if(data != null){
@@ -39,8 +40,7 @@ class MyProfileActivity : AppCompatActivity() {
                     binding.textViewMyProfileStudentIdValue.text = data.student_id
                     binding.textViewMyProfileMajorValue.text = data.major
                     binding.textViewMyProfileBirthdayValue.text = data.birth
-//                    binding.imageViewMyProfileBirthdayImg
-//                    Glide.
+                    //이부분에 업데이트 이미지 넣어야함.
                 }
             }
         })
@@ -72,6 +72,17 @@ class MyProfileActivity : AppCompatActivity() {
             finish()
         }
     }
+    fun loadProfileImage() {
+        var userUid = auth.uid.toString()
+        FirebaseStorage.getInstance().reference.child("image/IMAGE_$userUid.png").downloadUrl.addOnSuccessListener {
+            Log.d("프로필사진 로드", it.toString())
+            var profileImage = binding.imageViewMyProfileProfileImg
+            Glide.with(applicationContext).load(it).circleCrop().into(profileImage)
+        }.addOnFailureListener {
+            Log.d("프로필사진 로드","프로필사진없음")
+        }
+    }
+
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)

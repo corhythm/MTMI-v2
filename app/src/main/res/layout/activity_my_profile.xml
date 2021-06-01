@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:fontFamily="@font/maple_story_bold"
-                android:text="강성욱"
+                android:text=" "
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/maple_story_light"
-                android:text="dnr2144@gmail.com"
+                android:text=" "
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="@id/textView_myProfile_name"
@@ -111,7 +111,7 @@
             android:layout_marginTop="3dp"
             android:fontFamily="@font/maple_story_bold"
             android:letterSpacing="0.15"
-            android:text="컴퓨터공학과"
+            android:text=" "
             app:layout_constraintStart_toStartOf="@id/textView_myProfile_majorGuideText"
             app:layout_constraintTop_toBottomOf="@id/textView_myProfile_majorGuideText" />
 
@@ -144,7 +144,7 @@
             android:layout_marginTop="3dp"
             android:fontFamily="@font/maple_story_bold"
             android:letterSpacing="0.1"
-            android:text="60172121"
+            android:text=" "
             app:layout_constraintStart_toStartOf="@id/textView_myProfile_studentIdGuideText"
             app:layout_constraintTop_toBottomOf="@id/textView_myProfile_studentIdGuideText" />
 
@@ -178,7 +178,7 @@
             android:layout_marginTop="3dp"
             android:fontFamily="@font/maple_story_bold"
             android:letterSpacing="0.1"
-            android:text="19961125"
+            android:text=" "
             app:layout_constraintStart_toStartOf="@id/textView_myProfile_birthdayGuideText"
             app:layout_constraintTop_toBottomOf="@id/textView_myProfile_birthdayGuideText" />
 

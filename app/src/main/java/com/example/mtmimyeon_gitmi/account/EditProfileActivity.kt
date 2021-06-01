@@ -13,6 +13,9 @@ import android.view.View
 import androidx.core.widget.addTextChangedListener
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityEditProfileBinding
+import com.example.mtmimyeon_gitmi.db.Callback
+import com.example.mtmimyeon_gitmi.db.DatabaseManager
+import com.example.mtmimyeon_gitmi.db.UserData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog
@@ -21,6 +24,8 @@ import dev.shreyaspatil.MaterialDialog.model.TextAlignment
 class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityEditProfileBinding
     private lateinit var profileImage: Uri
+    private var auth = FirebaseAuth.getInstance()
+    var db = DatabaseManager()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
@@ -29,7 +34,17 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun init() {
-
+        // 프로필 유저정보 초기화
+        db.callUserData(auth.uid.toString(), object : Callback<UserData> {
+            override fun onCallback(data: UserData) {
+                if(data != null){
+                    binding.editTextActivityEditProfileIdValue.setText(data.id)
+                    binding.editTextActivityEditProfileNameValue.setText(data.userName)
+                    binding.editTextActivityEditProfileStudentIdValue.setText(data.student_id)
+                    binding.editTextActivityEditProfileBirthValue.setText(data.birth)
+                }
+            }
+        })
         // 스피너에 전공 데이터 넣기
         binding.spinnerActivityEditProfileMajor.setItem(
             resources.getStringArray(R.array.major).toMutableList()
@@ -65,6 +80,7 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
 
         // 업데이트 버튼 누르면 --> 프로필 업데이트
         binding.buttonActivityEditProfileUpdateProfile.setOnClickListener {
+            db.editUserData(profileImage)
             Intent(this, MyProfileActivity::class.java).also {
                 startActivity(it)
                 overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)

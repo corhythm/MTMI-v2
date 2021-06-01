@@ -316,4 +316,10 @@ class DatabaseManager {
         }.addOnFailureListener{
             Log.d("이미지 파일업로드","실패")
         }}
+    fun loadProfileImage(){
+        var userUid = firebaseAuth.uid.toString()
+        storageRef.reference.child("image/IMAGE_$userUid.png").downloadUrl.addOnSuccessListener {
+            Log.d("이미지다운로드","성공")
+        }
+    }
 }
