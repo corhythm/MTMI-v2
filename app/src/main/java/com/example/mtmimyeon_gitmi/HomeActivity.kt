@@ -42,6 +42,7 @@ class HomeActivity : AppCompatActivity() {
         init()
     }
 
+    @RequiresApi(Build.VERSION_CODES.P)
     private fun init() {
         nowFragment = HomeFragment()
 
@@ -60,6 +61,22 @@ class HomeActivity : AppCompatActivity() {
             // 바텀 네비게이션뷰 아이템 선택된 거 초기화
             binding.bottomNavigationViewHome.setItemSelected(-1)
         }
+
+         try {
+            val info =
+                packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNING_CERTIFICATES)
+            val signatures = info.signingInfo.apkContentsSigners
+            val md = MessageDigest.getInstance("SHA")
+            for (signature in signatures) {
+                val md: MessageDigest = MessageDigest.getInstance("SHA")
+                md.update(signature.toByteArray())
+                val key = String(Base64.encode(md.digest(), 0))
+                Log.d("해시값", key)
+            }
+        } catch (e: Exception) {
+            Log.d("name not found", e.toString())
+        }
+
 
         // 바텀네비게이션 뷰 메뉴 클릭했을 때
         binding.bottomNavigationViewHome.setOnItemSelectedListener {

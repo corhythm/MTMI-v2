@@ -373,7 +373,7 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                 "https://ucheck.mju.ac.kr/;jsessionid=F35A5F3F48644210CEB08183C2E8D492#"
             "기숙사" -> url = "https://jw4.mju.ac.kr/user/dorm/index.action"
             "문진표" -> url = "http://www.mjuqr.kr/view/4b46ea5151336b2f7668b67551b1a511"
-            "수강신청" -> url = "http://http://class.mju.ac.kr/"
+            "수강신청" -> url = "http://class.mju.ac.kr/"
             else -> url = "https://www.mju.ac.kr/mjukr/index.do"
         }
         Intent(Intent.ACTION_VIEW, Uri.parse(url)).also {
