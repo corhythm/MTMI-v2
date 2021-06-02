@@ -3,7 +3,10 @@ package com.example.mtmimyeon_gitmi.account
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import androidx.core.content.ContextCompat
 import com.example.mtmimyeon_gitmi.db.Callback
 import com.example.mtmimyeon_gitmi.db.DatabaseManager
 import com.example.mtmimyeon_gitmi.R
@@ -18,13 +21,32 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         init()
     }
 
     private fun init() {
         val majorList = resources.getStringArray(R.array.major).toMutableList()
         binding.spinnerSignUpMajorList.setItem(majorList)
+
+        // 비밀번호, 비밀번호 확인 체크
+        val textWatcher = object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { // 텍스트 변경 감지
+                if (binding.editTextSignUpPw.text.toString() == binding.editTextSignUpConfirmPw.text.toString()) { // 비밀번호가 일치할 때
+                    binding.editTextSignUpConfirmPw.setCompoundDrawablesWithIntrinsicBounds(null, null,
+                        ContextCompat.getDrawable(this@SignUpActivity, R.drawable.drawable_end_pw_check), null)
+                } else { // 비밀번호가 일치하지 않을 때
+                    binding.editTextSignUpConfirmPw.setCompoundDrawablesWithIntrinsicBounds(null, null,
+                        ContextCompat.getDrawable(this@SignUpActivity, R.drawable.drawable_end_x), null)
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        }
+
+        // 비밀번호, 비밀번호 체크 EditTextView 리스너 등록
+        binding.editTextSignUpPw.addTextChangedListener(textWatcher)
+        binding.editTextSignUpConfirmPw.addTextChangedListener(textWatcher)
+
 
         binding.buttonSignUpGoToSignUp.setOnClickListener {
             binding.buttonSignUpGoToSignUp.startAnimation()
