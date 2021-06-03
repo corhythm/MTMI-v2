@@ -63,6 +63,7 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
                     comment,
                     currentUser
                 )
+                database.postViewCount(pathData)
                 // 코멘트 갱신화작업
                 subjectBulletinBoardCommentRecyclerAdapter.notifyItemRangeRemoved(
                     0,

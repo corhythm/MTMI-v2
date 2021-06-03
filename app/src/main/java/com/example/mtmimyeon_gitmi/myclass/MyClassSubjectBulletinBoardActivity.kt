@@ -178,7 +178,8 @@ class SubjectBulletinBoardViewHolder(
         item.textViewItemSubjectBulletinBoardContent.text = BoardPost.content
         item.textViewItemSubjectBulletinBoardDate.text = BoardPost.day
         item.textViewItemSubjectBulletinBoardWriter.text = BoardPost.writerName
-        item.textViewItemSubjectBulletinBoardChatNum.text = BoardPost.subjectBoardIndex
+        item.textViewItemSubjectBulletinBoardChatNum.text = BoardPost.view.toString()
+
     }
 }
 

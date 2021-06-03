@@ -9,10 +9,11 @@ data class BoardPost(
     var content: String?, // 게시물 내용
     var writerUid: String?, // 작성자 uid (user)
     var writerName: String?,
-    var subjectBoardIndex: String? // 게시물의 인덱스
+    var subjectBoardIndex: String?, // 게시물의 인덱스
+    var view: Int?
 
 ):Serializable {
-    constructor() : this("","","","","","",""){}
+    constructor() : this("","","","","","","",-1){}
     init {
         this.subjectCode = subjectCode
         this.title = title
@@ -21,5 +22,6 @@ data class BoardPost(
         this.writerUid = writerUid
         this.writerName = writerName
         this.subjectBoardIndex = subjectBoardIndex
+        this.view = view
     }
 }

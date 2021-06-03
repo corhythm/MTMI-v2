@@ -11,6 +11,7 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
+import com.skydoves.progressview.progressView
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -43,14 +44,13 @@ class DatabaseManager {
         } else if (pw != confirm) {
             callback.onCallback(false)
             Toast.makeText(activity, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show()
-
         } else {
             Log.d("LOG", "회원가입 실행중입니다.")
             firebaseAuth.createUserWithEmailAndPassword(id, pw)
                 .addOnCompleteListener(activity) {
                     if (it.isSuccessful) {
                         val user = firebaseAuth.currentUser
-                        val userdata = UserData(id, pw, studentId, name, birth, gender, major, "")
+                        val userdata = UserData(id, pw, studentId, name, birth, gender, major, "empty")
                         database.child(user.uid).setValue(userdata)
                         callback.onCallback(true)
                         Log.d("createEmail: ", "Sign up Successful")//가입성공
@@ -165,7 +165,8 @@ class DatabaseManager {
                             postContent,
                             userId,
                             data.userName,
-                            saveIdx
+                            saveIdx,
+                            0
                         ) //테스터 대신 userName 넣어야함. data.userName
                     database.child(boardIdx).child(saveIdx).setValue(boardPost)
                 }
@@ -213,6 +214,16 @@ class DatabaseManager {
                     Log.d("게시물 가져오기실패 :. ", "게시물을 가져오기 실패")
                 }
             })
+    }
+    fun postViewCount(boardPost: BoardPost){
+        boardPost.view= boardPost.view?.plus(1)
+        boardPost.subjectBoardIndex?.let {
+            boardPost.subjectCode?.let { it1 ->
+                Firebase.database.reference.child("board").child(it1).child(
+                    it
+                ).child("view").setValue(boardPost.view)
+            }
+        }
     }
 
     fun postLeaveComment(
@@ -308,18 +319,22 @@ class DatabaseManager {
 
         })
     }
-    fun editUserData(filePath: Uri){
-        var userUid = firebaseAuth.uid.toString()
+    fun editUserData(filePath: Uri,userData: UserData,callback: Callback<Boolean>){
+        var userUid = firebaseAuth.currentUser.uid
         var imageFileName = "IMAGE_$userUid.png"
+        userData.userProfileImageUrl = imageFileName
+        FirebaseDatabase.getInstance().reference.child("user").child(userUid).setValue(userData)
         FirebaseStorage.getInstance().reference.child("image/").child(imageFileName).putFile(filePath).addOnSuccessListener {
             Log.d("이미지 파일업로드","성공") // 이 부분에 유저 업데이트 들어가야함
+            callback.onCallback(true)
         }.addOnFailureListener{
             Log.d("이미지 파일업로드","실패")
+            callback.onCallback(false)
         }}
-    fun loadProfileImage(){
-        var userUid = firebaseAuth.uid.toString()
-        storageRef.reference.child("image/IMAGE_$userUid.png").downloadUrl.addOnSuccessListener {
-            Log.d("이미지다운로드","성공")
-        }
-    }
+//    fun loadProfileImage(){
+//        var userUid = firebaseAuth.uid.toString()
+//        storageRef.reference.child("image/IMAGE_$userUid.png").downloadUrl.addOnSuccessListener {
+//            Log.d("이미지다운로드","성공")
+//        }
+//    }
 }
