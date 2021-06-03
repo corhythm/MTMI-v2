@@ -64,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
-                    app:toggle_text="강의 질문"
+                    app:toggle_text="면담"
                     app:toggle_textSize="20sp" />
 
                 <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
@@ -75,13 +75,13 @@
                     app:toggle_text="출석 문의"
                     app:toggle_textSize="20sp" />
 
-                <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-                    android:id="@+id/button_myClassMailToProf_test"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_margin="5dp"
-                    app:toggle_text="시험 문의"
-                    app:toggle_textSize="20sp" />
+<!--                <nl.bryanderidder.themedtogglebuttongroup.ThemedButton-->
+<!--                    android:id="@+id/button_myClassMailToProf_test"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    app:toggle_text="시험 문의"-->
+<!--                    app:toggle_textSize="20sp" />-->
 
                 <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
                     android:id="@+id/button_myClassMailToProf_grade"

@@ -52,62 +52,51 @@ class MyClassMailToProfessorActivity : AppCompatActivity() {
             var mailContent = ""
 
             when (it) {
-                binding.buttonMyClassMailToProfHomework -> {
-                    mailTitle = "과제 관련해서 문의드립니다 - 컴퓨터공학과 60172121 OOO"
-                    mailContent = "안녕하세요, OOO교수님," +
-                            "저는 컴퓨터공학과 수강생 컴퓨터공학과 17학번 OOO입니다." +
-                            "이번 주 과제 주신 거 중에 getchar를 사용하라고 하신 게 잘 이해가 안 됩니다." +
-                            "getchar는 그럴 때 사용하는 게 아니지 않나요?"
+                binding.buttonMyClassMailToProfHomework -> { // 과제
+                    mailTitle = "[명지대/과제]  OOO수업 과제 관련해서 문의드립니다 60****** OOO"
+                    mailContent = "교수님 안녕하세요?\n교수님의 N시 OO요일 OOO수업을 듣는 OOO학과 OOO입니다." +
+                            "\n다름이 아니라 (물어보고 싶은 내용)" +
+                            "ex) ~ 로 방향을 설정하였습니다. " +
+                            "혹시 이 부분이 주관적인 방향이진 않을까 우려가 되어 문의 드립니다. " +
+                            "바쁘시겠지만 확인 후, 답변 부탁드리면 감사하겠습니다. OOO 드림."
                 }
-                binding.buttonMyClassMailToProfReinforcement -> {
-                    mailTitle = "안녕하세요 컴퓨터공학과 OOO입니다. 증원 관련해서 문의드릴 게 있습니다."
-                    mailContent = "안녕하세요 교수님, 환절기에 건강 유의하시고 계신가요? 저는 금요일 10:00 ~ 13:00 운영체제 B반을 수강을 희망하는" +
-                            "17학번 OOO입니다. 제가 이번에 교수님께서 개강하신 운영체제론을 꼭 듣고 싶은데 아쉽게도 수강신청에 성공하시 못 했습니다. 혹시" +
-                            "실례가 안 된다면 증원을 요청드려도 될까요?"
+                binding.buttonMyClassMailToProfReinforcement -> { // 증원
+                    mailTitle = "[명지대/증원]  OOO수업 증원 관련해서 문의드립니다 60****** OOO"
+                    mailContent =
+                        "교수님 안녕하세요? 교수님의 N시 OO요일 OOO과목 수강을 희망하는 OOO학과 60******학번 OOO입니다." +
+                                "다름이 아니라 OOO과목 수업과 관련하여 수강인원 증원이 가능할지 여쭙고 싶어 메일 드립니다." +
+                                "~과목을 수강함으로써 관련 분야에 대한 전문성을 키우고자 합니다. " +
+                                "이를 위해 수강신청 기간에 수업을 신청하려 노력하였지만 경쟁률이 높아 안타깝게 실패하여 이렇게 증원 예정이 있으신지 여쭙게 되었습니다." +
+                                "해당 과목을 절실히 수강하고자 하는데 기회를 주시면 정말 감사드리겠습니다. 바쁘신 와중에 메일 읽어주셔서 감사합니다." +
+                                "행복한 하루 보내세요. 바쁘시겠지만 확인 후, 답변해주시면 감사하겠습니다. OOO드림"
                 }
-                binding.buttonMyClassMailToProfQuestion -> {
-                    mailTitle = "[컴퓨터공학과 60172121 OOO] 수업 내용 관련 문의드립니다."
-                    mailContent = "안녕하세여 OOO 교수님! 저는 시스템클라우드보안을 수강하고 있는 컴퓨터공학과 17학번 OOO입니다." +
-                            "궁금한 것이 있는 수업시간 전후에 여쭙기에는 내용이 많습니다. 가능하다면 30분에서 1시간 정도 교수님 " +
-                            "연구실을 방문해서 여쭙고 싶은데 혹시 가능하신지요? 저는 월/수 10:00 ~ 13:00 시간에 가능합니다. 가능하다면" +
-                            "제가 교수님 시간에 맞추겠습니다. 바쁘신 와중에 시간 내주셔서 감사합니다. 날이 추운데 감기 조심하세요/" +
-                            "OOO 드림"
+                binding.buttonMyClassMailToProfQuestion -> { // 면담 요청
+                    mailTitle = "[면담요청이유 (간단히)] ㅇㅇ대학교 OOO과 학사 OOO입니다. "
+                    mailContent = "안녕하세요, ㅇㅇㅇ교수님 ㅇㅇ대학교 OOO과 OOO입니다. 오늘도 좋은하루 보내고 계시나요? " +
+                            "다름이 아니라 (면담을 하여는 이유를 작성하여 주세요)" +
+                            "* 대학원 진학의 경우 학업사항, 경력사항 등을 작성해 주세요. " +
+                            "교수님께서 시간을 내주신다면 잠시라도 찾아 뵙고 상담을 통해 도움을 얻고싶은데 괜찮으신지 여쭙고싶어 메일 드립니다." +
+                            " 메일 읽어주셔서 감사 드리며, 답변 기다리겠습니다. OOO 드림"
                 }
-                binding.buttonMyClassMailToProfAttandance -> {
-                    mailTitle = "출석 관련해서 문의드립니다 - 컴퓨터공학과 60172121 OOO"
-                    mailContent = "안녕하세요, OOO교수님," +
-                            "저는 컴퓨터공학과 수강생 컴퓨터공학과 17학번 OOO입니다." +
-                            "교수님의 열정 가득한 가르침 덕분에, 저의 학문적 호기심을 기를 수 있었습니다. 항상 감사드립니다." +
-                            "다름이 아니라 이번에 학생회 임원이 되어 대동제 준비를 하게 되었는데," +
-                            "행사 준비 관계로 4월 23일 2시 강의 참석이 제한될 거 같아서 메일 드립니다." +
-                            "학교 행사이기 때문에 학과 사무실에서 혀조증과 참여 확인서는 발급된다고 하는데" +
-                            "혹시 해당 서류를 제출하면 출석 인정이 가능한 건지 문의드립니다" +
-                            "혹시 필요하실까봐 제 번호를 남깁니다. 제 번호는 010 0000 0000 입니다." +
-                            "그럼 확인 부탁드리겠습니다! 감사합니다."
+                binding.buttonMyClassMailToProfAttandance -> { // 출석
+                    mailTitle = "[명지대/출석]  OOO수업 출석 관련해서 문의드립니다 60****** OOO"
+                    mailContent =
+                        "교수님 안녕하세요? 교수님의 N시 OO요일 OOO수업을 듣는 OOO학과 OOO입니다. 다름이 아니라, O/O에 OOOO로 인해 " +
+                                "수업에 참석하지 못할 것 같습니다. 다른 날짜로 조정이 불가피한 상황이라, 출석 인정 받을 수 있는 다른 방법이 있을 지 문의 드립니다." +
+                                "출석인정이 가능하다면 관련 서류를 발급받을 수 있는지 확인해보고자 합니다. 확인 부탁드립니다! 감사합니다. OOO 드림."
                 }
-                binding.buttonMyClassMailToProfTest -> {
-                    mailTitle = "출석 관련해서 문의드립니다 - 컴퓨터공학과 60172121 OOO"
-                    mailContent = "안녕하세요, OOO교수님," +
-                            "저는 컴퓨터공학과 수강생 컴퓨터공학과 17학번 OOO입니다." +
-                            "교수님의 수업을 통해 컴퓨터공학에 대한 저의 생각과 지식을 발전시키는 좋은 기회를 얻었습니다" +
-                            "다름이 아니라, 이번 학기 컴퓨터구조론 성적이 제가 예상했던 것보다 다소 낮은 점수인 것 같습니다." +
-                            "바쁘시겠지만 제가 어떤 부분이 부족했는지 알려주실 수 있을까요?" +
-                            "부족한 부분을 학업에 참고하여 보안하고 싶습니다. 바쁘신 와중에 시간 내주셔서 감사합니다. 날이 추운데" +
-                            "감기 조심하세요. OOO 드림."
-                }
-                binding.buttonMyClassMailToProfGrade -> {
-                    mailTitle = "안녕하세요 17학번 컴퓨터공학과 OOO입니다. 성적과 관련해서 궁금한 사항이 있습니다."
-                    mailContent = "안녕하세요, OOO교수님," +
-                            "저는 컴퓨터공학과 수강생 컴퓨터공학과 17학번 OOO입니다." +
-                            "교수님의 수업을 통해 컴퓨터공학에 대한 저의 생각과 지식을 발전시키는 좋은 기회를 얻었습니다" +
-                            "다름이 아니라, 이번 학기 컴퓨터구조론 성적이 제가 예상했던 것보다 다소 낮은 점수인 것 같습니다." +
-                            "바쁘시겠지만 제가 어떤 부분이 부족했는지 알려주실 수 있을까요?" +
-                            "부족한 부분을 학업에 참고하여 보안하고 싶습니다. 바쁘신 와중에 시간 내주셔서 감사합니다. 날이 추운데" +
-                            "감기 조심하세요. OOO 드림."
+                binding.buttonMyClassMailToProfGrade -> { // 성적
+                    mailTitle = "[명지대/성적]  OOO수업 성적 관련하여 문의드립니다 60****** OOO"
+                    mailContent = "교수님 안녕하세요? 교수님의 N시 OO요일 OOO수업을 듣는 OOO학과 OOO입니다. " +
+                            "다름이 아니라 이번학기 수업 성적이 제가 예상한 것보다 낮아 어떤 부분이 부족했는지 알고 싶어 메일 드렸습니다." +
+                            "(물어보고 싶은 부분 작성) ex (중간/기말)시험 점수는 확인을 하였고 레포트나 과제 부분에서 점수가 많이 깎인 것 같습니다." +
+                            "부족한 부분을 알려주시면 앞으로 보안하고 싶습니다! 바쁘신 와중에 메일 확인해주셔서 감사합니다. 한 학기동안 좋은 수업해 주셔서 많이 배웠습니다." +
+                            "다시 한번 감사 드립니다 :) OOO 드림."
                 }
             }
             binding.editTextMyClassMailToProfMailTitle.setText(mailTitle)
             binding.editTextMyClassMailToProfMailContent.setText(mailContent)
+
         }
 
         val professorList = ArrayList<String>()
@@ -130,6 +119,9 @@ class MyClassMailToProfessorActivity : AppCompatActivity() {
         professorList.add("이명호 교수님")
 
         binding.spinnerMyClassMailToProfSelectMail.setItem(professorList)
+
+        // 처음에 default click
+        binding.buttonGroupMyClassMailToProfGroup.selectButton(binding.buttonMyClassMailToProfHomework)
     }
 
     override fun finish() {
