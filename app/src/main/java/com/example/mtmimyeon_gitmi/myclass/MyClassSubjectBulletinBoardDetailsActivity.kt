@@ -1,5 +1,6 @@
 package com.example.mtmimyeon_gitmi.myClass
 
+import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -61,18 +62,24 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
                     pathData.subjectCode,
                     pathData.subjectBoardIndex,
                     comment,
-                    currentUser
+                    currentUser,
+                    object : Callback<Boolean> {
+                        override fun onCallback(data: Boolean) {
+                            if(data)
+                            database.postViewCount(pathData)
+                            // 코멘트 갱신화작업
+                            subjectBulletinBoardCommentRecyclerAdapter.notifyItemRangeRemoved(
+                                0,
+                                itemSubjectBulletinBoardCommentList.size - 1
+                            )
+                            subjectBulletinBoardCommentRecyclerAdapter.notifyDataSetChanged()
+                            itemSubjectBulletinBoardCommentList.clear()
+                            postDetailCommentLoad(pathData)
+                            binding.editTextMyClassSubjectBulletinBoardWritingCommentContent.text.clear()
+                        }
+                    }
                 )
-                database.postViewCount(pathData)
-                // 코멘트 갱신화작업
-                subjectBulletinBoardCommentRecyclerAdapter.notifyItemRangeRemoved(
-                    0,
-                    itemSubjectBulletinBoardCommentList.size - 1
-                )
-                subjectBulletinBoardCommentRecyclerAdapter.notifyDataSetChanged()
-                itemSubjectBulletinBoardCommentList.clear()
-                postDetailCommentLoad(pathData)
-                binding.editTextMyClassSubjectBulletinBoardWritingCommentContent.text.clear()
+
             }
         }
 

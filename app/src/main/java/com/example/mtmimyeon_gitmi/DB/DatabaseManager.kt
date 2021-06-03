@@ -141,10 +141,10 @@ class DatabaseManager {
 
     fun writePost(
         idx: String,
-        subjectName: String,
         userId: String,
         postTitle: String,
-        postContent: String
+        postContent: String,
+        callback: Callback<Boolean>
     ) {
         callUserData(userId, object : Callback<UserData> {
             override fun onCallback(data: UserData) {
@@ -169,6 +169,7 @@ class DatabaseManager {
                             0
                         ) //테스터 대신 userName 넣어야함. data.userName
                     database.child(boardIdx).child(saveIdx).setValue(boardPost)
+                    callback.onCallback(true)
                 }
             }
         })
@@ -230,7 +231,8 @@ class DatabaseManager {
         subjectCode: String?,
         subjectIdx: String?,
         commentContent: String,
-        commenterUid: String
+        commenterUid: String,
+        callback: Callback<Boolean>
     ) {
         callUserData(commenterUid, object : Callback<UserData> {
             override fun onCallback(data: UserData) {
@@ -252,6 +254,7 @@ class DatabaseManager {
                         database = Firebase.database.getReference("board")
 
                         database.child(subjectCode).child(subjectIdx).child("comment").child(saveIdx).setValue(commentData)
+                        callback.onCallback(true)
                     } else {
                         Log.d("해달 과목이 존재하지 않습니다.", "error")
                     }

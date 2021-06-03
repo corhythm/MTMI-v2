@@ -13,11 +13,16 @@ import android.view.Window
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mtmimyeon_gitmi.R
+import com.example.mtmimyeon_gitmi.crawling.CrawlingLmsInfo
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectBulletinBoardBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemSubjectBulletinBoardBinding
 import com.example.mtmimyeon_gitmi.db.BoardPost
 import com.example.mtmimyeon_gitmi.db.Callback
 import com.example.mtmimyeon_gitmi.db.DatabaseManager
+import com.example.mtmimyeon_gitmi.util.SharedPrefManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardClickInterface {
     private lateinit var binding: ActivityMyClassSubjectBulletinBoardBinding
@@ -70,7 +75,16 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
                 overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
             }
         }
-
+        binding.swipeRefreshLayoutMyClassBoardRefresh.setOnRefreshListener {
+            subjectBulletinBoardRecyclerAdapter.notifyItemRangeRemoved(
+                0,
+                subjectBulletinBoardList.size - 1
+            )
+            subjectBulletinBoardRecyclerAdapter.notifyDataSetChanged()
+            subjectBulletinBoardList.clear()
+            postListLoad()
+            binding.swipeRefreshLayoutMyClassBoardRefresh.isRefreshing = false
+        }
     }
     private fun postListLoad(){
         database.loadPostList(subjectCode, object : Callback<ArrayList<BoardPost>> {
