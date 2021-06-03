@@ -210,7 +210,6 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
         accessRoadExpectationTime =
             requireContext().resources.getStringArray(R.array.access_road_expectation_time) // 진입로행 셔틀버스 진입로 도착 예정 시간
 
-
         // 추가 정보 버튼 클릭 시, 버스 노선 리사이킄러뷰 보이기
         binding.imageViewFragmentHomeInfo.setOnClickListener {
             if (binding.recyclerViewFragmentHomeAccessRoadStopoverList.visibility == View.GONE) {
@@ -310,7 +309,6 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                             accessRoadBusTime[accessRoadIndex]
                     }
                 }
-
             }
         }
     }
