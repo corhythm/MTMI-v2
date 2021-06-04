@@ -4,9 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassMailToProfessorBinding
 import com.marozzi.roundbutton.RoundButton
+import www.sanju.motiontoast.MotionToast
 
 class MyClassMailToProfessorActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyClassMailToProfessorBinding
@@ -19,32 +21,6 @@ class MyClassMailToProfessorActivity : AppCompatActivity() {
     }
 
     private fun init() { // 자세한 사용법: https://github.com/Chivorns/SmartMaterialSpinner 참조
-
-        binding.buttonMyClassMailToProfSend.setOnClickListener {
-            binding.buttonMyClassMailToProfSend.startAnimation()
-            Handler().postDelayed({ // delay 후 실행할 코드
-                binding.buttonMyClassMailToProfSend.stopAnimation()
-                binding.buttonMyClassMailToProfSend.setResultState(RoundButton.ResultState.SUCCESS)
-                binding.buttonMyClassMailToProfSend.revertAnimation()
-
-                // email 보내기(이메일 앱이 깔려 있으면 관련된 앱으로 이동)
-                startActivity(Intent(Intent.ACTION_SEND).apply {
-                    // The intent does not have a URI, so declare the "text/plain" MIME type
-                    type = "text/html"
-                    putExtra(Intent.EXTRA_EMAIL, arrayOf("professor@mju.ac.kr")) // receiver
-                    putExtra(
-                        Intent.EXTRA_SUBJECT,
-                        binding.editTextMyClassMailToProfMailTitle.text.toString()
-                    ) // title
-                    putExtra(
-                        Intent.EXTRA_TEXT,
-                        binding.editTextMyClassMailToProfMailContent.text.toString()
-                    ) // content
-                    // putExtra(Intent.EXTRA_STREAM, Uri.parse("content://path/to/email/attachment")) // 첨부 파일
-                    // You can also attach multiple items by passing an ArrayList of Uris
-                })
-            }, 1000)
-        }
 
         binding.buttonGroupMyClassMailToProfGroup.setOnSelectListener {
             // 버튼 클릭할 때마다 들어갈 텍스트, 나중에 DB에서 가져오는 걸로 바꿔야 함
@@ -99,26 +75,56 @@ class MyClassMailToProfessorActivity : AppCompatActivity() {
 
         }
 
-        val professorList = ArrayList<String>()
-        professorList.add("류연승 교수님")
-        professorList.add("장혁수 교수님")
-        professorList.add("조세형 교수님")
-        professorList.add("조민경 교수님")
-        professorList.add("김직수 교수님")
-        professorList.add("박현민 교수님")
-        professorList.add("김상운 교수님")
-        professorList.add("김상귀 교수님")
-        professorList.add("안희철 교수님")
-        professorList.add("신민호 교수님")
-        professorList.add("이충기 교수님")
-        professorList.add("장희점 교수님")
-        professorList.add("권동섭 교수님")
-        professorList.add("김상균 교수님")
-        professorList.add("윤병주 교수님")
-        professorList.add("이강선 교수님")
-        professorList.add("이명호 교수님")
+        // 교수 이름 초기화
+        val professorNameList = resources.getStringArray(R.array.professor_name).toMutableList()
+        val professorEmailList = resources.getStringArray(R.array.professor_email).toMutableList()
+        binding.spinnerMyClassMailToProfSelectMail.setItem(professorNameList)
 
-        binding.spinnerMyClassMailToProfSelectMail.setItem(professorList)
+
+        // 메일 보내기 버튼을 클릭했을 때
+        binding.buttonMyClassMailToProfSend.setOnClickListener {
+            if (binding.spinnerMyClassMailToProfSelectMail.selectedItem != null) { // 교수님을 선택했을 때
+                binding.buttonMyClassMailToProfSend.startAnimation()
+                Handler().postDelayed({ // delay 후 실행할 코드
+                    binding.buttonMyClassMailToProfSend.stopAnimation()
+                    binding.buttonMyClassMailToProfSend.setResultState(RoundButton.ResultState.SUCCESS)
+                    binding.buttonMyClassMailToProfSend.revertAnimation()
+                    val position = binding.spinnerMyClassMailToProfSelectMail.selectedItemPosition
+
+                    // email 보내기(이메일 앱이 깔려 있으면 관련된 앱으로 이동)
+                    startActivity(Intent(Intent.ACTION_SEND).apply {
+                        // The intent does not have a URI, so declare the "text/plain" MIME type
+                        type = "text/html"
+                        putExtra(
+                            Intent.EXTRA_EMAIL,
+                            arrayOf(professorEmailList[position])
+                        ) // receiver
+                        putExtra(
+                            Intent.EXTRA_SUBJECT,
+                            binding.editTextMyClassMailToProfMailTitle.text.toString()
+                        ) // title
+                        putExtra(
+                            Intent.EXTRA_TEXT,
+                            binding.editTextMyClassMailToProfMailContent.text.toString()
+                        ) // content
+                        // putExtra(Intent.EXTRA_STREAM, Uri.parse("content://path/to/email/attachment")) // 첨부 파일
+                        // You can also attach multiple items by passing an ArrayList of Uris
+                    })
+                }, 500)
+            } else {
+                MotionToast.createColorToast(
+                    this,
+                    "Error",
+                    "메일을 보낼 교수님을 선택해주세요.",
+                    MotionToast.TOAST_WARNING,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.SHORT_DURATION,
+                    ResourcesCompat.getFont(this, R.font.helvetica_regular)
+                )
+            }
+
+
+        }
 
         // 처음에 default click
         binding.buttonGroupMyClassMailToProfGroup.selectButton(binding.buttonMyClassMailToProfHomework)
