@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.example.mtmimyeon_gitmi.CopyrightActivity
 import com.example.mtmimyeon_gitmi.R
@@ -17,6 +18,7 @@ import com.example.mtmimyeon_gitmi.db.DatabaseManager
 import com.example.mtmimyeon_gitmi.db.UserData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
+import kotlin.system.exitProcess
 
 class MyProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyProfileBinding
@@ -68,7 +70,15 @@ class MyProfileActivity : AppCompatActivity() {
         // AppbarLayout elevation = 0dp
         binding.appLayoutMyProfileAppbarLayout.outlineProvider = null
 
-
+        binding.textViewMyProfileLogout.setOnClickListener{
+            auth.signOut()
+            finishAffinity()
+            Intent(this,LoginActivity::class.java).also{
+                startActivity(it)
+                overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
+                exitProcess(0)
+            }
+        }
         // toolbar appbar로 지정
         setSupportActionBar(binding.toolbarMyProfileToolbar)
 

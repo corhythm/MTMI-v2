@@ -87,25 +87,30 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
 
         // 게시글 작성자에게 메시지 보내기
         binding.imageViewMyClassSubjectBulletinBoardDetailsMessage.setOnClickListener {
-            Log.d("클릭리스너 실행", "메시지창 불러오는중")
-            var chatId = makeChat(auth.currentUser.uid, pathData.writerUid.toString())
-            Toast.makeText(
-                this,
-                "채팅방 개설 성공",
-                Toast.LENGTH_SHORT
-            ).show()
+            if (auth.uid.toString() == pathData.writerUid) {
+                Toast.makeText(this, "본인에게는 메세지를 보낼 수 없습니다.", Toast.LENGTH_SHORT).show()
+            } else {
+                Log.d("클릭리스너 실행", "메시지창 불러오는중")
+                var chatId = makeChat(auth.currentUser.uid, pathData.writerUid.toString())
+                Toast.makeText(
+                    this,
+                    "채팅방 개설 성공",
+                    Toast.LENGTH_SHORT
+                ).show()
 
 
-            var chatIntent = Intent(
-                this,
-                ChattingRoomDetailsActivity::class.java
-            )
-            chatIntent.putExtra("chatId", chatId).also {
-                startActivity(
-                    it,
-                    ActivityOptions.makeSceneTransitionAnimation(this@MyClassSubjectBulletinBoardDetailsActivity)
-                        .toBundle()
+                var chatIntent = Intent(
+                    this,
+                    ChattingRoomDetailsActivity::class.java
                 )
+                chatIntent.putExtra("chatId", chatId).also {
+                    chatIntent.putExtra("partnerImg", "image/IMAGE_${pathData.writerUid}.png")
+                    startActivity(
+                        it,
+                        ActivityOptions.makeSceneTransitionAnimation(this@MyClassSubjectBulletinBoardDetailsActivity)
+                            .toBundle()
+                    )
+                }
             }
         }
     }
@@ -172,28 +177,36 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
         Log.d("postDetailCommentLoad", "post comment 로드 종료")
     }
 
-    override fun sendMessageClicked(commentIdx: Int) {
+    override fun sendMessageClicked(commentIdx: Int,profileImg: String) {
         // 댓글 단 사람들 중에 채팅 보낼 때
-        Log.d("댓글단사람들 확인중", "메세지보내기")
-        Log.d("클릭리스너 실행", "메시지창 불러오는중")
-        var chatId = makeChat(auth.currentUser.uid, itemSubjectBulletinBoardCommentList[commentIdx].commenterUid)
-        Toast.makeText(
-            this,
-            "채팅방 개설 성공",
-            Toast.LENGTH_SHORT
-        ).show()
-
-
-        var chatIntent = Intent(
-            this,
-            ChattingRoomDetailsActivity::class.java
-        )
-        chatIntent.putExtra("chatId", chatId).also {
-            startActivity(
-                it,
-                ActivityOptions.makeSceneTransitionAnimation(this@MyClassSubjectBulletinBoardDetailsActivity)
-                    .toBundle()
+        if(auth.uid.toString() == itemSubjectBulletinBoardCommentList[commentIdx].commenterUid){
+            Toast.makeText(this,"본인에게는 메세지를 보낼 수 없습니다.",Toast.LENGTH_SHORT).show()
+        }else {
+            Log.d("댓글단사람들 확인중", "메세지보내기")
+            Log.d("클릭리스너 실행", "메시지창 불러오는중")
+            var chatId = makeChat(
+                auth.currentUser.uid,
+                itemSubjectBulletinBoardCommentList[commentIdx].commenterUid
             )
+            Toast.makeText(
+                this,
+                "채팅방 개설 성공",
+                Toast.LENGTH_SHORT
+            ).show()
+
+
+            var chatIntent = Intent(
+                this,
+                ChattingRoomDetailsActivity::class.java
+            )
+            chatIntent.putExtra("chatId", chatId).also {
+                chatIntent.putExtra("partnerImg", profileImg)
+                startActivity(
+                    it,
+                    ActivityOptions.makeSceneTransitionAnimation(this@MyClassSubjectBulletinBoardDetailsActivity)
+                        .toBundle()
+                )
+            }
         }
     }
 
@@ -204,7 +217,7 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
 }
 
 interface sendMessageClickInterface { // 댓글 단 사람들과 채팅
-    fun sendMessageClicked(commentIdx: Int)
+    fun sendMessageClicked(commentIdx: Int,profileImg: String)
 }
 
 class SubjectBulletinBoardCommentRecyclerAdapter(
@@ -253,12 +266,13 @@ class SubjectBulletinBoardCommentViewHolder(
                 FirebaseStorage.getInstance().reference.child("image/$data").downloadUrl.addOnSuccessListener {that ->
                     Glide.with(itemView.context).load(that).circleCrop().into(item.imageViewItemSubjectBulletinBoardCommentProfileImg)
                 }
+                item.imageViewItemSubjectBulletinBoardCommentMessage.setOnClickListener {
+                    this@SubjectBulletinBoardCommentViewHolder.sendMessageClickInterface.sendMessageClicked(adapterPosition,"image/$data")
+                    Log.d("클릭한 아이템",adapterPosition.toString())
+                }
             }
         }) }
 
-        item.imageViewItemSubjectBulletinBoardCommentMessage.setOnClickListener {
-            this.sendMessageClickInterface.sendMessageClicked(adapterPosition)
-            Log.d("클릭한 아이템",adapterPosition.toString())
-        }
+
     }
 }

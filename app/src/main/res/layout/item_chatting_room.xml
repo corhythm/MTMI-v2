@@ -45,7 +45,7 @@
 
     <TextView
         android:id="@+id/textView_itemChattingRoom_timeStamp"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         tools:text="2021-05-21 화"
         android:textSize="10sp"

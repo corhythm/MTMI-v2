@@ -40,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
                 DB_M.loginEmail(loginUserId, loginUserPw, this, object : Callback<Boolean> {
                     override fun onCallback(data: Boolean) {
                         if (data) {
+
                             binding.buttonLoginSignIn.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND,
                                 TransitionButton.OnAnimationStopEndListener {
                                     Intent(this@LoginActivity,HomeActivity::class.java).also {
