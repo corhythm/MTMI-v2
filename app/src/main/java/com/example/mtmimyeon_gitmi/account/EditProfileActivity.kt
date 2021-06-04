@@ -13,6 +13,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.example.mtmimyeon_gitmi.R
@@ -47,6 +48,8 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
                     binding.editTextActivityEditProfileIdValue.setText(data.id)
                     binding.editTextActivityEditProfileNameValue.setText(data.userName)
                     binding.editTextActivityEditProfileStudentIdValue.setText(data.student_id)
+                    binding.editTextActivityEditProfilePwValue.setText(data.pw)
+                    binding.editTextActivityEditProfilePwConfirmValue.setText(data.pw)
                     binding.editTextActivityEditProfileBirthValue.setText(data.birth)
                     gender= data.gender
                     loadProfileImage(data.userProfileImageUrl)
@@ -72,9 +75,11 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { // 텍스트 변경 감지
                 if (binding.editTextActivityEditProfilePwValue.text.toString() == binding.editTextActivityEditProfilePwConfirmValue.text.toString()) { // 비밀번호가 일치할 때
-                    binding.imageViewActivityEditProfileCheckPassword.setImageResource(R.drawable.ic_pw_check)
+                    binding.editTextActivityEditProfilePwConfirmValue.setCompoundDrawablesWithIntrinsicBounds(null, null,
+                        ContextCompat.getDrawable(this@EditProfileActivity, R.drawable.drawable_end_pw_check), null)
                 } else { // 비밀번호가 일치하지 않을 때
-                    binding.imageViewActivityEditProfileCheckPassword.setImageResource(R.drawable.ic_x)
+                    binding.editTextActivityEditProfilePwConfirmValue.setCompoundDrawablesWithIntrinsicBounds(null, null,
+                        ContextCompat.getDrawable(this@EditProfileActivity, R.drawable.drawable_end_pw_check), null)
                 }
             }
 
