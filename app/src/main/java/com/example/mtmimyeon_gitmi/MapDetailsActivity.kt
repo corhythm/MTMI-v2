@@ -35,6 +35,7 @@ class MapDetailsActivity : AppCompatActivity(), MapView.MapViewEventListener,
 
         // init kakao map
         val mapView = MapView(this)
+
         val markerList = ArrayList<MapPOIItem>()
         val locationNameList = resources.getStringArray(R.array.campus_building_name)
         val locationLatitudeList = resources.getStringArray(R.array.campus_building_latitude)

@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="21.04.25 12:23"
-        android:textSize="15sp"
+        android:textSize="12sp"
         android:layout_marginBottom="5dp"
         android:fontFamily="@font/karla_regular"
         app:layout_constraintHorizontal_bias="0.01"

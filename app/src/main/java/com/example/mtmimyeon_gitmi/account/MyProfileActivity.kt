@@ -1,5 +1,6 @@
 package com.example.mtmimyeon_gitmi.account
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,7 +21,9 @@ import com.google.firebase.storage.FirebaseStorage
 class MyProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyProfileBinding
     private var auth = FirebaseAuth.getInstance()
+    private var extraProfileImageUri: String=""
     private var db = DatabaseManager()
+    private  var currentUid = auth.uid.toString()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyProfileBinding.inflate(layoutInflater)
@@ -30,8 +33,8 @@ class MyProfileActivity : AppCompatActivity() {
 
     private fun init() {
 
-        var currentUid = auth.uid.toString()
-        loadProfileImage()
+
+
         db.callUserData(currentUid, object : Callback<UserData> {
             override fun onCallback(data: UserData) {
                 if(data != null){
@@ -40,7 +43,9 @@ class MyProfileActivity : AppCompatActivity() {
                     binding.textViewMyProfileStudentIdValue.text = data.student_id
                     binding.textViewMyProfileMajorValue.text = data.major
                     binding.textViewMyProfileBirthdayValue.text = data.birth
-                    //이부분에 업데이트 이미지 넣어야함.
+                    Log.d("data",data.toString())
+                    loadProfileImage(data.userProfileImageUrl)
+                    extraProfileImageUri = data.userProfileImageUrl
                 }
             }
         })
@@ -72,17 +77,39 @@ class MyProfileActivity : AppCompatActivity() {
             finish()
         }
     }
-    fun loadProfileImage() {
-        var userUid = auth.uid.toString()
-        FirebaseStorage.getInstance().reference.child("image/IMAGE_$userUid.png").downloadUrl.addOnSuccessListener {
-            Log.d("프로필사진 로드", it.toString())
-            var profileImage = binding.imageViewMyProfileProfileImg
-            Glide.with(applicationContext).load(it).circleCrop().into(profileImage)
-        }.addOnFailureListener {
-            Log.d("프로필사진 로드","프로필사진없음")
+    private fun loadProfileImage(profileImageUri: String) {
+        if(profileImageUri!="empty") {
+            FirebaseStorage.getInstance().reference.child("image/$profileImageUri").downloadUrl.addOnSuccessListener {
+                Log.d("프로필사진 로드", it.toString())
+                var profileImage = binding.imageViewMyProfileProfileImg
+                Glide.with(applicationContext).load(it).circleCrop().into(profileImage)
+            }.addOnFailureListener {
+                Log.d("프로필사진 로드", "프로필사진없음")
+            }
+        }
+        else{
+            Log.d("프로필 사진 로드","사진없음")
         }
     }
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            db.callUserData(currentUid, object : Callback<UserData> {
+                override fun onCallback(data: UserData) {
+                    if(data != null){
+                        binding.textViewMyProfileName.text = data.userName
+                        binding.textViewMyProfileEmail.text = data.id
+                        binding.textViewMyProfileStudentIdValue.text = data.student_id
+                        binding.textViewMyProfileMajorValue.text = data.major
+                        binding.textViewMyProfileBirthdayValue.text = data.birth
+                        Log.d("data",data.toString())
+                        loadProfileImage(data.userProfileImageUrl)
+                        extraProfileImageUri = data.userProfileImageUrl
+                    }
+                }
+            })
+        }
+    }
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
@@ -99,8 +126,10 @@ class MyProfileActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.menu_edit_account -> { // 프로필 수정 메뉴 누르면 EditProfileActivity로 이동
                 Intent(this, EditProfileActivity::class.java).also {
+                    intent.putExtra("profileImage",extraProfileImageUri)
                     startActivity(it)
                     overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
+                    finish()
                 }
             }
         }

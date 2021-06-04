@@ -4,10 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityMyClassSubjectBulletinBoardWritingBinding
+import com.example.mtmimyeon_gitmi.db.Callback
 import com.example.mtmimyeon_gitmi.db.DatabaseManager
 import com.google.firebase.auth.FirebaseAuth
 
@@ -60,7 +62,13 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
         var writter = auth.currentUser.uid
         var title = binding.editTextMyClassSubjectBulletinBoardWritingTitle.text.toString()
         var content = binding.editTextMyClassSubjectBulletinBoardWritingContent.text.toString()
-        DB.writePost(idx,subjectName,writter, title, content)
+        DB.writePost(idx,writter, title, content, object : Callback<Boolean> {
+            override fun onCallback(data: Boolean) {
+                if(data){
+                    Log.d("포스트업로드","성공")
+                }
+            }
+        })
     }
     override fun finish() {
         super.finish()

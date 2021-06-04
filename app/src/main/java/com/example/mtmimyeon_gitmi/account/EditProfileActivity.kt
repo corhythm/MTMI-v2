@@ -1,5 +1,7 @@
 package com.example.mtmimyeon_gitmi.account
 
+import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -10,7 +12,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
+import com.bumptech.glide.Glide
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityEditProfileBinding
 import com.example.mtmimyeon_gitmi.db.Callback
@@ -24,8 +28,10 @@ import dev.shreyaspatil.MaterialDialog.model.TextAlignment
 class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityEditProfileBinding
     private lateinit var profileImage: Uri
+    private lateinit var gender: String
     private var auth = FirebaseAuth.getInstance()
     var db = DatabaseManager()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
@@ -42,6 +48,8 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
                     binding.editTextActivityEditProfileNameValue.setText(data.userName)
                     binding.editTextActivityEditProfileStudentIdValue.setText(data.student_id)
                     binding.editTextActivityEditProfileBirthValue.setText(data.birth)
+                    gender= data.gender
+                    loadProfileImage(data.userProfileImageUrl)
                 }
             }
         })
@@ -81,11 +89,73 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
 
         // 업데이트 버튼 누르면 --> 프로필 업데이트
         binding.buttonActivityEditProfileUpdateProfile.setOnClickListener {
-            db.editUserData(profileImage)
-            Intent(this, MyProfileActivity::class.java).also {
-                startActivity(it)
-                overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
+            var updateCheck = true
+            var updateId = binding.editTextActivityEditProfileIdValue.text.toString()
+            var updatePw=  binding.editTextActivityEditProfilePwValue.text.toString()
+            var updateStudentId =binding.editTextActivityEditProfileStudentIdValue.text.toString()
+            var updateName = binding.editTextActivityEditProfileNameValue.text.toString()
+            var updateBirth = binding.editTextActivityEditProfileBirthValue.text.toString()
+            var updateMajor :String
+            if(binding.spinnerActivityEditProfileMajor.selectedItem != null){
+                updateMajor = binding.spinnerActivityEditProfileMajor.selectedItem.toString()
+            }else{
+                updateMajor = "empty"
+                updateCheck = false
+                Log.d("major check","false")
             }
+            if(updateCheck && (binding.editTextActivityEditProfilePwConfirmValue.text.toString() == updatePw)) {
+                Log.d("update Check", "true")
+
+                var userData = UserData(
+                    updateId,
+                    updatePw,
+                    updateStudentId,
+                    updateName,
+                    updateBirth,
+                    gender,
+                    updateMajor,
+                    profileImage.toString()
+                )
+                Toast.makeText(this, "유저데이터를 수정하는 중입니다", Toast.LENGTH_LONG).show()
+                db.editUserData(profileImage, userData, object : Callback<Boolean> {
+                    // 이미지 업로드시 callback 으로 받아오기
+                    override fun onCallback(data: Boolean) {
+                        if (data) {
+                            Intent(this@EditProfileActivity, MyProfileActivity::class.java).also {
+                                intent.putExtra("update", true)
+                                setResult(Activity.RESULT_OK, intent)
+                                startActivity(it)
+                                overridePendingTransition(
+                                    R.anim.activity_slide_in,
+                                    R.anim.activity_slide_out
+                                )
+                                finish()
+                            }
+                        } else {
+                            Log.d(
+                                "confirm check pw ",
+                                binding.editTextActivityEditProfilePwConfirmValue.text.toString()
+                            )
+                            Log.d("pw", updatePw)
+                            Log.d("update Check", "false")
+                            Toast.makeText(this@EditProfileActivity, "수정할 정보르 다시 한번 확인해주세요.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                })
+            }
+        }
+    }
+    private fun loadProfileImage(profileImageUri: String) {
+        if(profileImageUri != "empty") {
+            FirebaseStorage.getInstance().reference.child("image/$profileImageUri").downloadUrl.addOnSuccessListener {
+                Log.d("프로필사진 로드", it.toString())
+                var profileImage = binding.imageViewActivityEditProfileProfileImg
+                Glide.with(applicationContext).load(it).circleCrop().into(profileImage)
+            }.addOnFailureListener {
+                Log.d("프로필사진 로드", "프로필사진없음")
+            }
+        }else{
+            Log.d("프로필사진 로드 ","프로필 사진 없음")
         }
     }
     // 갤러리에서 사진 불러오기

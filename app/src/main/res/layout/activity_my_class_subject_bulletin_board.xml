@@ -1,66 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRefreshLayout_myClassBoard_refresh"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center"
-    tools:context=".myClass.MyClassSubjectBulletinBoardActivity">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appLayout_myClassSubjectBulletinBoard_appbarLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        tools:context=".myClass.MyClassSubjectBulletinBoardActivity">
 
-        <!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            app:contentScrim="?attr/colorPrimary"-->
-        <!--            app:expandedTitleMarginBottom="28dp"-->
-        <!--            app:titleEnabled="false"-->
-        <!--            app:collapsedTitleGravity ="bottom|center_horizontal"-->
-        <!--            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"-->
-        <!--            app:statusBarScrim="?attr/colorPrimaryVariant">-->
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_MyClassSubjectBulletinBoard_toolbar"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appLayout_myClassSubjectBulletinBoard_appbarLayout"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
-            app:title=""
-            app:titleCentered="true"
-            app:titleTextColor="@color/black" />
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
-    </com.google.android.material.appbar.AppBarLayout>
+            <!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="match_parent"-->
+            <!--            app:contentScrim="?attr/colorPrimary"-->
+            <!--            app:expandedTitleMarginBottom="28dp"-->
+            <!--            app:titleEnabled="false"-->
+            <!--            app:collapsedTitleGravity ="bottom|center_horizontal"-->
+            <!--            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"-->
+            <!--            app:statusBarScrim="?attr/colorPrimaryVariant">-->
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_myClassSubjectBulletinBoard_boardList"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layoutAnimation="@anim/layout_animation1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appLayout_myClassSubjectBulletinBoard_appbarLayout" />
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar_MyClassSubjectBulletinBoard_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
+                app:title=""
+                app:titleCentered="true"
+                app:titleTextColor="@color/black" />
+
+            <!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_myClassSubjectBulletinBoard_boardList"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layoutAnimation="@anim/layout_animation1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appLayout_myClassSubjectBulletinBoard_appbarLayout" />
 
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/extendFab_myClassSubjectBulletinBoard_addWriting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/airbnb_cereal_black"
-        android:text="새 글 작성"
-        app:background="@drawable/bg_rounded_corner_gradient3"
-        app:icon="@drawable/ic_my_class_subject_bulletin_board_write"
-        app:iconTint="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.96" />
-    <!--        app:icon="@drawable/ic_myclass_subject_bulletin_board_write"-->
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/extendFab_myClassSubjectBulletinBoard_addWriting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/airbnb_cereal_black"
+            android:text="새 글 작성"
+            app:background="@drawable/bg_rounded_corner_gradient3"
+            app:icon="@drawable/ic_my_class_subject_bulletin_board_write"
+            app:iconTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.96" />
+        <!--        app:icon="@drawable/ic_myclass_subject_bulletin_board_write"-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
