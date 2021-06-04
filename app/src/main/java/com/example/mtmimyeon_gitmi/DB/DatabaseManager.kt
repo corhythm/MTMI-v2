@@ -95,6 +95,23 @@ class DatabaseManager {
         var newChat = Chat(chatRoomId, sendUser, receiveUser)
         database.child(chatRoomId).setValue(newChat)
     }
+//    fun callChatRoomData(roomId: String,callback: Callback<Chat>){
+//       database = Firebase.database.getReference("chat").child(roomId)
+//       database.addListenerForSingleValueEvent(object : ValueEventListener{
+//           override fun onDataChange(snapshot: DataSnapshot) {
+//               var roomData: Chat? = snapshot.getValue<Chat>()
+//               if(roomData != null){
+//                   callback.onCallback(roomData)
+//               }else{
+//                   Log.d("callChatRoomData","오류")
+//               }
+//           }
+//
+//           override fun onCancelled(error: DatabaseError) {
+//               Log.d("방정보","없음")
+//           }
+//       })
+//    }
 
 //     채팅 중복 찾기
     fun checkChat(chatRoomId: String,callback: Callback<Boolean>){
@@ -132,7 +149,7 @@ class DatabaseManager {
         var formatted = current.format(uiFormatter)
         val chat_message =
             ChatMessage(chatRoomId, name, userId, message, imageUri, formatted) //메세지내용 전달
-        val chatListForm = ChatListForm("",name,message,formatted,chatRoomId)
+        val chatListForm = ChatListForm("image/IMAGE_$userId.png",name,message,formatted,chatRoomId)
         database = Firebase.database.getReference("chat") //chat reference
         formatted = current.format(dbSaveFormatter)
         database.child(chatRoomId).child("chatting").child(formatted).setValue(chat_message) //db저장
@@ -192,6 +209,19 @@ class DatabaseManager {
                     Log.d("게시물 가져오기실패 :. ", "게시물을 가져오기 실패")
                 }
             })
+    }
+    fun callUserDataImageUri(userUid: String,callback: Callback<String>){
+        Firebase.database.getReference("user").child(userUid).child("userProfileImageUrl").addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var profileImageUrl: String = snapshot.value as String
+                callback.onCallback(profileImageUrl)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("사진 Url 불러오는중","오류")
+            }
+
+        })
     }
 
     fun loadPostList(idx: String, callback: Callback<ArrayList<BoardPost>>) { // 과목별시판 불러오기

@@ -8,11 +8,13 @@ import android.util.Log
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityChattingRoomListBinding
 import com.example.mtmimyeon_gitmi.databinding.ItemChattingRoomBinding
 import com.example.mtmimyeon_gitmi.db.*
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -72,7 +74,7 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
     }
 
     // 특정 채팅방을 클릭했을 때
-    override fun chattingRoomClicked(chattingRoomIdx: String) { // 채팅 방 번호 <- 이걸로 채팅방 검색(필요 시 탐색 데이터 추가할 것)
+    override fun chattingRoomClicked(chattingRoomIdx: String,imgUrl: String) { // 채팅 방 번호 <- 이걸로 채팅방 검색(필요 시 탐색 데이터 추가할 것)
         Log.d("클릭", "클릭@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
         Log.d("chattingRoomIdx 체크", chattingRoomIdx)
         var chatIntent = Intent(
@@ -80,7 +82,7 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
             ChattingRoomDetailsActivity::class.java
         )
 
-        chatIntent.putExtra("chatId", chattingRoomIdx).also {
+        chatIntent.putExtra("chatId", chattingRoomIdx).putExtra("partnerImg",imgUrl).also {
             startActivity(it)
             overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
         }
@@ -134,14 +136,17 @@ class ChattingRoomViewHolder(
         item.textViewItemChattingRoomUserName.text = itemChattingRoom.name
         item.textViewItemChattingRoomLastMessage.text = itemChattingRoom.lastChat
         item.textViewItemChattingRoomTimeStamp.text = itemChattingRoom.timeStamp
+        FirebaseStorage.getInstance().reference.child(itemChattingRoom.imgUrl).downloadUrl.addOnSuccessListener { that ->
+            Glide.with(itemView.context).load(that).circleCrop().into(item.imageViewItemChattingRoomProfileImg)
+        }
 
         item.root.setOnClickListener {
             Log.d("채팅방 아이디 확인", itemChattingRoom.chatRoomId)
-            this.ChattingRoomClickInterface.chattingRoomClicked(itemChattingRoom.chatRoomId)
+            this.ChattingRoomClickInterface.chattingRoomClicked(itemChattingRoom.chatRoomId,itemChattingRoom.imgUrl)
         }
     }
 }
 
 interface ChattingRoomClickInterface {
-    fun chattingRoomClicked(chattingRoomIdx: String)
+    fun chattingRoomClicked(chattingRoomIdx: String,imgurl: String)
 }

@@ -13,7 +13,7 @@ data class BoardPost(
     var view: Int?
 
 ):Serializable {
-    constructor() : this("","","","","","","",-1){}
+    constructor() : this("","","","","","","",-1,){}
     init {
         this.subjectCode = subjectCode
         this.title = title
