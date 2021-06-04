@@ -45,43 +45,212 @@
 
 
     <string-array name="major">
-        <item>전공을 선택하세요</item>
-        <item>컴퓨터공학과</item>
-        <item>전자공학과</item>
-        <item>통계학과</item>
-        <item>물리학과</item>
-        <item>정보통신공학</item>
-        <item>화학과</item>
-        <item>화학공학과</item>
-        <item>생물학과</item>
-        <item>생명공학과</item>
-        <item>기계공학과</item>
-        <item>자유전공학부</item>
-        <item>바둑학과</item>
-        <item>뮤지컬학과</item>
-        <item>시각디자인학과</item>
-        <item>체육학과</item>
-        <item>교통공학과</item>
-        <item>전기공학과</item>
+        <item>국어국문학과</item>
+        <item>중어중문학과</item>
+        <item>일어일문학과</item>
+        <item>영어영문학과</item>
+        <item>사학과</item>
+        <item>문헌정보학과</item>
+        <item>아랍지역학과</item>
+        <item>미술사학과</item>
+        <item>철학과</item>
+        <item>문예창작학과</item>
+
+        <item>행정학과</item>
+        <item>경제학과</item>
+        <item>정치외교학과</item>
+        <item>디지털미디어학과</item>
+        <item>아동학과</item>
+        <item>청소년지도학과</item>
+
+        <item>경영학과</item>
+        <item>국제통상학과</item>
+        <item>경영정보학과</item>
+
+        <item>법학과</item>
+        <item>법무정책학과</item>
+
+        <item>디지털콘텐츠디자인학과</item>
+        <item>융합소프트웨어학부</item>
+        <item>정보통신확과</item>
+
+        <item>창의융합인재학부</item>
+        <item>사회복지학과</item>
+        <item>부동산학과</item>
+        <item>법무행정학과</item>
+        <item>심리치료학과</item>
+        <item>미래융합경영학과</item>
+        <item>멀티디자인학과</item>
+        <item>계약학과</item>
+
         <item>수학과</item>
-        <item>토목공학과</item>
-        <item>건축학과</item>
-        <item>자유전공학부</item>
+        <item>물리학과</item>
+        <item>화학과</item>
+        <item>식품영양학과</item>
+        <item>샹명과학정보학과</item>
+
+        <item>전기공학과</item>
+        <item>전자공학과</item>
+        <item>화학공학과</item>
+        <item>신소재공학과</item>
+        <item>환경에너지공학과</item>
+        <item>컴퓨터공학과</item>
+        <item>토목환경공학과</item>
+        <item>교통공학과</item>
+        <item>기계공학과</item>
+        <item>산업경영공학과</item>
+
+        <item>디자인학부</item>
+        <item>스포츠학부</item>
+        <item>바둑학과</item>
+        <item>예술학부</item>
+
+        <item>건축학부</item>
+
+        <item>전공자유학부(인문)</item>
+        <item>전공자유학부(자연)</item>
+        <item>융합전공학부(인문)</item>
+
+        <item>공상관리학과</item>
     </string-array>
 
-    <string-array name="professor">
-        <item>이메일을 보낼 교수님을 선택하세요!</item>
-        <item>문은호 교수&lt;dnr2144@gmail.com&gt;</item>
-        <item>김민호 교수&lt;dnr2144@gmail.com&gt;</item>
-        <item>구은총 교수&lt;dnr2144@gmail.com&gt;</item>
-        <item>최다연 교수&lt;dnr2144@gmail.com&gt;</item>
-        <item>김범진 교수&lt;dnr2144@gmail.com&gt;</item>
-        <item>안희철 교수&lt;dnr2144@gmail.com&gt;</item>
-        <item>류연승 교수&lt;dnr2144@gmail.com&gt;</item>
-        <item>김태우 교수&lt;dnr2144@gmail.com&gt;</item>
-        <item>박민우 교수&lt;dnr2144@gmail.com&gt;</item>
-        <item>김상귀 교수&lt;dnr2144@gmail.com&gt;</item>
-        <item>김진호 교수&lt;dnr2144@gmail.com&gt;</item>
+    <string-array name="major_site">
+
+        <item>http://jw4.mju.ac.kr/user/kll/index.action</item> <!-- 국어국문학과-->
+        <item>https://cll.mju.ac.kr/cll/index.do</item> <!-- 중어중문학과-->
+        <item>https://nichibun.mju.ac.kr/nichibun/index.do</item> <!-- 일어일문학과-->
+        <item>http://jw4.mju.ac.kr/user/english/index.action</item> <!-- 영어영문학과-->
+        <item>https://www.mju.ac.kr/mjukr/538/subview.do</item> <!-- 사학과-->
+        <item>http://jw4.mju.ac.kr/user/lis/index.action</item> <!-- 문헌정보학과-->
+        <item>http://jw4.mju.ac.kr/user/arab/index.action</item> <!-- 아랍지역학과-->
+        <item>https://www.mjuarthistory.org/</item> <!-- 미술사학과-->
+        <item>https://www.mju.ac.kr/mjukr/565/subview.do</item> <!-- 철학과-->
+        <item>http://jw4.mju.ac.kr/user/writers/index.action</item> <!-- 문예창작학과-->
+
+        <item>https://www.mju.ac.kr/mjukr/578/subview.do</item> <!-- 행정학과-->
+        <item>https://www.mjuecon.org/</item> <!-- 경제학과-->
+        <item>https://www.mju.ac.kr/mjukr/591/subview.do</item> <!-- 정치외교학과-->
+        <item>https://www.mju.ac.kr/mjukr/597/subview.do</item><!-- 디지털미디어학괴-->
+        <item>https://www.mju.ac.kr/mjukr/603/subview.do</item><!-- 아동학과-->
+        <item>https://www.mju.ac.kr/mjukr/609/subview.do</item><!-- 청소년지도학과-->
+
+        <item>https://biz.mju.ac.kr/</item><!-- 경영학과-->
+        <item>https://www.mju.ac.kr/sites/sba/index.do</item><!-- 국제통상학과-->
+        <item>https://www.mju.ac.kr/sba/2229/subview.do</item><!-- 경영정보학과-->
+
+        <item>https://col.mju.ac.kr/col/index.do</item><!-- 법학과-->
+        <item>http://jw4.mju.ac.kr/user/lanp/index.action</item><!-- 법무정책학과-->
+
+        <item>https://www.mju.ac.kr/mjukr/664/subview.do</item><!-- 디지털콘텐츠디자인학과-->
+        <item>https://www.mju.ac.kr/mjukr/670/subview.do</item><!-- 융합소프트웨어학과-->
+        <item>https://ince.mju.ac.kr/ince/index.do</item><!-- 정보통신학과-->
+
+        <item>http://future.mju.ac.kr/default/sub2/sub1.php</item><!-- 창의융합인재학부-->
+        <item>http://mjwelfare.mju.ac.kr/default/</item><!-- 사회복지학과-->
+        <item>http://real.mju.ac.kr/default/</item><!-- 부동산학과-->
+        <item>http://mjlaw.mju.ac.kr/default/</item><!-- 법무행정학과-->
+        <item>http://psy.mju.ac.kr/default/</item><!-- 심리치료학과-->
+        <item>http://dfba.mju.ac.kr/default/</item><!-- 미래융합경영학과-->
+        <item>https://multid.mju.ac.kr/default/</item><!-- 멀티디자인학과-->
+        <item>http://bizhrd.mju.ac.kr/default/</item><!-- 계약학과-->
+
+        <item>http://jw4.mju.ac.kr/user/math/index.action</item><!-- 수학과-->
+        <item>http://jw4.mju.ac.kr/user/physics/index.action</item><!-- 물리학과-->
+        <item>https://www.mju.ac.kr/mjukr/726/subview.do</item><!-- 화학과-->
+        <item>https://cafe.daum.net/foodzzang</item><!-- 식품경영학과-->
+        <item>https://www.mju.ac.kr/mjukr/739/subview.do</item><!-- 생명과학정보학과-->
+
+        <item>https://elec.mju.ac.kr/elec/index.do</item><!-- 전기공학과-->
+        <item>http://ee.mju.ac.kr</item><!-- 전자공학과-->
+        <item>https://chemeng.mju.ac.kr/chemeng/index.do</item><!-- 화학공학과-->
+        <item>https://mse.mju.ac.kr/mse/index.do</item><!-- 신소재공학과-->
+        <item>http://jw4.mju.ac.kr/user/3e/index.action</item><!-- 환경에너지공학과-->
+        <item>http://jw4.mju.ac.kr/user/cs/index.action</item><!-- 컴퓨터공학과-->
+        <item>http://jw4.mju.ac.kr/user/civil/index.action</item><!-- 토목환경공학과-->
+        <item>http://jw4.mju.ac.kr/user/mjtrans/index.action</item><!-- 교통공학과-->
+        <item>https://me.mju.ac.kr/me/index.do</item><!-- 기계공학과-->
+        <item>https://ie.mju.ac.kr/</item><!-- 산업경영공학과-->
+
+        <item>https://www.mju.ac.kr/mjukr/815/subview.do</item><!-- 디자인학부-->
+        <item>http://jw4.mju.ac.kr/user/phyedu/index.action</item><!-- 스포츠학부-->
+        <item>https://www.mju.ac.kr/mjukr/827/subview.do</item><!-- 바둑학과-->
+        <item>https://www.mju.ac.kr/mjukr/833/subview.do</item><!-- 예술학부-->
+
+        <item>https://arch.mju.ac.kr/arch/index.do</item><!-- 건축학부-->
+
+        <item>http://www.mju.ac.kr/bangmok/1653/subview.do</item><!-- 전공자유학부(인문)-->
+        <item>http://jw4.mju.ac.kr/user/openmajor/index.action</item><!-- 전공자유학부(자연)-->
+        <item>http://www.mju.ac.kr/bangmok/1655/subview.do</item><!-- 융합전공학부(인문)-->
+
+        <item>https://www.mju.ac.kr/mjukr/4746/subview.do</item><!-- 공상관리학과-->
+    </string-array>
+
+    <string-array name="professor_name">
+        <item>류연승 교수님</item>
+        <item>권영일 교수님</item>
+        <item>조세형 교수님</item>
+        <item>현상원 교수님</item>
+        <item>한승철 교수님</item>
+        <item>김상귀 교수님</item>
+        <item>이충기 교수님</item>
+        <item>장혁수 교수님</item>
+        <item>이명호 교수님</item>
+        <item>김직수 교수님</item>
+        <item>안희철 교수님</item>
+        <item>박현민 교수님</item>
+        <item>장희정 교수님</item>
+        <item>조민경 교수님</item>
+        <item>소순태 교수님</item>
+        <item>조종원 교수님</item>
+        <item>이광배 교수님</item>
+        <item>오영철 교수님</item>
+        <item>김정국 교수님</item>
+        <item>박종대 교수님</item>
+        <item>최우영 교수님</item>
+        <item>김도현 교수님</item>
+        <item>서동선 교수님</item>
+        <item>원용욱 교수님</item>
+        <item>김재민 교수님</item>
+        <item>박동철 교수님</item>
+        <item>한용수 교수님</item>
+        <item>조일환 교수님</item>
+        <item>김가람 교수님</item>
+        <item>박재현 교수님</item>
+        <item>우동민 교수님</item>
+    </string-array>
+
+    <string-array name="professor_email">
+        <item>ysryu@mju.ac.kr</item>
+        <item>cmajor7@hanmail.net</item>
+        <item>shcho@mju.ac.kr</item>
+        <item>shyun@mju.ac.kr</item>
+        <item>bongbong@mju.ac.kr</item>
+        <item>kimsk98@naver.com</item>
+        <item>cklee@mju.ac.kr</item>
+        <item>jang-h@mju.ac.kr</item>
+        <item>myunghol@mju.ac.kr</item>
+        <item>jiksoo@mju.ac.kr</item>
+        <item>anhc49@mju.ac.kr</item>
+        <item>hpark@mju.ac.kr</item>
+        <item>imcoltish@mju.ac.kr</item>
+        <item>mkcho@mju.ac.kr</item>
+        <item>sunsoh@mju.ac.kr</item>
+        <item>jwcho@mju.ac.kr</item>
+        <item>kblee@mju.ac.kr</item>
+        <item>youngcoh@naver.com</item>
+        <item>jk.kim@mju.ac.kr</item>
+        <item>cdpark@mju.ac.kr</item>
+        <item>choiwy@mju.ac.kr</item>
+        <item>dohyun.kim@mju.ac.kr</item>
+        <item>sdsphoto@mju.ac.kr</item>
+        <item>bluejerry@mju.ac.kr</item>
+        <item>jaemin@mju.ac.kr</item>
+        <item>parkd@mju.ac.kr</item>
+        <item>yshan@mju.ac.kr</item>
+        <item>ihcho77@mju.ac.kr</item>
+        <item>garamkim@mju.ac.kr</item>
+        <item>jhpark@mju.ac.kr</item>
+        <item>dmwoo@mju.ac.kr</item>
     </string-array>
 
     <string-array name="my_header_title">
@@ -994,7 +1163,7 @@
             INTJ, 도자기 공방(오로지)
         </item>
         <item> <!-- INFJ -->
-           INFJ,  조비산 (암벽등반)
+            INFJ,  조비산 (암벽등반)
         </item>
         <item> <!-- ISTJ -->
             ISTJ, 수영(서브마린)
@@ -1173,7 +1342,7 @@
         <item>ESFP - 사교적인 유형</item>
     </string-array>
 
-     <string-array name="main_banner_mbti_type_subtitle">
+    <string-array name="main_banner_mbti_type_subtitle">
         <item>전체적인 부분을 조합하여 비전을 제시하는 사람들</item>
         <item>사람과 관련된 뛰어난 통찰력을 가지고 있는 사람들</item>
         <item>한 번 시작한 일은 끝까지 해내는 사람들</item>
