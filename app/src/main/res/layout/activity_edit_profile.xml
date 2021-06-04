@@ -45,8 +45,7 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/img_entj" />
+                android:layout_marginTop="10dp" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_activityEditProfile_camera"
@@ -127,19 +126,10 @@
             android:maxLines="1"
             android:text="dnr2144"
             android:textSize="15sp"
+            android:drawableEnd="@drawable/drawable_end_x"
             app:layout_constraintStart_toStartOf="@id/textView_activityEditProfile_pwGuideText"
             app:layout_constraintTop_toBottomOf="@id/textView_activityEditProfile_pwConfirmGuideText" />
 
-        <ImageView
-            android:id="@+id/imageView_activityEditProfile_checkPassword"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_x"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.15"
-            app:layout_constraintTop_toTopOf="@id/editText_activityEditProfile_pwConfirmValue"
-            app:layout_constraintBottom_toBottomOf="@id/editText_activityEditProfile_pwConfirmValue"
-            app:layout_constraintStart_toEndOf="@id/editText_activityEditProfile_pwConfirmValue"/>
 
         <TextView
             android:id="@+id/textView_activityEditProfile_nameGuideText"
