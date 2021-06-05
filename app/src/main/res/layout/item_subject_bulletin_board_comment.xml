@@ -23,7 +23,7 @@
         android:layout_marginTop="15dp"
         android:src="@drawable/ic_toolbar_user"
         app:civ_border_color="@color/main_home_color"
-        app:civ_border_width="1dp"
+        app:civ_border_width="0dp"
         app:layout_constraintBottom_toTopOf="@id/textView_itemSubjectBulletinBoardComment_commentContent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

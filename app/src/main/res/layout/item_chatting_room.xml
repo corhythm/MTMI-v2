@@ -10,11 +10,10 @@
         android:id="@+id/imageView_itemChattingRoom_profileImg"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@drawable/squid"
+        app:layout_constraintVertical_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:civ_border_width="1dp"/>
+        app:civ_border_width="0dp"/>
 
     <TextView
         android:id="@+id/textView_itemChattingRoom_userName"
@@ -27,7 +26,7 @@
         app:layout_constraintStart_toEndOf="@id/imageView_itemChattingRoom_profileImg"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHeight_percent="0.3"
-        app:layout_constraintWidth_percent="0.6"/>
+        app:layout_constraintWidth_percent="0.5"/>
 
     <TextView
         android:id="@+id/textView_itemChattingRoom_lastMessage"
@@ -40,18 +39,17 @@
         app:layout_constraintStart_toStartOf="@id/textView_itemChattingRoom_userName"
         app:layout_constraintTop_toBottomOf="@id/textView_itemChattingRoom_userName"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintWidth_percent="0.6"
+        app:layout_constraintWidth_percent="0.5"
         app:layout_constraintHeight_percent="0.65"/>
 
     <TextView
         android:id="@+id/textView_itemChattingRoom_timeStamp"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="2021-05-21 화"
-        android:textSize="10sp"
-        android:gravity="end"
-        android:paddingEnd="10dp"
-        app:layout_constraintTop_toTopOf="@id/textView_itemChattingRoom_lastMessage"
+        android:textSize="9sp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/textView_itemChattingRoom_lastMessage"
         app:layout_constraintBottom_toBottomOf="@id/textView_itemChattingRoom_lastMessage"/>
 

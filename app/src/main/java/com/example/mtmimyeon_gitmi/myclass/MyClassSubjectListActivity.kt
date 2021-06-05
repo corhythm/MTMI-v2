@@ -78,10 +78,12 @@ class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface,
 
     // 과목 게시판으로 이동
     override fun itemClicked(idx: String, subjectName: String) {
-        val intent = Intent(this, MyClassSubjectBulletinBoardActivity::class.java)
-        intent.putExtra("과목코드", idx)
-        intent.putExtra("과목이름", subjectName)
-        startActivity(intent)
+        Intent(this, MyClassSubjectBulletinBoardActivity::class.java).also {
+            it.putExtra("과목코드", idx)
+            it.putExtra("과목이름", subjectName)
+            startActivity(it)
+        }
+        overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
     }
 
     override fun finish() {
@@ -144,7 +146,7 @@ class SubjectListRecyclerAdapter(private val subjectClickedInterface: SubjectCli
 // recyclerview viewHolder
 class SubjectViewHolder(
     private val item: ItemSubjectInfoBinding,
-    private val subjectClickedInterface: SubjectClickedInterface
+    private val subjectClickedInterface: SubjectClickedInterface,
 ) : RecyclerView.ViewHolder(item.root) {
 
     @SuppressLint("ResourceType")
@@ -173,7 +175,7 @@ class SubjectRecyclerDecoration : RecyclerView.ItemDecoration() {
         outRect: Rect,
         view: View,
         parent: RecyclerView,
-        state: RecyclerView.State
+        state: RecyclerView.State,
     ) {
         //super.getItemOffsets(outRect, view, parent, state)
         if (parent.getChildAdapterPosition(view) != parent.adapter!!.itemCount - 1) {

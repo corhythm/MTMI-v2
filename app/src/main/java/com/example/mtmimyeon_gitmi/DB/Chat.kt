@@ -1,7 +1,7 @@
 package com.example.mtmimyeon_gitmi.db
 
-data class Chat(var chatRoomId: String,var sendUser: String,var receiveUser: String) {
-    constructor() : this("","","")
+data class Chat(var chatRoomId: String, var sendUser: String, var receiveUser: String) {
+    constructor() : this("", "", "")
 
     init {
         this.chatRoomId = chatRoomId //채팅룸 id

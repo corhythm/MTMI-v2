@@ -29,10 +29,10 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
         super.onCreate(savedInstanceState)
         binding = ActivityChattingRoomListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        init()
     }
 
     private fun init() {
+        this.myChattingRoomList.clear()
         database.loadChatList(auth.currentUser.uid, object : Callback<ArrayList<Chat>> {
             override fun onCallback(data: ArrayList<Chat>) {
                 for (i in 0 until data.count()) {
@@ -66,26 +66,28 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
 
             }
         })
-//        Log.d("체크",myChattingRoomList[0].timeStamp)
+
         chattingRoomListRecyclerAdapter =
             ChattingRoomListRecyclerAdapter(myChattingRoomList, this)
+    }
 
-
+    override fun onResume() {
+        init()
+        super.onResume()
     }
 
     // 특정 채팅방을 클릭했을 때
-    override fun chattingRoomClicked(chattingRoomIdx: String,imgUrl: String) { // 채팅 방 번호 <- 이걸로 채팅방 검색(필요 시 탐색 데이터 추가할 것)
+    override fun chattingRoomClicked(
+        chattingRoomIdx: String,
+        imgUrl: String,
+    ) { // 채팅 방 번호 <- 이걸로 채팅방 검색(필요 시 탐색 데이터 추가할 것)
         Log.d("클릭", "클릭@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
         Log.d("chattingRoomIdx 체크", chattingRoomIdx)
-        var chatIntent = Intent(
-            this,
-            ChattingRoomDetailsActivity::class.java
-        )
-
-        chatIntent.putExtra("chatId", chattingRoomIdx).putExtra("partnerImg",imgUrl).also {
+        Intent(this, ChattingRoomDetailsActivity::class.java).also {
+            it.putExtra("chatId", chattingRoomIdx).putExtra("partnerImg", imgUrl)
             startActivity(it)
-            overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
         }
+        overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
     }
 
     override fun finish() {
@@ -104,7 +106,7 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
 
 class ChattingRoomListRecyclerAdapter(
     private val itemChattingRoomList: ArrayList<ChatListForm>,
-    private val chattingRoomClickInterface: ChattingRoomClickInterface
+    private val chattingRoomClickInterface: ChattingRoomClickInterface,
 ) : RecyclerView.Adapter<ChattingRoomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChattingRoomViewHolder {
@@ -127,7 +129,7 @@ class ChattingRoomListRecyclerAdapter(
 // 리사이클러뷰 뷰홀더
 class ChattingRoomViewHolder(
     private val item: ItemChattingRoomBinding,
-    private val ChattingRoomClickInterface: ChattingRoomClickInterface
+    private val ChattingRoomClickInterface: ChattingRoomClickInterface,
 ) :
     RecyclerView.ViewHolder(item.root) {
 
@@ -137,16 +139,18 @@ class ChattingRoomViewHolder(
         item.textViewItemChattingRoomLastMessage.text = itemChattingRoom.lastChat
         item.textViewItemChattingRoomTimeStamp.text = itemChattingRoom.timeStamp
         FirebaseStorage.getInstance().reference.child(itemChattingRoom.imgUrl).downloadUrl.addOnSuccessListener { that ->
-            Glide.with(itemView.context).load(that).circleCrop().into(item.imageViewItemChattingRoomProfileImg)
+            Glide.with(itemView.context).load(that).circleCrop()
+                .into(item.imageViewItemChattingRoomProfileImg)
         }
 
         item.root.setOnClickListener {
             Log.d("채팅방 아이디 확인", itemChattingRoom.chatRoomId)
-            this.ChattingRoomClickInterface.chattingRoomClicked(itemChattingRoom.chatRoomId,itemChattingRoom.imgUrl)
+            this.ChattingRoomClickInterface.chattingRoomClicked(itemChattingRoom.chatRoomId,
+                itemChattingRoom.imgUrl)
         }
     }
 }
 
 interface ChattingRoomClickInterface {
-    fun chattingRoomClicked(chattingRoomIdx: String,imgurl: String)
+    fun chattingRoomClicked(chattingRoomIdx: String, imgurl: String)
 }

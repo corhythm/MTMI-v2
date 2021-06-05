@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -22,6 +23,7 @@ import com.example.mtmimyeon_gitmi.db.Callback
 import com.example.mtmimyeon_gitmi.db.DatabaseManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
+import www.sanju.motiontoast.MotionToast
 
 class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMessageClickInterface {
     private lateinit var binding: ActivityMyClassSubjectBulletinBoardDetailsBinding
@@ -67,8 +69,8 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
                     currentUser,
                     object : Callback<Boolean> {
                         override fun onCallback(data: Boolean) {
-                            if(data)
-                            database.postViewCount(pathData)
+                            if (data)
+                                database.postViewCount(pathData)
                             // 코멘트 갱신화작업
                             subjectBulletinBoardCommentRecyclerAdapter.notifyItemRangeRemoved(
                                 0,
@@ -88,29 +90,25 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
         // 게시글 작성자에게 메시지 보내기
         binding.imageViewMyClassSubjectBulletinBoardDetailsMessage.setOnClickListener {
             if (auth.uid.toString() == pathData.writerUid) {
-                Toast.makeText(this, "본인에게는 메세지를 보낼 수 없습니다.", Toast.LENGTH_SHORT).show()
+                MotionToast.createColorToast(
+                    this,
+                    "Error",
+                    "본인에게 메시지를 보낼 수 없습니다",
+                    MotionToast.TOAST_ERROR,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.SHORT_DURATION,
+                    ResourcesCompat.getFont(this, R.font.maple_story_bold)
+                )
             } else {
                 Log.d("클릭리스너 실행", "메시지창 불러오는중")
                 var chatId = makeChat(auth.currentUser.uid, pathData.writerUid.toString())
-                Toast.makeText(
-                    this,
-                    "채팅방 개설 성공",
-                    Toast.LENGTH_SHORT
-                ).show()
 
-
-                var chatIntent = Intent(
-                    this,
-                    ChattingRoomDetailsActivity::class.java
-                )
-                chatIntent.putExtra("chatId", chatId).also {
-                    chatIntent.putExtra("partnerImg", "image/IMAGE_${pathData.writerUid}.png")
-                    startActivity(
-                        it,
-                        ActivityOptions.makeSceneTransitionAnimation(this@MyClassSubjectBulletinBoardDetailsActivity)
-                            .toBundle()
-                    )
+                Intent(this, ChattingRoomDetailsActivity::class.java).also {
+                    it.putExtra("chatId", chatId)
+                    it.putExtra("partnerImg", "image/IMAGE_${pathData.writerUid}.png")
+                    startActivity(it)
                 }
+                overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
             }
         }
     }
@@ -132,20 +130,23 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
     }
 
     private fun postDetailDataLoad(
-        BoardPost: BoardPost
+        BoardPost: BoardPost,
     ) {
         binding.textViewMyClassSubjectBulletinBoardDetailsUserName.text = BoardPost.writerName
         binding.textViewMyClassSubjectBulletinBoardDetailsDate.text = BoardPost.day
         binding.textViewMyClassSubjectBulletinBoardDetailsTitle.text = BoardPost.title
         binding.textViewMyClassSubjectBulletinBoardDetailsContent.text = BoardPost.content
-        BoardPost.writerUid?.let { database.callUserDataImageUri(it, object : Callback<String> {
-            override fun onCallback(data: String) {
-                Log.d("data 값",data)
-                FirebaseStorage.getInstance().reference.child("image/$data").downloadUrl.addOnSuccessListener {that ->
-                    Glide.with(applicationContext).load(that).circleCrop().into(binding.imageViewMyClassSubjectBulletinBoardDetailsProfileImg)
+        BoardPost.writerUid?.let {
+            database.callUserDataImageUri(it, object : Callback<String> {
+                override fun onCallback(data: String) {
+                    Log.d("data 값", data)
+                    FirebaseStorage.getInstance().reference.child("image/$data").downloadUrl.addOnSuccessListener { that ->
+                        Glide.with(applicationContext).load(that).circleCrop()
+                            .into(binding.imageViewMyClassSubjectBulletinBoardDetailsProfileImg)
+                    }
                 }
-            }
-        }) }
+            })
+        }
     }
 
     private fun postDetailCommentLoad(boardPost: BoardPost) {
@@ -177,36 +178,32 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
         Log.d("postDetailCommentLoad", "post comment 로드 종료")
     }
 
-    override fun sendMessageClicked(commentIdx: Int,profileImg: String) {
+    override fun sendMessageClicked(commentIdx: Int, profileImg: String) {
         // 댓글 단 사람들 중에 채팅 보낼 때
-        if(auth.uid.toString() == itemSubjectBulletinBoardCommentList[commentIdx].commenterUid){
-            Toast.makeText(this,"본인에게는 메세지를 보낼 수 없습니다.",Toast.LENGTH_SHORT).show()
-        }else {
+        if (auth.uid.toString() == itemSubjectBulletinBoardCommentList[commentIdx].commenterUid) {
+            MotionToast.createColorToast(
+                this,
+                "Error",
+                "본인에게 메시지를 보낼 수 없습니다",
+                MotionToast.TOAST_ERROR,
+                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.SHORT_DURATION,
+                ResourcesCompat.getFont(this, R.font.maple_story_bold)
+            )
+        } else {
             Log.d("댓글단사람들 확인중", "메세지보내기")
             Log.d("클릭리스너 실행", "메시지창 불러오는중")
             var chatId = makeChat(
                 auth.currentUser.uid,
                 itemSubjectBulletinBoardCommentList[commentIdx].commenterUid
             )
-            Toast.makeText(
-                this,
-                "채팅방 개설 성공",
-                Toast.LENGTH_SHORT
-            ).show()
 
-
-            var chatIntent = Intent(
-                this,
-                ChattingRoomDetailsActivity::class.java
-            )
-            chatIntent.putExtra("chatId", chatId).also {
-                chatIntent.putExtra("partnerImg", profileImg)
-                startActivity(
-                    it,
-                    ActivityOptions.makeSceneTransitionAnimation(this@MyClassSubjectBulletinBoardDetailsActivity)
-                        .toBundle()
-                )
+            Intent(this, ChattingRoomDetailsActivity::class.java).also {
+                it.putExtra("chatId", chatId)
+                it.putExtra("partnerImg", profileImg)
+                startActivity(it)
             }
+            overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
         }
     }
 
@@ -217,17 +214,17 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
 }
 
 interface sendMessageClickInterface { // 댓글 단 사람들과 채팅
-    fun sendMessageClicked(commentIdx: Int,profileImg: String)
+    fun sendMessageClicked(commentIdx: Int, profileImg: String)
 }
 
 class SubjectBulletinBoardCommentRecyclerAdapter(
     private val itemSubjectBulletinBoardCommentList: ArrayList<BoardComment>,
-    private val sendMessageClickInterface: sendMessageClickInterface
+    private val sendMessageClickInterface: sendMessageClickInterface,
 ) : RecyclerView.Adapter<SubjectBulletinBoardCommentViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): SubjectBulletinBoardCommentViewHolder {
         val binding = ItemSubjectBulletinBoardCommentBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -250,7 +247,7 @@ class SubjectBulletinBoardCommentRecyclerAdapter(
 // recyclerview viewHolder
 class SubjectBulletinBoardCommentViewHolder(
     private val item: ItemSubjectBulletinBoardCommentBinding,
-    private val sendMessageClickInterface: sendMessageClickInterface
+    private val sendMessageClickInterface: sendMessageClickInterface,
 ) : RecyclerView.ViewHolder(item.root) {
 
     fun bind(boardComment: BoardComment) {
@@ -260,18 +257,23 @@ class SubjectBulletinBoardCommentViewHolder(
             boardComment.content
         item.textViewItemSubjectBulletinBoardCommentDate.text = boardComment.day
         var database = DatabaseManager()
-        boardComment.commenterUid?.let { database.callUserDataImageUri(it, object : Callback<String> {
-            override fun onCallback(data: String) {
-                Log.d("data 값",data)
-                FirebaseStorage.getInstance().reference.child("image/$data").downloadUrl.addOnSuccessListener {that ->
-                    Glide.with(itemView.context).load(that).circleCrop().into(item.imageViewItemSubjectBulletinBoardCommentProfileImg)
+        boardComment.commenterUid?.let {
+            database.callUserDataImageUri(it, object : Callback<String> {
+                override fun onCallback(data: String) {
+                    Log.d("data 값", data)
+                    FirebaseStorage.getInstance().reference.child("image/$data").downloadUrl.addOnSuccessListener { that ->
+                        Glide.with(itemView.context).load(that).circleCrop()
+                            .into(item.imageViewItemSubjectBulletinBoardCommentProfileImg)
+                    }
+                    item.imageViewItemSubjectBulletinBoardCommentMessage.setOnClickListener {
+                        this@SubjectBulletinBoardCommentViewHolder.sendMessageClickInterface.sendMessageClicked(
+                            adapterPosition,
+                            "image/$data")
+                        Log.d("클릭한 아이템", adapterPosition.toString())
+                    }
                 }
-                item.imageViewItemSubjectBulletinBoardCommentMessage.setOnClickListener {
-                    this@SubjectBulletinBoardCommentViewHolder.sendMessageClickInterface.sendMessageClicked(adapterPosition,"image/$data")
-                    Log.d("클릭한 아이템",adapterPosition.toString())
-                }
-            }
-        }) }
+            })
+        }
 
 
     }

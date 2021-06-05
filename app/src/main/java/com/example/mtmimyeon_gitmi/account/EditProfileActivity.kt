@@ -1,20 +1,15 @@
 package com.example.mtmimyeon_gitmi.account
 
-import android.app.Activity
-import android.app.Dialog
 import android.content.Intent
-import android.graphics.BitmapFactory
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityEditProfileBinding
@@ -25,12 +20,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog
 import dev.shreyaspatil.MaterialDialog.model.TextAlignment
+import www.sanju.motiontoast.MotionToast
 
 class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityEditProfileBinding
-    private lateinit var profileImage: Uri
-    private lateinit var gender: String
+    private lateinit var myUserData: UserData
     private var auth = FirebaseAuth.getInstance()
+    private var isImageChanged = false // 이미지가 변경됐는지 감지
     var db = DatabaseManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,25 +37,10 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun init() {
-        // 프로필 유저정보 초기화
-        db.callUserData(auth.uid.toString(), object : Callback<UserData> {
-            override fun onCallback(data: UserData) {
-                if(data != null){
-                    binding.editTextActivityEditProfileIdValue.setText(data.id)
-                    binding.editTextActivityEditProfileNameValue.setText(data.userName)
-                    binding.editTextActivityEditProfileStudentIdValue.setText(data.student_id)
-                    binding.editTextActivityEditProfilePwValue.setText(data.pw)
-                    binding.editTextActivityEditProfilePwConfirmValue.setText(data.pw)
-                    binding.editTextActivityEditProfileBirthValue.setText(data.birth)
-                    gender= data.gender
-                    loadProfileImage(data.userProfileImageUrl)
-                }
-            }
-        })
+
         // 스피너에 전공 데이터 넣기
-        binding.spinnerActivityEditProfileMajor.setItem(
-            resources.getStringArray(R.array.major).toMutableList()
-        )
+        val majorList = resources.getStringArray(R.array.major).toMutableList()
+        binding.spinnerActivityEditProfileMajor.setItem(majorList)
 
         // toolbar의 뒤로 가기 눌렀을 때
         binding.toolbarActivityEditProfileToolbar.setNavigationOnClickListener { onBackPressed() }
@@ -68,18 +49,29 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
         binding.imageViewActivityEditProfileProfileImg.setOnClickListener(this)
         binding.fabActivityEditProfileCamera.setOnClickListener(this)
 
-
         // 비밀번호, 비밀번호 확인 EditText 텍스트 변경 감지 리스너
         val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { // 텍스트 변경 감지
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int,
+            ) { // 텍스트 변경 감지
                 if (binding.editTextActivityEditProfilePwValue.text.toString() == binding.editTextActivityEditProfilePwConfirmValue.text.toString()) { // 비밀번호가 일치할 때
-                    binding.editTextActivityEditProfilePwConfirmValue.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                        ContextCompat.getDrawable(this@EditProfileActivity, R.drawable.drawable_end_pw_check), null)
+                    binding.editTextActivityEditProfilePwConfirmValue.setCompoundDrawablesWithIntrinsicBounds(
+                        null,
+                        null,
+                        ContextCompat.getDrawable(this@EditProfileActivity,
+                            R.drawable.drawable_end_pw_check),
+                        null)
                 } else { // 비밀번호가 일치하지 않을 때
-                    binding.editTextActivityEditProfilePwConfirmValue.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                        ContextCompat.getDrawable(this@EditProfileActivity, R.drawable.drawable_end_pw_check), null)
+                    binding.editTextActivityEditProfilePwConfirmValue.setCompoundDrawablesWithIntrinsicBounds(
+                        null,
+                        null,
+                        ContextCompat.getDrawable(this@EditProfileActivity,
+                            R.drawable.drawable_end_x),
+                        null)
                 }
             }
 
@@ -91,78 +83,138 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
         binding.editTextActivityEditProfilePwValue.addTextChangedListener(textWatcher)
 
 
+        // 프로필 유저정보 초기화
+        db.callUserData(auth.uid.toString(), object : Callback<UserData> {
+            override fun onCallback(data: UserData) {
+                this@EditProfileActivity.myUserData = data
+                var majorIndex = 0
+
+                for (i in majorList.indices) { // major index 찾기
+                    if (majorList[i] == myUserData.major) {
+                        majorIndex = i
+                        break
+                    }
+                }
+
+                binding.editTextActivityEditProfileIdValue.setText(data.id)
+                binding.editTextActivityEditProfileNameValue.setText(data.userName)
+                binding.editTextActivityEditProfileStudentIdValue.setText(data.student_id)
+                binding.editTextActivityEditProfilePwValue.setText(data.pw)
+                binding.editTextActivityEditProfilePwConfirmValue.setText(data.pw)
+                binding.editTextActivityEditProfileBirthValue.setText(data.birth)
+                binding.spinnerActivityEditProfileMajor.setSelection(majorIndex)
+                loadProfileImage(data.userProfileImageUrl)
+            }
+        })
 
         // 업데이트 버튼 누르면 --> 프로필 업데이트
         binding.buttonActivityEditProfileUpdateProfile.setOnClickListener {
-            var updateCheck = true
-            var updateId = binding.editTextActivityEditProfileIdValue.text.toString()
-            var updatePw=  binding.editTextActivityEditProfilePwValue.text.toString()
-            var updateStudentId =binding.editTextActivityEditProfileStudentIdValue.text.toString()
-            var updateName = binding.editTextActivityEditProfileNameValue.text.toString()
-            var updateBirth = binding.editTextActivityEditProfileBirthValue.text.toString()
-            var updateMajor :String
-            if(binding.spinnerActivityEditProfileMajor.selectedItem != null){
-                updateMajor = binding.spinnerActivityEditProfileMajor.selectedItem.toString()
-            }else{
-                updateMajor = "empty"
-                updateCheck = false
-                Log.d("major check","false")
-            }
-            if(updateCheck && (binding.editTextActivityEditProfilePwConfirmValue.text.toString() == updatePw)) {
-                Log.d("update Check", "true")
+            val updateId = binding.editTextActivityEditProfileIdValue.text.toString() //id
+            val updatePw = binding.editTextActivityEditProfilePwValue.text.toString() // pw
+            val updateStudentId =
+                binding.editTextActivityEditProfileStudentIdValue.text.toString() // 학번
+            val updateName = binding.editTextActivityEditProfileNameValue.text.toString() // 이름
+            val updateBirth = binding.editTextActivityEditProfileBirthValue.text.toString() // 생일
+            val updateMajor = binding.spinnerActivityEditProfileMajor.selectedItem.toString() // 전공
 
-                var userData = UserData(
+            if (checkProfileValidate()) { // 프로필 정보 변경 가능한지 체크(빈 문자열 없는지)
+                val updatedUserData = UserData(
                     updateId,
                     updatePw,
                     updateStudentId,
                     updateName,
                     updateBirth,
-                    gender,
+                    this.myUserData.gender,
                     updateMajor,
-                    profileImage.toString()
+                    this.myUserData.userProfileImageUrl
                 )
-                Toast.makeText(this, "유저데이터를 수정하는 중입니다", Toast.LENGTH_LONG).show()
-                db.editUserData(profileImage, userData, object : Callback<Boolean> {
-                    // 이미지 업로드시 callback 으로 받아오기
-                    override fun onCallback(data: Boolean) {
-                        if (data) {
-                            Intent(this@EditProfileActivity, MyProfileActivity::class.java).also {
-                                intent.putExtra("update", true)
-                                setResult(Activity.RESULT_OK, intent)
-                                startActivity(it)
-                                overridePendingTransition(
-                                    R.anim.activity_slide_in,
-                                    R.anim.activity_slide_out
-                                )
+                Log.d("로그",
+                    "EditProfileActivity -init() called / img: ${this.myUserData.userProfileImageUrl}")
+
+                MotionToast.createColorToast(
+                    this,
+                    "Information",
+                    "프로필 정보를 업데이트 하는 중입니다.",
+                    MotionToast.TOAST_INFO,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.SHORT_DURATION,
+                    ResourcesCompat.getFont(this, R.font.maple_story_bold)
+                )
+
+                db.editUserData(this.isImageChanged,
+                    updatedUserData,
+                    object : Callback<Boolean> {
+                        // 이미지 업로드시 callback 으로 받아오기
+                        override fun onCallback(data: Boolean) {
+
+                            if (data) { // 업데이트 성공
+                                Log.d("로그", "EditProfileActivity -onCallback() called / 성공")
+                                Intent().also {
+                                    it.putExtra("name", updatedUserData.userName)
+                                    it.putExtra("email", updatedUserData.id)
+                                    it.putExtra("major", updatedUserData.major)
+                                    it.putExtra("studentId", updatedUserData.student_id)
+                                    it.putExtra("birth", updatedUserData.birth)
+                                    it.putExtra("imgUrl", updatedUserData.userProfileImageUrl)
+                                    setResult(RESULT_OK, it)
+                                }
                                 finish()
+                            } else { // 업데이트 실패
+                                Log.d("로그", "EditProfileActivity -onCallback() called / 실패")
+                                MotionToast.createColorToast(
+                                    this@EditProfileActivity,
+                                    "Update Error",
+                                    "프로필 정보를 업데이트 하는 중 알 수 없는 오류가 발생했어요.",
+                                    MotionToast.TOAST_ERROR,
+                                    MotionToast.GRAVITY_BOTTOM,
+                                    MotionToast.SHORT_DURATION,
+                                    ResourcesCompat.getFont(this@EditProfileActivity,
+                                        R.font.maple_story_bold)
+                                )
                             }
-                        } else {
-                            Log.d(
-                                "confirm check pw ",
-                                binding.editTextActivityEditProfilePwConfirmValue.text.toString()
-                            )
-                            Log.d("pw", updatePw)
-                            Log.d("update Check", "false")
-                            Toast.makeText(this@EditProfileActivity, "수정할 정보르 다시 한번 확인해주세요.", Toast.LENGTH_SHORT).show()
                         }
-                    }
-                })
+                    })
+            } else { // 프로필 정보가 적절하지 않을 때
+                MotionToast.createColorToast(
+                    this@EditProfileActivity,
+                    "Warning",
+                    "필수 입력항목들을 확인해주세요.",
+                    MotionToast.TOAST_WARNING,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.SHORT_DURATION,
+                    ResourcesCompat.getFont(this@EditProfileActivity,
+                        R.font.maple_story_bold)
+                )
             }
         }
     }
+
+    private fun checkProfileValidate(): Boolean { // 프로필 변경하기 전 텍스트 형식 유효한지 검사
+        // 비밀번호 일치 여부
+        if (binding.editTextActivityEditProfilePwValue.text.toString() != binding.editTextActivityEditProfilePwConfirmValue.text.toString())
+            return false
+
+        // 이름이 빈 문자열일 때
+        if(binding.editTextActivityEditProfileNameValue.text.toString() == "")
+            return false
+
+        return true
+    }
+
     private fun loadProfileImage(profileImageUri: String) {
-        if(profileImageUri != "empty") {
+        if (profileImageUri != "empty") {
             FirebaseStorage.getInstance().reference.child("image/$profileImageUri").downloadUrl.addOnSuccessListener {
                 Log.d("프로필사진 로드", it.toString())
-                var profileImage = binding.imageViewActivityEditProfileProfileImg
+                val profileImage = binding.imageViewActivityEditProfileProfileImg
                 Glide.with(applicationContext).load(it).circleCrop().into(profileImage)
             }.addOnFailureListener {
                 Log.d("프로필사진 로드", "프로필사진없음")
             }
-        }else{
-            Log.d("프로필사진 로드 ","프로필 사진 없음")
+        } else {
+            Log.d("프로필사진 로드 ", "프로필 사진 없음")
         }
     }
+
     // 갤러리에서 사진 불러오기
     override fun onClick(v: View?) {
         Intent(Intent.ACTION_PICK).also {
@@ -173,13 +225,14 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    // 갤러리로부 사진 받았을 때 오출
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 0 && resultCode == RESULT_OK) { // 이미지 불러오기 성공했을 때, 프로필 이미지 변경
-            profileImage = data!!.data!!
-            binding.imageViewActivityEditProfileProfileImg.setImageURI(data!!.data!!)
-        }
-
         super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 0 && resultCode == RESULT_OK) { // 이미지 불러오기 성공했을 때, 프로필 이미지 변경
+            this.myUserData.userProfileImageUrl = data!!.data.toString()
+            binding.imageViewActivityEditProfileProfileImg.setImageURI(data.data!!)
+            this.isImageChanged = true // 이미지 변경 확인
+        }
     }
 
     override fun finish() {
@@ -207,6 +260,5 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
 
         // Show Dialog
         mDialog.show();
-
     }
 }
