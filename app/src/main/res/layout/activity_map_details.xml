@@ -19,12 +19,12 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
+            app:menu="@menu/toolbar_map"
             app:navigationIcon="@drawable/ic_my_class_subject_bulletin_board_writing_back"
             app:title="위치 및 주변시설"
             app:titleCentered="true"
             app:titleTextColor="@color/black" />
 
-        <!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
     </com.google.android.material.appbar.AppBarLayout>
 
 

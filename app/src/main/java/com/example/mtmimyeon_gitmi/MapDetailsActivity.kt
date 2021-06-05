@@ -3,6 +3,8 @@ package com.example.mtmimyeon_gitmi
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -24,11 +26,26 @@ class MapDetailsActivity : AppCompatActivity(), MapView.MapViewEventListener,
         binding = ActivityMapDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbarActivityMapDetailsToolbar)
         // 학교 건물 찾기 혹은 MBTI 추천 시설 중 선택해서 지도 초기화 (사실상 현재 코드는 같은데 추후에 변경될 수도 있으니 일단 다른 init 함수 사용)
         if (intent.getIntExtra("mapType", 0) == MapType.UNIVERSITY_BUILDING.typeNum)
             initUniversityBuilding()
         else
             initRecommendedPlace()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_map, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_toolBar_myLocation -> {
+
+            }
+        }
+        return true
     }
 
     private fun initUniversityBuilding() { // 학교 건물 지도

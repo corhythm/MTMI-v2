@@ -14,27 +14,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-<!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            app:collapsedTitleGravity="bottom|center_horizontal"-->
-<!--            app:contentScrim="?attr/colorPrimary"-->
-<!--            app:expandedTitleMarginBottom="28dp"-->
-<!--            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"-->
-<!--            app:statusBarScrim="?attr/colorPrimaryVariant"-->
-<!--            app:titleEnabled="false">-->
-
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar_campusPhoneNumber_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/white"
-                app:menu="@menu/toolbar_campus_phone_number_menu"
                 app:title="교내 전화번호"
                 app:titleCentered="true"
                 app:titleTextColor="@color/black" />
 
-<!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
