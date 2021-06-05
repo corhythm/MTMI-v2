@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cnb_unselectedColor="#666666">
     <item
-        android:id="@+id/menu_toolBar_search"
-        android:icon="@drawable/ic_item_search"
-        app:showAsAction="ifRoom"
-        android:title="search"
+        android:id="@+id/menu_toolBar_myLocation"
+        android:icon="@drawable/ic_map"
+        app:showAsAction="always"
+        android:title="myLocation"
         app:cnb_iconColor="@color/black" />
 </menu>
