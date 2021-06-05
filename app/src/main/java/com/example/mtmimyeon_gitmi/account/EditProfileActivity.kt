@@ -148,14 +148,9 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
                         override fun onCallback(data: Boolean) {
 
                             if (data) { // 업데이트 성공
-                                Log.d("로그", "EditProfileActivity -onCallback() called / 성공")
+                                Log.d("로그", "EditProfileActivity -onCallback() called / 성공 gs://mtmi-4eeac.appspot.com/image/IMAGE_${auth.uid}.png")
                                 Intent().also {
-                                    it.putExtra("name", updatedUserData.userName)
-                                    it.putExtra("email", updatedUserData.id)
-                                    it.putExtra("major", updatedUserData.major)
-                                    it.putExtra("studentId", updatedUserData.student_id)
-                                    it.putExtra("birth", updatedUserData.birth)
-                                    it.putExtra("imgUrl", updatedUserData.userProfileImageUrl)
+                                    it.putExtra("imgUrl", "IMAGE_${auth.uid}.png")
                                     setResult(RESULT_OK, it)
                                 }
                                 finish()

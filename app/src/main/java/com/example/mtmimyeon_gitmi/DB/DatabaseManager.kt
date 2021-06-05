@@ -167,29 +167,27 @@ class DatabaseManager {
     ) {
         callUserData(userId, object : Callback<UserData> {
             override fun onCallback(data: UserData) {
-                if (data != null) {
-                    val current = LocalDateTime.now() //현재사간
-                    val uiFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분")
-                    var formatted = current.format(uiFormatter)
-                    val dbSaveFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS") //밀리초 환산
-                    var formatted2 = current.format(dbSaveFormatter)
-                    val saveIdx = (99999999999999999 - formatted2.toLong()).toString() // 역순출력처리
-                    database = Firebase.database.getReference("board")
-                    var boardIdx = idx
-                    var boardPost =
-                        BoardPost(
-                            idx,
-                            postTitle,
-                            formatted,
-                            postContent,
-                            userId,
-                            data.userName,
-                            saveIdx,
-                            0
-                        ) //테스터 대신 userName 넣어야함. data.userName
-                    database.child(boardIdx).child(saveIdx).setValue(boardPost)
-                    callback.onCallback(true)
-                }
+                val current = LocalDateTime.now() //현재사간
+                val uiFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분")
+                val formatted = current.format(uiFormatter)
+                val dbSaveFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS") //밀리초 환산
+                val formatted2 = current.format(dbSaveFormatter)
+                val saveIdx = (99999999999999999 - formatted2.toLong()).toString() // 역순출력처리
+                database = Firebase.database.getReference("board")
+                val boardIdx = idx
+                val boardPost =
+                    BoardPost(
+                        idx,
+                        postTitle,
+                        formatted,
+                        postContent,
+                        userId,
+                        data.userName,
+                        saveIdx,
+                        0
+                    ) //테스터 대신 userName 넣어야함. data.userName
+                database.child(boardIdx).child(saveIdx).setValue(boardPost)
+                callback.onCallback(true)
             }
         })
     }
@@ -198,7 +196,7 @@ class DatabaseManager {
         Firebase.database.getReference("user").child(userUid)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    var userData: UserData? = dataSnapshot.getValue<UserData>()
+                    val userData: UserData? = dataSnapshot.getValue<UserData>()
                     if (userData != null) {
                         Log.d("불러온 유저데이터이름", userData.userName)
                     }
@@ -217,7 +215,7 @@ class DatabaseManager {
         Firebase.database.getReference("user").child(userUid).child("userProfileImageUrl")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    var profileImageUrl: String = snapshot.value as String
+                    val profileImageUrl: String = snapshot.value as String
                     callback.onCallback(profileImageUrl)
                 }
 
@@ -232,7 +230,7 @@ class DatabaseManager {
         Firebase.database.getReference("/board/$idx")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    var postList = ArrayList<BoardPost>()
+                    val postList = ArrayList<BoardPost>()
                     dataSnapshot.children.forEach {
                         Log.d("new", it.toString())
                         Log.d("key", it.key.toString()) // 이건좋음
@@ -255,9 +253,10 @@ class DatabaseManager {
         boardPost.view = boardPost.view?.plus(1)
         boardPost.subjectBoardIndex?.let {
             boardPost.subjectCode?.let { it1 ->
-                Firebase.database.reference.child("board").child(it1).child(
-                    it
-                ).child("view").setValue(boardPost.view)
+                Firebase.database.reference.child("board")
+                    .child(it1)
+                    .child(it)
+                    .child("view").setValue(boardPost.view)
             }
         }
     }
@@ -271,7 +270,7 @@ class DatabaseManager {
     ) {
         callUserData(commenterUid, object : Callback<UserData> {
             override fun onCallback(data: UserData) {
-                val current = LocalDateTime.now() //현재사간
+                val current = LocalDateTime.now() //현재시간
                 val uiFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분")
                 val formatted = current.format(uiFormatter)
                 val dbSaveFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS") //밀리초 환산
@@ -291,7 +290,7 @@ class DatabaseManager {
                         ).setValue(commentData)
                     callback.onCallback(true)
                 } else {
-                    Log.d("해달 과목이 존재하지 않습니다.", "error")
+                    Log.d("해당 과목이 존재하지 않습니다.", "error")
                 }
             }
         })
@@ -332,7 +331,7 @@ class DatabaseManager {
                 val chatList = ArrayList<Chat>()
                 snapshot.children.forEach() {
                     if (it.key.toString().contains(userId)) {
-                        var chat = it.getValue(Chat::class.java)
+                        val chat = it.getValue(Chat::class.java)
                         if (chat != null) {
                             chatList.add(chat)
                         }
@@ -372,21 +371,14 @@ class DatabaseManager {
 
         if (isImageChanged) { // 이미지가 변경됐을 때
             FirebaseDatabase.getInstance().reference.child("user").child(userUid).setValue(userData)
-            Log.d("로그", "DatabaseManager -editUserData() called // 이미지 경로: ${userData.userProfileImageUrl}")
             FirebaseStorage.getInstance().reference.child("image/").child(imageFileName)
-                .putFile(filePath).addOnSuccessListener {
-                    Log.d("이미지 파일업로드", "성공") // 이 부분에 유저 업데이트 들어가야함
-                    callback.onCallback(true)
-                }.addOnFailureListener {
-                    Log.d("이미지 파일업로드", "실패")
-                    callback.onCallback(false)
-                }
+                .putFile(filePath)
+                .addOnSuccessListener { callback.onCallback(true) }
+                .addOnFailureListener { callback.onCallback(false) }
         } else { // 이미지가 변경되지 않았을 때
-            FirebaseDatabase.getInstance().reference.child("user").child(userUid).setValue(userData).addOnSuccessListener {
-                callback.onCallback(true)
-            }.addOnFailureListener {
-                callback.onCallback(false)
-            }
+            FirebaseDatabase.getInstance().reference.child("user").child(userUid).setValue(userData)
+                .addOnSuccessListener { callback.onCallback(true) }
+                .addOnFailureListener { callback.onCallback(false) }
         }
 
 
