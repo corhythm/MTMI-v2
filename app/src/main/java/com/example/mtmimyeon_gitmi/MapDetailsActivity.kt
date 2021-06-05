@@ -1,5 +1,9 @@
 package com.example.mtmimyeon_gitmi
 
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
+import android.graphics.Color
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +12,8 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import com.example.mtmimyeon_gitmi.databinding.ActivityMapDetailsBinding
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
@@ -20,6 +26,8 @@ enum class MapType(val typeNum: Int) {
 class MapDetailsActivity : AppCompatActivity(), MapView.MapViewEventListener,
     MapView.POIItemEventListener, MapView.OpenAPIKeyAuthenticationResultListener {
     private lateinit var binding: ActivityMapDetailsBinding
+    private lateinit var mapView: MapView
+    private var isMyLocationEnabled = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,19 +47,42 @@ class MapDetailsActivity : AppCompatActivity(), MapView.MapViewEventListener,
         return true
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_toolBar_myLocation -> {
+                // 현재 위치 받아오기 (테스트 할 때는 사용하면 안 됨)
+                if (!this.isMyLocationEnabled) { // 현재 위치 활성화
+                    this.mapView.currentLocationTrackingMode =
+                        MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading // 현재 위치 추적 트랙킹 ON
+                    binding.toolbarActivityMapDetailsToolbar.menu.getItem(0).icon =
+                        ContextCompat.getDrawable(this, R.drawable.ic_location_enabled)
+                    this.isMyLocationEnabled = true
+                } else { // 현재 위치 비활성화
+                    this.mapView.currentLocationTrackingMode =
+                        MapView.CurrentLocationTrackingMode.TrackingModeOff // 현재 위치 추적 트랙킹 OFF
+                    binding.toolbarActivityMapDetailsToolbar.menu.getItem(0).icon =
+                        ContextCompat.getDrawable(this, R.drawable.ic_location_disabled)
+                    this.isMyLocationEnabled = false
+                }
+
 
             }
         }
         return true
     }
 
+    override fun onDestroy() {
+        Log.d("로그", "MapDetailsActivity -onDestroy() called")
+        this.mapView.currentLocationTrackingMode =
+                        MapView.CurrentLocationTrackingMode.TrackingModeOff
+        super.onDestroy()
+    }
+
     private fun initUniversityBuilding() { // 학교 건물 지도
 
         // init kakao map
-        val mapView = MapView(this)
+        this.mapView = MapView(this)
 
         val markerList = ArrayList<MapPOIItem>()
         val locationNameList = resources.getStringArray(R.array.campus_building_name)
@@ -107,7 +138,7 @@ class MapDetailsActivity : AppCompatActivity(), MapView.MapViewEventListener,
                     parent: AdapterView<*>?,
                     view: View?,
                     position: Int,
-                    id: Long
+                    id: Long,
                 ) {
                     Log.d("로그", "$position")
                     mapView.removeAllPOIItems()
@@ -137,7 +168,7 @@ class MapDetailsActivity : AppCompatActivity(), MapView.MapViewEventListener,
 
     private fun initRecommendedPlace() { // MBTI 추천 장소
         // init kakao map
-        val mapView = MapView(this)
+        this.mapView = MapView(this)
         val markerList = ArrayList<MapPOIItem>()
         val locationNameList = resources.getStringArray(R.array.mbti_recommended_place_name)
         val locationLatitudeList =
@@ -209,7 +240,7 @@ class MapDetailsActivity : AppCompatActivity(), MapView.MapViewEventListener,
                     parent: AdapterView<*>?,
                     view: View?,
                     position: Int,
-                    id: Long
+                    id: Long,
                 ) {
                     Log.d("로그", "$position")
                     mapView.removeAllPOIItems()
@@ -263,7 +294,7 @@ class MapDetailsActivity : AppCompatActivity(), MapView.MapViewEventListener,
     override fun onCalloutBalloonOfPOIItemTouched(
         p0: MapView?,
         p1: MapPOIItem?,
-        p2: MapPOIItem.CalloutBalloonButtonType?
+        p2: MapPOIItem.CalloutBalloonButtonType?,
     ) {
     }
 

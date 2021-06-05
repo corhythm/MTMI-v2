@@ -4,7 +4,7 @@
     app:cnb_unselectedColor="#666666">
     <item
         android:id="@+id/menu_toolBar_myLocation"
-        android:icon="@drawable/ic_map"
+        android:icon="@drawable/ic_location_disabled"
         app:showAsAction="always"
         android:title="myLocation"
         app:cnb_iconColor="@color/black" />
