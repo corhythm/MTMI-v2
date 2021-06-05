@@ -2,6 +2,7 @@ package com.example.mtmimyeon_gitmi.util
 
 import android.content.Context
 import android.util.Log
+import com.example.mtmimyeon_gitmi.db.UserData
 import com.example.mtmimyeon_gitmi.myClass.ItemSubjectInfo
 import com.google.gson.Gson
 
@@ -21,6 +22,9 @@ object SharedPrefManager {
 
     private const val SHARED_MBTI_TYPE = "MBTI_TYPE"
     private const val KEY_MY_MBTI_TYPE = "MY_MBTI_TYPE"
+
+    private const val SHARED_USER_DATA = "USER_DATA"
+    private const val KEY_USER_DATA = "USER_DATA"
 
     fun setUserLmsId(userId: String) {
         val shared = App.instance.getSharedPreferences(
@@ -163,6 +167,30 @@ object SharedPrefManager {
             SHARED_MBTI_TYPE,
             Context.MODE_PRIVATE
         ).edit().clear().apply()
+    }
+
+    fun setUserData(userData: UserData) {
+
+        val shared = App.instance.getSharedPreferences(
+            SHARED_USER_DATA,
+            Context.MODE_PRIVATE
+        ) // 쉐어드 가져오기
+
+        val editor = shared.edit() // 쉐어드 에디터 가져오기
+        val userDataJson = Gson().toJson(userData) // 배열 -> 문자열로 변환
+        editor.putString(KEY_USER_DATA, userDataJson) // 쉐어드에 저장
+        editor.apply() // 변경 사항 저장
+    }
+
+    fun getUserData(): UserData {
+        val shared = App.instance.getSharedPreferences(
+            SHARED_USER_DATA,
+            Context.MODE_PRIVATE
+        ) // 쉐어드 가져오기
+
+        val userDataJson = shared.getString(KEY_USER_DATA, "")!!
+
+        return Gson().fromJson(userDataJson, UserData::class.java)
     }
 
 

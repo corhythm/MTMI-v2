@@ -13,9 +13,9 @@ import com.royrodriguez.transitionbutton.TransitionButton
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    var DB_M = DatabaseManager()
-    override fun onCreate(savedInstanceState: Bundle?) {
+    var db = DatabaseManager()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -34,16 +34,16 @@ class LoginActivity : AppCompatActivity() {
 
             // Do your networking task or background work here.
             val handler: Handler = Handler()
-            handler.postDelayed(Runnable {
-                var loginUserId: String = binding.editTextLoginEmailAddress.text.toString()
-                var loginUserPw: String = binding.editTextLoginPassword.text.toString()
-                DB_M.loginEmail(loginUserId, loginUserPw, this, object : Callback<Boolean> {
+            handler.postDelayed({
+                val loginUserId: String = binding.editTextLoginEmailAddress.text.toString()
+                val loginUserPw: String = binding.editTextLoginPassword.text.toString()
+
+                db.loginEmail(loginUserId, loginUserPw, this, object : Callback<Boolean> {
                     override fun onCallback(data: Boolean) {
                         if (data) {
-
                             binding.buttonLoginSignIn.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND,
                                 TransitionButton.OnAnimationStopEndListener {
-                                    Intent(this@LoginActivity,HomeActivity::class.java).also {
+                                    Intent(this@LoginActivity, HomeActivity::class.java).also {
                                         startActivity(it)
                                     }
                                     finish() // 임시

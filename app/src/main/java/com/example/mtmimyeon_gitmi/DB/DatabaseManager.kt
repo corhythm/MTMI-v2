@@ -5,6 +5,7 @@ import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import androidx.core.net.toUri
+import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -76,11 +77,11 @@ class DatabaseManager {
         if (id.isEmpty() || pw.isEmpty()) {
             callback.onCallback(false)
         } else {
-            firebaseAuth!!.signInWithEmailAndPassword(id, pw)
+            firebaseAuth.signInWithEmailAndPassword(id, pw)
                 .addOnCompleteListener(activity) {
                     if (it.isSuccessful) {
                         Log.d("loginEmail : ", "Login Success") //로그인 성공
-                        val user = firebaseAuth?.currentUser
+                        val user = firebaseAuth.currentUser
                         callback.onCallback(true)
                     } else {
                         Log.d("loginEmail : ", "Login Failed") //로그인 실패
@@ -380,6 +381,9 @@ class DatabaseManager {
                 .addOnSuccessListener { callback.onCallback(true) }
                 .addOnFailureListener { callback.onCallback(false) }
         }
+
+        // 유저 데이터 업데이트
+        SharedPrefManager.setUserData(userData)
 
 
     }

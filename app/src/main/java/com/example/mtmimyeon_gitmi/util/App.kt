@@ -1,6 +1,7 @@
 package com.example.mtmimyeon_gitmi.util
 
 import android.app.Application
+import android.util.Log
 
 // 전역 Context
 class App: Application() {
@@ -12,5 +13,6 @@ class App: Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        Log.d("로그", "App -onCreate() called // app 초기화")
     }
 }

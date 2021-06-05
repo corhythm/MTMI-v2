@@ -146,7 +146,6 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
                     object : Callback<Boolean> {
                         // 이미지 업로드시 callback 으로 받아오기
                         override fun onCallback(data: Boolean) {
-
                             if (data) { // 업데이트 성공
                                 Log.d("로그", "EditProfileActivity -onCallback() called / 성공 gs://mtmi-4eeac.appspot.com/image/IMAGE_${auth.uid}.png")
                                 Intent().also {
