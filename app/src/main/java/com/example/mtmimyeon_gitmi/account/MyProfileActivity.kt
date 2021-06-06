@@ -18,6 +18,8 @@ import com.example.mtmimyeon_gitmi.db.DatabaseManager
 import com.example.mtmimyeon_gitmi.db.UserData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
+import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog
+import dev.shreyaspatil.MaterialDialog.model.TextAlignment
 import kotlin.system.exitProcess
 
 class MyProfileActivity : AppCompatActivity() {
@@ -69,12 +71,27 @@ class MyProfileActivity : AppCompatActivity() {
 
         // 로그아웃 클릭했을 때
         binding.textViewMyProfileLogout.setOnClickListener {
-            auth.signOut()
-            finishAffinity()
-            Intent(this, LoginActivity::class.java).also {
-                startActivity(it)
-                exitProcess(0)
-            }
+            val mDialog = BottomSheetMaterialDialog.Builder(this)
+                .setTitle("Logout?")
+                .setAnimation("question.json")
+                .setMessage(
+                    "정말로 로그아웃 하시겠어요?",
+                    TextAlignment.CENTER
+                )
+                .setPositiveButton("Yes") { dialogInterface, _ ->
+                    dialogInterface.dismiss()
+                    auth.signOut()
+                    finishAffinity()
+                    Intent(this, LoginActivity::class.java).also {
+                        startActivity(it)
+                        exitProcess(0)
+                    }
+                }
+                .setNegativeButton("No") { dialogInterface, _ -> dialogInterface.dismiss() }
+                .build();
+
+            // Show Dialog
+            mDialog.show();
         }
 
         // toolbar appbar로 지정
@@ -113,7 +130,8 @@ class MyProfileActivity : AppCompatActivity() {
         Log.d("로그", "MyProfileActivity -onActivityResult() called / first")
         if (requestCode == 2000) { // 프로필 업데이트
             if (resultCode == RESULT_OK) {
-                Log.d("로그", "MyProfileActivity -onActivityResult() called // 2000: ${data!!.getStringExtra("imgUrl")!!}")
+                Log.d("로그",
+                    "MyProfileActivity -onActivityResult() called // 2000: ${data!!.getStringExtra("imgUrl")!!}")
                 loadProfileImage(data!!.getStringExtra("imgUrl")!!)
             }
         }
