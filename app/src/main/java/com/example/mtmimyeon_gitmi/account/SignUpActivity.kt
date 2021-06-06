@@ -24,7 +24,6 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         init()
     }
 
@@ -226,7 +225,6 @@ class SignUpActivity : AppCompatActivity() {
             )
             return false
         }
-
 
         // 생년월일이 validation check (e.g. 961125)
         if (binding.editTextSignUpDateOfBirth.text.toString().trim() == "") {
