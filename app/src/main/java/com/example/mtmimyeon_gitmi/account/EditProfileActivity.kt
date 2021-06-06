@@ -192,6 +192,9 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
         if(binding.editTextActivityEditProfileNameValue.text.toString() == "")
             return false
 
+        if(binding.spinnerActivityEditProfileMajor.selectedItemPosition == -1)
+            return false
+
         return true
     }
 
@@ -219,7 +222,7 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    // 갤러리로부 사진 받았을 때 오출
+    // 갤러리로부터 사진 받았을 때 호출
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 0 && resultCode == RESULT_OK) { // 이미지 불러오기 성공했을 때, 프로필 이미지 변경

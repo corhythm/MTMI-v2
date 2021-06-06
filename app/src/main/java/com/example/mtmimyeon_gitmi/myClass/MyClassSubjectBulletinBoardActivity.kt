@@ -27,7 +27,7 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
     lateinit var subjectBulletinBoardRecyclerAdapter: SubjectBulletinBoardRecyclerAdapter
     lateinit var subjectBulletinBoardList: ArrayList<BoardPost>
     var database = DatabaseManager()
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyClassSubjectBulletinBoardBinding.inflate(layoutInflater)
