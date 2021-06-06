@@ -109,13 +109,13 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
 
         // 업데이트 버튼 누르면 --> 프로필 업데이트
         binding.buttonActivityEditProfileUpdateProfile.setOnClickListener {
-            val updateId = binding.editTextActivityEditProfileIdValue.text.toString() //id
-            val updatePw = binding.editTextActivityEditProfilePwValue.text.toString() // pw
+            val updateId = binding.editTextActivityEditProfileIdValue.text.toString().trim() //id
+            val updatePw = binding.editTextActivityEditProfilePwValue.text.toString().trim() // pw
             val updateStudentId =
-                binding.editTextActivityEditProfileStudentIdValue.text.toString() // 학번
-            val updateName = binding.editTextActivityEditProfileNameValue.text.toString() // 이름
-            val updateBirth = binding.editTextActivityEditProfileBirthValue.text.toString() // 생일
-            val updateMajor = binding.spinnerActivityEditProfileMajor.selectedItem.toString() // 전공
+                binding.editTextActivityEditProfileStudentIdValue.text.toString().trim() // 학번
+            val updateName = binding.editTextActivityEditProfileNameValue.text.toString().trim() // 이름
+            val updateBirth = binding.editTextActivityEditProfileBirthValue.text.toString().trim() // 생일
+            val updateMajor = binding.spinnerActivityEditProfileMajor.selectedItem.toString().trim() // 전공
 
             if (checkProfileValidate()) { // 프로필 정보 변경 가능한지 체크(빈 문자열 없는지)
                 val updatedUserData = UserData(

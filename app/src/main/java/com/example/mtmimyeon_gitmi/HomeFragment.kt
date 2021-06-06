@@ -30,6 +30,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -38,7 +39,6 @@ import kotlin.math.abs
 class HomeFragment : Fragment(), MjuSiteClickedInterface {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private var isFirstStart = true // 처음 시작할 때만 db에서 유저 데이터 get
     private lateinit var mTimer: Timer
     private lateinit var customTimerTask: CustomTimerTask
     private var isFromSchoolToDestination = true // 학교 -> 도착지 || 도착지 학교
@@ -63,35 +63,34 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         init()
-
+        Log.d("로그", "HomeFragment -onCreateView() called / 크리에트뷰")
         return binding.root
     }
 
     private fun init() {
 
         // db에서 유저 데이터 가져와서 SharedPrefernces 저장
-        if (this.isFirstStart) {
-            val myUid = FirebaseAuth.getInstance().currentUser.uid
-            val db = DatabaseManager()
-            Log.d("로그", "HomeFragment -init() called // DB에서 처음으로 데이터 get")
-            this.isFirstStart = false
+        val myUid = FirebaseAuth.getInstance().currentUser.uid
+        val db = DatabaseManager()
+        Log.d("로그", "HomeFragment -init() called // DB에서 처음으로 데이터 get")
 
-            db.callUserData(myUid, object : Callback<UserData> {
-                override fun onCallback(data: UserData) {
-                    Log.d("로그", "HomeFragment -onCallback() called / data = $data")
-                    val sharedUserData = SharedPrefManager.getUserData()
-                    if (sharedUserData != null) { // 기존에 저장된 UserData가 있을 경우
-                        if (sharedUserData.id != data.id) { // 기존에 로그인하던 id가 아닌 다른 id로 로그인할 경우
-                            SharedPrefManager.clearAllLmsUserData() // LMS 관련 데이터 삭제
-                            SharedPrefManager.clearAllMyMbtiData() // MBTI 데이터 삭제
-                            SharedPrefManager.clearAllUserData() // 기존 UserData 삭제
+        db.callUserData(myUid, object : Callback<UserData> {
+            override fun onCallback(data: UserData) {
+                Log.d("로그", "HomeFragment -onCallback() called / data = $data")
+                val sharedUserData = SharedPrefManager.getUserData()
+                if (sharedUserData != null) { // 기존에 저장된 UserData가 있을 경우
+                    if (sharedUserData.id != data.id) { // 기존에 로그인하던 id가 아닌 다른 id로 로그인할 경우
+                        SharedPrefManager.clearAllLmsUserData() // LMS 관련 데이터 삭제
+                        SharedPrefManager.clearAllMyMbtiData() // MBTI 데이터 삭제
+                        SharedPrefManager.clearAllUserData() // 기존 UserData 삭제
 
-                        }
                     }
-                    SharedPrefManager.setUserData(data)
+                }
+                SharedPrefManager.setUserData(data)
 
-                    // main banner init -
-                    // 원래 callback method에서 수행하면 안 되는데, 안 그럼 뷰가 먼저 그려짐.
+                // main banner init -
+                // 원래 callback method에서 수행하면 안 되는데, 안 그럼 뷰가 먼저 그려짐.
+                try {
                     val myMbtiResult = SharedPrefManager.getMyMbtiType()
 
                     if (myMbtiResult != "") { // mbti 테스트를 이미 했으면
@@ -144,7 +143,8 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                             requireContext().resources.getStringArray(R.array.main_banner_mbti_type_subtitle)[mbtiIndex[myMbtiResult]!!]
 
                     } else { // mbti 테스트를 한 번도 안 했으면
-                        binding.constraintLayoutFragmentHomeMyMbtiContainer.visibility = View.GONE
+                        binding.constraintLayoutFragmentHomeMyMbtiContainer.visibility =
+                            View.GONE
                         // main banner 클릭 시, mbti 메뉴로 이동
                         binding.textviewMainGoToMbti.setOnClickListener {
                             (requireActivity() as HomeActivity).binding.bottomNavigationViewHome.setItemSelected(
@@ -153,9 +153,12 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                             )
                         }
                     }
+                } catch (exception: Exception) {
+                    Log.d("로그", "HomeFragment -onCallback() called / $exception")
                 }
-            })
-        }
+
+            }
+        })
 
 
         // 홈 명지대 아이콘 데이터 초기화

@@ -15,6 +15,7 @@ import com.example.mtmimyeon_gitmi.databinding.ItemChattingRoomBinding
 import com.example.mtmimyeon_gitmi.db.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -139,8 +140,13 @@ class ChattingRoomViewHolder(
         item.textViewItemChattingRoomLastMessage.text = itemChattingRoom.lastChat
         item.textViewItemChattingRoomTimeStamp.text = itemChattingRoom.timeStamp
         FirebaseStorage.getInstance().reference.child(itemChattingRoom.imgUrl).downloadUrl.addOnSuccessListener { that ->
-            Glide.with(itemView.context).load(that).circleCrop()
-                .into(item.imageViewItemChattingRoomProfileImg)
+            try {
+                Glide.with(itemView.context).load(that).circleCrop()
+                    .into(item.imageViewItemChattingRoomProfileImg)
+            } catch (exception: Exception) {
+                Log.d("팅김", "ChattingRoomViewHolder -bind() called / 팅김")
+            }
+
         }
 
         item.root.setOnClickListener {
