@@ -1,10 +1,12 @@
 package com.example.mtmimyeon_gitmi.db
 
 import android.app.Activity
+import android.content.Context
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import androidx.core.net.toUri
+import com.example.mtmimyeon_gitmi.account.SignUpActivity
 import com.example.mtmimyeon_gitmi.util.SharedPrefManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -28,44 +30,30 @@ class DatabaseManager {
     fun createEmail(
         id: String,
         pw: String,
-        confirm: String,
         name: String,
         studentId: String,
         major: String,
         birth: String,
         gender: String,
-        activity: Activity,
+        context: Context,
         callback: Callback<Boolean>,
     ) {  // -> 회원가입 메소드
-        Log.d(" id and password", "$id, $pw")
         database = Firebase.database.getReference("user")
-        if (id.isEmpty() || pw.isEmpty() || confirm.isEmpty() || name.isEmpty() || studentId.isEmpty() || major.isEmpty() || birth.isEmpty() || gender.isEmpty()) {
-            callback.onCallback(false)
-            Toast.makeText(activity, "아이디 혹은 비밀번호를 입력해주세요.", Toast.LENGTH_LONG).show()
-        } else if (pw != confirm) {
-            callback.onCallback(false)
-            Toast.makeText(activity, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show()
-        } else {
-            Log.d("LOG", "회원가입 실행중입니다.")
-            firebaseAuth.createUserWithEmailAndPassword(id, pw)
-                .addOnCompleteListener(activity) {
-                    if (it.isSuccessful) {
-                        val user = firebaseAuth.currentUser
-                        val userdata =
-                            UserData(id, pw, studentId, name, birth, gender, major, "empty")
-                        database.child(user.uid).setValue(userdata)
-                        callback.onCallback(true)
-                        Log.d("createEmail: ", "Sign up Successful")//가입성공
-                    } else {
-                        Log.d("createEmail: ", "Sign up Failed")//가입실패
-                        callback.onCallback(false)
-                        Toast.makeText(activity, "회원가입 실패: 다시 확인해주세요", Toast.LENGTH_LONG).show()
-                    }
-                }
-        }
 
-        Log.d("end if , else", ": 조건문 처리 종료")
-        Log.d("return chekck ", ": 체킹 값 출력")
+        firebaseAuth.createUserWithEmailAndPassword(id, pw)
+            .addOnCompleteListener(context as SignUpActivity) {
+                if (it.isSuccessful) {
+                    val user = firebaseAuth.currentUser
+                    val userdata =
+                        UserData(id, pw, studentId, name, birth, gender, major, "empty")
+                    database.child(user.uid).setValue(userdata)
+                    callback.onCallback(true)
+                    Log.d("createEmail: ", "Sign up Successful")//가입성공
+                } else {
+                    Log.d("createEmail: ", "Sign up Failed")//가입실패
+                    callback.onCallback(false)
+                }
+            }
     }
 
     fun loginEmail(
@@ -80,12 +68,9 @@ class DatabaseManager {
             firebaseAuth.signInWithEmailAndPassword(id, pw)
                 .addOnCompleteListener(activity) {
                     if (it.isSuccessful) {
-                        Log.d("loginEmail : ", "Login Success") //로그인 성공
                         val user = firebaseAuth.currentUser
                         callback.onCallback(true)
                     } else {
-                        Log.d("loginEmail : ", "Login Failed") //로그인 실패
-                        Toast.makeText(activity, "아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_LONG).show()
                         callback.onCallback(false)
                     }
                 }
@@ -122,7 +107,7 @@ class DatabaseManager {
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.children.forEach() {
-                    var chatId: String = it.key as String
+                    val chatId: String = it.key as String
                     Log.d("가져온 키", chatId)
                     if (chatId == chatRoomId) {
                         check = false

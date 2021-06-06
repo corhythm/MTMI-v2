@@ -4,12 +4,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import androidx.core.content.res.ResourcesCompat
 import com.example.mtmimyeon_gitmi.db.Callback
 import com.example.mtmimyeon_gitmi.db.DatabaseManager
 import com.example.mtmimyeon_gitmi.HomeActivity
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivityLoginBinding
 import com.royrodriguez.transitionbutton.TransitionButton
+import www.sanju.motiontoast.MotionToast
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -35,8 +37,8 @@ class LoginActivity : AppCompatActivity() {
             // Do your networking task or background work here.
             val handler: Handler = Handler()
             handler.postDelayed({
-                val loginUserId: String = binding.editTextLoginEmailAddress.text.toString()
-                val loginUserPw: String = binding.editTextLoginPassword.text.toString()
+                val loginUserId = binding.editTextLoginEmailAddress.text.toString().trim()
+                val loginUserPw = binding.editTextLoginPassword.text.toString().trim()
 
                 db.loginEmail(loginUserId, loginUserPw, this, object : Callback<Boolean> {
                     override fun onCallback(data: Boolean) {
@@ -49,6 +51,16 @@ class LoginActivity : AppCompatActivity() {
                                     finish() // 임시
                                 })
                         } else {
+                            MotionToast.createColorToast(
+                                this@LoginActivity,
+                                "Login Error",
+                                "아이디 혹은 비밀번호가 일치하지 않습니다.",
+                                MotionToast.TOAST_ERROR,
+                                MotionToast.GRAVITY_BOTTOM,
+                                MotionToast.SHORT_DURATION,
+                                ResourcesCompat.getFont(this@LoginActivity,
+                                    R.font.maple_story_bold)
+                            )
                             binding.buttonLoginSignIn.stopAnimation(
                                 TransitionButton.StopAnimationStyle.SHAKE,
                                 null
