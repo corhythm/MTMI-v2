@@ -102,7 +102,7 @@ object SharedPrefManager {
         return storedSubjectInfoList
     }
 
-    fun clearAllLmsUserData() {
+    fun clearAllLmsUserData() { // LMS 관련 정보 전부 삭제
 
         // 쉐어드 모든 데이터 삭제
         val accountShared = App.instance.getSharedPreferences(
@@ -182,7 +182,7 @@ object SharedPrefManager {
         editor.apply() // 변경 사항 저장
     }
 
-    fun getUserData(): UserData {
+    fun getUserData(): UserData? {
         val shared = App.instance.getSharedPreferences(
             SHARED_USER_DATA,
             Context.MODE_PRIVATE
@@ -190,7 +190,15 @@ object SharedPrefManager {
 
         val userDataJson = shared.getString(KEY_USER_DATA, "")!!
 
-        return Gson().fromJson(userDataJson, UserData::class.java)
+            return Gson().fromJson(userDataJson, UserData::class.java)
+    }
+
+    fun clearAllUserData() {
+         // 쉐어드 모든 데이터 삭제
+        val accountShared = App.instance.getSharedPreferences(
+            SHARED_USER_DATA,
+            Context.MODE_PRIVATE
+        ).edit().clear().apply()
     }
 
 

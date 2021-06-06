@@ -73,12 +73,12 @@ class SignUpActivity : AppCompatActivity() {
 
                 if (checkValidateSignUp()) { // 기입한 회원정보가 모두 유효하면 회원가입 진행
                     //유저가 기입한 내용
-                    val signUpUserId = binding.editTextSignUpId.text.toString()
-                    val signUpUserPw = binding.editTextSignUpPw.text.toString()
-                    val signUpUserStudentId = binding.editTextSignUpStudentId.text.toString()
-                    val signUpUserBirth = binding.editTextSignUpDateOfBirth.text.toString()
-                    val signUpUserName = binding.editTextSignUpName.text.toString()
-                    val signUpUserMajor = binding.spinnerSignUpMajorList.selectedItem.toString()
+                    val signUpUserId = binding.editTextSignUpId.text.toString().trim()
+                    val signUpUserPw = binding.editTextSignUpPw.text.toString().trim()
+                    val signUpUserStudentId = binding.editTextSignUpStudentId.text.toString().trim()
+                    val signUpUserBirth = binding.editTextSignUpDateOfBirth.text.toString().trim()
+                    val signUpUserName = binding.editTextSignUpName.text.toString().trim()
+                    val signUpUserMajor = binding.spinnerSignUpMajorList.selectedItem.toString().trim()
                     var signUpUserGender = "남성" // 젠더 초기값
                     binding.radioButtonSignUpGenderGroup.setOnCheckedChangeListener { _, checkedId ->
                         when (checkedId) {
@@ -103,17 +103,9 @@ class SignUpActivity : AppCompatActivity() {
                         context = this,
                         object : Callback<Boolean> {
                             override fun onCallback(data: Boolean) {
-                                isSuccessful = data
-                                Log.d("callback method", ": in")
-                                Log.d("boolean check", isSuccessful.toString())
-                                if (isSuccessful) { // 회원가입 성공
+                                if (data) { // 회원가입 성공
                                     binding.buttonSignUpGoToSignUp.stopAnimation(
-                                        TransitionButton.StopAnimationStyle.EXPAND
-                                    ) {
-                                        Log.d("로그", binding.editTextSignUpConfirmPw.text.toString())
-                                        finish()
-                                        Log.d("callback method", ": out")
-                                    }
+                                        TransitionButton.StopAnimationStyle.EXPAND) { finish() }
                                 } else { // 회원가입 실패
                                     binding.buttonSignUpGoToSignUp.stopAnimation(
                                         TransitionButton.StopAnimationStyle.SHAKE,
@@ -129,7 +121,6 @@ class SignUpActivity : AppCompatActivity() {
                                         ResourcesCompat.getFont(this@SignUpActivity,
                                             R.font.maple_story_bold)
                                     )
-                                    Log.d("callback method", ": create auth faied")
                                 }
                             }
                         })
@@ -161,6 +152,21 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         // password validation check
+        if (binding.editTextSignUpPw.text.toString().trim().length < 6) {
+            MotionToast.createColorToast(
+                this,
+                "SignUp Error",
+                "비밀번호는 6자리 이상으로 설정해주세요!",
+                MotionToast.TOAST_ERROR,
+                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.SHORT_DURATION,
+                ResourcesCompat.getFont(this,
+                    R.font.maple_story_bold)
+            )
+            return false
+        }
+
+
         if (binding.editTextSignUpPw.text.toString()
                 .trim() == "" || binding.editTextSignUpConfirmPw.text.toString().trim() == ""
             || binding.editTextSignUpPw.text.toString()

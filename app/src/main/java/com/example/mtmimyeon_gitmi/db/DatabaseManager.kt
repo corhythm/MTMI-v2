@@ -42,15 +42,17 @@ class DatabaseManager {
 
         firebaseAuth.createUserWithEmailAndPassword(id, pw)
             .addOnCompleteListener(context as SignUpActivity) {
+                Log.d("createEmail", "DatabaseManager -createEmail() called / $id, $pw, $name, $studentId, $major, $birth, $gender, $context")
+                Log.d("로그", "DatabaseManager -createEmail() called / exception = ${it.exception}")
                 if (it.isSuccessful) {
-                    val user = firebaseAuth.currentUser
-                    val userdata =
+                    val userData =
                         UserData(id, pw, studentId, name, birth, gender, major, "empty")
-                    database.child(user.uid).setValue(userdata)
+                    Log.d("createEmail", "DatabaseManager -createEmail() called / userdata = $userData")
+                    database.child(firebaseAuth.currentUser!!.uid).setValue(userData)
                     callback.onCallback(true)
-                    Log.d("createEmail: ", "Sign up Successful")//가입성공
+                    Log.d("createEmail: ", "Sign up Successful") //가입성공
                 } else {
-                    Log.d("createEmail: ", "Sign up Failed")//가입실패
+                    Log.d("createEmail: ", "Sign up Failed") //가입실패
                     callback.onCallback(false)
                 }
             }
@@ -79,26 +81,9 @@ class DatabaseManager {
 
     fun makeChatRoom(sendUser: String, receiveUser: String, chatRoomId: String) { //채팅방 ID 생성 및 단일화
         database = Firebase.database.getReference("chat")
-        var newChat = Chat(chatRoomId, sendUser, receiveUser)
+        val newChat = Chat(chatRoomId, sendUser, receiveUser)
         database.child(chatRoomId).setValue(newChat)
     }
-//    fun callChatRoomData(roomId: String,callback: Callback<Chat>){
-//       database = Firebase.database.getReference("chat").child(roomId)
-//       database.addListenerForSingleValueEvent(object : ValueEventListener{
-//           override fun onDataChange(snapshot: DataSnapshot) {
-//               var roomData: Chat? = snapshot.getValue<Chat>()
-//               if(roomData != null){
-//                   callback.onCallback(roomData)
-//               }else{
-//                   Log.d("callChatRoomData","오류")
-//               }
-//           }
-//
-//           override fun onCancelled(error: DatabaseError) {
-//               Log.d("방정보","없음")
-//           }
-//       })
-//    }
 
     //     채팅 중복 찾기
     fun checkChat(chatRoomId: String, callback: Callback<Boolean>) {

@@ -79,72 +79,82 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
             db.callUserData(myUid, object : Callback<UserData> {
                 override fun onCallback(data: UserData) {
                     Log.d("로그", "HomeFragment -onCallback() called / data = $data")
+                    val sharedUserData = SharedPrefManager.getUserData()
+                    if (sharedUserData != null) { // 기존에 저장된 UserData가 있을 경우
+                        if (sharedUserData.id != data.id) { // 기존에 로그인하던 id가 아닌 다른 id로 로그인할 경우
+                            SharedPrefManager.clearAllLmsUserData() // LMS 관련 데이터 삭제
+                            SharedPrefManager.clearAllMyMbtiData() // MBTI 데이터 삭제
+                            SharedPrefManager.clearAllUserData() // 기존 UserData 삭제
+
+                        }
+                    }
                     SharedPrefManager.setUserData(data)
+
+                    // main banner init -
+                    // 원래 callback method에서 수행하면 안 되는데, 안 그럼 뷰가 먼저 그려짐.
+                    val myMbtiResult = SharedPrefManager.getMyMbtiType()
+
+                    if (myMbtiResult != "") { // mbti 테스트를 이미 했으면
+                        binding.linearLayoutFragmentHomeGoToMbtiContainer.visibility = View.GONE
+
+                        val mbtiImgList = resources.obtainTypedArray(R.array.mbti_img)
+                        // 해당 mbti에 해당하는 values.xml index 매칭 HashMap
+                        val mbtiIndex = hashMapOf(
+                            "INTJ" to 0,
+                            "INFJ" to 1,
+                            "ISTJ" to 2,
+                            "ISTP" to 3,
+                            "INTP" to 4,
+                            "INFP" to 5,
+                            "ISFJ" to 6,
+                            "ISFP" to 7,
+                            "ENTJ" to 8,
+                            "ENFJ" to 9,
+                            "ESTJ" to 10,
+                            "ESTP" to 11,
+                            "ENTP" to 12,
+                            "ENFP" to 13,
+                            "ESFJ" to 14,
+                            "ESFP" to 15
+                        )
+
+                        val bannerColorList = arrayListOf(
+                            R.drawable.bg_rounded_banner1,
+                            R.drawable.bg_rounded_banner2,
+                            R.drawable.bg_rounded_banner3,
+                            R.drawable.bg_rounded_banner4,
+                        )
+
+                        // MBTI 이미지 설정
+                        binding.imageViewFragmentHomeMbtiImg.setImageResource(
+                            mbtiImgList.getResourceId(
+                                mbtiIndex[myMbtiResult]!!,
+                                -1
+                            )
+                        )
+                        // MBTI 배경 설정
+                        binding.constraintLayoutFragmentHomeMyMbtiContainer.background =
+                            ContextCompat.getDrawable(requireContext(),
+                                bannerColorList[mbtiIndex[myMbtiResult]!! % bannerColorList.size])
+                        // MBTI Title 설정
+                        binding.textViewFragmentHomeMbtiTypeTitle.text =
+                            requireContext().resources.getStringArray(R.array.main_banner_mbti_type_title)[mbtiIndex[myMbtiResult]!!]
+                        // MBTI Subtitle 설정
+                        binding.textViewFragmentHomeMbtiTypeSubTitle.text =
+                            requireContext().resources.getStringArray(R.array.main_banner_mbti_type_subtitle)[mbtiIndex[myMbtiResult]!!]
+
+                    } else { // mbti 테스트를 한 번도 안 했으면
+                        binding.constraintLayoutFragmentHomeMyMbtiContainer.visibility = View.GONE
+                        // main banner 클릭 시, mbti 메뉴로 이동
+                        binding.textviewMainGoToMbti.setOnClickListener {
+                            (requireActivity() as HomeActivity).binding.bottomNavigationViewHome.setItemSelected(
+                                R.id.menu_mbti,
+                                true
+                            )
+                        }
+                    }
                 }
             })
-        }
-
-        // main banner init
-        val myMbtiResult = SharedPrefManager.getMyMbtiType()
-
-        if (myMbtiResult != "") { // mbti 테스트를 이미 했으면
-            binding.linearLayoutFragmentHomeGoToMbtiContainer.visibility = View.GONE
-
-            val mbtiImgList = resources.obtainTypedArray(R.array.mbti_img)
-            // 해당 mbti에 해당하는 values.xml index 매칭 HashMap
-            val mbtiIndex = hashMapOf(
-                "INTJ" to 0,
-                "INFJ" to 1,
-                "ISTJ" to 2,
-                "ISTP" to 3,
-                "INTP" to 4,
-                "INFP" to 5,
-                "ISFJ" to 6,
-                "ISFP" to 7,
-                "ENTJ" to 8,
-                "ENFJ" to 9,
-                "ESTJ" to 10,
-                "ESTP" to 11,
-                "ENTP" to 12,
-                "ENFP" to 13,
-                "ESFJ" to 14,
-                "ESFP" to 15
-            )
-
-            val bannerColorList = arrayListOf(
-                R.drawable.bg_rounded_banner1,
-                R.drawable.bg_rounded_banner2,
-                R.drawable.bg_rounded_banner3,
-                R.drawable.bg_rounded_banner4,
-            )
-
-            // MBTI 이미지 설정
-            binding.imageViewFragmentHomeMbtiImg.setImageResource(
-                mbtiImgList.getResourceId(
-                    mbtiIndex[myMbtiResult]!!,
-                    -1
-                )
-            )
-            // MBTI 배경 설정
-            binding.constraintLayoutFragmentHomeMyMbtiContainer.background =
-                ContextCompat.getDrawable(requireContext(),
-                    bannerColorList[mbtiIndex[myMbtiResult]!! % bannerColorList.size])
-            // MBTI Title 설정
-            binding.textViewFragmentHomeMbtiTypeTitle.text =
-                requireContext().resources.getStringArray(R.array.main_banner_mbti_type_title)[mbtiIndex[myMbtiResult]!!]
-            // MBTI Subtitle 설정
-            binding.textViewFragmentHomeMbtiTypeSubTitle.text =
-                requireContext().resources.getStringArray(R.array.main_banner_mbti_type_subtitle)[mbtiIndex[myMbtiResult]!!]
-
-        } else { // mbti 테스트를 한 번도 안 했으면
-            binding.constraintLayoutFragmentHomeMyMbtiContainer.visibility = View.GONE
-            // main banner 클릭 시, mbti 메뉴로 이동
-            binding.textviewMainGoToMbti.setOnClickListener {
-                (requireActivity() as HomeActivity).binding.bottomNavigationViewHome.setItemSelected(
-                    R.id.menu_mbti,
-                    true
-                )
-            }
         }
 
 
@@ -383,7 +393,7 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
 
             "학교홈" -> url = "https://www.mju.ac.kr/mjukr/index.do"
             "학과홈" -> {
-                val major = SharedPrefManager.getUserData().major
+                val major = SharedPrefManager.getUserData()!!.major
                 var majorIndex = -1
                 val majorList = requireContext().resources.getStringArray(R.array.major)
                 for (i in majorList.indices) { // index get

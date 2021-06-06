@@ -13,7 +13,7 @@ import www.sanju.motiontoast.MotionToast
 
 class MyClassMailToProfessorActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyClassMailToProfessorBinding
-    private val userData = SharedPrefManager.getUserData()
+    private val userData = SharedPrefManager.getUserData()!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
