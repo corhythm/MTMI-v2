@@ -14,6 +14,8 @@ import com.example.mtmimyeon_gitmi.db.DatabaseManager
 import com.example.mtmimyeon_gitmi.R
 import com.example.mtmimyeon_gitmi.databinding.ActivitySignUpBinding
 import com.royrodriguez.transitionbutton.TransitionButton
+import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog
+import dev.shreyaspatil.MaterialDialog.model.TextAlignment
 import www.sanju.motiontoast.MotionToast
 import java.util.regex.Pattern
 
@@ -287,6 +289,28 @@ class SignUpActivity : AppCompatActivity() {
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)
+    }
+
+    // 뒤로 가기 눌렀을 때
+    override fun onBackPressed() {
+        val mDialog = BottomSheetMaterialDialog.Builder(this)
+            .setTitle("Exit?")
+            .setAnimation("question.json")
+            .setMessage(
+                "회원가입을 중단하실 건가요? 중간에 나가시면 기존 정보는 저장되지 않아요.",
+                TextAlignment.CENTER
+            )
+            .setPositiveButton("Yes") { dialogInterface, _ ->
+                super.onBackPressed()
+                dialogInterface.dismiss()
+            }
+            .setNegativeButton("No") { dialogInterface, _ ->
+                dialogInterface.dismiss()
+            }
+            .build();
+
+        // Show Dialog
+        mDialog.show();
     }
 
 
