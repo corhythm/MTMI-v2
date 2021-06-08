@@ -1,14 +1,11 @@
 package com.example.mtmimyeon_gitmi.myClass
 
-import android.app.Activity
-import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import www.sanju.motiontoast.MotionToast
 
-class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMessageClickInterface {
+class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMessageClickInterface {
     private lateinit var binding: ActivityMyClassSubjectBulletinBoardDetailsBinding
     private val itemSubjectBulletinBoardCommentList = ArrayList<BoardComment>()
     private lateinit var subjectBulletinBoardCommentRecyclerAdapter: SubjectBulletinBoardCommentRecyclerAdapter
@@ -101,7 +98,7 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
                 )
             } else {
                 Log.d("클릭리스너 실행", "메시지창 불러오는중")
-                var chatId = makeChat(auth.currentUser.uid, pathData.writerUid.toString())
+                val chatId = makeChat(auth.currentUser.uid, pathData.writerUid.toString())
 
                 Intent(this, ChattingRoomDetailsActivity::class.java).also {
                     it.putExtra("chatId", chatId)
@@ -114,7 +111,7 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
     }
 
     private fun makeChat(sendUser: String, receiveUser: String): String {
-        var chatId: String = if (sendUser > receiveUser) {
+        val chatId: String = if (sendUser > receiveUser) {
             "$sendUser-$receiveUser"
         } else {
             "$receiveUser-$sendUser"
@@ -193,7 +190,7 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
         } else {
             Log.d("댓글단사람들 확인중", "메세지보내기")
             Log.d("클릭리스너 실행", "메시지창 불러오는중")
-            var chatId = makeChat(
+            val chatId = makeChat(
                 auth.currentUser.uid,
                 itemSubjectBulletinBoardCommentList[commentIdx].commenterUid
             )
@@ -213,13 +210,13 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), sendMess
     }
 }
 
-interface sendMessageClickInterface { // 댓글 단 사람들과 채팅
+interface SendMessageClickInterface { // 댓글 단 사람들과 채팅
     fun sendMessageClicked(commentIdx: Int, profileImg: String)
 }
 
 class SubjectBulletinBoardCommentRecyclerAdapter(
     private val itemSubjectBulletinBoardCommentList: ArrayList<BoardComment>,
-    private val sendMessageClickInterface: sendMessageClickInterface,
+    private val SendMessageClickInterface: SendMessageClickInterface,
 ) : RecyclerView.Adapter<SubjectBulletinBoardCommentViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -231,7 +228,7 @@ class SubjectBulletinBoardCommentRecyclerAdapter(
             parent,
             false
         )
-        return SubjectBulletinBoardCommentViewHolder(binding, this.sendMessageClickInterface)
+        return SubjectBulletinBoardCommentViewHolder(binding, this.SendMessageClickInterface)
     }
 
     override fun onBindViewHolder(holder: SubjectBulletinBoardCommentViewHolder, position: Int) {
@@ -247,7 +244,7 @@ class SubjectBulletinBoardCommentRecyclerAdapter(
 // recyclerview viewHolder
 class SubjectBulletinBoardCommentViewHolder(
     private val item: ItemSubjectBulletinBoardCommentBinding,
-    private val sendMessageClickInterface: sendMessageClickInterface,
+    private val SendMessageClickInterface: SendMessageClickInterface,
 ) : RecyclerView.ViewHolder(item.root) {
 
     fun bind(boardComment: BoardComment) {
@@ -256,7 +253,7 @@ class SubjectBulletinBoardCommentViewHolder(
         item.textViewItemSubjectBulletinBoardCommentCommentContent.text =
             boardComment.content
         item.textViewItemSubjectBulletinBoardCommentDate.text = boardComment.day
-        var database = DatabaseManager()
+        val database = DatabaseManager()
         boardComment.commenterUid?.let {
             database.callUserDataImageUri(it, object : Callback<String> {
                 override fun onCallback(data: String) {
@@ -266,7 +263,7 @@ class SubjectBulletinBoardCommentViewHolder(
                             .into(item.imageViewItemSubjectBulletinBoardCommentProfileImg)
                     }
                     item.imageViewItemSubjectBulletinBoardCommentMessage.setOnClickListener {
-                        this@SubjectBulletinBoardCommentViewHolder.sendMessageClickInterface.sendMessageClicked(
+                        this@SubjectBulletinBoardCommentViewHolder.SendMessageClickInterface.sendMessageClicked(
                             adapterPosition,
                             "image/$data")
                         Log.d("클릭한 아이템", adapterPosition.toString())

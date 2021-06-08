@@ -20,7 +20,7 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
     lateinit var subjectName: String
     lateinit var idx: String
     override fun onCreate(savedInstanceState: Bundle?) {
-        var intentExtra = intent
+        val intentExtra = intent
         subjectName = intentExtra.getStringExtra("과목이름") // 과목 이름
         idx = intentExtra.getStringExtra("과목코드")// 과목 코드
         super.onCreate(savedInstanceState)
@@ -59,9 +59,9 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
         return true
     }
     private fun uploadPost() {
-        var writter = auth.currentUser.uid
-        var title = binding.editTextMyClassSubjectBulletinBoardWritingTitle.text.toString()
-        var content = binding.editTextMyClassSubjectBulletinBoardWritingContent.text.toString()
+        val writter = auth.currentUser.uid
+        val title = binding.editTextMyClassSubjectBulletinBoardWritingTitle.text.toString()
+        val content = binding.editTextMyClassSubjectBulletinBoardWritingContent.text.toString()
         DB.writePost(idx,writter, title, content, object : Callback<Boolean> {
             override fun onCallback(data: Boolean) {
                 if(data){
