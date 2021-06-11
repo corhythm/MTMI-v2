@@ -23,8 +23,6 @@ class DatabaseManager {
 
     private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private lateinit var database: DatabaseReference
-    private var storageRef = FirebaseStorage.getInstance()
-    private var storage = Firebase.storage
 
     //      회원가입 메소드 ( 정보 기입 필요한 )
     fun createEmail(

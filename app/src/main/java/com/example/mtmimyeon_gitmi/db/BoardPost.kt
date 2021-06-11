@@ -14,14 +14,4 @@ data class BoardPost(
 
 ):Serializable {
     constructor() : this("","","","","","","",-1,){}
-    init {
-        this.subjectCode = subjectCode
-        this.title = title
-        this.day = day
-        this.content = content
-        this.writerUid = writerUid
-        this.writerName = writerName
-        this.subjectBoardIndex = subjectBoardIndex
-        this.view = view
-    }
 }

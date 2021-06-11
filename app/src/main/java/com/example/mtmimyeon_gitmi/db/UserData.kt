@@ -14,5 +14,4 @@ data class UserData(
     var userProfileImageUrl: String = ""
 ){
     constructor() : this("","","","","","","",""){}
-
 }
