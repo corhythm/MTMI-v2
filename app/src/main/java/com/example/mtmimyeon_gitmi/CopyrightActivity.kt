@@ -1,5 +1,6 @@
 package com.example.mtmimyeon_gitmi
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mtmimyeon_gitmi.databinding.ActivityCopyrightBinding
@@ -11,6 +12,7 @@ class CopyrightActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCopyrightBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        window.statusBarColor = Color.BLACK
     }
 
     override fun finish() {
