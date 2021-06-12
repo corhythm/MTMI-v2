@@ -18,7 +18,7 @@
         android:id="@+id/constraintLayout_login_imageFrame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_rounded_corner"
+        android:background="@drawable/bg_rounded_corner2"
         android:backgroundTint="#F4CECE"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
