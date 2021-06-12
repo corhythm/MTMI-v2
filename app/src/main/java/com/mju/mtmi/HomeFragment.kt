@@ -17,9 +17,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mju.mtmi.databinding.*
-import com.mju.mtmi.db.Callback
-import com.mju.mtmi.db.DatabaseManager
-import com.mju.mtmi.db.UserData
+import com.mju.mtmi.database.Callback
+import com.mju.mtmi.database.DatabaseManager
+import com.mju.mtmi.database.UserData
 import com.mju.mtmi.util.SharedPrefManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth

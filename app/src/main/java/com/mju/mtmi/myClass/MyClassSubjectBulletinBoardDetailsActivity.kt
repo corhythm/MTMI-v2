@@ -14,10 +14,10 @@ import com.mju.mtmi.R
 import com.mju.mtmi.chatting.ChattingRoomDetailsActivity
 import com.mju.mtmi.databinding.ActivityMyClassSubjectBulletinBoardDetailsBinding
 import com.mju.mtmi.databinding.ItemSubjectBulletinBoardCommentBinding
-import com.mju.mtmi.db.BoardComment
-import com.mju.mtmi.db.BoardPost
-import com.mju.mtmi.db.Callback
-import com.mju.mtmi.db.DatabaseManager
+import com.mju.mtmi.database.BoardComment
+import com.mju.mtmi.database.BoardPost
+import com.mju.mtmi.database.Callback
+import com.mju.mtmi.database.DatabaseManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import www.sanju.motiontoast.MotionToast

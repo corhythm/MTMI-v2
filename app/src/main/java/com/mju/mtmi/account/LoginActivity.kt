@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
-import com.mju.mtmi.db.Callback
-import com.mju.mtmi.db.DatabaseManager
+import com.mju.mtmi.database.Callback
+import com.mju.mtmi.database.DatabaseManager
 import com.mju.mtmi.HomeActivity
 import com.mju.mtmi.R
 import com.mju.mtmi.databinding.ActivityLoginBinding

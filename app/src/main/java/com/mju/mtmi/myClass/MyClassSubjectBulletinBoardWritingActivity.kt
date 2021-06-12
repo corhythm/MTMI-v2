@@ -9,8 +9,8 @@ import android.view.Menu
 import android.view.MenuItem
 import com.mju.mtmi.R
 import com.mju.mtmi.databinding.ActivityMyClassSubjectBulletinBoardWritingBinding
-import com.mju.mtmi.db.Callback
-import com.mju.mtmi.db.DatabaseManager
+import com.mju.mtmi.database.Callback
+import com.mju.mtmi.database.DatabaseManager
 import com.google.firebase.auth.FirebaseAuth
 
 class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {

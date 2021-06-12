@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mju.mtmi.R
 import com.mju.mtmi.databinding.ActivityMyClassSubjectBulletinBoardBinding
 import com.mju.mtmi.databinding.ItemSubjectBulletinBoardBinding
-import com.mju.mtmi.db.BoardPost
-import com.mju.mtmi.db.Callback
-import com.mju.mtmi.db.DatabaseManager
+import com.mju.mtmi.database.BoardPost
+import com.mju.mtmi.database.Callback
+import com.mju.mtmi.database.DatabaseManager
 
 
 class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardClickInterface {

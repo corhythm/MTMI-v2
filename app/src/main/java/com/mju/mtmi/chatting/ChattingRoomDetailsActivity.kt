@@ -13,7 +13,7 @@ import com.mju.mtmi.R
 import com.mju.mtmi.databinding.ActivityChattingRoomDetailsBinding
 import com.mju.mtmi.databinding.ItemReceiveChattingBinding
 import com.mju.mtmi.databinding.ItemSendChattingBinding
-import com.mju.mtmi.db.*
+import com.mju.mtmi.database.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot

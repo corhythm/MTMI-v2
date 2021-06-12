@@ -10,8 +10,8 @@ import android.util.Log
 import android.util.Patterns
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import com.mju.mtmi.db.Callback
-import com.mju.mtmi.db.DatabaseManager
+import com.mju.mtmi.database.Callback
+import com.mju.mtmi.database.DatabaseManager
 import com.mju.mtmi.R
 import com.mju.mtmi.databinding.ActivitySignUpBinding
 import com.royrodriguez.transitionbutton.TransitionButton

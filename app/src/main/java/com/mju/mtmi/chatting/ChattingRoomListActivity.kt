@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.mju.mtmi.R
 import com.mju.mtmi.databinding.ActivityChattingRoomListBinding
 import com.mju.mtmi.databinding.ItemChattingRoomBinding
-import com.mju.mtmi.db.*
+import com.mju.mtmi.database.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import java.lang.Exception

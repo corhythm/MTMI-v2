@@ -12,9 +12,9 @@ import androidx.core.content.res.ResourcesCompat
 import com.bumptech.glide.Glide
 import com.mju.mtmi.R
 import com.mju.mtmi.databinding.ActivityEditProfileBinding
-import com.mju.mtmi.db.Callback
-import com.mju.mtmi.db.DatabaseManager
-import com.mju.mtmi.db.UserData
+import com.mju.mtmi.database.Callback
+import com.mju.mtmi.database.DatabaseManager
+import com.mju.mtmi.database.UserData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog

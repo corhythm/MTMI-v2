@@ -1,4 +1,4 @@
-package com.mju.mtmi.db
+package com.mju.mtmi.database
 
 import android.app.Activity
 import android.content.Context

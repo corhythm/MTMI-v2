@@ -1,4 +1,4 @@
-package com.mju.mtmi.db
+package com.mju.mtmi.database
 
 data class UserData(
     var id: String?,

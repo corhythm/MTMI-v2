@@ -2,7 +2,7 @@ package com.mju.mtmi.util
 
 import android.content.Context
 import android.util.Log
-import com.mju.mtmi.db.UserData
+import com.mju.mtmi.database.UserData
 import com.mju.mtmi.myClass.ItemSubjectInfo
 import com.google.gson.Gson
 
