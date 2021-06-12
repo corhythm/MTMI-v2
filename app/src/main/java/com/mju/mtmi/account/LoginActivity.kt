@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.util.TypedValue
 import android.view.ViewGroup
 import android.widget.TextView
@@ -20,7 +21,6 @@ import www.sanju.motiontoast.MotionToast
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private var backKeyPressedTime: Long = 0 // 마지막으로 back key를 눌렀던 시간
-    private lateinit var toast: Toast // toast 메시지
     var db = DatabaseManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +33,6 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(it)
                 overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
             }
-
         }
 
         binding.buttonLoginSignIn.setOnClickListener {
@@ -41,8 +40,7 @@ class LoginActivity : AppCompatActivity() {
             binding.buttonLoginSignIn.startAnimation()
 
             // Do your networking task or background work here.
-            val handler: Handler = Handler()
-            handler.postDelayed({
+            Handler(Looper.getMainLooper()).postDelayed({
                 val loginUserId = binding.editTextLoginEmailAddress.text.toString().trim()
                 val loginUserPw = binding.editTextLoginPassword.text.toString().trim()
 
@@ -86,18 +84,12 @@ class LoginActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
             backKeyPressedTime = System.currentTimeMillis()
-            toast = Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT)
-            ((toast.view as ViewGroup).getChildAt(0) as TextView).setTextSize(
-                TypedValue.COMPLEX_UNIT_DIP,
-                15F
-            ) // 토스트 메시지 폰트 사이즈 변경
-            toast.show()
+            Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show()
             return;
         }
 
         if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
             finish();
-            toast.cancel();
         }
 
     }

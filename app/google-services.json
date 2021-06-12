@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "739776716397",
-    "project_id": "mtmi-4eeac",
-    "storage_bucket": "mtmi-4eeac.appspot.com"
+    "project_number": "334572218618",
+    "project_id": "mtmi-v2",
+    "storage_bucket": "mtmi-v2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:739776716397:android:1319f448eb758c555fe964",
+        "mobilesdk_app_id": "1:334572218618:android:d195cc51daa85e69090143",
         "android_client_info": {
-          "package_name": "com.example.mtmimyeon_gitmi"
+          "package_name": "com.mju.mtmi"
         }
       },
       "oauth_client": [
         {
-          "client_id": "739776716397-k01q06vuu5gktqm0vmb0s2rr6rj3naul.apps.googleusercontent.com",
+          "client_id": "334572218618-9bav8edogn21117veubvsblaog8tbkta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mju.mtmi",
+            "certificate_hash": "d05aec5bf476fe9496efa6f2543b7ece7e9a8d2e"
+          }
+        },
+        {
+          "client_id": "334572218618-oicccb92unp0cufl3q6p16io679i8sn9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyASPpua9_cvnJw6JMgmL5CI4xC6F3nErCc"
+          "current_key": "AIzaSyBG7BbHxdCUjdk2g9MH87yTYLAcF60cJFA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "739776716397-k01q06vuu5gktqm0vmb0s2rr6rj3naul.apps.googleusercontent.com",
+              "client_id": "334572218618-oicccb92unp0cufl3q6p16io679i8sn9.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

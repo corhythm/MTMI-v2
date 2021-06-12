@@ -43,25 +43,21 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
 
     private fun init() {
         // DB와 auth 초기화
-        var DB = DatabaseManager()
-        var auth = FirebaseAuth.getInstance()
+        val DB = DatabaseManager()
+        val auth = FirebaseAuth.getInstance()
 
 
         //intent값 초기화
-        var chatIntent = getIntent()
-        roomId = chatIntent.getStringExtra("chatId")
-        partnerImg = chatIntent.getStringExtra("partnerImg")
+
+        roomId = intent.getStringExtra("chatId")!!
+        partnerImg = intent.getStringExtra("partnerImg")!!
+
         //현재 유저 데이터 초기화
         DB.callUserData(auth.uid.toString(), object : Callback<UserData> {
             override fun onCallback(data: UserData) {
                 currentUser = data
             }
         })
-//        DB.callChatRoomData(roomId, object : Callback<Chat> {
-//            override fun onCallback(data: Chat) {
-//
-//            }
-//        })
 
         val chattingDataList = ArrayList<ChatMessage>()
 
@@ -113,14 +109,14 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
 
         // send시 메세지 보냄
         binding.buttonActivityChattingRoomDetailsSend.setOnClickListener {
-            var sendMessageContenet =
+            val sendMessageContenet =
                 binding.editTextActivityChattingRoomDetailsMessage.text.toString()
-            if (currentUser!=null&&sendMessageContenet.isNotEmpty()) {
+            if (sendMessageContenet.isNotEmpty()) {
                 DB.sendMessage(
                     roomId,
                     currentUser.userName,
                     binding.editTextActivityChattingRoomDetailsMessage.text.toString(),
-                    auth.currentUser.uid,
+                    auth.currentUser!!.uid,
                     currentUser.userProfileImageUrl
                 )
                 binding.editTextActivityChattingRoomDetailsMessage.text.clear()
@@ -146,7 +142,7 @@ class ChattingRoomDetailsRecyclerAdapter(private val chattingList: ArrayList<Cha
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var auth = FirebaseAuth.getInstance()
-    private val uid = auth.currentUser.uid
+    private val uid = auth.currentUser!!.uid
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == ViewType.MY_CHATTING.viewNum) // 내가 보낸 채팅일 때

@@ -3,6 +3,7 @@ package com.mju.mtmi.account
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -69,7 +70,7 @@ class SignUpActivity : AppCompatActivity() {
             binding.buttonSignUpGoToSignUp.startAnimation()
 
             // Do your networking task or background work here.
-            Handler().postDelayed({
+            Handler(Looper.getMainLooper()).postDelayed({
 
                 var isSuccessful: Boolean
 

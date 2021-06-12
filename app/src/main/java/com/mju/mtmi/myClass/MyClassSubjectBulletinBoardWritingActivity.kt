@@ -15,23 +15,23 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyClassSubjectBulletinBoardWritingBinding
-    private var DB = DatabaseManager()
+    private var db = DatabaseManager()
     private var auth = FirebaseAuth.getInstance()
     lateinit var subjectName: String
     lateinit var idx: String
     override fun onCreate(savedInstanceState: Bundle?) {
-        val intentExtra = intent
-        subjectName = intentExtra.getStringExtra("과목이름") // 과목 이름
-        idx = intentExtra.getStringExtra("과목코드")// 과목 코드
+
+        subjectName = intent.getStringExtra("과목이름")!! // 과목 이름
+        idx = intent.getStringExtra("과목코드")!! // 과목 코드
         super.onCreate(savedInstanceState)
         binding = ActivityMyClassSubjectBulletinBoardWritingBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
-        binding.fabMyClassSubjectBulletinBoardPost.setOnClickListener{
+        binding.fabMyClassSubjectBulletinBoardPost.setOnClickListener {
             uploadPost()
             val intent = Intent()
-            intent.putExtra("upload",true)
-            setResult(Activity.RESULT_OK,intent)
+            intent.putExtra("upload", true)
+            setResult(Activity.RESULT_OK, intent)
             finish()
         }
     }
@@ -53,23 +53,26 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            else -> { }
+        when (item.itemId) {
+            else -> {
+            }
         }
         return true
     }
+
     private fun uploadPost() {
-        val writter = auth.currentUser.uid
+        val writer = auth.currentUser!!.uid
         val title = binding.editTextMyClassSubjectBulletinBoardWritingTitle.text.toString()
         val content = binding.editTextMyClassSubjectBulletinBoardWritingContent.text.toString()
-        DB.writePost(idx,writter, title, content, object : Callback<Boolean> {
+        db.writePost(idx, writer, title, content, object : Callback<Boolean> {
             override fun onCallback(data: Boolean) {
-                if(data){
-                    Log.d("포스트업로드","성공")
+                if (data) {
+                    Log.d("포스트업로드", "성공")
                 }
             }
         })
     }
+
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.activity_slide_back_in, R.anim.activity_slide_back_out)

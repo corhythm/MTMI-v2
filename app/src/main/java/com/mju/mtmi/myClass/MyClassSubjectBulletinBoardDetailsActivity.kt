@@ -41,7 +41,7 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMess
     private fun init() {
 
         pathData = intent.getSerializableExtra("post") as BoardPost
-        Log.d("가져오 게시물 제목", pathData.title)
+        Log.d("가져오 게시물 제목", pathData.title!!)
         postDetailDataLoad(pathData)
         postDetailCommentLoad(pathData)
         Log.d("댓글 가져옴", "성공")
@@ -56,8 +56,8 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMess
         // 코멘트 작성
         binding.buttonMyClassSubjectBulletinBoardWritingPostComment.setOnClickListener {
             if (binding.editTextMyClassSubjectBulletinBoardWritingCommentContent.text.isNotEmpty()) {
-                var currentUser = auth.currentUser.uid
-                var comment =
+                val currentUser = auth.currentUser.uid
+                val comment =
                     binding.editTextMyClassSubjectBulletinBoardWritingCommentContent.text.toString()
                 database.postLeaveComment(
                     pathData.subjectCode,
@@ -151,24 +151,20 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMess
         database.loadPostComment(boardPost.subjectCode, boardPost.subjectBoardIndex,
             object : Callback<ArrayList<BoardComment>> {
                 override fun onCallback(data: ArrayList<BoardComment>) {
-                    if (data != null) {
-                        Log.d("callback", "코멘트추가완료")
-                        for (i in 0 until data.count())
-                            itemSubjectBulletinBoardCommentList.add(data[i])
-                        binding.recyclerviewMyClassSubjectBulletinBoardCommentList.apply {
-                            adapter = subjectBulletinBoardCommentRecyclerAdapter
-                            layoutManager = LinearLayoutManager(
-                                this@MyClassSubjectBulletinBoardDetailsActivity,
-                                LinearLayoutManager.VERTICAL,
-                                false
-                            )
-                            addItemDecoration(SubjectRecyclerDecoration())
-                            //itemAnimator = DefaultItemAnimator()
-                        }
-
-                    } else {
-                        Log.d("load comment", "error")
+                    Log.d("callback", "코멘트추가완료")
+                    for (i in 0 until data.count())
+                        itemSubjectBulletinBoardCommentList.add(data[i])
+                    binding.recyclerviewMyClassSubjectBulletinBoardCommentList.apply {
+                        adapter = subjectBulletinBoardCommentRecyclerAdapter
+                        layoutManager = LinearLayoutManager(
+                            this@MyClassSubjectBulletinBoardDetailsActivity,
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
+                        addItemDecoration(SubjectRecyclerDecoration())
+                        //itemAnimator = DefaultItemAnimator()
                     }
+
                 }
 
             })
@@ -191,7 +187,7 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMess
             Log.d("댓글단사람들 확인중", "메세지보내기")
             Log.d("클릭리스너 실행", "메시지창 불러오는중")
             val chatId = makeChat(
-                auth.currentUser.uid,
+                auth.currentUser!!.uid,
                 itemSubjectBulletinBoardCommentList[commentIdx].commenterUid
             )
 
@@ -254,7 +250,7 @@ class SubjectBulletinBoardCommentViewHolder(
             boardComment.content
         item.textViewItemSubjectBulletinBoardCommentDate.text = boardComment.day
         val database = DatabaseManager()
-        boardComment.commenterUid?.let {
+        boardComment.commenterUid.let {
             database.callUserDataImageUri(it, object : Callback<String> {
                 override fun onCallback(data: String) {
                     Log.d("data 값", data)

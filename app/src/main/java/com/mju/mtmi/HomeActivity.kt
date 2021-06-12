@@ -27,7 +27,6 @@ class HomeActivity : AppCompatActivity() {
     lateinit var binding: ActivityHomeBinding
     private lateinit var nowFragment: Fragment
     private var backKeyPressedTime: Long = 0 // 마지막으로 back key를 눌렀던 시간
-    private lateinit var toast: Toast // toast 메시지
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +60,6 @@ class HomeActivity : AppCompatActivity() {
             val info =
                 packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNING_CERTIFICATES)
             val signatures = info.signingInfo.apkContentsSigners
-            val md = MessageDigest.getInstance("SHA")
             for (signature in signatures) {
                 val md: MessageDigest = MessageDigest.getInstance("SHA")
                 md.update(signature.toByteArray())
@@ -118,21 +116,14 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-//        super.onBackPressed()
         if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
             backKeyPressedTime = System.currentTimeMillis()
-            toast = Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT)
-            ((toast.view as ViewGroup).getChildAt(0) as TextView).setTextSize(
-                TypedValue.COMPLEX_UNIT_DIP,
-                15F
-            ) // 토스트 메시지 폰트 사이즈 변경
-            toast.show()
+            Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show()
             return;
         }
 
         if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
             finish();
-            toast.cancel();
         }
 
     }
