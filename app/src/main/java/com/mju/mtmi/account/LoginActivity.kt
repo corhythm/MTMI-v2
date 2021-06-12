@@ -1,6 +1,7 @@
 package com.mju.mtmi.account
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -24,6 +25,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        window.statusBarColor = Color.parseColor("#B7EAF7")
 
         binding.textViewLoginSignUp.setOnClickListener {
             Intent(this, SignUpActivity::class.java).also {

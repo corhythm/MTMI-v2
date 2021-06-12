@@ -18,8 +18,8 @@
         android:id="@+id/constraintLayout_login_imageFrame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_rounded_corner"
-        android:backgroundTint="#F4CECE"
+        android:background="@drawable/bg_rounded_corner2"
+        android:backgroundTint="#B7EAF7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -48,7 +48,7 @@
         <View
             android:id="@+id/view_login_divider"
             android:layout_width="300dp"
-            android:layout_height="0.5dp"
+            android:layout_height="1dp"
             android:layout_gravity="center"
             android:layout_marginTop="1dp"
             android:background="#000000"

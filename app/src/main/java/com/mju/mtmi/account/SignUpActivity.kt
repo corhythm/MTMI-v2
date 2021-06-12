@@ -129,8 +129,7 @@ class SignUpActivity : AppCompatActivity() {
                         })
                     Log.d("After callback  : ", "Create method exit")
                 } else {
-                    binding.buttonSignUpGoToSignUp.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE,
-                        null)
+                    binding.buttonSignUpGoToSignUp.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null)
                     return@postDelayed
                 }
             }, 300)
