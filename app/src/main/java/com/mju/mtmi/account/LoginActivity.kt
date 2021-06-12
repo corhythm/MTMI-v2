@@ -5,9 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.TypedValue
-import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import com.mju.mtmi.database.Callback
