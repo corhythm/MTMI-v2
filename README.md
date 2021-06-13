@@ -1,5 +1,4 @@
-# MJU-TeamProject2
-TeamProject 2
+# MTMI(MJU TMI)
 
 ## Android Convention Rule(리소스 네이밍)
 * 이미지 파일: 특정 액티비티에 속한 이미지 -> type_activityname_filename.*
