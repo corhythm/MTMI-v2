@@ -22,7 +22,7 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
     private lateinit var binding: ActivityChattingRoomListBinding
     private lateinit var chattingRoomListRecyclerAdapter: ChattingRoomListRecyclerAdapter
     private var myChattingRoomList = ArrayList<ChatListForm>()
-    var database: DatabaseManager = DatabaseManager()
+    var firebase: FirebaseManager = FirebaseManager()
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,10 +33,10 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
 
     private fun init() {
         this.myChattingRoomList.clear()
-        database.loadChatList(auth.currentUser.uid, object : Callback<ArrayList<Chat>> {
+        firebase.loadChatList(auth.currentUser!!.uid, object : DataBaseCallback<ArrayList<Chat>> {
             override fun onCallback(data: ArrayList<Chat>) {
                 for (i in 0 until data.count()) {
-                    database.loadLastChat(data[i].chatRoomId, object : Callback<ChatListForm> {
+                    firebase.loadLastChat(data[i].chatRoomId, object : DataBaseCallback<ChatListForm> {
                         override fun onCallback(data: ChatListForm) {
                             myChattingRoomList.add(data)
                             Log.d("data", data.timeStamp)
@@ -52,17 +52,6 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
                         }
                     })
                 }
-//                binding.recyclerviewActivityChattingRoomListChatList.apply {
-//                    adapter = chattingRoomListRecyclerAdapter
-//                    layoutManager =
-//                        LinearLayoutManager(
-//                            this@ChattingRoomListActivity,
-//                            LinearLayoutManager.VERTICAL,
-//                            false
-//                        )
-//                }
-//                Log.d("체크",myChattingRoomList[0].timeStamp)
-
 
             }
         })
@@ -77,14 +66,9 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
     }
 
     // 특정 채팅방을 클릭했을 때
-    override fun chattingRoomClicked(
-        chattingRoomIdx: String,
-        imgUrl: String,
-    ) { // 채팅 방 번호 <- 이걸로 채팅방 검색(필요 시 탐색 데이터 추가할 것)
-        Log.d("클릭", "클릭@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-        Log.d("chattingRoomIdx 체크", chattingRoomIdx)
+    override fun chattingRoomClicked(chattingRoomIdx: String, imageUrl: String, ) { // 채팅 방 번호 <- 이걸로 채팅방 검색(필요 시 탐색 데이터 추가할 것)
         Intent(this, ChattingRoomDetailsActivity::class.java).also {
-            it.putExtra("chatId", chattingRoomIdx).putExtra("partnerImg", imgUrl)
+            it.putExtra("chatId", chattingRoomIdx).putExtra("partnerImg", imageUrl)
             startActivity(it)
         }
         overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)

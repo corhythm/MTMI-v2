@@ -49,7 +49,7 @@ object SharedPrefManager {
             Context.MODE_PRIVATE
         ) // 쉐어드 에디터 가져오기
 
-        val encryptedPw = AES128(Secret.USER_INFO_PASSWORD_KEY).encrypt(userPw)
+        val encryptedPw = AES128.encrypt(userPw)
 
         val editor = shared.edit() // 쉐어드 에디터 가져오기
         editor.putString(KEY_USER_LMS_PW, encryptedPw) // 쉐어드에 저장
@@ -63,7 +63,7 @@ object SharedPrefManager {
         val encryptedPw = shared.getString(KEY_USER_LMS_PW, "")!!
         Log.d("로그", "SharedPrefManager -getUserLmsPw() called / $encryptedPw")
         if (encryptedPw != "") {
-            return AES128(Secret.USER_INFO_PASSWORD_KEY).decrypt(encryptedPw)
+            return AES128.decrypt(encryptedPw)
         }
         return encryptedPw
     }

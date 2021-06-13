@@ -8,8 +8,8 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
-import com.mju.mtmi.database.Callback
-import com.mju.mtmi.database.DatabaseManager
+import com.mju.mtmi.database.DataBaseCallback
+import com.mju.mtmi.database.FirebaseManager
 import com.mju.mtmi.HomeActivity
 import com.mju.mtmi.R
 import com.mju.mtmi.databinding.ActivityLoginBinding
@@ -19,7 +19,7 @@ import www.sanju.motiontoast.MotionToast
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private var backKeyPressedTime: Long = 0 // 마지막으로 back key를 눌렀던 시간
-    var db = DatabaseManager()
+    var db = FirebaseManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
                 val loginUserId = binding.editTextLoginEmailAddress.text.toString().trim()
                 val loginUserPw = binding.editTextLoginPassword.text.toString().trim()
 
-                db.loginEmail(loginUserId, loginUserPw, this, object : Callback<Boolean> {
+                db.loginEmail(loginUserId, loginUserPw, this, object : DataBaseCallback<Boolean> {
                     override fun onCallback(data: Boolean) {
                         if (data) {
                             binding.buttonLoginSignIn.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND,

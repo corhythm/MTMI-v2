@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:src="@drawable/img_login_horse"
+            android:src="@drawable/ic_login_horse"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -65,6 +65,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="50dp"
         android:text="Email address"
+        android:fontFamily="@font/maple_story_bold"
         app:layout_constraintHorizontal_bias="0.041"
         app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
         app:layout_constraintTop_toBottomOf="@id/constraintLayout_login_imageFrame" />
@@ -84,6 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="44dp"
+        android:fontFamily="@font/maple_story_bold"
         android:text="Password"
         app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
         app:layout_constraintTop_toBottomOf="@id/editText_login_emailAddress" />
@@ -105,9 +107,10 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"
         android:clickable="true"
-        android:visibility="gone"
+        android:textSize="16sp"
+        android:fontFamily="@font/maple_story_bold"
         android:text="Forgot password?"
-        android:textColor="#2DB8F8"
+        android:textColor="#EF0F0F"
         app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
         app:layout_constraintTop_toBottomOf="@id/editText_login_password" />
 
@@ -120,6 +123,8 @@
         android:clickable="true"
         android:text="아직 MTMI 회원이 아니신가요?"
         android:textColor="#2DB8F8"
+        android:textSize="16sp"
+        android:fontFamily="@font/maple_story_bold"
         app:layout_constraintStart_toStartOf="@id/guideline_login_guildline"
         app:layout_constraintTop_toBottomOf="@id/textView_login_forgotPassword" />
 

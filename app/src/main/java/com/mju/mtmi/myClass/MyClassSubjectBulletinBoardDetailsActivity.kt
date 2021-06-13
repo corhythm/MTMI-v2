@@ -16,8 +16,8 @@ import com.mju.mtmi.databinding.ActivityMyClassSubjectBulletinBoardDetailsBindin
 import com.mju.mtmi.databinding.ItemSubjectBulletinBoardCommentBinding
 import com.mju.mtmi.database.BoardComment
 import com.mju.mtmi.database.BoardPost
-import com.mju.mtmi.database.Callback
-import com.mju.mtmi.database.DatabaseManager
+import com.mju.mtmi.database.DataBaseCallback
+import com.mju.mtmi.database.FirebaseManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import www.sanju.motiontoast.MotionToast
@@ -28,7 +28,7 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMess
     private lateinit var subjectBulletinBoardCommentRecyclerAdapter: SubjectBulletinBoardCommentRecyclerAdapter
     private var isLiked = false
     lateinit var pathData: BoardPost
-    var database: DatabaseManager = DatabaseManager()
+    var firebase: FirebaseManager = FirebaseManager()
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,15 +59,15 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMess
                 val currentUser = auth.currentUser.uid
                 val comment =
                     binding.editTextMyClassSubjectBulletinBoardWritingCommentContent.text.toString()
-                database.postLeaveComment(
+                firebase.postLeaveComment(
                     pathData.subjectCode,
                     pathData.subjectBoardIndex,
                     comment,
                     currentUser,
-                    object : Callback<Boolean> {
+                    object : DataBaseCallback<Boolean> {
                         override fun onCallback(data: Boolean) {
                             if (data)
-                                database.postViewCount(pathData)
+                                firebase.postViewCount(pathData)
                             // 코멘트 갱신화작업
                             subjectBulletinBoardCommentRecyclerAdapter.notifyItemRangeRemoved(
                                 0,
@@ -116,10 +116,10 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMess
         } else {
             "$receiveUser-$sendUser"
         }
-        database.checkChat(chatId, object : Callback<Boolean> {
+        firebase.checkChat(chatId, object : DataBaseCallback<Boolean> {
             override fun onCallback(data: Boolean) {
                 if (data) {
-                    database.makeChatRoom(sendUser, receiveUser, chatId)
+                    firebase.makeChatRoom(sendUser, receiveUser, chatId)
                 }
             }
         })
@@ -134,7 +134,7 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMess
         binding.textViewMyClassSubjectBulletinBoardDetailsTitle.text = BoardPost.title
         binding.textViewMyClassSubjectBulletinBoardDetailsContent.text = BoardPost.content
         BoardPost.writerUid?.let {
-            database.callUserDataImageUri(it, object : Callback<String> {
+            firebase.callUserDataImageUri(it, object : DataBaseCallback<String> {
                 override fun onCallback(data: String) {
                     Log.d("data 값", data)
                     FirebaseStorage.getInstance().reference.child("image/$data").downloadUrl.addOnSuccessListener { that ->
@@ -148,8 +148,8 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMess
 
     private fun postDetailCommentLoad(boardPost: BoardPost) {
         Log.d("코멘트 로딩", "체크")
-        database.loadPostComment(boardPost.subjectCode, boardPost.subjectBoardIndex,
-            object : Callback<ArrayList<BoardComment>> {
+        firebase.loadPostComment(boardPost.subjectCode, boardPost.subjectBoardIndex,
+            object : DataBaseCallback<ArrayList<BoardComment>> {
                 override fun onCallback(data: ArrayList<BoardComment>) {
                     Log.d("callback", "코멘트추가완료")
                     for (i in 0 until data.count())
@@ -249,9 +249,9 @@ class SubjectBulletinBoardCommentViewHolder(
         item.textViewItemSubjectBulletinBoardCommentCommentContent.text =
             boardComment.content
         item.textViewItemSubjectBulletinBoardCommentDate.text = boardComment.day
-        val database = DatabaseManager()
+        val database = FirebaseManager()
         boardComment.commenterUid.let {
-            database.callUserDataImageUri(it, object : Callback<String> {
+            database.callUserDataImageUri(it, object : DataBaseCallback<String> {
                 override fun onCallback(data: String) {
                     Log.d("data 값", data)
                     FirebaseStorage.getInstance().reference.child("image/$data").downloadUrl.addOnSuccessListener { that ->

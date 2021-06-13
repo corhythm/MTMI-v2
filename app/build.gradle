@@ -45,13 +45,12 @@ android {
 dependencies {
 
     // firebase
+    implementation platform('com.google.firebase:firebase-bom:27.1.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-database-ktx'
-
     implementation 'com.google.firebase:firebase-auth-ktx'
-    implementation platform('com.google.firebase:firebase-bom:27.1.0')
-    implementation 'com.google.firebase:firebase-database-ktx:20.0.0'
     implementation 'com.google.firebase:firebase-storage-ktx'
+
 
     //코루틴
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2'

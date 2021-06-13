@@ -19,6 +19,7 @@
             android:layout_marginTop="30dp"
             android:fontFamily="@font/airbnb_cereal_black"
             android:gravity="center_horizontal"
+            android:clickable="true"
             android:text="Welcome to MTMI"
             android:textSize="30sp" />
 
@@ -161,7 +162,7 @@
         </com.github.florent37.materialtextfield.MaterialTextField>
 
         <RadioGroup
-            android:id="@+id/radioButton_signUp_genderGroup"
+            android:id="@+id/radioGroup_signUp_genderGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"

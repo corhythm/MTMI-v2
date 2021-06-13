@@ -43,7 +43,7 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
 
     private fun init() {
         // DB와 auth 초기화
-        val DB = DatabaseManager()
+        val DB = FirebaseManager()
         val auth = FirebaseAuth.getInstance()
 
 
@@ -53,7 +53,7 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
         partnerImg = intent.getStringExtra("partnerImg")!!
 
         //현재 유저 데이터 초기화
-        DB.callUserData(auth.uid.toString(), object : Callback<UserData> {
+        DB.callUserData(auth.uid.toString(), object : DataBaseCallback<UserData> {
             override fun onCallback(data: UserData) {
                 currentUser = data
             }
