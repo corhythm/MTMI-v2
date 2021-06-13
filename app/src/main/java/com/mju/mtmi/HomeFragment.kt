@@ -17,8 +17,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mju.mtmi.databinding.*
-import com.mju.mtmi.database.DataBaseCallback
-import com.mju.mtmi.database.FirebaseManager
+import com.mju.mtmi.database.Callback
+import com.mju.mtmi.database.DatabaseManager
 import com.mju.mtmi.database.UserData
 import com.mju.mtmi.util.SharedPrefManager
 import com.google.android.material.snackbar.Snackbar
@@ -66,11 +66,11 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
     private fun init() {
 
         // db에서 유저 데이터 가져와서 SharedPrefernces 저장
-        val myUid = FirebaseAuth.getInstance().currentUser!!.uid
-        val db = FirebaseManager()
+        val myUid = FirebaseAuth.getInstance().currentUser.uid
+        val db = DatabaseManager()
         Log.d("로그", "HomeFragment -init() called // DB에서 처음으로 데이터 get")
 
-        db.callUserData(myUid, object : DataBaseCallback<UserData> {
+        db.callUserData(myUid, object : Callback<UserData> {
             override fun onCallback(data: UserData) {
                 Log.d("로그", "HomeFragment -onCallback() called / data = $data")
                 val sharedUserData = SharedPrefManager.getUserData()
