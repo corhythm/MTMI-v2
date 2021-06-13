@@ -9,13 +9,13 @@ import android.view.Menu
 import android.view.MenuItem
 import com.mju.mtmi.R
 import com.mju.mtmi.databinding.ActivityMyClassSubjectBulletinBoardWritingBinding
-import com.mju.mtmi.database.Callback
-import com.mju.mtmi.database.DatabaseManager
+import com.mju.mtmi.database.DataBaseCallback
+import com.mju.mtmi.database.FirebaseManager
 import com.google.firebase.auth.FirebaseAuth
 
 class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyClassSubjectBulletinBoardWritingBinding
-    private var db = DatabaseManager()
+    private var db = FirebaseManager()
     private var auth = FirebaseAuth.getInstance()
     lateinit var subjectName: String
     lateinit var idx: String
@@ -64,7 +64,7 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
         val writer = auth.currentUser!!.uid
         val title = binding.editTextMyClassSubjectBulletinBoardWritingTitle.text.toString()
         val content = binding.editTextMyClassSubjectBulletinBoardWritingContent.text.toString()
-        db.writePost(idx, writer, title, content, object : Callback<Boolean> {
+        db.writePost(idx, writer, title, content, object : DataBaseCallback<Boolean> {
             override fun onCallback(data: Boolean) {
                 if (data) {
                     Log.d("포스트업로드", "성공")

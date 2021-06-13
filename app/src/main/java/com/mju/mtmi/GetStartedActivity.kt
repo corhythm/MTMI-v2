@@ -23,7 +23,7 @@ class GetStartedActivity : AppCompatActivity() {
                 overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
             }
             finish()
-        }, 1000)
+        }, 500)
 
 
     }

@@ -12,11 +12,12 @@ import androidx.core.content.res.ResourcesCompat
 import com.bumptech.glide.Glide
 import com.mju.mtmi.R
 import com.mju.mtmi.databinding.ActivityEditProfileBinding
-import com.mju.mtmi.database.Callback
-import com.mju.mtmi.database.DatabaseManager
+import com.mju.mtmi.database.DataBaseCallback
+import com.mju.mtmi.database.FirebaseManager
 import com.mju.mtmi.database.UserData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
+import com.mju.mtmi.util.AES128
 import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog
 import dev.shreyaspatil.MaterialDialog.model.TextAlignment
 import www.sanju.motiontoast.MotionToast
@@ -26,7 +27,7 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var myUserData: UserData
     private var auth = FirebaseAuth.getInstance()
     private var isImageChanged = false // 이미지가 변경됐는지 감지
-    var db = DatabaseManager()
+    var db = FirebaseManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,7 +84,7 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
 
 
         // 프로필 유저정보 초기화
-        db.callUserData(auth.uid.toString(), object : Callback<UserData> {
+        db.callUserData(auth.uid.toString(), object : DataBaseCallback<UserData> {
             override fun onCallback(data: UserData) {
                 this@EditProfileActivity.myUserData = data
                 var majorIndex = 0
@@ -98,8 +99,8 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
                 binding.editTextActivityEditProfileIdValue.setText(data.id)
                 binding.editTextActivityEditProfileNameValue.setText(data.userName)
                 binding.editTextActivityEditProfileStudentIdValue.setText(data.student_id)
-                binding.editTextActivityEditProfilePwValue.setText(data.pw)
-                binding.editTextActivityEditProfilePwConfirmValue.setText(data.pw)
+                binding.editTextActivityEditProfilePwValue.setText(AES128.decrypt(data.pw))
+                binding.editTextActivityEditProfilePwConfirmValue.setText(AES128.decrypt(data.pw))
                 binding.editTextActivityEditProfileBirthValue.setText(data.birth)
                 binding.spinnerActivityEditProfileMajor.setSelection(majorIndex)
                 loadProfileImage(data.userProfileImageUrl)
@@ -142,7 +143,7 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
 
                 db.editUserData(this.isImageChanged,
                     updatedUserData,
-                    object : Callback<Boolean> {
+                    object : DataBaseCallback<Boolean> {
                         // 이미지 업로드시 callback 으로 받아오기
                         override fun onCallback(data: Boolean) {
                             if (data) { // 업데이트 성공

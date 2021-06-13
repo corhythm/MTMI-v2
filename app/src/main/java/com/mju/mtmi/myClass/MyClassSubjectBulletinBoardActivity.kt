@@ -13,8 +13,8 @@ import com.mju.mtmi.R
 import com.mju.mtmi.databinding.ActivityMyClassSubjectBulletinBoardBinding
 import com.mju.mtmi.databinding.ItemSubjectBulletinBoardBinding
 import com.mju.mtmi.database.BoardPost
-import com.mju.mtmi.database.Callback
-import com.mju.mtmi.database.DatabaseManager
+import com.mju.mtmi.database.DataBaseCallback
+import com.mju.mtmi.database.FirebaseManager
 
 
 class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardClickInterface {
@@ -23,7 +23,7 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
     lateinit var subjectName: String
     lateinit var subjectBulletinBoardRecyclerAdapter: SubjectBulletinBoardRecyclerAdapter
     lateinit var subjectBulletinBoardList: ArrayList<BoardPost>
-    var database = DatabaseManager()
+    var database = FirebaseManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +68,7 @@ class MyClassSubjectBulletinBoardActivity : AppCompatActivity(), BulletinBoardCl
     }
 
     private fun postListLoad() {
-        database.loadPostList(subjectCode, object : Callback<ArrayList<BoardPost>> {
+        database.loadPostList(subjectCode, object : DataBaseCallback<ArrayList<BoardPost>> {
             override fun onCallback(data: ArrayList<BoardPost>) {
                 subjectBulletinBoardList = data
                 subjectBulletinBoardRecyclerAdapter =

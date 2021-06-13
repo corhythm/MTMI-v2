@@ -11,8 +11,8 @@ import com.mju.mtmi.CopyrightActivity
 import com.mju.mtmi.R
 import com.mju.mtmi.chatting.ChattingRoomListActivity
 import com.mju.mtmi.databinding.ActivityMyProfileBinding
-import com.mju.mtmi.database.Callback
-import com.mju.mtmi.database.DatabaseManager
+import com.mju.mtmi.database.DataBaseCallback
+import com.mju.mtmi.database.FirebaseManager
 import com.mju.mtmi.database.UserData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
@@ -23,7 +23,7 @@ import kotlin.system.exitProcess
 class MyProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyProfileBinding
     private var auth = FirebaseAuth.getInstance()
-    private var db = DatabaseManager()
+    private var db = FirebaseManager()
     private var currentUid = auth.uid.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +36,7 @@ class MyProfileActivity : AppCompatActivity() {
     private fun init() {
 
         // 유저 프로필 세팅
-        db.callUserData(currentUid, object : Callback<UserData> {
+        db.callUserData(currentUid, object : DataBaseCallback<UserData> {
             override fun onCallback(data: UserData) {
                 binding.textViewMyProfileName.text = data.userName
                 binding.textViewMyProfileEmail.text = data.id
@@ -108,29 +108,29 @@ class MyProfileActivity : AppCompatActivity() {
     }
 
 
+    // 프로필 이미지 로드
     private fun loadProfileImage(profileImageUri: String) {
-        if (profileImageUri != "empty") {
-            FirebaseStorage.getInstance().reference.child("image/$profileImageUri").downloadUrl.addOnSuccessListener {
-                Log.d("프로필사진 로드", it.toString())
-                val profileImage = binding.imageViewMyProfileProfileImg
-                Log.d("로그", "MyProfileActivity -loadProfileImage() called / v프로필사진 로드: $it")
-                Glide.with(applicationContext).load(it).circleCrop().into(profileImage)
-            }.addOnFailureListener {
-                Log.d("로그", "프로필사진없음")
-            }
-        } else {
-            Log.d("로그", "사진없음")
+        FirebaseStorage.getInstance().reference.child("user_profile_images/$profileImageUri").downloadUrl.addOnSuccessListener {
+            Log.d("프로필사진 로드", it.toString())
+            val profileImage = binding.imageViewMyProfileProfileImg
+            Glide.with(applicationContext).load(it).error(R.drawable.ic_toolbar_user).circleCrop()
+                .into(profileImage)
+        }.addOnFailureListener {
+            Log.d("로그", "프로필사진없음")
         }
     }
 
+    // 프로필 이미지 바꾸고 다시 돌아왔을 때
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Log.d("로그", "MyProfileActivity -onActivityResult() called / first")
         if (requestCode == 2000) { // 프로필 업데이트
             if (resultCode == RESULT_OK) {
-                Log.d("로그",
-                    "MyProfileActivity -onActivityResult() called // 2000: ${data!!.getStringExtra("imgUrl")!!}")
-                loadProfileImage(data!!.getStringExtra("imgUrl")!!)
+                Log.d(
+                    "로그",
+                    "MyProfileActivity -onActivityResult() called // 2000: ${data!!.getStringExtra("imgUrl")!!}"
+                )
+                loadProfileImage(data.getStringExtra("imgUrl")!!)
             }
         }
     }

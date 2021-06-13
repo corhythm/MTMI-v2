@@ -8,10 +8,11 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.util.Patterns
+import android.widget.RadioButton
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import com.mju.mtmi.database.Callback
-import com.mju.mtmi.database.DatabaseManager
+import com.mju.mtmi.database.DataBaseCallback
+import com.mju.mtmi.database.FirebaseManager
 import com.mju.mtmi.R
 import com.mju.mtmi.databinding.ActivitySignUpBinding
 import com.royrodriguez.transitionbutton.TransitionButton
@@ -22,7 +23,7 @@ import java.util.regex.Pattern
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
-    var db = DatabaseManager()
+    var db = FirebaseManager()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
@@ -44,16 +45,22 @@ class SignUpActivity : AppCompatActivity() {
                 count: Int,
             ) { // 텍스트 변경 감지
                 if (binding.editTextSignUpPw.text.toString() == binding.editTextSignUpConfirmPw.text.toString()) { // 비밀번호가 일치할 때
-                    binding.editTextSignUpConfirmPw.setCompoundDrawablesWithIntrinsicBounds(null,
+                    binding.editTextSignUpConfirmPw.setCompoundDrawablesWithIntrinsicBounds(
                         null,
-                        ContextCompat.getDrawable(this@SignUpActivity,
-                            R.drawable.drawable_end_pw_check),
-                        null)
+                        null,
+                        ContextCompat.getDrawable(
+                            this@SignUpActivity,
+                            R.drawable.drawable_end_pw_check
+                        ),
+                        null
+                    )
                 } else { // 비밀번호가 일치하지 않을 때
-                    binding.editTextSignUpConfirmPw.setCompoundDrawablesWithIntrinsicBounds(null,
+                    binding.editTextSignUpConfirmPw.setCompoundDrawablesWithIntrinsicBounds(
+                        null,
                         null,
                         ContextCompat.getDrawable(this@SignUpActivity, R.drawable.drawable_end_x),
-                        null)
+                        null
+                    )
                 }
             }
 
@@ -65,14 +72,23 @@ class SignUpActivity : AppCompatActivity() {
         binding.editTextSignUpConfirmPw.addTextChangedListener(textWatcher)
 
 
+        // 임시 테스트용
+        binding.textViewSignUpTitle.setOnClickListener {
+            binding.editTextSignUpId.setText("dnr2144@gmail.com")
+            binding.editTextSignUpPw.setText("123456")
+            binding.editTextSignUpConfirmPw.setText("123456")
+            binding.editTextSignUpName.setText("강성욱")
+            binding.editTextSignUpStudentId.setText("60172121")
+            binding.spinnerSignUpMajorList.setSelection(2)
+            binding.editTextSignUpDateOfBirth.setText("961125")
+        }
+
         // 회원가입 버튼 클릭 시
         binding.buttonSignUpGoToSignUp.setOnClickListener {
             binding.buttonSignUpGoToSignUp.startAnimation()
 
             // Do your networking task or background work here.
             Handler(Looper.getMainLooper()).postDelayed({
-
-                var isSuccessful: Boolean
 
                 if (checkValidateSignUp()) { // 기입한 회원정보가 모두 유효하면 회원가입 진행
                     //유저가 기입한 내용
@@ -81,18 +97,10 @@ class SignUpActivity : AppCompatActivity() {
                     val signUpUserStudentId = binding.editTextSignUpStudentId.text.toString().trim()
                     val signUpUserBirth = binding.editTextSignUpDateOfBirth.text.toString().trim()
                     val signUpUserName = binding.editTextSignUpName.text.toString().trim()
-                    val signUpUserMajor = binding.spinnerSignUpMajorList.selectedItem.toString().trim()
-                    var signUpUserGender = "남성" // 젠더 초기값
-                    binding.radioButtonSignUpGenderGroup.setOnCheckedChangeListener { _, checkedId ->
-                        when (checkedId) {
-                            R.id.radioButton_signUp_man -> {
-                                signUpUserGender = "남성"
-                            }
-                            R.id.radioButton_signUp_woman -> {
-                                signUpUserGender = "여성"
-                            }
-                        }
-                    }
+                    val signUpUserMajor =
+                        binding.spinnerSignUpMajorList.selectedItem.toString().trim()
+                    val signUpUserGender = findViewById<RadioButton>(binding.radioGroupSignUpGenderGroup.checkedRadioButtonId).text.toString()
+
 
                     // interface로 callback 처리함 일단 임시방편용 이후에 문제가 생길 경우 다른코드 대안 찾을 것.
                     db.createEmail(
@@ -104,11 +112,12 @@ class SignUpActivity : AppCompatActivity() {
                         birth = signUpUserBirth,
                         gender = signUpUserGender,
                         context = this,
-                        object : Callback<Boolean> {
+                        object : DataBaseCallback<Boolean> {
                             override fun onCallback(data: Boolean) {
                                 if (data) { // 회원가입 성공
                                     binding.buttonSignUpGoToSignUp.stopAnimation(
-                                        TransitionButton.StopAnimationStyle.EXPAND) { finish() }
+                                        TransitionButton.StopAnimationStyle.EXPAND
+                                    ) { finish() }
                                 } else { // 회원가입 실패
                                     binding.buttonSignUpGoToSignUp.stopAnimation(
                                         TransitionButton.StopAnimationStyle.SHAKE,
@@ -121,15 +130,19 @@ class SignUpActivity : AppCompatActivity() {
                                         MotionToast.TOAST_ERROR,
                                         MotionToast.GRAVITY_BOTTOM,
                                         MotionToast.SHORT_DURATION,
-                                        ResourcesCompat.getFont(this@SignUpActivity,
-                                            R.font.maple_story_bold)
+                                        ResourcesCompat.getFont(
+                                            this@SignUpActivity,
+                                            R.font.maple_story_bold
+                                        )
                                     )
                                 }
                             }
                         })
-                    Log.d("After callback  : ", "Create method exit")
                 } else {
-                    binding.buttonSignUpGoToSignUp.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null)
+                    binding.buttonSignUpGoToSignUp.stopAnimation(
+                        TransitionButton.StopAnimationStyle.SHAKE,
+                        null
+                    )
                     return@postDelayed
                 }
             }, 300)
@@ -147,8 +160,10 @@ class SignUpActivity : AppCompatActivity() {
                 MotionToast.TOAST_ERROR,
                 MotionToast.GRAVITY_BOTTOM,
                 MotionToast.SHORT_DURATION,
-                ResourcesCompat.getFont(this,
-                    R.font.maple_story_bold)
+                ResourcesCompat.getFont(
+                    this,
+                    R.font.maple_story_bold
+                )
             )
             return false
         }
@@ -162,8 +177,10 @@ class SignUpActivity : AppCompatActivity() {
                 MotionToast.TOAST_ERROR,
                 MotionToast.GRAVITY_BOTTOM,
                 MotionToast.SHORT_DURATION,
-                ResourcesCompat.getFont(this,
-                    R.font.maple_story_bold)
+                ResourcesCompat.getFont(
+                    this,
+                    R.font.maple_story_bold
+                )
             )
             return false
         }
@@ -181,8 +198,10 @@ class SignUpActivity : AppCompatActivity() {
                 MotionToast.TOAST_ERROR,
                 MotionToast.GRAVITY_BOTTOM,
                 MotionToast.SHORT_DURATION,
-                ResourcesCompat.getFont(this,
-                    R.font.maple_story_bold)
+                ResourcesCompat.getFont(
+                    this,
+                    R.font.maple_story_bold
+                )
             )
             return false
         }
@@ -197,8 +216,10 @@ class SignUpActivity : AppCompatActivity() {
                 MotionToast.TOAST_ERROR,
                 MotionToast.GRAVITY_BOTTOM,
                 MotionToast.SHORT_DURATION,
-                ResourcesCompat.getFont(this,
-                    R.font.maple_story_bold)
+                ResourcesCompat.getFont(
+                    this,
+                    R.font.maple_story_bold
+                )
             )
             return false
         }
@@ -213,8 +234,10 @@ class SignUpActivity : AppCompatActivity() {
                 MotionToast.TOAST_ERROR,
                 MotionToast.GRAVITY_BOTTOM,
                 MotionToast.SHORT_DURATION,
-                ResourcesCompat.getFont(this,
-                    R.font.maple_story_bold)
+                ResourcesCompat.getFont(
+                    this,
+                    R.font.maple_story_bold
+                )
             )
             return false
         }
@@ -228,8 +251,10 @@ class SignUpActivity : AppCompatActivity() {
                 MotionToast.TOAST_ERROR,
                 MotionToast.GRAVITY_BOTTOM,
                 MotionToast.SHORT_DURATION,
-                ResourcesCompat.getFont(this,
-                    R.font.maple_story_bold)
+                ResourcesCompat.getFont(
+                    this,
+                    R.font.maple_story_bold
+                )
             )
             return false
         }
@@ -243,8 +268,10 @@ class SignUpActivity : AppCompatActivity() {
                 MotionToast.TOAST_ERROR,
                 MotionToast.GRAVITY_BOTTOM,
                 MotionToast.SHORT_DURATION,
-                ResourcesCompat.getFont(this,
-                    R.font.maple_story_bold)
+                ResourcesCompat.getFont(
+                    this,
+                    R.font.maple_story_bold
+                )
             )
             return false
         }
@@ -264,8 +291,10 @@ class SignUpActivity : AppCompatActivity() {
                     MotionToast.TOAST_ERROR,
                     MotionToast.GRAVITY_BOTTOM,
                     MotionToast.SHORT_DURATION,
-                    ResourcesCompat.getFont(this,
-                        R.font.maple_story_bold)
+                    ResourcesCompat.getFont(
+                        this,
+                        R.font.maple_story_bold
+                    )
                 )
                 return false
             }
@@ -277,8 +306,10 @@ class SignUpActivity : AppCompatActivity() {
                 MotionToast.TOAST_ERROR,
                 MotionToast.GRAVITY_BOTTOM,
                 MotionToast.SHORT_DURATION,
-                ResourcesCompat.getFont(this,
-                    R.font.maple_story_bold)
+                ResourcesCompat.getFont(
+                    this,
+                    R.font.maple_story_bold
+                )
             )
             return false
         }
