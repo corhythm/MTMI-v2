@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mju.mtmi.databinding.*
 import com.mju.mtmi.database.DataBaseCallback
 import com.mju.mtmi.database.FirebaseManager
-import com.mju.mtmi.database.UserData
+import com.mju.mtmi.database.entity.UserData
 import com.mju.mtmi.util.SharedPrefManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -79,12 +79,11 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                         SharedPrefManager.clearAllLmsUserData() // LMS 관련 데이터 삭제
                         SharedPrefManager.clearAllMyMbtiData() // MBTI 데이터 삭제
                         SharedPrefManager.clearAllUserData() // 기존 UserData 삭제
-
                     }
                 }
                 SharedPrefManager.setUserData(data)
 
-                // main banner init -
+                // main banner init
                 // 원래 callback method에서 수행하면 안 되는데, 안 그럼 뷰가 먼저 그려짐.
                 try {
                     val myMbtiResult = SharedPrefManager.getMyMbtiType()
@@ -150,7 +149,7 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                         }
                     }
                 } catch (exception: Exception) {
-                    Log.d("로그", "HomeFragment -onCallback() called / $exception")
+                    Log.d("로그", "HomeFragment -onCallback() called / ${exception.stackTrace}")
                 }
 
             }

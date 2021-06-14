@@ -1,4 +1,4 @@
-package com.mju.mtmi.database
+package com.mju.mtmi.database.entity
 
 class BoardComment(
     var commentBoardIndex: String = "",// 게시물 인덱스

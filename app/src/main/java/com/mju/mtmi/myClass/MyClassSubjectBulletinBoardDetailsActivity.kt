@@ -14,8 +14,8 @@ import com.mju.mtmi.R
 import com.mju.mtmi.chatting.ChattingRoomDetailsActivity
 import com.mju.mtmi.databinding.ActivityMyClassSubjectBulletinBoardDetailsBinding
 import com.mju.mtmi.databinding.ItemSubjectBulletinBoardCommentBinding
-import com.mju.mtmi.database.BoardComment
-import com.mju.mtmi.database.BoardPost
+import com.mju.mtmi.database.entity.BoardComment
+import com.mju.mtmi.database.entity.BoardPost
 import com.mju.mtmi.database.DataBaseCallback
 import com.mju.mtmi.database.FirebaseManager
 import com.google.firebase.auth.FirebaseAuth

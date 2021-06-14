@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mju.mtmi.R
 import com.mju.mtmi.databinding.ActivityMyClassSubjectBulletinBoardBinding
 import com.mju.mtmi.databinding.ItemSubjectBulletinBoardBinding
-import com.mju.mtmi.database.BoardPost
+import com.mju.mtmi.database.entity.BoardPost
 import com.mju.mtmi.database.DataBaseCallback
 import com.mju.mtmi.database.FirebaseManager
 

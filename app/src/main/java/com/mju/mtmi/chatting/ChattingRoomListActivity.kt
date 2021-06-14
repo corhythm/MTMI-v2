@@ -14,6 +14,8 @@ import com.mju.mtmi.databinding.ItemChattingRoomBinding
 import com.mju.mtmi.database.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
+import com.mju.mtmi.database.entity.Chat
+import com.mju.mtmi.database.entity.ChatListForm
 import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList

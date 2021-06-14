@@ -14,7 +14,7 @@ import com.mju.mtmi.R
 import com.mju.mtmi.databinding.ActivityEditProfileBinding
 import com.mju.mtmi.database.DataBaseCallback
 import com.mju.mtmi.database.FirebaseManager
-import com.mju.mtmi.database.UserData
+import com.mju.mtmi.database.entity.UserData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.mju.mtmi.util.AES128

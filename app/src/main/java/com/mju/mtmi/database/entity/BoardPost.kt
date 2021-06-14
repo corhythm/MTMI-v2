@@ -1,4 +1,4 @@
-package com.mju.mtmi.database
+package com.mju.mtmi.database.entity
 
 import java.io.Serializable
 

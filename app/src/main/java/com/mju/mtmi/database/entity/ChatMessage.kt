@@ -1,5 +1,5 @@
 
-package com.mju.mtmi.database
+package com.mju.mtmi.database.entity
 
 data class ChatMessage(
     var chatRoomId: String,

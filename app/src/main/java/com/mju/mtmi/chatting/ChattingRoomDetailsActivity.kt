@@ -22,6 +22,8 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.mju.mtmi.database.entity.ChatMessage
+import com.mju.mtmi.database.entity.UserData
 
 
 class ChattingRoomDetailsActivity : AppCompatActivity() {
@@ -138,7 +140,7 @@ enum class ViewType(val viewNum: Int) {
 }
 
 // recyclerview adapter
-class ChattingRoomDetailsRecyclerAdapter(private val chattingList: ArrayList<ChatMessage>,private val partnerImg: String) :
+class ChattingRoomDetailsRecyclerAdapter(private val chattingList: ArrayList<ChatMessage>, private val partnerImg: String) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var auth = FirebaseAuth.getInstance()

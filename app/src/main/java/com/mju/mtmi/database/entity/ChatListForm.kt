@@ -1,4 +1,4 @@
-package com.mju.mtmi.database
+package com.mju.mtmi.database.entity
 
 data class ChatListForm(
     var imgUrl: String,
