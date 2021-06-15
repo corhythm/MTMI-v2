@@ -1,7 +1,7 @@
 package com.mju.mtmi.database.entity
 
 data class UserData(
-    var id: String?,
+    var id: String,
     var pw: String,
     var student_id: String,
     var userName: String,
@@ -9,6 +9,15 @@ data class UserData(
     var gender: String,
     var major: String,
     var userProfileImageUrl: String = ""
-){
-    constructor() : this("","","","","","","","")
+) {
+    constructor() : this(
+        id = "",
+        pw = "",
+        student_id = "",
+        userName = "",
+        birth = "",
+        gender = "",
+        major = "",
+        userProfileImageUrl = ""
+    )
 }

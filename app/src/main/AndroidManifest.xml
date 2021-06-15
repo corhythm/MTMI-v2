@@ -39,7 +39,7 @@
             android:name="com.mju.mtmi.myClass.MyClassSubjectBulletinBoardWritingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.mju.mtmi.myClass.MyClassSubjectBulletinBoardActivity"
+            android:name="com.mju.mtmi.myClass.MyClassSubjectBulletinBoardListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.mju.mtmi.chatting.ChattingRoomListActivity"

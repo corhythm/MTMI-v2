@@ -76,11 +76,10 @@ class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface,
         }
     }
 
-    // 과목 게시판으로 이동
+    // 특정 과목 게시판으로 이동
     override fun itemClicked(idx: String, subjectName: String) {
-        Intent(this, MyClassSubjectBulletinBoardActivity::class.java).also {
-            it.putExtra("과목코드", idx)
-            it.putExtra("과목이름", subjectName)
+        Intent(this, MyClassSubjectBulletinBoardListActivity::class.java).also {
+            it.putExtra("과목코드", subjectName)
             startActivity(it)
         }
         overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
@@ -177,7 +176,6 @@ class SubjectRecyclerDecoration : RecyclerView.ItemDecoration() {
         parent: RecyclerView,
         state: RecyclerView.State,
     ) {
-        //super.getItemOffsets(outRect, view, parent, state)
         if (parent.getChildAdapterPosition(view) != parent.adapter!!.itemCount - 1) {
             outRect.bottom = verticalSpaceHeight
         }

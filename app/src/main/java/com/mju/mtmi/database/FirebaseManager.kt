@@ -18,12 +18,23 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.collections.ArrayList
 
-class FirebaseManager {
+object FirebaseManager {
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    private lateinit var database: DatabaseReference
 
-    // 회원가입 메소드 ( 정보 기입 필요한 )
-    fun createEmail(
+    // firebase database path
+    const val USER_PATH = "user"
+    const val DEFAULT_MAN_PROFILE_IMAGE_PATH = "default_man_profile_image"
+    const val DEFAULT_WOMAN_PROFILE_IMAGE_PATH = "default_woman_profile_image"
+    const val USER_PROFILE_IMAGES_PATH = "userProfileImageUrl"
+    const val BOARD_PATH = "board"
+    const val CHATTING_ROOM_PATH = "chattingRoom"
+    const val CHATTING_MESSAGE_PATH = "chattingMessage"
+    const val COMMENT_COUNT_PATH = "commentCount"
+    const val COMMENT_PATH = "comment"
+    const val LAST_CHATTING_PATH = "lastChatting"
+
+    // 회원가입
+    fun postNewAccount(
         id: String,
         pw: String,
         name: String,
@@ -34,14 +45,13 @@ class FirebaseManager {
         context: Context,
         dataBaseCallback: DataBaseCallback<Boolean>,
     ) {  // -> 회원가입 메소드
-        Log.d("로그", "FirebaseManager -createEmail() called / currentUser = ${firebaseAuth.currentUser!!.uid}")
         firebaseAuth.createUserWithEmailAndPassword(id, AES128.encrypt(pw))
             .addOnCompleteListener(context as SignUpActivity) { task ->
                 if (task.isSuccessful) {
                     val profileImgUrl = if (gender == "남성")
-                        "default_man_profile_image.png"
+                        this.DEFAULT_MAN_PROFILE_IMAGE_PATH
                     else
-                        "default_woman_profile_image.png"
+                        this.DEFAULT_WOMAN_PROFILE_IMAGE_PATH
                     val userData =
                         UserData(
                             id,
@@ -53,7 +63,7 @@ class FirebaseManager {
                             major,
                             profileImgUrl
                         )
-                    Firebase.database.getReference("user")
+                    Firebase.database.getReference(this.USER_PATH)
                         .child(firebaseAuth.currentUser!!.uid)
                         .setValue(userData)
 
@@ -66,7 +76,8 @@ class FirebaseManager {
             }
     }
 
-    fun loginEmail(
+    // 로그인
+    fun login(
         id: String,
         pw: String,
         activity: Activity,
@@ -87,132 +98,137 @@ class FirebaseManager {
         }
     }
 
-    fun makeChatRoom(sendUser: String, receiveUser: String, chatRoomId: String) { //채팅방 ID 생성 및 단일화
-        database = Firebase.database.getReference("chat")
-        database.child(chatRoomId).setValue(Chat(chatRoomId, sendUser, receiveUser))
+    // 새로운 채팅방 만들기
+    fun postNewChattingRoom(
+        sendUser: String,
+        receiveUser: String,
+        chatRoomId: String
+    ) { //채팅방 ID 생성 및 단일화
+        val database = Firebase.database.getReference(this.CHATTING_ROOM_PATH)
+        database.child(chatRoomId).setValue(ChattingRoom(chatRoomId, arrayListOf(sendUser, receiveUser)))
     }
 
-    //     채팅 중복 찾기
-    fun checkChat(chatRoomId: String, dataBaseCallback: DataBaseCallback<Boolean>) {
-        database = Firebase.database.getReference("chat")
+    // 채팅방 중복 찾기
+    fun checkRedundantChattingRoom(
+        chattingRoomId: String,
+        dataBaseCallback: DataBaseCallback<Boolean>
+    ) {
+        val database = Firebase.database.getReference(this.CHATTING_ROOM_PATH)
         var check = true
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.children.forEach() {
-                    val chatId: String = it.key as String
-                    if (chatId == chatRoomId) {
+                    val existingChattingRoomId: String = it.key as String
+                    if (existingChattingRoomId == chattingRoomId) {
                         check = false
                     }
                 }
                 dataBaseCallback.onCallback(check)
             }
-
             override fun onCancelled(error: DatabaseError) {}
         })
     }
 
-    fun sendMessage(
-        chatRoomId: String,
+    // 새로운 채팅 메시지 보내기
+    fun postNewChattingMessage(
+        chattingRoomId: String,
         name: String,
         message: String,
         userId: String,
         imageUri: String,
     ) {
-        //밀리초 단위로 메시지 푸쉬
+        //밀리초 단위로 메시지 푸쉬 -> 키 값으로 사용
         val current = LocalDateTime.now() //현재 시간
         val dbSaveFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS") //밀리초 환산
         val uiFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분")
         var formatted = current.format(uiFormatter)
-        val chatMessage =
-            ChatMessage(chatRoomId, name, userId, message, imageUri, formatted) //메세지내용 전달
-        val chatListForm =
-            ChatListForm("image/IMAGE_$userId.png", name, message, formatted, chatRoomId)
-        database = Firebase.database.getReference("chat") //chat reference
+
+        val newChattingMessage =
+            ChattingMessage(chattingRoomId, name, userId, message, imageUri, formatted) //메세지내용 전
+        val lastChattingMessage = LastChatting(message = message, timeStamp = formatted)
+        val database = Firebase.database.getReference(this.CHATTING_ROOM_PATH)
         formatted = current.format(dbSaveFormatter)
-        database.child(chatRoomId).child("chatting").child(formatted).setValue(chatMessage) //db저장
-        database.child(chatRoomId).child("lastChat").setValue(chatListForm)
+
+        database.child(chattingRoomId).child(this.CHATTING_MESSAGE_PATH).child(formatted)
+            .setValue(newChattingMessage) // 메시지 데이터 post
+        database.child(chattingRoomId).child(this.LAST_CHATTING_PATH).setValue(lastChattingMessage) // 마지막 메시지 데이터 post
     }
 
-    fun writePost(
-        idx: String,
+    // 새 게시글 작성
+    fun postNewPost(
+        subjectCode: String,
         userId: String,
         postTitle: String,
         postContent: String,
         dataBaseCallback: DataBaseCallback<Boolean>,
     ) {
-        callUserData(userId, object : DataBaseCallback<UserData> {
+        getUserData(userId, object : DataBaseCallback<UserData> {
             override fun onCallback(data: UserData) {
-                val current = LocalDateTime.now() //현재사간
-                val uiFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분")
-                val formatted = current.format(uiFormatter)
+                val currentTime = LocalDateTime.now() //현재 시간
+                val formattedTime =
+                    currentTime.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분"))
                 val dbSaveFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS") //밀리초 환산
-                val formatted2 = current.format(dbSaveFormatter)
-                val saveIdx = (99999999999999999 - formatted2.toLong()).toString() // 역순출력처리
-                database = Firebase.database.getReference("board")
-                val boardIdx = idx
+                val formatted2 = currentTime.format(dbSaveFormatter)
+                val saveIdx = (Long.MAX_VALUE - formatted2.toLong()).toString() // 역순출력처리
                 val boardPost =
                     BoardPost(
-                        idx,
+                        subjectCode,
                         postTitle,
-                        formatted,
+                        formattedTime,
                         postContent,
                         userId,
                         data.userName,
                         saveIdx,
                         0
-                    ) //테스터 대신 userName 넣어야함. data.userName
-                database.child(boardIdx).child(saveIdx).setValue(boardPost)
+                    )
+                Firebase.database.getReference(this@FirebaseManager.BOARD_PATH)
+                    .child(subjectCode)
+                    .child(saveIdx)
+                    .setValue(boardPost)
+
                 dataBaseCallback.onCallback(true)
             }
         })
     }
 
-    fun callUserData(userUid: String, dataBaseCallback: DataBaseCallback<UserData>) {
-        Firebase.database.getReference("user").child(userUid)
+    // 사용자 정보 가져오기
+    fun getUserData(userUid: String, dataBaseCallback: DataBaseCallback<UserData>) {
+        Firebase.database.getReference(this.USER_PATH).child(userUid)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val userData: UserData? = dataSnapshot.getValue<UserData>()
+                    val userData = dataSnapshot.getValue<UserData>()
                     if (userData != null) {
-                        Log.d("불러온 유저데이터이름", userData.userName)
-                    }
-                    if (userData != null) {
+                        Log.d("로그", "FirebaseManager.callUserData / userData : $userData")
                         dataBaseCallback.onCallback(userData)
                     }
                 }
-
-                override fun onCancelled(databaseError: DatabaseError) {
-                    Log.d("게시물 가져오기실패 :. ", "게시물을 가져오기 실패")
-                }
+                override fun onCancelled(databaseError: DatabaseError) {}
             })
     }
 
-    fun callUserDataImageUri(userUid: String, dataBaseCallback: DataBaseCallback<String>) {
-        Firebase.database.getReference("user").child(userUid).child("userProfileImageUrl")
+    // 사용자 프로필이미지 url 가져오기
+    fun getUserDataImageUri(userUid: String, dataBaseCallback: DataBaseCallback<String>) {
+        Firebase.database.getReference(this.USER_PATH).child(userUid)
+            .child(this.USER_PROFILE_IMAGES_PATH)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val profileImageUrl: String = snapshot.value as String
                     dataBaseCallback.onCallback(profileImageUrl)
                 }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Log.d("사진 Url 불러오는중", "오류")
-                }
-
+                override fun onCancelled(error: DatabaseError) {}
             })
     }
 
-    fun loadPostList(
+    // 게시글 리스트 가져오기
+    fun getListOfPosts(
         idx: String,
         dataBaseCallback: DataBaseCallback<ArrayList<BoardPost>>
     ) { // 과목별시판 불러오기
-        Firebase.database.getReference("/board/$idx")
+        Firebase.database.getReference("/${this.BOARD_PATH}/$idx")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val postList = ArrayList<BoardPost>()
                     dataSnapshot.children.forEach {
-                        Log.d("new", it.toString())
-                        Log.d("key", it.key.toString()) // 이건좋음
-                        Log.d("value", it.value.toString())
                         val post = it.getValue(BoardPost::class.java)
                         if (post != null) {
                             postList.add(post)
@@ -221,32 +237,32 @@ class FirebaseManager {
                     dataBaseCallback.onCallback(postList)
                 }
 
-                override fun onCancelled(databaseError: DatabaseError) {
-                    Log.d("게시물 가져오기실패 :. ", "게시물을 가져오기 실패")
-                }
+                override fun onCancelled(databaseError: DatabaseError) {}
             })
     }
 
-    fun postViewCount(boardPost: BoardPost) {
-        boardPost.view = boardPost.view?.plus(1)
-        boardPost.subjectBoardIndex?.let {
-            boardPost.subjectCode?.let { it1 ->
-                Firebase.database.reference.child("board")
+    // 댓글 개수 업데이트
+    fun patchCommentCount(boardPost: BoardPost) {
+        boardPost.commentCount = boardPost.commentCount.plus(1)
+        boardPost.subjectBoardIndex.let {
+            boardPost.subjectCode.let { it1 ->
+                Firebase.database.reference.child(this.BOARD_PATH)
                     .child(it1)
                     .child(it)
-                    .child("view").setValue(boardPost.view)
+                    .child(this.COMMENT_COUNT_PATH).setValue(boardPost.commentCount)
             }
         }
     }
 
-    fun postLeaveComment(
+    // 새로운 댓글 추가
+    fun postNewComment(
         subjectCode: String?,
         subjectIdx: String?,
         commentContent: String,
         commenterUid: String,
         dataBaseCallback: DataBaseCallback<Boolean>,
     ) {
-        callUserData(commenterUid, object : DataBaseCallback<UserData> {
+        getUserData(commenterUid, object : DataBaseCallback<UserData> {
             override fun onCallback(data: UserData) {
                 val current = LocalDateTime.now() //현재시간
                 val uiFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분")
@@ -261,88 +277,84 @@ class FirebaseManager {
                         formatted,
                         commentContent
                     )
-                    database = Firebase.database.getReference("board")
+                    val database = Firebase.database.getReference(this@FirebaseManager.BOARD_PATH)
 
-                    database.child(subjectCode).child(subjectIdx).child("comment")
+                    database.child(subjectCode).child(subjectIdx)
+                        .child(this@FirebaseManager.COMMENT_PATH)
                         .child(
                             formatted2 // 정순 출력 처리
                         ).setValue(commentData)
                     dataBaseCallback.onCallback(true)
-                } else {
-                    Log.d("해당 과목이 존재하지 않습니다.", "error")
                 }
             }
         })
     }
 
-    fun loadPostComment(
+    // 댓글 개수 가져오기
+    fun getNumOfComment(
         subjectCode: String?,
         subjectBoardIdx: String?,
         dataBaseCallback: DataBaseCallback<ArrayList<BoardComment>>,
     ) {
-        Log.d("loadPostComment", "실행중")
-        Firebase.database.getReference("/board/$subjectCode/$subjectBoardIdx/comment")
+        Firebase.database.getReference("/${this.BOARD_PATH}/$subjectCode/$subjectBoardIdx/${this.COMMENT_PATH}")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val commentList = ArrayList<BoardComment>()
                     snapshot.children.forEach {
                         val comment = it.getValue(BoardComment::class.java)
-                        Log.d("코멘트", comment.toString())
                         if (comment != null) {
-                            Log.d("코멘트 리스트", comment.content)
                             commentList.add(comment)
                         }
                     }
-                    Log.d("loadPostComment", "callback")
                     dataBaseCallback.onCallback(commentList)
                 }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Log.d("comment", "not data")
-                }
+                override fun onCancelled(error: DatabaseError) {}
             })
     }
 
-    fun loadChatList(userId: String, dataBaseCallback: DataBaseCallback<ArrayList<Chat>>) {
-        database = Firebase.database.getReference("chat")
-        database.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val chatList = ArrayList<Chat>()
-                snapshot.children.forEach() {
-                    if (it.key.toString().contains(userId)) {
-                        val chat = it.getValue(Chat::class.java)
-                        if (chat != null) {
-                            chatList.add(chat)
+    // 내 모든 채팅방 리스트 가져오기
+    fun getMyChattingRoomList(
+        userId: String,
+        dataBaseCallback: DataBaseCallback<ArrayList<ChattingRoomListForm>>
+    ) {
+        Firebase.database.getReference(this.CHATTING_ROOM_PATH)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val chattingList = ArrayList<ChattingRoomListForm>()
+                    snapshot.children.forEach {
+                        if (it.key.toString().contains(userId)) {
+                            val chattingListForm = it.getValue(ChattingRoomListForm::class.java)
+                            if (chattingListForm != null) {
+                                chattingList.add(chattingListForm)
+                            }
                         }
                     }
+                    dataBaseCallback.onCallback(chattingList)
                 }
-                dataBaseCallback.onCallback(chatList)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("채팅방에러", "채팅방 오류")
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {}
+            })
     }
 
-    fun loadLastChat(chatRoomId: String, dataBaseCallback: DataBaseCallback<ChatListForm>) {
-        database = Firebase.database.getReference("chat/$chatRoomId/lastChat")
+    // 마지막 채팅 메시지 가져오기
+    fun getLastChattingMessage(
+        chattingRoomId: String,
+        dataBaseCallback: DataBaseCallback<LastChatting>
+    ) {
+        val database =
+            Firebase.database.getReference("${this.CHATTING_ROOM_PATH}/$chattingRoomId/${this.LAST_CHATTING_PATH}")
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val lastChat: ChatListForm? = snapshot.getValue<ChatListForm>()
-                if (lastChat != null) {
-                    dataBaseCallback.onCallback(lastChat)
+                val lastChatting: LastChatting? = snapshot.getValue<LastChatting>()
+                if (lastChatting != null) {
+                    dataBaseCallback.onCallback(lastChatting)
                 }
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("채팅방 리스트", "error")
-            }
-
+            override fun onCancelled(error: DatabaseError) {}
         })
     }
 
-    fun editUserData(
+    // 사용자 프로필 편집
+    fun patchUserProfileInfo(
         isImageChanged: Boolean,
         userData: UserData,
         dataBaseCallback: DataBaseCallback<Boolean>
@@ -353,21 +365,21 @@ class FirebaseManager {
         userData.userProfileImageUrl = imageFileName
 
         if (isImageChanged) { // 이미지가 변경됐을 때
-            FirebaseDatabase.getInstance().reference.child("user").child(userUid).setValue(userData)
-            FirebaseStorage.getInstance().reference.child("image/").child(imageFileName)
+            FirebaseDatabase.getInstance().reference.child(this.USER_PATH).child(userUid)
+                .setValue(userData)
+            FirebaseStorage.getInstance().reference.child("${this.USER_PROFILE_IMAGES_PATH}/")
+                .child(imageFileName)
                 .putFile(filePath)
                 .addOnSuccessListener { dataBaseCallback.onCallback(true) }
                 .addOnFailureListener { dataBaseCallback.onCallback(false) }
         } else { // 이미지가 변경되지 않았을 때
-            FirebaseDatabase.getInstance().reference.child("user").child(userUid).setValue(userData)
+            FirebaseDatabase.getInstance().reference.child(this.USER_PATH).child(userUid)
+                .setValue(userData)
                 .addOnSuccessListener { dataBaseCallback.onCallback(true) }
                 .addOnFailureListener { dataBaseCallback.onCallback(false) }
         }
 
         // 유저 데이터 업데이트
         SharedPrefManager.setUserData(userData)
-
-
     }
-
 }

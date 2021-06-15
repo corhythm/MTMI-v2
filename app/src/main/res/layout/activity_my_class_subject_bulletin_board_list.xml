@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        tools:context=".myClass.MyClassSubjectBulletinBoardActivity">
+        tools:context=".myClass.MyClassSubjectBulletinBoardListActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appLayout_myClassSubjectBulletinBoard_appbarLayout"

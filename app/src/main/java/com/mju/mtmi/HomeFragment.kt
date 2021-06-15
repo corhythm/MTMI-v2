@@ -65,12 +65,11 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
 
     private fun init() {
 
-        // db에서 유저 데이터 가져와서 SharedPrefernces 저장
+        // firebase에서 유저 데이터 가져와서 SharedPrefernces 저장
         val myUid = FirebaseAuth.getInstance().currentUser!!.uid
-        val db = FirebaseManager()
         Log.d("로그", "HomeFragment -init() called // DB에서 처음으로 데이터 get")
 
-        db.callUserData(myUid, object : DataBaseCallback<UserData> {
+        FirebaseManager.getUserData(myUid, object : DataBaseCallback<UserData> {
             override fun onCallback(data: UserData) {
                 Log.d("로그", "HomeFragment -onCallback() called / data = $data")
                 val sharedUserData = SharedPrefManager.getUserData()
@@ -363,7 +362,7 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
     }
 
     override fun onItemClicked(item: String) {
-        var url = ""
+        val url: String
 
         when (item) {
             "phone" -> {

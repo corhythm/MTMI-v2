@@ -23,7 +23,7 @@ import java.util.regex.Pattern
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
-    var db = FirebaseManager()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
@@ -103,7 +103,7 @@ class SignUpActivity : AppCompatActivity() {
 
 
                     // interface로 callback 처리함 일단 임시방편용 이후에 문제가 생길 경우 다른코드 대안 찾을 것.
-                    db.createEmail(
+                    FirebaseManager.postNewAccount(
                         id = signUpUserId,
                         pw = signUpUserPw,
                         name = signUpUserName,
