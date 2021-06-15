@@ -79,7 +79,7 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMess
         }
 
         // 게시글 작성자에게 메시지 보내기
-        binding.imageViewMyClassSubjectBulletinBoardDetailsMessage.setOnClickListener {
+        binding.linearLayoutMyClassSubjectBulletinBoardDetailsChattingContainer.setOnClickListener {
             if (firebaseAuth.uid.toString() == this.nowBoardPost.writerUid) {
                 MotionToast.createColorToast(
                     this,
@@ -250,7 +250,7 @@ class SubjectBulletinBoardCommentViewHolder(
                     }
 
                     // 메시지 보내기 클릭했을 때
-                    item.imageViewItemSubjectBulletinBoardCommentMessage.setOnClickListener {
+                    item.linearLayoutItemSubjectBulletinBoardCommentChattingContainer.setOnClickListener {
                         this@SubjectBulletinBoardCommentViewHolder.SendMessageClickInterface.sendMessageClicked(
                             adapterPosition,
                             "image/$data"
