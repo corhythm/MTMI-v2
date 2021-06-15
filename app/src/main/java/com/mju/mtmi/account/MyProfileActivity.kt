@@ -13,18 +13,18 @@ import com.mju.mtmi.chatting.ChattingRoomListActivity
 import com.mju.mtmi.databinding.ActivityMyProfileBinding
 import com.mju.mtmi.database.DataBaseCallback
 import com.mju.mtmi.database.FirebaseManager
-import com.mju.mtmi.database.UserData
+import com.mju.mtmi.database.entity.UserData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog
 import dev.shreyaspatil.MaterialDialog.model.TextAlignment
+import java.lang.Exception
 import kotlin.system.exitProcess
 
 class MyProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyProfileBinding
-    private var auth = FirebaseAuth.getInstance()
-    private var db = FirebaseManager()
-    private var currentUid = auth.uid.toString()
+    private val auth = FirebaseAuth.getInstance()
+    private val currentUid = auth.uid.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,14 +36,14 @@ class MyProfileActivity : AppCompatActivity() {
     private fun init() {
 
         // 유저 프로필 세팅
-        db.callUserData(currentUid, object : DataBaseCallback<UserData> {
+        FirebaseManager.getUserData(currentUid, object : DataBaseCallback<UserData> {
             override fun onCallback(data: UserData) {
                 binding.textViewMyProfileName.text = data.userName
                 binding.textViewMyProfileEmail.text = data.id
                 binding.textViewMyProfileStudentIdValue.text = data.student_id
                 binding.textViewMyProfileMajorValue.text = data.major
                 binding.textViewMyProfileBirthdayValue.text = data.birth
-                Log.d("로그", "data: $data")
+                Log.d("로그", "myProfileActivity-init() / data: $data")
                 loadProfileImage(data.userProfileImageUrl)
             }
         })
@@ -102,6 +102,7 @@ class MyProfileActivity : AppCompatActivity() {
         binding.imageViewMyProfileProfileImg.setOnClickListener {
             Intent(this, EditProfileActivity::class.java).also {
                 startActivityForResult(it, 2000)
+//                getContent.launch(it)
             }
             overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
         }
@@ -110,13 +111,18 @@ class MyProfileActivity : AppCompatActivity() {
 
     // 프로필 이미지 로드
     private fun loadProfileImage(profileImageUri: String) {
-        FirebaseStorage.getInstance().reference.child("user_profile_images/$profileImageUri").downloadUrl.addOnSuccessListener {
-            Log.d("프로필사진 로드", it.toString())
-            val profileImage = binding.imageViewMyProfileProfileImg
-            Glide.with(applicationContext).load(it).error(R.drawable.ic_toolbar_user).circleCrop()
-                .into(profileImage)
-        }.addOnFailureListener {
-            Log.d("로그", "프로필사진없음")
+        try {
+            FirebaseStorage.getInstance().reference.child("user_profile_images/$profileImageUri").downloadUrl.addOnSuccessListener {
+                Log.d("프로필사진 로드", it.toString())
+                val profileImage = binding.imageViewMyProfileProfileImg
+                Glide.with(applicationContext).load(it).error(R.drawable.ic_toolbar_user)
+                    .circleCrop()
+                    .into(profileImage)
+            }.addOnFailureListener {
+                Log.d("로그", "프로필사진없음")
+            }
+        } catch (e: Exception) {
+            Log.d("로그", "MyProfileActivity -loadProfileImage() called / ${e.stackTrace}")
         }
     }
 

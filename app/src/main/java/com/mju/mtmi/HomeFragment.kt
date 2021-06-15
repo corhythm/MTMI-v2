@@ -17,9 +17,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mju.mtmi.databinding.*
-import com.mju.mtmi.database.Callback
-import com.mju.mtmi.database.DatabaseManager
-import com.mju.mtmi.database.UserData
+import com.mju.mtmi.database.DataBaseCallback
+import com.mju.mtmi.database.FirebaseManager
+import com.mju.mtmi.database.entity.UserData
 import com.mju.mtmi.util.SharedPrefManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -65,12 +65,11 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
 
     private fun init() {
 
-        // db에서 유저 데이터 가져와서 SharedPrefernces 저장
-        val myUid = FirebaseAuth.getInstance().currentUser.uid
-        val db = DatabaseManager()
+        // firebase에서 유저 데이터 가져와서 SharedPrefernces 저장
+        val myUid = FirebaseAuth.getInstance().currentUser!!.uid
         Log.d("로그", "HomeFragment -init() called // DB에서 처음으로 데이터 get")
 
-        db.callUserData(myUid, object : Callback<UserData> {
+        FirebaseManager.getUserData(myUid, object : DataBaseCallback<UserData> {
             override fun onCallback(data: UserData) {
                 Log.d("로그", "HomeFragment -onCallback() called / data = $data")
                 val sharedUserData = SharedPrefManager.getUserData()
@@ -79,12 +78,11 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                         SharedPrefManager.clearAllLmsUserData() // LMS 관련 데이터 삭제
                         SharedPrefManager.clearAllMyMbtiData() // MBTI 데이터 삭제
                         SharedPrefManager.clearAllUserData() // 기존 UserData 삭제
-
                     }
                 }
                 SharedPrefManager.setUserData(data)
 
-                // main banner init -
+                // main banner init
                 // 원래 callback method에서 수행하면 안 되는데, 안 그럼 뷰가 먼저 그려짐.
                 try {
                     val myMbtiResult = SharedPrefManager.getMyMbtiType()
@@ -150,7 +148,7 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                         }
                     }
                 } catch (exception: Exception) {
-                    Log.d("로그", "HomeFragment -onCallback() called / $exception")
+                    Log.d("로그", "HomeFragment -onCallback() called / ${exception.stackTrace}")
                 }
 
             }
@@ -364,7 +362,7 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
     }
 
     override fun onItemClicked(item: String) {
-        var url = ""
+        val url: String
 
         when (item) {
             "phone" -> {

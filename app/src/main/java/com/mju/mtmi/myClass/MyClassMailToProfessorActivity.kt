@@ -3,6 +3,7 @@ package com.mju.mtmi.myClass
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.mju.mtmi.R
@@ -87,7 +88,7 @@ class MyClassMailToProfessorActivity : AppCompatActivity() {
         binding.buttonMyClassMailToProfSend.setOnClickListener {
             if (binding.spinnerMyClassMailToProfSelectMail.selectedItem != null) { // 교수님을 선택했을 때
                 binding.buttonMyClassMailToProfSend.startAnimation()
-                Handler().postDelayed({ // delay 후 실행할 코드
+                Handler(Looper.getMainLooper()).postDelayed({ // delay 후 실행할 코드
                     binding.buttonMyClassMailToProfSend.stopAnimation()
                     binding.buttonMyClassMailToProfSend.setResultState(RoundButton.ResultState.SUCCESS)
                     binding.buttonMyClassMailToProfSend.revertAnimation()
