@@ -17,6 +17,7 @@ import com.mju.mtmi.database.FirebaseManager
 import com.mju.mtmi.database.entity.UserData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
+import com.mju.mtmi.database.FireStoreManager
 import com.mju.mtmi.util.AES128
 import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog
 import dev.shreyaspatil.MaterialDialog.model.TextAlignment
@@ -26,6 +27,7 @@ import java.lang.Exception
 class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityEditProfileBinding
     private lateinit var myUserData: UserData
+    private val TAG = "로그"
     private var auth = FirebaseAuth.getInstance()
     private var isImageChanged = false // 이미지가 변경됐는지 감지
 
@@ -90,7 +92,7 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
 
 
         // 프로필 유저정보 초기화
-        FirebaseManager.getUserData(auth.uid.toString(), object : DataBaseCallback<UserData> {
+        FireStoreManager.getUserData(auth.uid.toString(), object : DataBaseCallback<UserData> {
             override fun onCallback(data: UserData) {
                 this@EditProfileActivity.myUserData = data
                 var majorIndex = 0
@@ -154,23 +156,14 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
                 )
 
                 // Firebase 데이터 업데이트
-                FirebaseManager.patchUserProfileInfo(this.isImageChanged,
+                FireStoreManager.patchUserData(this.isImageChanged,
                     updatedUserData,
                     object : DataBaseCallback<Boolean> {
                         // 이미지 업로드시 callback 으로 받아오기
                         override fun onCallback(data: Boolean) {
                             if (data) { // 업데이트 성공
-                                Log.d(
-                                    "로그",
-                                    "EditProfileActivity -onCallback() called / 성공 gs://mtmi-4eeac.appspot.com/image/IMAGE_${auth.uid}.png"
-                                )
-                                Intent().also {
-                                    it.putExtra("imgUrl", "IMAGE_${auth.uid}.png")
-                                    setResult(RESULT_OK, it)
-                                }
                                 finish()
                             } else { // 업데이트 실패
-                                Log.d("로그", "EditProfileActivity -onCallback() called / 실패")
                                 MotionToast.createColorToast(
                                     this@EditProfileActivity,
                                     "Update Error",

@@ -14,6 +14,7 @@ import androidx.core.content.res.ResourcesCompat
 import com.mju.mtmi.database.DataBaseCallback
 import com.mju.mtmi.database.FirebaseManager
 import com.mju.mtmi.R
+import com.mju.mtmi.database.FireStoreManager
 import com.mju.mtmi.databinding.ActivitySignUpBinding
 import com.royrodriguez.transitionbutton.TransitionButton
 import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog
@@ -103,7 +104,7 @@ class SignUpActivity : AppCompatActivity() {
 
 
                     // interface로 callback 처리함 일단 임시방편용 이후에 문제가 생길 경우 다른코드 대안 찾을 것.
-                    FirebaseManager.postNewAccount(
+                    FireStoreManager.postNewAccount(
                         id = signUpUserId,
                         pw = signUpUserPw,
                         name = signUpUserName,

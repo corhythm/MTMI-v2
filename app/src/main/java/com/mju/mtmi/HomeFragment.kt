@@ -23,6 +23,7 @@ import com.mju.mtmi.database.entity.UserData
 import com.mju.mtmi.util.SharedPrefManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.mju.mtmi.database.FireStoreManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,6 +36,7 @@ import kotlin.collections.ArrayList
 class HomeFragment : Fragment(), MjuSiteClickedInterface {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private val TAG = "로그"
     private lateinit var mTimer: Timer
     private lateinit var customTimerTask: CustomTimerTask
     private var isFromSchoolToDestination = true // 학교 -> 도착지 || 도착지 학교
@@ -69,8 +71,9 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
         val myUid = FirebaseAuth.getInstance().currentUser!!.uid
         Log.d("로그", "HomeFragment -init() called // DB에서 처음으로 데이터 get")
 
-        FirebaseManager.getUserData(myUid, object : DataBaseCallback<UserData> {
+        FireStoreManager.getUserData(myUid, object: DataBaseCallback<UserData> {
             override fun onCallback(data: UserData) {
+                Log.d(TAG, "FireStroe.userdata = $data")
                 Log.d("로그", "HomeFragment -onCallback() called / data = $data")
                 val sharedUserData = SharedPrefManager.getUserData()
                 if (sharedUserData != null) { // 기존에 저장된 UserData가 있을 경우
@@ -150,7 +153,6 @@ class HomeFragment : Fragment(), MjuSiteClickedInterface {
                 } catch (exception: Exception) {
                     Log.d("로그", "HomeFragment -onCallback() called / ${exception.stackTrace}")
                 }
-
             }
         })
 
