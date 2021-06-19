@@ -10,6 +10,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.mju.mtmi.database.entity.*
@@ -20,11 +22,10 @@ import kotlin.collections.ArrayList
 
 object FirebaseManager {
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val TAG = "로그"
 
     // firebase database path
     const val USER_PATH = "user"
-    const val DEFAULT_MAN_PROFILE_IMAGE_PATH = "default_man_profile_image"
-    const val DEFAULT_WOMAN_PROFILE_IMAGE_PATH = "default_woman_profile_image"
     const val USER_PROFILE_IMAGES_PATH = "userProfileImageUrl"
     const val BOARD_PATH = "board"
     const val CHATTING_ROOM_PATH = "chattingRoom"
@@ -32,6 +33,7 @@ object FirebaseManager {
     const val COMMENT_COUNT_PATH = "commentCount"
     const val COMMENT_PATH = "comment"
     const val LAST_CHATTING_PATH = "lastChatting"
+
 
     // 회원가입
     fun postNewAccount(
@@ -45,13 +47,13 @@ object FirebaseManager {
         context: Context,
         dataBaseCallback: DataBaseCallback<Boolean>,
     ) {  // -> 회원가입 메소드
-        firebaseAuth.createUserWithEmailAndPassword(id, AES128.encrypt(pw))
+        this.firebaseAuth.createUserWithEmailAndPassword(id, AES128.encrypt(pw))
             .addOnCompleteListener(context as SignUpActivity) { task ->
                 if (task.isSuccessful) {
                     val profileImgUrl = if (gender == "남성")
-                        this.DEFAULT_MAN_PROFILE_IMAGE_PATH
+                        "default_man_profile_image.png"
                     else
-                        this.DEFAULT_WOMAN_PROFILE_IMAGE_PATH
+                        "default_woman_profile_image.png"
                     val userData =
                         UserData(
                             id,
@@ -63,9 +65,8 @@ object FirebaseManager {
                             major,
                             profileImgUrl
                         )
-                    Firebase.database.getReference(this.USER_PATH)
-                        .child(firebaseAuth.currentUser!!.uid)
-                        .setValue(userData)
+                    FirebaseFirestore.getInstance().collection("users")
+                        .document(firebaseAuth.currentUser!!.uid).set(userData)
 
                     Log.d("로그", "FirebaseManager -createEmail() called / 회원 가입 성공")
                     dataBaseCallback.onCallback(true)
@@ -86,8 +87,7 @@ object FirebaseManager {
         if (id.isEmpty() || pw.isEmpty()) {
             dataBaseCallback.onCallback(false)
         } else {
-            Log.d("로그", "FirebaseManager -loginEmail() called / ${AES128.encrypt(pw)}")
-            firebaseAuth.signInWithEmailAndPassword(id, AES128.encrypt(pw))
+            this.firebaseAuth.signInWithEmailAndPassword(id, AES128.encrypt(pw))
                 .addOnCompleteListener(activity) {
                     if (it.isSuccessful) {
                         dataBaseCallback.onCallback(true)
@@ -96,6 +96,56 @@ object FirebaseManager {
                     }
                 }
         }
+    }
+
+    // 사용자 정보 가져오기
+    fun getUserData(userUid: String, dataBaseCallback: DataBaseCallback<UserData>) {
+        FirebaseFirestore.getInstance()
+            .collection("users")
+            .document(userUid)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    Log.d(
+                        TAG,
+                        "FireStoreManager -getUserData() called / Success to get UserData / userData: $document"
+                    )
+                    dataBaseCallback.onCallback(document.toObject(UserData::class.java)!!)
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d(
+                    TAG,
+                    "FireStoreManager -getUserData() called / Failure to get UserData: $exception"
+                )
+            }
+    }
+
+    fun patchUserData(
+        isImageChanged: Boolean,
+        userData: UserData,
+        dataBaseCallback: DataBaseCallback<Boolean>
+    ) {
+        val currentUid = firebaseAuth.currentUser!!.uid
+        val imageFileName = "IMAGE_$currentUid.png" // 파이어베이스에 저장될 이미지 파일 이름
+        val filePath = userData.userProfileImageUrl.toUri()
+        userData.userProfileImageUrl = imageFileName
+
+        FirebaseFirestore.getInstance().collection("users")
+            .document(currentUid)
+            .set(userData, SetOptions.merge())
+
+        if (isImageChanged) { // 이미지가 변경됐을 때, 이미지 저장 (이미지 데이터 크기가 크므로 업데이트 완료 순간을 텍스트 데이터 보다는
+            // 이미지 데이터로 완료 시점을 잡는 게 좋다.
+            FirebaseStorage.getInstance().reference.child("user_profile_images/")
+                .child(imageFileName)
+                .putFile(filePath) // 이미지 storage에 저장
+                .addOnSuccessListener { dataBaseCallback.onCallback(true) }
+                .addOnFailureListener { dataBaseCallback.onCallback(false) }
+        }
+
+        // 유저 데이터 업데이트
+        SharedPrefManager.setUserData(userData)
     }
 
     // 새로운 채팅방 만들기
@@ -189,21 +239,6 @@ object FirebaseManager {
                 dataBaseCallback.onCallback(true)
             }
         })
-    }
-
-    // 사용자 정보 가져오기
-    fun getUserData(userUid: String, dataBaseCallback: DataBaseCallback<UserData>) {
-        Firebase.database.getReference(this.USER_PATH).child(userUid)
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val userData = dataSnapshot.getValue<UserData>()
-                    if (userData != null) {
-                        Log.d("로그", "FirebaseManager.callUserData / userData : $userData")
-                        dataBaseCallback.onCallback(userData)
-                    }
-                }
-                override fun onCancelled(databaseError: DatabaseError) {}
-            })
     }
 
     // 사용자 프로필이미지 url 가져오기
@@ -353,33 +388,4 @@ object FirebaseManager {
         })
     }
 
-    // 사용자 프로필 편집
-    fun patchUserProfileInfo(
-        isImageChanged: Boolean,
-        userData: UserData,
-        dataBaseCallback: DataBaseCallback<Boolean>
-    ) {
-        val userUid = firebaseAuth.currentUser!!.uid
-        val imageFileName = "IMAGE_$userUid.png" // 파이어베이스에 저장될 이미지 파일 이름
-        val filePath = userData.userProfileImageUrl.toUri()
-        userData.userProfileImageUrl = imageFileName
-
-        if (isImageChanged) { // 이미지가 변경됐을 때
-            FirebaseDatabase.getInstance().reference.child(this.USER_PATH).child(userUid)
-                .setValue(userData)
-            FirebaseStorage.getInstance().reference.child("${this.USER_PROFILE_IMAGES_PATH}/")
-                .child(imageFileName)
-                .putFile(filePath)
-                .addOnSuccessListener { dataBaseCallback.onCallback(true) }
-                .addOnFailureListener { dataBaseCallback.onCallback(false) }
-        } else { // 이미지가 변경되지 않았을 때
-            FirebaseDatabase.getInstance().reference.child(this.USER_PATH).child(userUid)
-                .setValue(userData)
-                .addOnSuccessListener { dataBaseCallback.onCallback(true) }
-                .addOnFailureListener { dataBaseCallback.onCallback(false) }
-        }
-
-        // 유저 데이터 업데이트
-        SharedPrefManager.setUserData(userData)
-    }
 }

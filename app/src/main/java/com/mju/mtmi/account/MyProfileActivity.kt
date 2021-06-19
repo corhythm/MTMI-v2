@@ -59,24 +59,6 @@ class MyProfileActivity : AppCompatActivity() {
                 Log.d(TAG, "유저정보 업데이트 / userData = $userData")
                 loadProfileImage(userData.userProfileImageUrl)
             }
-
-
-//        FirebaseFirestore.getInstance().collection("users").document(currentUid)
-//            .get()
-//            .addOnSuccessListener { document ->
-//                val userData = document.toObject(UserData::class.java)
-//                binding.textViewMyProfileName.text = userData!!.userName
-//                binding.textViewMyProfileEmail.text = userData.id
-//                binding.textViewMyProfileStudentIdValue.text = userData.student_id
-//                binding.textViewMyProfileMajorValue.text = userData.major
-//                binding.textViewMyProfileBirthdayValue.text = userData.birth
-//                Log.d(TAG, "유저정보 업데이트 / userData = $userData")
-//                loadProfileImage(userData.userProfileImageUrl)
-//                Log.d(TAG, "MyProfileActivity -onStart() called / Success to get userData = $userData")
-//            }
-//            .addOnFailureListener {
-//                Log.d(TAG, "MyProfileActivity -onStart() called / Failed to get userData")
-//            }
     }
 
     override fun onDestroy() {

@@ -11,6 +11,7 @@ import com.mju.mtmi.databinding.ActivityMyClassSubjectBulletinBoardWritingBindin
 import com.mju.mtmi.database.DataBaseCallback
 import com.mju.mtmi.database.FirebaseManager
 import com.google.firebase.auth.FirebaseAuth
+import com.mju.mtmi.database.FireStoreManager
 
 // 게시판에 글쓰기
 class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
@@ -32,16 +33,11 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
         // 글 쓰기 버튼 클릭 시 -> 게시글 등록
         binding.fabMyClassSubjectBulletinBoardPost.setOnClickListener {
             uploadMyPost()
-            val intent = Intent()
-            intent.putExtra("upload", true)
-            setResult(Activity.RESULT_OK, intent)
             finish()
         }
 
         // 네비게이션 아이콘 클릭 -> 글 쓰기 취소
-        binding.toolbarMyClassSubjectBulletinBoardToolbar.setNavigationOnClickListener {
-            finish()
-        }
+        binding.toolbarMyClassSubjectBulletinBoardToolbar.setNavigationOnClickListener { finish() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean { // toolbar inflate
@@ -50,12 +46,12 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
     }
 
 
-    // 내가 쓴 게시글 DB에 저장장
+    // 내가 쓴 게시글 DB에 저장
     private fun uploadMyPost() {
         val writer = auth.currentUser!!.uid
         val title = binding.editTextMyClassSubjectBulletinBoardWritingTitle.text.toString()
         val content = binding.editTextMyClassSubjectBulletinBoardWritingContent.text.toString()
-        FirebaseManager.postNewPost(this.subjectCode, writer, title, content, object : DataBaseCallback<Boolean> {
+        FireStoreManager.postNewPost(this.subjectCode, writer, title, content, object : DataBaseCallback<Boolean> {
             override fun onCallback(data: Boolean) {
                 if (data) {
                     Log.d("로그", "포스트업로드 성공")

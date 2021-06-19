@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.mju.mtmi.R
 import com.mju.mtmi.databinding.ActivityMyClassSubjectBulletinBoardListBinding
 import com.mju.mtmi.databinding.ItemSubjectBulletinBoardBinding
@@ -20,6 +22,7 @@ import com.mju.mtmi.database.FirebaseManager
 class MyClassSubjectBulletinBoardListActivity : AppCompatActivity(), BulletinBoardClickInterface {
     private lateinit var binding: ActivityMyClassSubjectBulletinBoardListBinding
     private lateinit var subjectCode: String
+    private val TAG = "로그"
     private lateinit var subjectBulletinBoardRecyclerAdapter: SubjectBulletinBoardRecyclerAdapter
     private lateinit var subjectBulletinBoardList: ArrayList<BoardPost>
 
@@ -30,16 +33,11 @@ class MyClassSubjectBulletinBoardListActivity : AppCompatActivity(), BulletinBoa
 
         this.subjectCode = intent.getStringExtra("과목코드")!! // 과목 코드
 
-        Log.d("로그", "MyClassSubjectBulletinBoardListActivity -onCreate() called / subjectCode = $subjectCode")
-
+        // 툴바 타이틀 설정
         binding.toolbarMyClassSubjectBulletinBoardToolbar.title = this.subjectCode
         init()
     }
 
-    override fun onResume() {
-        super.onResume()
-        getListOfPosts()
-    }
 
     private fun init() {
         // 글 쓰기 버튼 클릭
@@ -52,17 +50,17 @@ class MyClassSubjectBulletinBoardListActivity : AppCompatActivity(), BulletinBoa
             }
         }
 
-        // 화면 스와이프 시 새로고침
-        binding.swipeRefreshLayoutMyClassBoardRefresh.setOnRefreshListener {
-            subjectBulletinBoardRecyclerAdapter.notifyItemRangeRemoved(
-                0,
-                subjectBulletinBoardList.size - 1
-            )
-            subjectBulletinBoardRecyclerAdapter.notifyDataSetChanged()
-            subjectBulletinBoardList.clear()
-            getListOfPosts()
-            binding.swipeRefreshLayoutMyClassBoardRefresh.isRefreshing = false
-        }
+//        // 화면 스와이프 시 새로고침
+//        binding.swipeRefreshLayoutMyClassBoardRefresh.setOnRefreshListener {
+//            subjectBulletinBoardRecyclerAdapter.notifyItemRangeRemoved(
+//                0,
+//                subjectBulletinBoardList.size - 1
+//            )
+//            subjectBulletinBoardRecyclerAdapter.notifyDataSetChanged()
+//            subjectBulletinBoardList.clear()
+//            getListOfPosts()
+//            binding.swipeRefreshLayoutMyClassBoardRefresh.isRefreshing = false
+//        }
     }
 
     // 게시글 리스트 가져오기
@@ -122,9 +120,7 @@ class MyClassSubjectBulletinBoardListActivity : AppCompatActivity(), BulletinBoa
 class SubjectBulletinBoardRecyclerAdapter(
     private val itemSubjectBulletinBoardList: ArrayList<BoardPost>,
     private val bulletinBoardClickInterface: BulletinBoardClickInterface,
-) :
-    RecyclerView.Adapter<SubjectBulletinBoardViewHolder>() {
-
+) : RecyclerView.Adapter<SubjectBulletinBoardViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -169,7 +165,7 @@ class SubjectBulletinBoardViewHolder(
         item.textViewItemSubjectBulletinBoardTitle.text = BoardPost.title
         item.textViewItemSubjectBulletinBoardContent.text = BoardPost.content
         item.textViewItemSubjectBulletinBoardDate.text = BoardPost.timeStamp
-        item.textViewItemSubjectBulletinBoardWriter.text = BoardPost.writerName
+        item.textViewItemSubjectBulletinBoardWriter.text = BoardPost.writerUid
         item.textViewItemSubjectBulletinBoardChatNum.text = BoardPost.commentCount.toString()
     }
 }
