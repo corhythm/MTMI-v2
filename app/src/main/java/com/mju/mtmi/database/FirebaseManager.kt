@@ -25,9 +25,6 @@ object FirebaseManager {
     private val TAG = "로그"
 
     // firebase database path
-    const val USER_PATH = "user"
-    const val USER_PROFILE_IMAGES_PATH = "userProfileImageUrl"
-    const val BOARD_PATH = "board"
     const val CHATTING_ROOM_PATH = "chattingRoom"
     const val CHATTING_MESSAGE_PATH = "chattingMessage"
     const val COMMENT_COUNT_PATH = "commentCount"
@@ -118,7 +115,7 @@ object FirebaseManager {
             }
     }
 
-    fun patchUserData(
+    fun putUserData(
         isImageChanged: Boolean,
         userData: UserData,
         dataBaseCallback: DataBaseCallback<Boolean>
@@ -217,21 +214,21 @@ object FirebaseManager {
                 val currentTime = LocalDateTime.now() //현재 시간
                 val formattedTime =
                     currentTime.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분"))
-                val dbSaveFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS") //밀리초 환산
-                val formatted2 = currentTime.format(dbSaveFormatter)
+                val formatted2 =
+                    currentTime.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"))
                 val boardIdx = (Long.MAX_VALUE - formatted2.toLong()).toString() // 역순출력처리
-                val boardPost =
-                    BoardPost(
-                        subjectCode = subjectCode,
-                        title = postTitle,
-                        timeStamp = formattedTime,
-                        content = postContent,
-                        writerUid = userId,
-                        writerName = data.userName,
-                        subjectBoardIndex = boardIdx,
-                        commentCount = 0
-                    )
-                Firebase.database.getReference(this@FirebaseManager.BOARD_PATH)
+                val boardPost = BoardPost(
+                    subjectCode = subjectCode,
+                    title = postTitle,
+                    timeStamp = formattedTime,
+                    content = postContent,
+                    writerUid = userId,
+                    writerName = data.userName,
+                    subjectBoardIndex = boardIdx,
+                    commentCount = 0
+                )
+
+                Firebase.database.getReference("boards")
                     .child(subjectCode)
                     .child(boardIdx)
                     .setValue(boardPost)
@@ -257,7 +254,7 @@ object FirebaseManager {
         idx: String,
         dataBaseCallback: DataBaseCallback<ArrayList<BoardPost>>
     ) { // 과목별시판 불러오기
-        Firebase.database.getReference("/${this.BOARD_PATH}/$idx")
+        Firebase.database.getReference("/boards/$idx")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val postList = ArrayList<BoardPost>()
@@ -279,7 +276,7 @@ object FirebaseManager {
         boardPost.commentCount = boardPost.commentCount.plus(1)
         boardPost.subjectBoardIndex.let {
             boardPost.subjectCode.let { it1 ->
-                Firebase.database.reference.child(this.BOARD_PATH)
+                Firebase.database.reference.child("boards")
                     .child(it1)
                     .child(it)
                     .child(this.COMMENT_COUNT_PATH).setValue(boardPost.commentCount)
@@ -290,38 +287,36 @@ object FirebaseManager {
     // 새로운 댓글 추가
     fun postNewComment(
         subjectCode: String?,
-        subjectIdx: String?,
+        boardIdx: String?,
         commentContent: String,
         commenterUid: String,
         dataBaseCallback: DataBaseCallback<Boolean>,
     ) {
-        getUserData(commenterUid, object : DataBaseCallback<UserData> {
-            override fun onCallback(data: UserData) {
-                val current = LocalDateTime.now() //현재시간
-                val uiFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분")
-                val formatted = current.format(uiFormatter)
-                val dbSaveFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS") //밀리초 환산
-                val formatted2 = current.format(dbSaveFormatter)
-                if (subjectCode != null && subjectIdx != null) {
-                    val commentData = BoardComment(
-                        subjectIdx,
-                        commenterUid,
-                        data.userName,
-                        formatted,
-                        commentContent
-                    )
-                    val database = Firebase.database.getReference(this@FirebaseManager.BOARD_PATH)
+        val currentTime = LocalDateTime.now() //현재시간
+        val timeStamp = currentTime.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분"))
+        val commentIdx = currentTime.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"))
 
-                    database.child(subjectCode).child(subjectIdx)
-                        .child(this@FirebaseManager.COMMENT_PATH)
-                        .child(
-                            formatted2 // 정순 출력 처리
-                        ).setValue(commentData)
-                    dataBaseCallback.onCallback(true)
-                }
-            }
-        })
+        if (subjectCode != null && boardIdx != null) {
+            val boardComment = BoardComment(
+                boardIdx = boardIdx,
+                commentIdx = commentIdx,
+                commenterUid = commenterUid,
+                timeStamp = timeStamp,
+                content = commentContent
+            )
+
+            // post comment data into database
+            Firebase.database.getReference("boards")
+                .child(subjectCode)
+                .child(boardIdx)
+                .child("comments")
+                .child(commentIdx)
+                .setValue(boardComment)
+                .addOnSuccessListener { dataBaseCallback.onCallback(true) }
+                .addOnFailureListener { dataBaseCallback.onCallback(false) }
+        }
     }
+
 
     // 댓글 개수 가져오기
     fun getNumOfComment(
@@ -329,7 +324,7 @@ object FirebaseManager {
         subjectBoardIdx: String?,
         dataBaseCallback: DataBaseCallback<ArrayList<BoardComment>>,
     ) {
-        Firebase.database.getReference("/${this.BOARD_PATH}/$subjectCode/$subjectBoardIdx/${this.COMMENT_PATH}")
+        Firebase.database.getReference("/boards/$subjectCode/$subjectBoardIdx/comments")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val commentList = ArrayList<BoardComment>()

@@ -3,6 +3,7 @@ package com.mju.mtmi.myClass
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
@@ -18,7 +19,11 @@ import com.mju.mtmi.database.entity.BoardPost
 import com.mju.mtmi.database.DataBaseCallback
 import com.mju.mtmi.database.FirebaseManager
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.mju.mtmi.database.entity.UserData
 import www.sanju.motiontoast.MotionToast
 
 // 특정 게시글 보기
@@ -47,38 +52,41 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMess
                 this
             )
 
-
         // 댓글 작성
-        binding.buttonMyClassSubjectBulletinBoardWritingPostComment.setOnClickListener {
-            if (binding.editTextMyClassSubjectBulletinBoardWritingCommentContent.text.isNotEmpty()) {
-                val currentUser = firebaseAuth.currentUser!!.uid
-                val comment =
+        binding.buttonMyClassSubjectBulletinBoardWritingPostComment.setOnClickListener { // 댓글 입력 버튼 클릭 시
+            if (binding.editTextMyClassSubjectBulletinBoardWritingCommentContent.text.isNotEmpty()) { // 댓글이 빈 문자열이 아니면
+                val currentUserUid = firebaseAuth.currentUser!!.uid
+                val commentContent =
                     binding.editTextMyClassSubjectBulletinBoardWritingCommentContent.text.toString()
+
                 FirebaseManager.postNewComment(
-                    this.nowBoardPost.subjectCode,
-                    this.nowBoardPost.subjectBoardIndex,
-                    comment,
-                    currentUser,
-                    object : DataBaseCallback<Boolean> {
+                    subjectCode = this.nowBoardPost.subjectCode,
+                    boardIdx = this.nowBoardPost.subjectBoardIndex,
+                    commentContent = commentContent,
+                    commenterUid = currentUserUid,
+                    dataBaseCallback = object : DataBaseCallback<Boolean> {
                         override fun onCallback(data: Boolean) {
-                            if (data)
+                            if (data) {
                                 FirebaseManager.patchCommentCount(this@MyClassSubjectBulletinBoardDetailsActivity.nowBoardPost)
-                            // 코멘트 갱신화작업
-                            subjectBulletinBoardCommentRecyclerAdapter.notifyItemRangeRemoved(
-                                0,
-                                itemSubjectBulletinBoardCommentList.size - 1
-                            )
-                            subjectBulletinBoardCommentRecyclerAdapter.notifyDataSetChanged()
-                            itemSubjectBulletinBoardCommentList.clear()
-                            getCommentList(this@MyClassSubjectBulletinBoardDetailsActivity.nowBoardPost)
-                            binding.editTextMyClassSubjectBulletinBoardWritingCommentContent.text.clear()
+
+                                // 코멘트 갱신화작업
+                                subjectBulletinBoardCommentRecyclerAdapter.notifyItemRangeRemoved(
+                                    0,
+                                    itemSubjectBulletinBoardCommentList.size - 1
+                                )
+                                subjectBulletinBoardCommentRecyclerAdapter.notifyDataSetChanged()
+                                itemSubjectBulletinBoardCommentList.clear()
+                                getCommentList(this@MyClassSubjectBulletinBoardDetailsActivity.nowBoardPost)
+                                binding.editTextMyClassSubjectBulletinBoardWritingCommentContent.text.clear()
+                            }
                         }
                     }
                 )
+
             }
         }
 
-        // 게시글 작성자에게 메시지 보내기
+        // 게시글 작성자에게 메시지 보내기 클릭 시 -> 채팅방 개설
         binding.linearLayoutMyClassSubjectBulletinBoardDetailsChattingContainer.setOnClickListener {
             if (firebaseAuth.uid.toString() == this.nowBoardPost.writerUid) {
                 MotionToast.createColorToast(
@@ -164,7 +172,8 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMess
                         addItemDecoration(SubjectRecyclerDecoration())
                     }
                 }
-            })
+            }
+        )
     }
 
     override fun sendMessageClicked(commentIdx: Int, profileImg: String) {
@@ -226,7 +235,6 @@ class SubjectBulletinBoardCommentRecyclerAdapter(
     }
 
     override fun getItemCount(): Int = itemSubjectBulletinBoardCommentList.size
-
 }
 
 // recyclerview viewHolder
@@ -236,13 +244,31 @@ class SubjectBulletinBoardCommentViewHolder(
 ) : RecyclerView.ViewHolder(item.root) {
 
     fun bind(boardComment: BoardComment) {
-        item.textViewItemSubjectBulletinBoardCommentUserName.text = boardComment.userName
-        item.textViewItemSubjectBulletinBoardCommentCommentContent.text = boardComment.content
-        item.textViewItemSubjectBulletinBoardCommentDate.text = boardComment.timeStamp
+
+        var userData: UserData?
+
+        // get UserData using UserUid
+        FirebaseFirestore.getInstance()
+            .collection("users")
+            .document(boardComment.commenterUid)
+            .get()
+            .addOnSuccessListener { document ->
+                userData = document.toObject(UserData::class.java)!!
+                Log.d("로그", "댓글 사용자 데이터 = $userData")
+
+                item.textViewItemSubjectBulletinBoardCommentUserName.text = userData!!.userName
+                item.textViewItemSubjectBulletinBoardCommentCommentContent.text =
+                    boardComment.content
+                item.textViewItemSubjectBulletinBoardCommentDate.text = boardComment.timeStamp
+            }
+            .addOnFailureListener { exception ->
+                Log.d("로그", "exception = $exception")
+            }
+
 
         // 댓글 단 유저들 프로필 이미지 불러오기
-        boardComment.commenterUid.let {
-            FirebaseManager.getUserDataImageUri(it, object : DataBaseCallback<String> {
+        boardComment.commenterUid.let { profileImageUrl ->
+            FirebaseManager.getUserDataImageUri(profileImageUrl, object : DataBaseCallback<String> {
                 override fun onCallback(data: String) {
                     FirebaseStorage.getInstance().reference.child("user_profile_images/$data").downloadUrl.addOnSuccessListener { that ->
                         Glide.with(itemView.context).load(that).circleCrop()

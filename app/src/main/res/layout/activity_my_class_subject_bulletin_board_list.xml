@@ -20,16 +20,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="match_parent"-->
-            <!--            app:contentScrim="?attr/colorPrimary"-->
-            <!--            app:expandedTitleMarginBottom="28dp"-->
-            <!--            app:titleEnabled="false"-->
-            <!--            app:collapsedTitleGravity ="bottom|center_horizontal"-->
-            <!--            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"-->
-            <!--            app:statusBarScrim="?attr/colorPrimaryVariant">-->
-
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar_MyClassSubjectBulletinBoard_toolbar"
                 android:layout_width="match_parent"
@@ -39,7 +29,6 @@
                 app:titleCentered="true"
                 app:titleTextColor="@color/black" />
 
-            <!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView

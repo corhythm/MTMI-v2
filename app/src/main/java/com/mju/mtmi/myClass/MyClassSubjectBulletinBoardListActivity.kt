@@ -47,10 +47,9 @@ class MyClassSubjectBulletinBoardListActivity : AppCompatActivity(), BulletinBoa
 
         // 글 쓰기 버튼 클릭
         binding.extendFabMyClassSubjectBulletinBoardAddWriting.setOnClickListener {
-            val intent = Intent(this, MyClassSubjectBulletinBoardWritingActivity::class.java)
-            intent.putExtra("과목코드", this.subjectCode)
-            intent.also {
-                startActivityForResult(it, 100)
+            Intent(this, MyClassSubjectBulletinBoardWritingActivity::class.java).also {
+                it.putExtra("subjectCode", this.subjectCode)
+                startActivity(it)
                 overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
             }
         }

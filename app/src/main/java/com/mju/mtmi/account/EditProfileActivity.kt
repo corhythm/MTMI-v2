@@ -163,7 +163,7 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
                 )
 
                 // Firebase 데이터 업데이트
-                FirebaseManager.patchUserData(this.isImageChanged,
+                FirebaseManager.putUserData(this.isImageChanged,
                     this.myUserData,
                     object : DataBaseCallback<Boolean> {
                         // 이미지 업로드시 callback 으로 받아오기
