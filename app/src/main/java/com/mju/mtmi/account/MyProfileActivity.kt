@@ -56,6 +56,7 @@ class MyProfileActivity : AppCompatActivity() {
                 binding.textViewMyProfileStudentIdValue.text = userData.student_id
                 binding.textViewMyProfileMajorValue.text = userData.major
                 binding.textViewMyProfileBirthdayValue.text = userData.birth
+                binding.textViewMyProfileMbtiType.text = userData.mbtiType
                 Log.d(TAG, "유저정보 업데이트 / userData = $userData")
                 loadProfileImage(userData.userProfileImageUrl)
             }

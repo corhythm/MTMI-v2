@@ -56,14 +56,15 @@ object FirebaseManager {
                         "default_woman_profile_image.png"
                     val userData =
                         UserData(
-                            id,
-                            AES128.encrypt(pw),
-                            studentId,
-                            name,
-                            birth,
-                            gender,
-                            major,
-                            profileImgUrl
+                            id = id,
+                            pw = AES128.encrypt(pw),
+                            student_id = studentId,
+                            userName = name,
+                            birth = birth,
+                            gender = gender,
+                            major = major,
+                            userProfileImageUrl = profileImgUrl,
+                            mbtiType = ""
                         )
                     FirebaseFirestore.getInstance().collection("users")
                         .document(firebaseAuth.currentUser!!.uid).set(userData)
@@ -106,10 +107,6 @@ object FirebaseManager {
             .get()
             .addOnSuccessListener { document ->
                 if (document != null) {
-                    Log.d(
-                        TAG,
-                        "FireStoreManager -getUserData() called / Success to get UserData / userData: $document"
-                    )
                     dataBaseCallback.onCallback(document.toObject(UserData::class.java)!!)
                 }
             }
@@ -155,7 +152,8 @@ object FirebaseManager {
         chatRoomId: String
     ) { //채팅방 ID 생성 및 단일화
         val database = Firebase.database.getReference(this.CHATTING_ROOM_PATH)
-        database.child(chatRoomId).setValue(ChattingRoom(chatRoomId, arrayListOf(sendUser, receiveUser)))
+        database.child(chatRoomId)
+            .setValue(ChattingRoom(chatRoomId, arrayListOf(sendUser, receiveUser)))
     }
 
     // 채팅방 중복 찾기
@@ -175,6 +173,7 @@ object FirebaseManager {
                 }
                 dataBaseCallback.onCallback(check)
             }
+
             override fun onCancelled(error: DatabaseError) {}
         })
     }
@@ -201,7 +200,8 @@ object FirebaseManager {
 
         database.child(chattingRoomId).child(this.CHATTING_MESSAGE_PATH).child(formatted)
             .setValue(newChattingMessage) // 메시지 데이터 post
-        database.child(chattingRoomId).child(this.LAST_CHATTING_PATH).setValue(lastChattingMessage) // 마지막 메시지 데이터 post
+        database.child(chattingRoomId).child(this.LAST_CHATTING_PATH)
+            .setValue(lastChattingMessage) // 마지막 메시지 데이터 post
     }
 
     // 새 게시글 작성
@@ -219,21 +219,21 @@ object FirebaseManager {
                     currentTime.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분"))
                 val dbSaveFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS") //밀리초 환산
                 val formatted2 = currentTime.format(dbSaveFormatter)
-                val saveIdx = (Long.MAX_VALUE - formatted2.toLong()).toString() // 역순출력처리
+                val boardIdx = (Long.MAX_VALUE - formatted2.toLong()).toString() // 역순출력처리
                 val boardPost =
                     BoardPost(
-                        subjectCode,
-                        postTitle,
-                        formattedTime,
-                        postContent,
-                        userId,
-                        data.userName,
-                        saveIdx,
-                        0
+                        subjectCode = subjectCode,
+                        title = postTitle,
+                        timeStamp = formattedTime,
+                        content = postContent,
+                        writerUid = userId,
+                        writerName = data.userName,
+                        subjectBoardIndex = boardIdx,
+                        commentCount = 0
                     )
                 Firebase.database.getReference(this@FirebaseManager.BOARD_PATH)
                     .child(subjectCode)
-                    .child(saveIdx)
+                    .child(boardIdx)
                     .setValue(boardPost)
 
                 dataBaseCallback.onCallback(true)
@@ -243,15 +243,13 @@ object FirebaseManager {
 
     // 사용자 프로필이미지 url 가져오기
     fun getUserDataImageUri(userUid: String, dataBaseCallback: DataBaseCallback<String>) {
-        Firebase.database.getReference(this.USER_PATH).child(userUid)
-            .child(this.USER_PROFILE_IMAGES_PATH)
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val profileImageUrl: String = snapshot.value as String
-                    dataBaseCallback.onCallback(profileImageUrl)
-                }
-                override fun onCancelled(error: DatabaseError) {}
-            })
+        FirebaseFirestore.getInstance()
+            .collection("users")
+            .document(userUid)
+            .get()
+            .addOnSuccessListener { document ->
+                dataBaseCallback.onCallback(document["userProfileImageUrl"].toString())
+            }
     }
 
     // 게시글 리스트 가져오기
@@ -343,6 +341,7 @@ object FirebaseManager {
                     }
                     dataBaseCallback.onCallback(commentList)
                 }
+
                 override fun onCancelled(error: DatabaseError) {}
             })
     }
@@ -366,6 +365,7 @@ object FirebaseManager {
                     }
                     dataBaseCallback.onCallback(chattingList)
                 }
+
                 override fun onCancelled(error: DatabaseError) {}
             })
     }
@@ -384,8 +384,21 @@ object FirebaseManager {
                     dataBaseCallback.onCallback(lastChatting)
                 }
             }
+
             override fun onCancelled(error: DatabaseError) {}
         })
+    }
+
+    // MBTI 결과 변경
+    fun patchMbtiType(mbtiResult: String, dataBaseCallback: DataBaseCallback<Boolean>) {
+        val myUid = FirebaseAuth.getInstance().currentUser!!.uid
+
+        FirebaseFirestore.getInstance()
+            .collection("users")
+            .document(myUid)
+            .update("mbtiType", mbtiResult)
+            .addOnSuccessListener { dataBaseCallback.onCallback(true) }
+            .addOnFailureListener { dataBaseCallback.onCallback(false) }
     }
 
 }

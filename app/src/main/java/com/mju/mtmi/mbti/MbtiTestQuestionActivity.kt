@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.mju.mtmi.R
+import com.mju.mtmi.database.DataBaseCallback
+import com.mju.mtmi.database.FirebaseManager
 import com.mju.mtmi.databinding.ActivityMbtiTestQuestionBinding
 import com.mju.mtmi.databinding.ItemQuestionBannerBinding
 import com.mju.mtmi.util.SharedPrefManager
@@ -110,8 +112,8 @@ class MbtiTestQuestionActivity : AppCompatActivity() {
                 aTypeMbtiQuestion = resources.getStringArray(R.array.mbti_S)
                 bTypeMbtiQuestion = resources.getStringArray(R.array.mbti_N)
 
-                var mySideSpelling = ""
-                var oppositeSideSpelling = ""
+                val mySideSpelling: String
+                val oppositeSideSpelling: String
 
                 if (whatType == A_TYPE) { // 외향
                     mySideSpelling = "E"
@@ -126,8 +128,8 @@ class MbtiTestQuestionActivity : AppCompatActivity() {
                 aTypeMbtiQuestion = resources.getStringArray(R.array.mbti_T)
                 bTypeMbtiQuestion = resources.getStringArray(R.array.mbti_F)
 
-                var mySideSpelling = ""
-                var oppositeSideSpelling = ""
+                val mySideSpelling: String
+                val oppositeSideSpelling: String
 
                 if (whatType == A_TYPE) {
                     mySideSpelling = "N"
@@ -143,8 +145,8 @@ class MbtiTestQuestionActivity : AppCompatActivity() {
                 aTypeMbtiQuestion = resources.getStringArray(R.array.mbti_J)
                 bTypeMbtiQuestion = resources.getStringArray(R.array.mbti_P)
 
-                var mySideSpelling = ""
-                var oppositeSideSpelling = ""
+                val mySideSpelling: String
+                val oppositeSideSpelling: String
 
                 if (whatType == A_TYPE) { // 사고
                     mySideSpelling = "F"
@@ -161,8 +163,8 @@ class MbtiTestQuestionActivity : AppCompatActivity() {
                 binding.progressBarActivityMbtiTestQuestionStatus.labelText =
                     "achieve $nowQuestionStatusCount / $totalQuestionNum"
 
-                var mySideSpelling = ""
-                var oppositeSideSpelling = ""
+                val mySideSpelling: String
+                val oppositeSideSpelling: String
 
                 if (whatType == A_TYPE) { // 판단
                     mySideSpelling = "J"
@@ -172,14 +174,30 @@ class MbtiTestQuestionActivity : AppCompatActivity() {
                     oppositeSideSpelling = "J"
                 }
                 decideMbtiSpellingType(questionCount, mySideSpelling, oppositeSideSpelling)
-                SharedPrefManager.setMyMbtiType(myMbtiResult) // 내 mbti 결과 SharedPreferences에 저장
-                Log.d("로그", "myMbtiResulit = $myMbtiResult")
-                Intent(this, MbtiResultActivity::class.java).also {
-                    startActivity(it)
-                }
-                overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
-                finish()
-                return
+
+                Log.d("로그", "mbti 결과 = ${this.myMbtiResult}")
+                // MBTI 결과 저장
+                FirebaseManager.patchMbtiType(
+                    this.myMbtiResult,
+                    object : DataBaseCallback<Boolean> {
+                        override fun onCallback(data: Boolean) {
+                            if (data) { // MBTI 타입 저장 성공
+                                SharedPrefManager.setMyMbtiType(myMbtiResult)
+                                Intent(
+                                    this@MbtiTestQuestionActivity,
+                                    MbtiResultActivity::class.java
+                                ).also {
+                                    startActivity(it)
+                                }
+                                overridePendingTransition(
+                                    R.anim.activity_slide_in,
+                                    R.anim.activity_slide_out
+                                )
+                                finish()
+                            }
+                        }
+                    }
+                )
             }
 
         }

@@ -17,7 +17,6 @@ import com.mju.mtmi.database.FirebaseManager
 import com.mju.mtmi.database.entity.UserData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
-import com.mju.mtmi.database.FireStoreManager
 import com.mju.mtmi.util.AES128
 import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog
 import dev.shreyaspatil.MaterialDialog.model.TextAlignment
@@ -92,7 +91,7 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
 
 
         // 프로필 유저정보 초기화
-        FireStoreManager.getUserData(auth.uid.toString(), object : DataBaseCallback<UserData> {
+        FirebaseManager.getUserData(auth.uid.toString(), object : DataBaseCallback<UserData> {
             override fun onCallback(data: UserData) {
                 this@EditProfileActivity.myUserData = data
                 var majorIndex = 0
@@ -118,28 +117,36 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
 
         // 업데이트 버튼 누르면 --> 프로필 업데이트
         binding.buttonActivityEditProfileUpdateProfile.setOnClickListener {
-            val updateId = binding.editTextActivityEditProfileIdValue.text.toString().trim() //id
-            val updatePw = AES128.encrypt(binding.editTextActivityEditProfilePwValue.text.toString().trim()) // pw
-            val updateStudentId =
-                binding.editTextActivityEditProfileStudentIdValue.text.toString().trim() // 학번
-            val updateName =
-                binding.editTextActivityEditProfileNameValue.text.toString().trim() // 이름
-            val updateBirth =
-                binding.editTextActivityEditProfileBirthValue.text.toString().trim() // 생일
-            val updateMajor =
-                binding.spinnerActivityEditProfileMajor.selectedItem.toString().trim() // 전공
+//            val updateId = binding.editTextActivityEditProfileIdValue.text.toString().trim() //id
+//            val updatePw = AES128.encrypt(binding.editTextActivityEditProfilePwValue.text.toString().trim()) // pw
+//            val updateStudentId =
+//                binding.editTextActivityEditProfileStudentIdValue.text.toString().trim() // 학번
+//            val updateName =
+//                binding.editTextActivityEditProfileNameValue.text.toString().trim() // 이름
+//            val updateBirth =
+//                binding.editTextActivityEditProfileBirthValue.text.toString().trim() // 생일
+//            val updateMajor =
+//                binding.spinnerActivityEditProfileMajor.selectedItem.toString().trim() // 전공
 
             if (checkProfileValidate()) { // 프로필 정보 변경 가능한지 체크(빈 문자열 없는지)
-                val updatedUserData = UserData(
-                    updateId,
-                    updatePw,
-                    updateStudentId,
-                    updateName,
-                    updateBirth,
-                    this.myUserData.gender,
-                    updateMajor,
-                    this.myUserData.userProfileImageUrl
-                )
+//                val updatedUserData = UserData(
+//                    id = updateId,
+//                    pw = updatePw,
+//                    student_id = updateStudentId,
+//                    userName = updateName,
+//                    birth = updateBirth,
+//                    gender = this.myUserData.gender,
+//                    major = updateMajor,
+//                    mbtiType = "",
+//                    userProfileImageUrl = this.myUserData.userProfileImageUrl
+//                )
+                this.myUserData.id = binding.editTextActivityEditProfileIdValue.text.toString().trim() //id
+                this.myUserData.pw = AES128.encrypt(binding.editTextActivityEditProfilePwValue.text.toString().trim()) // pw
+                this.myUserData.student_id = binding.editTextActivityEditProfileStudentIdValue.text.toString().trim() // 학번
+                this.myUserData.userName = binding.editTextActivityEditProfileNameValue.text.toString().trim() // 이름
+                this.myUserData.birth = binding.editTextActivityEditProfileBirthValue.text.toString().trim() // 생일
+                this.myUserData.major = binding.spinnerActivityEditProfileMajor.selectedItem.toString().trim() // 전공
+
                 Log.d(
                     "로그",
                     "EditProfileActivity -init() called / img: ${this.myUserData.userProfileImageUrl}"
@@ -156,8 +163,8 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
                 )
 
                 // Firebase 데이터 업데이트
-                FireStoreManager.patchUserData(this.isImageChanged,
-                    updatedUserData,
+                FirebaseManager.patchUserData(this.isImageChanged,
+                    this.myUserData,
                     object : DataBaseCallback<Boolean> {
                         // 이미지 업로드시 callback 으로 받아오기
                         override fun onCallback(data: Boolean) {

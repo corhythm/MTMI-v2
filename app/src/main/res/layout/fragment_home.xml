@@ -11,10 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <FrameLayout
-            android:id="@+id/frameLayout_fragmentHome_mainBannerContainer"
+        <RelativeLayout
+            android:id="@+id/relativeLayout_fragmentHome_container"
             android:layout_width="0dp"
-            android:layout_height="180dp"
+            android:layout_height="200dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/bg_rounded_corner"
             android:gravity="center"
@@ -25,82 +25,28 @@
             app:layout_constraintVertical_bias="0.2"
             app:layout_constraintWidth_percent="0.9">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout_fragmentHome_myMbtiContainer"
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewpager2_main_mainBanner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bg_rounded_banner4"
-                android:padding="10dp">
+                android:orientation="horizontal" />
 
-                <ImageView
-                    android:id="@+id/imageView_fragmentHome_mbtiImg"
-                    android:layout_width="130dp"
-                    android:layout_height="150dp"
-                    android:src="@drawable/img_esfp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                android:id="@+id/dotsIndicator_main_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                app:dotsColor="#F1F1F1"
+                app:dotsCornerRadius="8dp"
+                app:dotsSize="10dp"
+                app:dotsSpacing="3dp"
+                app:dotsWidthFactor="2.5"
+                app:progressMode="true"
+                app:selectedDotColor="#FFC107"
+                android:layout_marginBottom="15dp"/>
 
-                <TextView
-                    android:id="@+id/textView_fragmentHome_mbtiTypeTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:fontFamily="@font/maple_story_bold"
-                    android:text="ISTJ - 세상의 소금형"
-                    android:textSize="20sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/imageView_fragmentHome_mbtiImg"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView_fragmentHome_mbtiTypeSubTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/maple_story_bold"
-                    android:text="한번 시작한 일은 끝까지 해내는 사람들"
-                    android:textSize="15sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/imageView_fragmentHome_mbtiImg"
-                    app:layout_constraintTop_toBottomOf="@id/textView_fragmentHome_mbtiTypeTitle"
-                    app:layout_constraintWidth_percent="0.6" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout_fragmentHome_goToMbtiContainer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/bg_rounded_corner"
-                android:backgroundTint="@color/main_home_color"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/maple_story_bold"
-                    android:text="나는 어떤 명지인일까?"
-                    android:textColor="@color/white"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/textview_main_goToMbti"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="15dp"
-                    android:textAlignment="center"
-                    android:clickable="true"
-                    android:fontFamily="@font/maple_story_light"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:textSize="17sp"
-                    android:text="@string/mbti"
-                    android:textColor="@color/white" />
-            </LinearLayout>
-
-        </FrameLayout>
+        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_fragmentHome_unvInfo"
@@ -111,7 +57,7 @@
             android:layoutAnimation="@anim/layout_animation2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frameLayout_fragmentHome_mainBannerContainer" />
+            app:layout_constraintTop_toBottomOf="@id/relativeLayout_fragmentHome_container" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_fragmentHome_lottieAni"

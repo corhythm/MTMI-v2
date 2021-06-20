@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mju.mtmi.R
@@ -138,7 +139,7 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
 //        }
 //    }
 //}
-//
+
 interface ChattingRoomClickInterface {
     fun chattingRoomClicked(chattingRoomIdx: String, imageUrl: String)
 }

@@ -1,7 +1,5 @@
 package com.mju.mtmi.myClass
 
-import android.app.Activity
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +9,6 @@ import com.mju.mtmi.databinding.ActivityMyClassSubjectBulletinBoardWritingBindin
 import com.mju.mtmi.database.DataBaseCallback
 import com.mju.mtmi.database.FirebaseManager
 import com.google.firebase.auth.FirebaseAuth
-import com.mju.mtmi.database.FireStoreManager
 
 // 게시판에 글쓰기
 class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
@@ -51,7 +48,7 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
         val writer = auth.currentUser!!.uid
         val title = binding.editTextMyClassSubjectBulletinBoardWritingTitle.text.toString()
         val content = binding.editTextMyClassSubjectBulletinBoardWritingContent.text.toString()
-        FireStoreManager.postNewPost(this.subjectCode, writer, title, content, object : DataBaseCallback<Boolean> {
+        FirebaseManager.postNewPost(this.subjectCode, writer, title, content, object : DataBaseCallback<Boolean> {
             override fun onCallback(data: Boolean) {
                 if (data) {
                     Log.d("로그", "포스트업로드 성공")

@@ -69,6 +69,21 @@
                 app:layout_constraintTop_toBottomOf="@id/textView_myProfile_name" />
 
 
+            <TextView
+                android:id="@+id/textView_myProfile_mbtiType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/imageView_myProfile_profileImg"
+                app:layout_constraintStart_toEndOf="@id/textView_myProfile_name"
+                app:layout_constraintHorizontal_bias="0.9"
+                android:textColor="@color/white"
+                tools:text="INTJ"
+                android:textSize="30sp"
+                android:fontFamily="@font/godo_maum"/>
+
+
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageView_myProfile_profileImg"
                 android:layout_width="130dp"

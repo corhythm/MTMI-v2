@@ -30,16 +30,21 @@ class MyClassSubjectBulletinBoardListActivity : AppCompatActivity(), BulletinBoa
         super.onCreate(savedInstanceState)
         binding = ActivityMyClassSubjectBulletinBoardListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        this.subjectCode = intent.getStringExtra("과목코드")!! // 과목 코드
-
-        // 툴바 타이틀 설정
-        binding.toolbarMyClassSubjectBulletinBoardToolbar.title = this.subjectCode
         init()
     }
 
+    override fun onStart() {
+        getListOfPosts()
+        super.onStart()
+    }
 
     private fun init() {
+        // 과목 코드 받아오기
+        this.subjectCode = intent.getStringExtra("subjectCode")!! // 과목 코드
+
+        // 툴바 타이틀 설정
+        binding.toolbarMyClassSubjectBulletinBoardToolbar.title = this.subjectCode
+
         // 글 쓰기 버튼 클릭
         binding.extendFabMyClassSubjectBulletinBoardAddWriting.setOnClickListener {
             val intent = Intent(this, MyClassSubjectBulletinBoardWritingActivity::class.java)
@@ -50,17 +55,17 @@ class MyClassSubjectBulletinBoardListActivity : AppCompatActivity(), BulletinBoa
             }
         }
 
-//        // 화면 스와이프 시 새로고침
-//        binding.swipeRefreshLayoutMyClassBoardRefresh.setOnRefreshListener {
-//            subjectBulletinBoardRecyclerAdapter.notifyItemRangeRemoved(
-//                0,
-//                subjectBulletinBoardList.size - 1
-//            )
-//            subjectBulletinBoardRecyclerAdapter.notifyDataSetChanged()
-//            subjectBulletinBoardList.clear()
-//            getListOfPosts()
-//            binding.swipeRefreshLayoutMyClassBoardRefresh.isRefreshing = false
-//        }
+        // 화면 스와이프 시 새로고침
+        binding.swipeRefreshLayoutMyClassBoardRefresh.setOnRefreshListener {
+            subjectBulletinBoardRecyclerAdapter.notifyItemRangeRemoved(
+                0,
+                subjectBulletinBoardList.size - 1
+            )
+            subjectBulletinBoardRecyclerAdapter.notifyDataSetChanged()
+            subjectBulletinBoardList.clear()
+            getListOfPosts()
+            binding.swipeRefreshLayoutMyClassBoardRefresh.isRefreshing = false
+        }
     }
 
     // 게시글 리스트 가져오기
@@ -165,7 +170,7 @@ class SubjectBulletinBoardViewHolder(
         item.textViewItemSubjectBulletinBoardTitle.text = BoardPost.title
         item.textViewItemSubjectBulletinBoardContent.text = BoardPost.content
         item.textViewItemSubjectBulletinBoardDate.text = BoardPost.timeStamp
-        item.textViewItemSubjectBulletinBoardWriter.text = BoardPost.writerUid
+        item.textViewItemSubjectBulletinBoardWriter.text = BoardPost.writerName
         item.textViewItemSubjectBulletinBoardChatNum.text = BoardPost.commentCount.toString()
     }
 }
