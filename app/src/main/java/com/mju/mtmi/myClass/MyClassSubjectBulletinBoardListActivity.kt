@@ -17,6 +17,7 @@ import com.mju.mtmi.databinding.ItemSubjectBulletinBoardBinding
 import com.mju.mtmi.database.entity.BoardPost
 import com.mju.mtmi.database.DataBaseCallback
 import com.mju.mtmi.database.FirebaseManager
+import com.mju.mtmi.database.entity.UserData
 
 // 게시글 리스트
 class MyClassSubjectBulletinBoardListActivity : AppCompatActivity(), BulletinBoardClickInterface {
@@ -153,11 +154,18 @@ class SubjectBulletinBoardViewHolder(
     fun bind(BoardPost: BoardPost, position: Int) {
         this.idx = position
         this.boardPost = BoardPost
-        item.textViewItemSubjectBulletinBoardTitle.text = BoardPost.title
-        item.textViewItemSubjectBulletinBoardContent.text = BoardPost.content
-        item.textViewItemSubjectBulletinBoardDate.text = BoardPost.timeStamp
-        item.textViewItemSubjectBulletinBoardWriter.text = BoardPost.writerName
-        item.textViewItemSubjectBulletinBoardChatNum.text = BoardPost.commentCount.toString()
+        FirebaseManager.getUserData(
+            userIdx = boardPost.writerIdx,
+            dataBaseCallback = object : DataBaseCallback<UserData> {
+                override fun onCallback(data: UserData) {
+                    item.textViewItemSubjectBulletinBoardTitle.text = BoardPost.title
+                    item.textViewItemSubjectBulletinBoardContent.text = BoardPost.content
+                    item.textViewItemSubjectBulletinBoardDate.text = BoardPost.timeStamp
+                    item.textViewItemSubjectBulletinBoardWriter.text = data.userName
+                    item.textViewItemSubjectBulletinBoardChatNum.text =
+                        BoardPost.commentCount.toString()
+                }
+            })
     }
 }
 

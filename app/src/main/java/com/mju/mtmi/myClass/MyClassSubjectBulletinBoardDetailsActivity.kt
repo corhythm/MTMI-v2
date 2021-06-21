@@ -55,15 +55,15 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMess
         // 댓글 작성
         binding.buttonMyClassSubjectBulletinBoardWritingPostComment.setOnClickListener { // 댓글 입력 버튼 클릭 시
             if (binding.editTextMyClassSubjectBulletinBoardWritingCommentContent.text.isNotEmpty()) { // 댓글이 빈 문자열이 아니면
-                val currentUserUid = firebaseAuth.currentUser!!.uid
+                val writerIdx = firebaseAuth.currentUser!!.uid
                 val commentContent =
                     binding.editTextMyClassSubjectBulletinBoardWritingCommentContent.text.toString()
 
                 FirebaseManager.postNewComment(
-                    subjectCode = this.nowBoardPost.subjectCode,
-                    boardIdx = this.nowBoardPost.subjectBoardIndex,
+                    boardIdx = this.nowBoardPost.boardIdx,
+                    postIdx = this.nowBoardPost.postIdx,
                     commentContent = commentContent,
-                    commenterUid = currentUserUid,
+                    writerIdx = writerIdx,
                     dataBaseCallback = object : DataBaseCallback<Boolean> {
                         override fun onCallback(data: Boolean) {
                             if (data) {
@@ -88,7 +88,8 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMess
 
         // 게시글 작성자에게 메시지 보내기 클릭 시 -> 채팅방 개설
         binding.linearLayoutMyClassSubjectBulletinBoardDetailsChattingContainer.setOnClickListener {
-            if (firebaseAuth.uid.toString() == this.nowBoardPost.writerUid) {
+            // 게시글 작성한 사람이 본인일 경우
+            if (firebaseAuth.uid.toString() == this.nowBoardPost.writerIdx) {
                 MotionToast.createColorToast(
                     this,
                     "Error",
@@ -99,17 +100,14 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMess
                     ResourcesCompat.getFont(this, R.font.maple_story_bold)
                 )
             } else {
-                val chattingRoomId = createNewChattingRoom(
-                    firebaseAuth.currentUser!!.uid,
-                    this.nowBoardPost.writerUid
-                )
+
+                val myIdx = firebaseAuth.currentUser!!.uid
+                val receiverIdx = this.nowBoardPost.writerIdx
+                val chattingRoomIdx = createNewChattingRoom(myIdx = myIdx, receiverIdx = receiverIdx)
 
                 Intent(this, ChattingRoomDetailsActivity::class.java).also {
-                    it.putExtra("chattingRoomId", chattingRoomId)
-                    it.putExtra(
-                        "partnerImg",
-                        "user_profile_images/IMAGE_${this.nowBoardPost.writerUid}.png"
-                    )
+                    it.putExtra("chattingRoomIdx", chattingRoomIdx)
+                    it.putExtra("receiverIdx", receiverIdx)
                     startActivity(it)
                 }
                 overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
@@ -117,48 +115,89 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMess
         }
     }
 
-    private fun createNewChattingRoom(sendUser: String, receiveUser: String): String {
-        val chattingRoomId: String = if (sendUser > receiveUser) // 채팅방 구분 키 생성
-            "$sendUser-$receiveUser"
+    // 댓글 단 사람들 중에 채팅 보낼 때
+    override fun sendMessageClicked(commentIdx: Int, profileImg: String) {
+        // 댓글 단 사람이 본인일 경우
+        if (firebaseAuth.uid.toString() == itemSubjectBulletinBoardCommentList[commentIdx].writerIdx) {
+            MotionToast.createColorToast(
+                this,
+                "Error",
+                "본인에게 메시지를 보낼 수 없습니다",
+                MotionToast.TOAST_ERROR,
+                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.SHORT_DURATION,
+                ResourcesCompat.getFont(this, R.font.maple_story_bold)
+            )
+        } else {
+            val myIdx = firebaseAuth.currentUser!!.uid // 내 uid
+            val receiverIdx =
+                itemSubjectBulletinBoardCommentList[commentIdx].writerIdx // 상대방 uid
+            val chattingRoomIdx = createNewChattingRoom(
+                myIdx = myIdx,
+                receiverIdx = receiverIdx
+            ) // 나와 상대방이 대화할 채팅방 id
+
+            Intent(this, ChattingRoomDetailsActivity::class.java).also {
+                it.putExtra("chattingRoomIdx", chattingRoomIdx)
+                it.putExtra("receiverIdx", receiverIdx)
+                startActivity(it)
+            }
+            overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
+        }
+    }
+
+    private fun createNewChattingRoom(myIdx: String, receiverIdx: String): String {
+        val chattingRoomIdx: String = if (myIdx > receiverIdx) // 채팅방 구분 키 생성
+            "$myIdx-$receiverIdx"
         else
-            "$receiveUser-$sendUser"
+            "$receiverIdx-$myIdx"
 
         // 채팅방 중복 체크
         FirebaseManager.checkRedundantChattingRoom(
-            chattingRoomId,
-            object : DataBaseCallback<Boolean> {
+            chattingRoomId = chattingRoomIdx,
+            dataBaseCallback = object : DataBaseCallback<Boolean> {
                 override fun onCallback(data: Boolean) {
                     if (data) {
-                        FirebaseManager.postNewChattingRoom(sendUser, receiveUser, chattingRoomId)
+                        FirebaseManager.postNewChattingRoom(myIdx, receiverIdx, chattingRoomIdx)
                     }
                 }
             })
-        return chattingRoomId
+        return chattingRoomIdx
     }
 
     // 게시글 세부 내용 가져오기
     private fun getPostDetailInfo(
-        BoardPost: BoardPost,
+        boardPost: BoardPost,
     ) {
-        binding.textViewMyClassSubjectBulletinBoardDetailsUserName.text = BoardPost.writerName
-        binding.textViewMyClassSubjectBulletinBoardDetailsDate.text = BoardPost.timeStamp
-        binding.textViewMyClassSubjectBulletinBoardDetailsTitle.text = BoardPost.title
-        binding.textViewMyClassSubjectBulletinBoardDetailsContent.text = BoardPost.content
-        BoardPost.writerUid.let {
-            FirebaseManager.getUserDataImageUri(it, object : DataBaseCallback<String> {
-                override fun onCallback(data: String) {
-                    FirebaseStorage.getInstance().reference.child("user_profile_images/$data").downloadUrl.addOnSuccessListener { imageUrl ->
-                        Glide.with(applicationContext).load(imageUrl).circleCrop()
-                            .into(binding.imageViewMyClassSubjectBulletinBoardDetailsProfileImg)
-                    }
+        FirebaseManager.getUserData(
+            userIdx = boardPost.writerIdx,
+            dataBaseCallback = object : DataBaseCallback<UserData> { // userIdx를 이용해 user 이름 받아오기
+                override fun onCallback(data: UserData) {
+                    binding.textViewMyClassSubjectBulletinBoardDetailsUserName.text = data.userName
+                    binding.textViewMyClassSubjectBulletinBoardDetailsDate.text = boardPost.timeStamp
+                    binding.textViewMyClassSubjectBulletinBoardDetailsTitle.text = boardPost.title
+                    binding.textViewMyClassSubjectBulletinBoardDetailsContent.text = boardPost.content
                 }
             })
+
+        boardPost.writerIdx.let { userIdx ->
+            FirebaseManager.getUserDataImageUri(
+                userIdx = userIdx,
+                dataBaseCallback = object : DataBaseCallback<String> {
+                    override fun onCallback(data: String) {
+                        FirebaseStorage.getInstance().reference.child("user_profile_images/$data").downloadUrl.addOnSuccessListener { imageUrl ->
+                            Glide.with(applicationContext).load(imageUrl).circleCrop()
+                                .into(binding.imageViewMyClassSubjectBulletinBoardDetailsProfileImg)
+                        }
+                    }
+                })
         }
     }
 
     private fun getCommentList(boardPost: BoardPost) {
-        FirebaseManager.getNumOfComment(boardPost.subjectCode, boardPost.subjectBoardIndex,
-            object : DataBaseCallback<ArrayList<BoardComment>> {
+        FirebaseManager.getNumOfComment(boardIdx = boardPost.boardIdx,
+            postIdx = boardPost.postIdx,
+            dataBaseCallback = object : DataBaseCallback<ArrayList<BoardComment>> {
                 override fun onCallback(data: ArrayList<BoardComment>) {
                     for (i in 0 until data.count())
                         itemSubjectBulletinBoardCommentList.add(data[i])
@@ -174,33 +213,6 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMess
                 }
             }
         )
-    }
-
-    override fun sendMessageClicked(commentIdx: Int, profileImg: String) {
-        // 댓글 단 사람들 중에 채팅 보낼 때
-        if (firebaseAuth.uid.toString() == itemSubjectBulletinBoardCommentList[commentIdx].commenterUid) {
-            MotionToast.createColorToast(
-                this,
-                "Error",
-                "본인에게 메시지를 보낼 수 없습니다",
-                MotionToast.TOAST_ERROR,
-                MotionToast.GRAVITY_BOTTOM,
-                MotionToast.SHORT_DURATION,
-                ResourcesCompat.getFont(this, R.font.maple_story_bold)
-            )
-        } else {
-            val chattingRoomId = createNewChattingRoom(
-                firebaseAuth.currentUser!!.uid,
-                itemSubjectBulletinBoardCommentList[commentIdx].commenterUid
-            )
-
-            Intent(this, ChattingRoomDetailsActivity::class.java).also {
-                it.putExtra("chattingRoomId", chattingRoomId)
-                it.putExtra("partnerImg", profileImg)
-                startActivity(it)
-            }
-            overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
-        }
     }
 
     override fun finish() {
@@ -250,7 +262,7 @@ class SubjectBulletinBoardCommentViewHolder(
         // get UserData using UserUid
         FirebaseFirestore.getInstance()
             .collection("users")
-            .document(boardComment.commenterUid)
+            .document(boardComment.writerIdx)
             .get()
             .addOnSuccessListener { document ->
                 userData = document.toObject(UserData::class.java)!!
@@ -267,23 +279,23 @@ class SubjectBulletinBoardCommentViewHolder(
 
 
         // 댓글 단 유저들 프로필 이미지 불러오기
-        boardComment.commenterUid.let { profileImageUrl ->
-            FirebaseManager.getUserDataImageUri(profileImageUrl, object : DataBaseCallback<String> {
+        FirebaseManager.getUserDataImageUri(
+            userIdx = boardComment.writerIdx,
+            dataBaseCallback = object : DataBaseCallback<String> {
                 override fun onCallback(data: String) {
-                    FirebaseStorage.getInstance().reference.child("user_profile_images/$data").downloadUrl.addOnSuccessListener { that ->
-                        Glide.with(itemView.context).load(that).circleCrop()
+                    FirebaseStorage.getInstance().reference.child("user_profile_images/$data").downloadUrl.addOnSuccessListener { profileImageUrl ->
+                        Glide.with(itemView.context).load(profileImageUrl).circleCrop()
                             .into(item.imageViewItemSubjectBulletinBoardCommentProfileImg)
                     }
 
                     // 메시지 보내기 클릭했을 때
                     item.linearLayoutItemSubjectBulletinBoardCommentChattingContainer.setOnClickListener {
                         this@SubjectBulletinBoardCommentViewHolder.SendMessageClickInterface.sendMessageClicked(
-                            adapterPosition,
+                            this@SubjectBulletinBoardCommentViewHolder.adapterPosition,
                             "image/$data"
                         )
                     }
                 }
             })
-        }
     }
 }

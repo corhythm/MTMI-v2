@@ -3,22 +3,10 @@ package com.mju.mtmi.chatting
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.*
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.mju.mtmi.R
 import com.mju.mtmi.databinding.ActivityChattingRoomListBinding
-import com.mju.mtmi.databinding.ItemChattingRoomBinding
-import com.mju.mtmi.database.*
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.storage.FirebaseStorage
-import com.mju.mtmi.database.entity.ChattingMessage
 import com.mju.mtmi.database.entity.ChattingRoomListForm
-import com.mju.mtmi.database.entity.LastChatting
-import java.lang.Exception
-import java.util.*
 import kotlin.collections.ArrayList
 
 class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface {

@@ -1,7 +1,7 @@
 package com.mju.mtmi.database.entity
 
 data class UserData(
-    var  id: String,
+    var id: String,
     var pw: String,
     var student_id: String,
     var userName: String,

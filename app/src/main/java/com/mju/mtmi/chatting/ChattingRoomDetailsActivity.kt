@@ -31,7 +31,7 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
     private lateinit var chattingRoomDetailsRecyclerAdapter: ChattingRoomDetailsRecyclerAdapter
     private lateinit var chattingRoomId: String
     private lateinit var partnerImg: String
-    private var database = Firebase.database.getReference(FirebaseManager.CHATTING_ROOM_PATH)
+    private var database = Firebase.database.getReference("chattingRooms")
     private lateinit var currentUserData: UserData
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,8 +45,8 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
         // DB와 auth 초기화
         val auth = FirebaseAuth.getInstance()
 
-        this.chattingRoomId = intent.getStringExtra("chattingRoomId")!!
-        this.partnerImg = intent.getStringExtra("partnerImg")!!
+        this.chattingRoomId = intent.getStringExtra("chattingRoomId")!! // 채팅방 번호
+        this.partnerImg = intent.getStringExtra("partnerImg")!! // 상대방 이미지 저장 경로
 
         //현재 유저 데이터 초기화
         FirebaseManager.getUserData(auth.uid.toString(), object : DataBaseCallback<UserData> {
@@ -56,14 +56,12 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
         })
 
         val chattingDataList = ArrayList<ChattingMessage>()
-
         this.chattingRoomDetailsRecyclerAdapter =
             ChattingRoomDetailsRecyclerAdapter(chattingDataList, partnerImg)
 
-
         // 채팅 메시지 보내거나 올 때마다 리사이클러뷰 업데이트
-        database.child(this.chattingRoomId).child(FirebaseManager.CHATTING_MESSAGE_PATH)
-            .addChildEventListener(object : ChildEventListener {
+        database.child(this.chattingRoomId).child("chattingMessages")
+            .addChildEventListener(object : ChildEventListener { // 대기하고 있다가 자식이 추가될 때마다 호출
                 override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                     val addChattingMessage = snapshot.getValue<ChattingMessage>()
                     if (addChattingMessage != null) {
