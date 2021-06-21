@@ -91,19 +91,6 @@ class MyClassSubjectBulletinBoardListActivity : AppCompatActivity(), BulletinBoa
             })
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            subjectBulletinBoardRecyclerAdapter.notifyItemRangeRemoved(
-                0,
-                subjectBulletinBoardList.size - 1
-            )
-            subjectBulletinBoardRecyclerAdapter.notifyDataSetChanged()
-            subjectBulletinBoardList.clear()
-            getListOfPosts()
-        }
-    }
-
     override fun itemClicked(idx: Int, boardPost: BoardPost) {
         Log.d("클릭한 item :$idx", " 클릭한 포스트" + boardPost.title)
         // 특정 게시글 클릭 시, 해당 게시글 상세 내용 불러오기

@@ -360,7 +360,6 @@ object FirebaseManager {
                     }
                     dataBaseCallback.onCallback(chattingList)
                 }
-
                 override fun onCancelled(error: DatabaseError) {}
             })
     }

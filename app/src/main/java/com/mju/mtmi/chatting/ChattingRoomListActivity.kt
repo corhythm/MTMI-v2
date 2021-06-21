@@ -14,7 +14,9 @@ import com.mju.mtmi.databinding.ItemChattingRoomBinding
 import com.mju.mtmi.database.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
+import com.mju.mtmi.database.entity.ChattingMessage
 import com.mju.mtmi.database.entity.ChattingRoomListForm
+import com.mju.mtmi.database.entity.LastChatting
 import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
@@ -37,40 +39,44 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
     }
 
     private fun init() {
-//        this.myChattingRoomList.clear()
-//        FirebaseManager.getMyChattingRoomList(firebaseAuth.currentUser!!.uid, object : DataBaseCallback<ArrayList<Chatting>> {
-//            override fun onCallback(data: ArrayList<Chatting>) {
-//                for (i in 0 until data.count()) {
-//                    FirebaseManager.getLastChattingMessage(data[i].chattingRoomId, object : DataBaseCallback<ChattingRoomListForm> {
-//                        override fun onCallback(data: ChattingRoomListForm) {
-//                            myChattingRoomList.add(data)
-//                            binding.recyclerviewActivityChattingRoomListChatList.apply {
-//                                adapter = chattingRoomListRecyclerAdapter
-//                                layoutManager =
-//                                    LinearLayoutManager(
-//                                        this@ChattingRoomListActivity,
-//                                        LinearLayoutManager.VERTICAL,
-//                                        false
-//                                    )
-//                            }
-//                        }
-//                    })
-//                }
-//
-//            }
-//        })
+        this.myChattingRoomList.clear()
 
+//        FirebaseManager.getMyChattingRoomList(
+//            userId = firebaseAuth.currentUser!!.uid,
+//            dataBaseCallback = object : DataBaseCallback<ArrayList<ChattingRoomListForm>> {
+//                override fun onCallback(data: ArrayList<ChattingRoomListForm>) {
+//                    for (i in 0 until data.count()) {
+//                        FirebaseManager.getLastChattingMessage(
+//                            data[i].chattingRoomId,
+//                            object : DataBaseCallback<LastChatting> {
+//                                override fun onCallback(data: LastChatting) {
+//                                    myChattingRoomList.add(data)
+//                                    binding.recyclerviewActivityChattingRoomListChatList.apply {
+//                                        adapter = chattingRoomListRecyclerAdapter
+//                                        layoutManager =
+//                                            LinearLayoutManager(
+//                                                this@ChattingRoomListActivity,
+//                                                LinearLayoutManager.VERTICAL,
+//                                                false
+//                                            )
+//                                    }
+//                                }
+//                            })
+//                    }
+//
+//                }
+//            })
+//
 //        chattingRoomListRecyclerAdapter =
 //            ChattingRoomListRecyclerAdapter(myChattingRoomList, this)
-
-        FirebaseManager.getMyChattingRoomList(firebaseAuth.currentUser!!.uid, object : DataBaseCallback<ArrayList<ChattingRoomListForm>> {
-            override fun onCallback(data: ArrayList<ChattingRoomListForm>) {
-                Log.d("로그", "chattingRoomForm: $data ")
-            }
-
-        })
-
-
+//
+//        FirebaseManager.getMyChattingRoomList(
+//            firebaseAuth.currentUser!!.uid,
+//            object : DataBaseCallback<ArrayList<ChattingRoomListForm>> {
+//                override fun onCallback(data: ArrayList<ChattingRoomListForm>) {
+//                    Log.d("로그", "chattingRoomForm: $data ")
+//                }
+//            })
     }
 
     // 특정 채팅방을 클릭했을 때
@@ -109,8 +115,8 @@ class ChattingRoomListActivity : AppCompatActivity(), ChattingRoomClickInterface
 //
 //    override fun getItemCount(): Int = this.itemChattingRoomRoomList.size
 //}
-
-// 리사이클러뷰 뷰홀더
+//
+//// 리사이클러뷰 뷰홀더
 //class ChattingRoomViewHolder(
 //    private val item: ItemChattingRoomBinding,
 //    private val ChattingRoomClickInterface: ChattingRoomClickInterface,

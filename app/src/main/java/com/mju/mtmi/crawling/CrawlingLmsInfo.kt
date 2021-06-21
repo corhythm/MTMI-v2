@@ -80,6 +80,7 @@ class CrawlingLmsInfo(
                 data = data,
                 httpMethod = Connection.Method.POST
             )
+            Log.d(TAG, "res2 = $res2")
 
             // 3. 데이터 안의 id, pw key값 이름 바꿔주고 redirect_uri 키 추가.
             data.clear()
@@ -109,7 +110,7 @@ class CrawlingLmsInfo(
                 data = data,
                 httpMethod = Connection.Method.POST
             )
-
+            Log.d(TAG, "res4 = $res4")
 
             // data 값 초기화
             data.clear()
@@ -125,12 +126,10 @@ class CrawlingLmsInfo(
                 httpMethod = Connection.Method.POST
             )
 
-
             // 수강 중인 과목 저장
             Jsoup.parse(res5.body()).select("div > div > div > div > a > span").forEach {
                 subjectInfoList.add(ItemSubjectInfo(subjectName = it.text()))
             }
-
 
             // 교수, 시간 임시 저장
             val tempProfAndTime = ArrayList<Element>()
@@ -147,11 +146,9 @@ class CrawlingLmsInfo(
                 }
             }
 
-
             // # 과목 코드 >> ['eclassRoom(', 'A20203KMA021010012', '); return false;']
             val kjKeyHtml = Jsoup.parse(res5.body()).select("div > div > div > a")
             println(kjKeyHtml)
-
 
             // 과목 코드 저장
             for (i in 0 until subjectInfoList.size) {
@@ -207,7 +204,9 @@ class CrawlingLmsInfo(
                 Jsoup.parse(res7.body()).select("table > tbody > tr > td > img")
                     .forEach { isSubmittedText ->
                         it.homeworkList.add(
-                            Homework(isSubmitted = isSubmittedText.attr("title").toString())
+                            Homework(
+                                isSubmitted = isSubmittedText.attr("title").toString()
+                            )
                         )
                     }
 
