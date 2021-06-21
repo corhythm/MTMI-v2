@@ -1,19 +1,17 @@
 package com.mju.mtmi.database.entity
 
 data class ChattingMessage(
-    var chattingRoomId: String,
-    var name: String,
-    var userId: String,
-    var message: String,
-    var imageUri: String,
-    var timeStamp: String
+    val chattingRoomIdx: String,
+    val chattingMessageIdx: String,
+    val writerIdx: String,
+    val content: String,
+    val timeStamp: String
 ) {
     constructor() : this(
-        chattingRoomId = "",
-        name = "",
-        userId = "",
-        message = "",
-        imageUri = "",
+        chattingRoomIdx = "",
+        chattingMessageIdx = "",
+        writerIdx = "",
+        content = "",
         timeStamp = ""
     )
 }

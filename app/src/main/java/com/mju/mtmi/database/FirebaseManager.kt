@@ -148,7 +148,7 @@ object FirebaseManager {
 
     // 채팅방 중복 찾기
     fun checkRedundantChattingRoom(
-        chattingRoomId: String,
+        chattingRoomIdx: String,
         dataBaseCallback: DataBaseCallback<Boolean>
     ) {
         val database = Firebase.database.getReference("chattingRooms")
@@ -157,7 +157,7 @@ object FirebaseManager {
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.children.forEach() {
                     val existingChattingRoomId: String = it.key as String
-                    if (existingChattingRoomId == chattingRoomId) {
+                    if (existingChattingRoomId == chattingRoomIdx) {
                         check = false
                     }
                 }
@@ -170,27 +170,28 @@ object FirebaseManager {
 
     // 새로운 채팅 메시지 보내기
     fun postNewChattingMessage(
-        chattingRoomId: String,
-        name: String,
+        chattingRoomIdx: String,
         message: String,
-        userId: String,
-        imageUri: String,
+        writerIdx: String,
     ) {
         //밀리초 단위로 메시지 푸쉬 -> 키 값으로 사용
-        val current = LocalDateTime.now() //현재 시간
-        val dbSaveFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS") //밀리초 환산
-        val uiFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분")
-        var formatted = current.format(uiFormatter)
-
+        val currentTime = LocalDateTime.now() //현재 시간
+        val chattingMessageIdx = currentTime.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"))
+        val timeStamp = currentTime.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분"))
         val newChattingMessage =
-            ChattingMessage(chattingRoomId, name, userId, message, imageUri, formatted) //메세지내용 전
-        val lastChattingMessage = LastChattingMessage(message = message, timeStamp = formatted)
+            ChattingMessage(
+                chattingRoomIdx = chattingRoomIdx,
+                chattingMessageIdx = chattingMessageIdx,
+                writerIdx = writerIdx,
+                content = message,
+                timeStamp = timeStamp
+            )
+        val lastChattingMessage = LastChattingMessage(message = message, timeStamp = timeStamp)
         val database = Firebase.database.getReference("chattingRooms")
-        formatted = current.format(dbSaveFormatter)
 
-        database.child(chattingRoomId).child("chattingMessages").child(formatted)
+        database.child(chattingRoomIdx).child("chattingMessages").child(chattingMessageIdx)
             .setValue(newChattingMessage) // 메시지 데이터 post
-        database.child(chattingRoomId).child("lastChattingMessage")
+        database.child(chattingRoomIdx).child("lastChattingMessage")
             .setValue(lastChattingMessage) // 마지막 메시지 데이터 post
     }
 

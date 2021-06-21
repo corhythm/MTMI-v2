@@ -25,42 +25,50 @@ import com.google.firebase.storage.FirebaseStorage
 import com.mju.mtmi.database.entity.ChattingMessage
 import com.mju.mtmi.database.entity.UserData
 
-
 class ChattingRoomDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChattingRoomDetailsBinding
     private lateinit var chattingRoomDetailsRecyclerAdapter: ChattingRoomDetailsRecyclerAdapter
-    private lateinit var chattingRoomId: String
-    private lateinit var partnerImg: String
-    private var database = Firebase.database.getReference("chattingRooms")
+    private lateinit var chattingRoomIdx: String // 채팅방 idx
+    private lateinit var opponentIdx: String // 상대방 userIdx
+    private val firebaseAuth = FirebaseAuth.getInstance()
+    private val database = Firebase.database.getReference("chattingRooms")
     private lateinit var currentUserData: UserData
+    private lateinit var opponentUserData: UserData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.binding = ActivityChattingRoomDetailsBinding.inflate(layoutInflater)
         setContentView(this.binding.root)
-        init()
-    }
 
-    private fun init() {
         // DB와 auth 초기화
-        val auth = FirebaseAuth.getInstance()
+        this.chattingRoomIdx = intent.getStringExtra("chattingRoomIdx")!! // 채팅방 번호
+        this.opponentIdx = intent.getStringExtra("receiverIdx")!! // 상대방 idx
 
-        this.chattingRoomId = intent.getStringExtra("chattingRoomId")!! // 채팅방 번호
-        this.partnerImg = intent.getStringExtra("partnerImg")!! // 상대방 이미지 저장 경로
-
-        //현재 유저 데이터 초기화
-        FirebaseManager.getUserData(auth.uid.toString(), object : DataBaseCallback<UserData> {
+        //현재 유저 데이터 가져오기
+        FirebaseManager.getUserData(this.firebaseAuth.uid.toString(), object : DataBaseCallback<UserData> {
             override fun onCallback(data: UserData) {
-                currentUserData = data
+                this@ChattingRoomDetailsActivity.currentUserData = data
             }
         })
 
+
+        // 채팅 상대방 데이터 가져오기
+        FirebaseManager.getUserData(this.opponentIdx, object : DataBaseCallback<UserData> {
+            override fun onCallback(data: UserData) {
+                this@ChattingRoomDetailsActivity.opponentUserData = data
+                init()
+            }
+        })
+    }
+
+    private fun init() {
+
         val chattingDataList = ArrayList<ChattingMessage>()
         this.chattingRoomDetailsRecyclerAdapter =
-            ChattingRoomDetailsRecyclerAdapter(chattingDataList, partnerImg)
+                    ChattingRoomDetailsRecyclerAdapter(chattingDataList, this.opponentUserData)
 
         // 채팅 메시지 보내거나 올 때마다 리사이클러뷰 업데이트
-        database.child(this.chattingRoomId).child("chattingMessages")
+        database.child(this.chattingRoomIdx).child("chattingMessages")
             .addChildEventListener(object : ChildEventListener { // 대기하고 있다가 자식이 추가될 때마다 호출
                 override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                     val addChattingMessage = snapshot.getValue<ChattingMessage>()
@@ -74,6 +82,7 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
                         )
                     }
                 }
+
                 override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
                 override fun onChildRemoved(snapshot: DataSnapshot) {}
                 override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
@@ -91,17 +100,14 @@ class ChattingRoomDetailsActivity : AppCompatActivity() {
                     .isNotEmpty()
             ) { // 메시지 내용이 빈 문자열이 아닐 경우
                 FirebaseManager.postNewChattingMessage(
-                    chattingRoomId,
-                    currentUserData.userName,
-                    binding.editTextActivityChattingRoomDetailsMessage.text.toString(),
-                    auth.currentUser!!.uid,
-                    currentUserData.userProfileImageUrl
+                    chattingRoomIdx = chattingRoomIdx,
+                    message = binding.editTextActivityChattingRoomDetailsMessage.text.toString(),
+                    writerIdx = this.firebaseAuth.currentUser!!.uid,
                 )
                 binding.editTextActivityChattingRoomDetailsMessage.text.clear()
             }
         }
     }
-
 
     override fun finish() {
         super.finish()
@@ -117,10 +123,10 @@ enum class ViewType(val viewNum: Int) {
 // recyclerview adapter
 class ChattingRoomDetailsRecyclerAdapter(
     private val chattingList: ArrayList<ChattingMessage>,
-    private val partnerImg: String
+    private val opponentUserData: UserData
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val currentUserUid = FirebaseAuth.getInstance().currentUser!!.uid
+    private val currentUserIdx = FirebaseAuth.getInstance().currentUser!!.uid
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == ViewType.MY_CHATTING.viewNum) // 내가 보낸 채팅일 때
@@ -129,7 +135,7 @@ class ChattingRoomDetailsRecyclerAdapter(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                ), partnerImg
+                ), opponentUserData
             )
         else
             ChattingViewHolder(
@@ -137,7 +143,7 @@ class ChattingRoomDetailsRecyclerAdapter(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                ), partnerImg
+                ), opponentUserData
             )
 
     }
@@ -151,7 +157,7 @@ class ChattingRoomDetailsRecyclerAdapter(
     // 메시지 주인 구분
     override fun getItemViewType(position: Int): Int {
         // 여기서 firebase uid로 내가 보낸 채팅인지, 받은 채팅인지 구분
-        return if (this.chattingList[position].userId == this.currentUserUid)
+        return if (this.chattingList[position].writerIdx == this.currentUserIdx)
             ViewType.MY_CHATTING.viewNum
         else
             ViewType.OTHERS_CHATTING.viewNum
@@ -159,22 +165,22 @@ class ChattingRoomDetailsRecyclerAdapter(
 
 }
 
-class ChattingViewHolder(private val item: ViewBinding, private val partnerImg: String) :
+class ChattingViewHolder(private val item: ViewBinding, private val opponentUserData: UserData) :
     RecyclerView.ViewHolder(item.root) {
-    fun bind(chattingData: ChattingMessage) { // 내가 보낸 채팅
+
+    fun bind(chattingMessage: ChattingMessage) { // 내가 보낸 채팅
         if (item is ItemSendChattingBinding) {
-            item.textViewItemSendChattingSendMsg.text = chattingData.message
-            item.textViewItemSendChattingTimeStamp.text = chattingData.timeStamp
+            item.textViewItemSendChattingSendMsg.text = chattingMessage.content
+            item.textViewItemSendChattingTimeStamp.text = chattingMessage.timeStamp
         } else { // 내가 받은 채팅
-            Log.d("로그", "ChattingViewHolder -bind() called / partnerImg = ${this.partnerImg}")
             (item as ItemReceiveChattingBinding).textViewItemReceiveChattingReceiverName.text =
-                chattingData.name
-            FirebaseStorage.getInstance().reference.child(partnerImg).downloadUrl.addOnSuccessListener { that ->
+                opponentUserData.userName
+            FirebaseStorage.getInstance().reference.child(opponentUserData.userProfileImageUrl).downloadUrl.addOnSuccessListener { that ->
                 Glide.with(itemView.context).load(that).circleCrop()
                     .into(item.imageViewItemReceiveChattingProfileImg)
             }
-            item.textViewItemReceiveChattingReceiveMsg.text = chattingData.message
-            item.textViewItemReceiveChattingTimeStamp.text = chattingData.timeStamp
+            item.textViewItemReceiveChattingReceiveMsg.text = chattingMessage.content
+            item.textViewItemReceiveChattingTimeStamp.text = chattingMessage.timeStamp
         }
     }
 }

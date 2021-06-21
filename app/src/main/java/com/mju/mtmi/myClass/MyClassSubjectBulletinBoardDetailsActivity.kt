@@ -100,7 +100,6 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMess
                     ResourcesCompat.getFont(this, R.font.maple_story_bold)
                 )
             } else {
-
                 val myIdx = firebaseAuth.currentUser!!.uid
                 val receiverIdx = this.nowBoardPost.writerIdx
                 val chattingRoomIdx = createNewChattingRoom(myIdx = myIdx, receiverIdx = receiverIdx)
@@ -130,12 +129,8 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMess
             )
         } else {
             val myIdx = firebaseAuth.currentUser!!.uid // 내 uid
-            val receiverIdx =
-                itemSubjectBulletinBoardCommentList[commentIdx].writerIdx // 상대방 uid
-            val chattingRoomIdx = createNewChattingRoom(
-                myIdx = myIdx,
-                receiverIdx = receiverIdx
-            ) // 나와 상대방이 대화할 채팅방 id
+            val receiverIdx = itemSubjectBulletinBoardCommentList[commentIdx].writerIdx // 상대방 uid
+            val chattingRoomIdx = createNewChattingRoom(myIdx = myIdx, receiverIdx = receiverIdx) // 나와 상대방이 대화할 채팅방 id
 
             Intent(this, ChattingRoomDetailsActivity::class.java).also {
                 it.putExtra("chattingRoomIdx", chattingRoomIdx)
@@ -154,7 +149,7 @@ class MyClassSubjectBulletinBoardDetailsActivity : AppCompatActivity(), SendMess
 
         // 채팅방 중복 체크
         FirebaseManager.checkRedundantChattingRoom(
-            chattingRoomId = chattingRoomIdx,
+            chattingRoomIdx = chattingRoomIdx,
             dataBaseCallback = object : DataBaseCallback<Boolean> {
                 override fun onCallback(data: Boolean) {
                     if (data) {
