@@ -328,16 +328,16 @@ object FirebaseManager {
 
     // 내 모든 채팅방 리스트 가져오기
     fun getMyChattingRoomList(
-        userId: String,
+        userIdx: String,
         dataBaseCallback: DataBaseCallback<ArrayList<ChattingRoomListForm>>
     ) {
         Firebase.database.getReference("chattingRooms")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val chattingList = ArrayList<ChattingRoomListForm>()
-                    snapshot.children.forEach {
-                        if (it.key.toString().contains(userId)) {
-                            val chattingListForm = it.getValue(ChattingRoomListForm::class.java)
+                    snapshot.children.forEach { dataSnapShot ->
+                        if (dataSnapShot.key.toString().contains(userIdx)) { // 내가 참여하고 있는 채팅방이면
+                            val chattingListForm = dataSnapShot.getValue(ChattingRoomListForm::class.java)
                             if (chattingListForm != null) {
                                 chattingList.add(chattingListForm)
                             }

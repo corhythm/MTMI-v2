@@ -175,7 +175,7 @@ class ChattingViewHolder(private val item: ViewBinding, private val opponentUser
         } else { // 내가 받은 채팅
             (item as ItemReceiveChattingBinding).textViewItemReceiveChattingReceiverName.text =
                 opponentUserData.userName
-            FirebaseStorage.getInstance().reference.child(opponentUserData.userProfileImageUrl).downloadUrl.addOnSuccessListener { that ->
+            FirebaseStorage.getInstance().reference.child("user_profile_images/${opponentUserData.userProfileImageUrl}").downloadUrl.addOnSuccessListener { that ->
                 Glide.with(itemView.context).load(that).circleCrop()
                     .into(item.imageViewItemReceiveChattingProfileImg)
             }
