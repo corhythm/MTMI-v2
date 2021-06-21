@@ -77,9 +77,9 @@ class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface,
     }
 
     // 특정 과목 게시판으로 이동
-    override fun itemClicked(idx: String, subjectName: String) {
+    override fun itemClicked(idx: String, subjectCode: String) {
         Intent(this, MyClassSubjectBulletinBoardListActivity::class.java).also {
-            it.putExtra("과목코드", subjectName)
+            it.putExtra("subjectCode", subjectCode)
             startActivity(it)
         }
         overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
@@ -105,7 +105,7 @@ class MyClassSubjectListActivity : AppCompatActivity(), SubjectClickedInterface,
 }
 
 interface SubjectClickedInterface {
-    fun itemClicked(idx: String, subjectName: String)
+    fun itemClicked(idx: String, subjectCode: String)
 }
 
 // recyclerview adapter

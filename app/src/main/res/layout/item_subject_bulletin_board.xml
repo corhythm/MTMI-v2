@@ -9,7 +9,7 @@
         android:layout_width="0dp"
         android:layout_height="20dp"
         android:ellipsize="end"
-        android:fontFamily="@font/airbnb_cereal_bold"
+        android:fontFamily="@font/maple_story_bold"
         android:maxLines="1"
         android:text="PT 얼마에요?"
         android:textSize="15sp"
@@ -25,6 +25,7 @@
         android:layout_height="15dp"
         android:ellipsize="end"
         android:maxLines="1"
+            android:fontFamily="@font/baemin_hanna_air"
         android:text="PT 보통 얼마에요? 5kg 정도 빼면서 몸매 라인 잡고 교정도 하고 했는데 많이 힘드나요"
         android:textSize="10sp"
         android:layout_marginTop="5dp"
@@ -38,6 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:text="04/20"
+        android:fontFamily="@font/maple_story_light"
         android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="@id/textView_itemSubjectBulletinBoard_content"
         app:layout_constraintTop_toBottomOf="@id/textView_itemSubjectBulletinBoard_content" />
@@ -57,7 +59,9 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:text="익명"
+        android:fontFamily="@font/maple_story_light"
         android:layout_marginStart="5dp"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toEndOf="@id/view_itemSubjectBulletinBoard_verticalDivider"
         app:layout_constraintTop_toTopOf="@id/textView_itemSubjectBulletinBoard_date"
         app:layout_constraintBottom_toBottomOf="@id/textView_itemSubjectBulletinBoard_date"/>
@@ -78,10 +82,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/textView_itemSubjectBulletinBoard_writer"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/textView_itemSubjectBulletinBoard_chatNum"
         app:layout_constraintTop_toBottomOf="@id/textView_itemSubjectBulletinBoard_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintHorizontal_bias="0.985"
         android:src="@drawable/ic_item_chat"/>
 
     <TextView
@@ -89,9 +93,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="8"
+        android:layout_marginEnd="10dp"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintTop_toBottomOf="@id/textView_itemSubjectBulletinBoard_content"
-        app:layout_constraintStart_toEndOf="@id/imageView_itemSubjectBulletinBoard_chatIcon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

@@ -1,16 +1,16 @@
 package com.mju.mtmi.myClass
 
-import android.app.Activity
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import androidx.core.content.res.ResourcesCompat
 import com.mju.mtmi.R
 import com.mju.mtmi.databinding.ActivityMyClassSubjectBulletinBoardWritingBinding
 import com.mju.mtmi.database.DataBaseCallback
 import com.mju.mtmi.database.FirebaseManager
 import com.google.firebase.auth.FirebaseAuth
+import www.sanju.motiontoast.MotionToast
 
 // 게시판에 글쓰기
 class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
@@ -19,7 +19,7 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
     private lateinit var subjectCode: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        this.subjectCode = intent.getStringExtra("과목코드")!! // 과목 코드
+        this.subjectCode = intent.getStringExtra("subjectCode")!! // 과목 코드
 
         super.onCreate(savedInstanceState)
         binding = ActivityMyClassSubjectBulletinBoardWritingBinding.inflate(layoutInflater)
@@ -31,17 +31,15 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
 
         // 글 쓰기 버튼 클릭 시 -> 게시글 등록
         binding.fabMyClassSubjectBulletinBoardPost.setOnClickListener {
+            if (!checkPostValidation())
+                return@setOnClickListener
+
             uploadMyPost()
-            val intent = Intent()
-            intent.putExtra("upload", true)
-            setResult(Activity.RESULT_OK, intent)
             finish()
         }
 
         // 네비게이션 아이콘 클릭 -> 글 쓰기 취소
-        binding.toolbarMyClassSubjectBulletinBoardToolbar.setNavigationOnClickListener {
-            finish()
-        }
+        binding.toolbarMyClassSubjectBulletinBoardToolbar.setNavigationOnClickListener { finish() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean { // toolbar inflate
@@ -50,7 +48,7 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
     }
 
 
-    // 내가 쓴 게시글 DB에 저장장
+    // 내가 쓴 게시글 DB에 저장
     private fun uploadMyPost() {
         val writer = auth.currentUser!!.uid
         val title = binding.editTextMyClassSubjectBulletinBoardWritingTitle.text.toString()
@@ -62,6 +60,23 @@ class MyClassSubjectBulletinBoardWritingActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun checkPostValidation(): Boolean {
+        return if (this.binding.editTextMyClassSubjectBulletinBoardWritingTitle.text.toString().trim() == ""
+            || this.binding.editTextMyClassSubjectBulletinBoardWritingContent.text.toString().trim() == "") {
+                MotionToast.createColorToast(
+                        this,
+                        "Error",
+                        "제목과 내용을 모두 작성해주세요.",
+                        MotionToast.TOAST_ERROR,
+                        MotionToast.GRAVITY_BOTTOM,
+                        MotionToast.SHORT_DURATION,
+                        ResourcesCompat.getFont(this, R.font.maple_story_bold)
+                    )
+            false
+        } else
+            true
     }
 
     override fun finish() {

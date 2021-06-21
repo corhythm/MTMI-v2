@@ -105,12 +105,12 @@ object SharedPrefManager {
     fun clearAllLmsUserData() { // LMS 관련 정보 전부 삭제
 
         // 쉐어드 모든 데이터 삭제
-        val accountShared = App.instance.getSharedPreferences(
+        App.instance.getSharedPreferences(
             SHARED_USER_LMS_ACCOUNT,
             Context.MODE_PRIVATE
         ).edit().clear().apply()
 
-        val lmsInfoShared = App.instance.getSharedPreferences(
+        App.instance.getSharedPreferences(
             SHARED_USER_LMS_INFO,
             Context.MODE_PRIVATE
         ).edit().clear().apply()
@@ -138,7 +138,7 @@ object SharedPrefManager {
 
     fun clearAllPermissionData() {
         // 쉐어드 모든 데이터 삭제
-        val accountShared = App.instance.getSharedPreferences(
+        App.instance.getSharedPreferences(
             SHARED_PERMISSIONS,
             Context.MODE_PRIVATE
         ).edit().clear().apply()
@@ -163,7 +163,7 @@ object SharedPrefManager {
 
     fun clearAllMyMbtiData() {
         // 쉐어드 모든 데이터 삭제
-        val accountShared = App.instance.getSharedPreferences(
+        App.instance.getSharedPreferences(
             SHARED_MBTI_TYPE,
             Context.MODE_PRIVATE
         ).edit().clear().apply()
@@ -195,7 +195,7 @@ object SharedPrefManager {
 
     fun clearAllUserData() {
          // 쉐어드 모든 데이터 삭제
-        val accountShared = App.instance.getSharedPreferences(
+        App.instance.getSharedPreferences(
             SHARED_USER_DATA,
             Context.MODE_PRIVATE
         ).edit().clear().apply()

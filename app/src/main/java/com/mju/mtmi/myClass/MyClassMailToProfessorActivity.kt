@@ -125,8 +125,6 @@ class MyClassMailToProfessorActivity : AppCompatActivity() {
                     ResourcesCompat.getFont(this, R.font.helvetica_regular)
                 )
             }
-
-
         }
 
         // 처음에 default click

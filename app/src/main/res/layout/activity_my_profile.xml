@@ -49,6 +49,7 @@
                 android:text=" "
                 android:textColor="@color/white"
                 android:textSize="25sp"
+                android:paddingStart="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="parent"
@@ -63,8 +64,24 @@
                 android:text=" "
                 android:textColor="@color/white"
                 android:textSize="15sp"
+                android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="@id/textView_myProfile_name"
                 app:layout_constraintTop_toBottomOf="@id/textView_myProfile_name" />
+
+
+            <TextView
+                android:id="@+id/textView_myProfile_mbtiType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/imageView_myProfile_profileImg"
+                app:layout_constraintStart_toEndOf="@id/textView_myProfile_name"
+                app:layout_constraintHorizontal_bias="0.9"
+                android:textColor="@color/white"
+                tools:text="INTJ"
+                android:textSize="30sp"
+                android:fontFamily="@font/godo_maum"/>
+
 
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -79,7 +96,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.77"
                 app:layout_constraintStart_toEndOf="@id/textView_myProfile_email"
-                app:layout_constraintTop_toTopOf="@id/textView_myProfile_name" />
+                app:layout_constraintTop_toBottomOf="@id/textView_myProfile_name" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView

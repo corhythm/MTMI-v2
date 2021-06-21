@@ -15,6 +15,9 @@ import com.mju.mtmi.database.DataBaseCallback
 import com.mju.mtmi.database.FirebaseManager
 import com.mju.mtmi.database.entity.UserData
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.auth.User
 import com.google.firebase.storage.FirebaseStorage
 import dev.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog
 import dev.shreyaspatil.MaterialDialog.model.TextAlignment
@@ -25,6 +28,8 @@ class MyProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyProfileBinding
     private val auth = FirebaseAuth.getInstance()
     private val currentUid = auth.uid.toString()
+    private val TAG = "로그"
+    private lateinit var registration: ListenerRegistration // 실시간 수신 대기 리스너
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,20 +38,37 @@ class MyProfileActivity : AppCompatActivity() {
         init()
     }
 
-    private fun init() {
+    override fun onStart() {
+        super.onStart()
+        Log.d(TAG, "MyProfileActivity -onStart() called")
+        // 프로필 정보는 업데이트 한 후에 다시 현재 액티비티로 보여줘야 하므로 FireStoreManager Object가 아닌 현재 액티비티에서 직접 수신
+        this.registration = FirebaseFirestore.getInstance().collection("users").document(currentUid)
+            .addSnapshotListener { document, error ->
+                if (error != null) {
+                    Log.d(TAG, "Listen failed. $error")
+                    return@addSnapshotListener
+                }
 
-        // 유저 프로필 세팅
-        FirebaseManager.getUserData(currentUid, object : DataBaseCallback<UserData> {
-            override fun onCallback(data: UserData) {
-                binding.textViewMyProfileName.text = data.userName
-                binding.textViewMyProfileEmail.text = data.id
-                binding.textViewMyProfileStudentIdValue.text = data.student_id
-                binding.textViewMyProfileMajorValue.text = data.major
-                binding.textViewMyProfileBirthdayValue.text = data.birth
-                Log.d("로그", "myProfileActivity-init() / data: $data")
-                loadProfileImage(data.userProfileImageUrl)
+                Log.d(TAG, "MyProfileActivity -onStart() called / 프로필 업데이트")
+                val userData = document?.toObject(UserData::class.java)
+                binding.textViewMyProfileName.text = userData!!.userName
+                binding.textViewMyProfileEmail.text = userData.id
+                binding.textViewMyProfileStudentIdValue.text = userData.student_id
+                binding.textViewMyProfileMajorValue.text = userData.major
+                binding.textViewMyProfileBirthdayValue.text = userData.birth
+                binding.textViewMyProfileMbtiType.text = userData.mbtiType
+                Log.d(TAG, "유저정보 업데이트 / userData = $userData")
+                loadProfileImage(userData.userProfileImageUrl)
             }
-        })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "MyProfileActivity -onStop() called")
+        this.registration.remove() // 실시간 리스너 해제
+    }
+
+    private fun init() {
 
         // copyright 이동
         binding.textViewMyProfileGoToCopyright.setOnClickListener {
@@ -101,43 +123,26 @@ class MyProfileActivity : AppCompatActivity() {
         // 프로필 이미지 클릭했을 때
         binding.imageViewMyProfileProfileImg.setOnClickListener {
             Intent(this, EditProfileActivity::class.java).also {
-                startActivityForResult(it, 2000)
-//                getContent.launch(it)
+                startActivity(it)
             }
             overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
         }
     }
 
-
     // 프로필 이미지 로드
     private fun loadProfileImage(profileImageUri: String) {
         try {
             FirebaseStorage.getInstance().reference.child("user_profile_images/$profileImageUri").downloadUrl.addOnSuccessListener {
-                Log.d("프로필사진 로드", it.toString())
+                Log.d(TAG, "프로필 사진 로드/ ${it.toString()}")
                 val profileImage = binding.imageViewMyProfileProfileImg
                 Glide.with(applicationContext).load(it).error(R.drawable.ic_toolbar_user)
                     .circleCrop()
                     .into(profileImage)
             }.addOnFailureListener {
-                Log.d("로그", "프로필사진없음")
+                Log.d(TAG, "프로필 사진 없음")
             }
         } catch (e: Exception) {
-            Log.d("로그", "MyProfileActivity -loadProfileImage() called / ${e.stackTrace}")
-        }
-    }
-
-    // 프로필 이미지 바꾸고 다시 돌아왔을 때
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        Log.d("로그", "MyProfileActivity -onActivityResult() called / first")
-        if (requestCode == 2000) { // 프로필 업데이트
-            if (resultCode == RESULT_OK) {
-                Log.d(
-                    "로그",
-                    "MyProfileActivity -onActivityResult() called // 2000: ${data!!.getStringExtra("imgUrl")!!}"
-                )
-                loadProfileImage(data.getStringExtra("imgUrl")!!)
-            }
+            Log.d(TAG, "MyProfileActivity -loadProfileImage() called / ${e.stackTrace}")
         }
     }
 
@@ -155,7 +160,7 @@ class MyProfileActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.menu_edit_account -> { // 프로필 수정 메뉴 누르면 EditProfileActivity로 이동
                 Intent(this, EditProfileActivity::class.java).also {
-                    startActivityForResult(it, 2000)
+                    startActivity(it)
                 }
                 overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
             }

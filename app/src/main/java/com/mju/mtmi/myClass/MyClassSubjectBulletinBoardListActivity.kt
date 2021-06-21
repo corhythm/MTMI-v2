@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.mju.mtmi.R
 import com.mju.mtmi.databinding.ActivityMyClassSubjectBulletinBoardListBinding
 import com.mju.mtmi.databinding.ItemSubjectBulletinBoardBinding
@@ -20,6 +22,7 @@ import com.mju.mtmi.database.FirebaseManager
 class MyClassSubjectBulletinBoardListActivity : AppCompatActivity(), BulletinBoardClickInterface {
     private lateinit var binding: ActivityMyClassSubjectBulletinBoardListBinding
     private lateinit var subjectCode: String
+    private val TAG = "로그"
     private lateinit var subjectBulletinBoardRecyclerAdapter: SubjectBulletinBoardRecyclerAdapter
     private lateinit var subjectBulletinBoardList: ArrayList<BoardPost>
 
@@ -27,27 +30,26 @@ class MyClassSubjectBulletinBoardListActivity : AppCompatActivity(), BulletinBoa
         super.onCreate(savedInstanceState)
         binding = ActivityMyClassSubjectBulletinBoardListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        this.subjectCode = intent.getStringExtra("과목코드")!! // 과목 코드
-
-        Log.d("로그", "MyClassSubjectBulletinBoardListActivity -onCreate() called / subjectCode = $subjectCode")
-
-        binding.toolbarMyClassSubjectBulletinBoardToolbar.title = this.subjectCode
         init()
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
         getListOfPosts()
+        super.onStart()
     }
 
     private fun init() {
+        // 과목 코드 받아오기
+        this.subjectCode = intent.getStringExtra("subjectCode")!! // 과목 코드
+
+        // 툴바 타이틀 설정
+        binding.toolbarMyClassSubjectBulletinBoardToolbar.title = this.subjectCode
+
         // 글 쓰기 버튼 클릭
         binding.extendFabMyClassSubjectBulletinBoardAddWriting.setOnClickListener {
-            val intent = Intent(this, MyClassSubjectBulletinBoardWritingActivity::class.java)
-            intent.putExtra("과목코드", this.subjectCode)
-            intent.also {
-                startActivityForResult(it, 100)
+            Intent(this, MyClassSubjectBulletinBoardWritingActivity::class.java).also {
+                it.putExtra("subjectCode", this.subjectCode)
+                startActivity(it)
                 overridePendingTransition(R.anim.activity_slide_in, R.anim.activity_slide_out)
             }
         }
@@ -89,19 +91,6 @@ class MyClassSubjectBulletinBoardListActivity : AppCompatActivity(), BulletinBoa
             })
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            subjectBulletinBoardRecyclerAdapter.notifyItemRangeRemoved(
-                0,
-                subjectBulletinBoardList.size - 1
-            )
-            subjectBulletinBoardRecyclerAdapter.notifyDataSetChanged()
-            subjectBulletinBoardList.clear()
-            getListOfPosts()
-        }
-    }
-
     override fun itemClicked(idx: Int, boardPost: BoardPost) {
         Log.d("클릭한 item :$idx", " 클릭한 포스트" + boardPost.title)
         // 특정 게시글 클릭 시, 해당 게시글 상세 내용 불러오기
@@ -122,9 +111,7 @@ class MyClassSubjectBulletinBoardListActivity : AppCompatActivity(), BulletinBoa
 class SubjectBulletinBoardRecyclerAdapter(
     private val itemSubjectBulletinBoardList: ArrayList<BoardPost>,
     private val bulletinBoardClickInterface: BulletinBoardClickInterface,
-) :
-    RecyclerView.Adapter<SubjectBulletinBoardViewHolder>() {
-
+) : RecyclerView.Adapter<SubjectBulletinBoardViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

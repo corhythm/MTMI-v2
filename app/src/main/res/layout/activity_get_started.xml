@@ -39,7 +39,7 @@
         android:id="@+id/imageView_getStarted_horseLogo"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:src="@drawable/img_getstarted_horse"
+        android:src="@drawable/ic_horse_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.5"
         app:layout_constraintStart_toStartOf="parent"
