@@ -129,9 +129,9 @@ Made in MJU Team project class <br />
 - Custom Dialog: https://github.com/PatilShreyas/MaterialDialog-Android
 
 ## Application layout
-### ① _Login & ② SignUp & ③ UserProfile & ④ EditUserProflie_
+### ① _Login & ② SignUp & ③ UserProfile & ④ EditUserProflie & ⑤ Copyright_
 <pre> 
-<img src="https://user-images.githubusercontent.com/43941383/122704597-ff93d700-d28e-11eb-840a-e0e8ac709636.jpg" width=200 height=400/>   <img src="https://user-images.githubusercontent.com/43941383/122704601-015d9a80-d28f-11eb-985f-bfeec7371ce9.jpg" width=200 height=400/>   <img src="https://user-images.githubusercontent.com/43941383/122704646-10444d00-d28f-11eb-898b-8b7cc92804aa.jpg" width=200 height=400/>   <img src="https://user-images.githubusercontent.com/43941383/122704651-11757a00-d28f-11eb-9976-a965c4302634.jpg" width=200 height=400/>   
+<img src="https://user-images.githubusercontent.com/43941383/122704597-ff93d700-d28e-11eb-840a-e0e8ac709636.jpg" width=200 height=400/>   <img src="https://user-images.githubusercontent.com/43941383/122704601-015d9a80-d28f-11eb-985f-bfeec7371ce9.jpg" width=200 height=400/>   <img src="https://user-images.githubusercontent.com/43941383/122704646-10444d00-d28f-11eb-898b-8b7cc92804aa.jpg" width=200 height=400/>   <img src="https://user-images.githubusercontent.com/43941383/122704651-11757a00-d28f-11eb-9976-a965c4302634.jpg" width=200 height=400/>   <img src="https://user-images.githubusercontent.com/43941383/122704655-12a6a700-d28f-11eb-8c86-6866796ebf3b.jpg" width=200 height=400/>   
 </pre>
 
 ### _① Main Home & ② Choosing MJU Building & ③ Specific Building Location_
@@ -144,8 +144,13 @@ Made in MJU Team project class <br />
 <img src="https://user-images.githubusercontent.com/43941383/122704624-0a4e6c00-d28f-11eb-9455-3a942a39484d.jpg" width=200 height=400/>   <img src="https://user-images.githubusercontent.com/43941383/122863946-b14e0900-d35e-11eb-85b3-de6fa1c8ca77.jpg" width=200 height=400/>   <img src="https://user-images.githubusercontent.com/43941383/122863981-c165e880-d35e-11eb-8679-a1a8848512c8.jpg" width=200 height=400/>   <img src="https://user-images.githubusercontent.com/43941383/122864663-00486e00-d360-11eb-93ba-d92f36c4681b.jpg" width=200 height=400/>
 </pre>
 
-### _① MyClass Main & ③ Bulletin Board List & ③ Post List & ④ Show Specific Post and Comments_
+### _① MyClass Main & ② Lms Login ③ Bulletin Board List & ④ Post List & ⑤ Show Specific Post and Comments_
 <pre>
-<img src="https://user-images.githubusercontent.com/43941383/122704629-0c182f80-d28f-11eb-8126-f422e4ee7dc4.jpg" width=200 height=400/>   <img src="https://user-images.githubusercontent.com/43941383/122865145-d0e63100-d360-11eb-813e-3237c3cbf417.png" width=200 height=400/>   <img src="https://user-images.githubusercontent.com/43941383/122865304-215d8e80-d361-11eb-87cd-cbc1bd9e5f4c.png" width=200 height=400/>   <img src="https://user-images.githubusercontent.com/43941383/122865377-43efa780-d361-11eb-912d-6f9452f24fa6.png" width=200 height=400/>
+<img src="https://user-images.githubusercontent.com/43941383/122704629-0c182f80-d28f-11eb-8126-f422e4ee7dc4.jpg" width=200 height=400/>   <img src="https://user-images.githubusercontent.com/43941383/122865145-d0e63100-d360-11eb-813e-3237c3cbf417.png" width=200 height=400/>   <img src="https://user-images.githubusercontent.com/43941383/122704644-0f132000-d28f-11eb-9039-f079abee276c.jpg" width=200 height=400/>   <img src="https://user-images.githubusercontent.com/43941383/122865304-215d8e80-d361-11eb-87cd-cbc1bd9e5f4c.png" width=200 height=400/>   <img src="https://user-images.githubusercontent.com/43941383/122865377-43efa780-d361-11eb-912d-6f9452f24fa6.png" width=200 height=400/>
+</pre>
+
+### _① Chatting Room List & ② Specific Chatting Room_
+<pre>
+<img src="https://user-images.githubusercontent.com/43941383/122849113-da15d480-d345-11eb-94cc-56f9c661cb25.png" width=200 height=400/>   <img src="https://user-images.githubusercontent.com/43941383/122849146-eb5ee100-d345-11eb-9300-bd7fb803a82b.png" width=200 height=400/>
 </pre>
 
