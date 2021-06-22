@@ -1,15 +1,48 @@
 # MTMI(MJU TMI)
+Made in MJU Team project class <br />
+* Eamil address: dnr2144@gmail.com
+* Demo video: https://youtu.be/kkeV75rNsuc
 
-## Android Convention Rule(리소스 네이밍)
-* 이미지 파일: 특정 액티비티에 속한 이미지 -> type_activityname_filename.*
-    * e.g. GetStartedActivity layout에 쓰인 이미지 파일 -> ic(img)_get_started_filename.png
-    * e.g. 'Copyright'로 파일 이름이 시작하면 xml(액티비티 아님)에 쓰인 이미지 파일 -> copyright_image.png
+## Android Convention Rule(resource naming)
+* _Image files: imageType\_(iconOrImage)\_activityNameORfragmentName\_fileName_
+    * e.g. _The icon file used in activity\_get\_started.xml: \_ic\_get\_started\_fileName.xml_
+    * e.g. _The image file used in activity\_copyright.xml:  \_img\_copyright\_fileName.png_
 
 ## Project management
-* 패키지 세분화: myclass, mbti, account ... etc.
+* Pacakage
+   * account
+   * chatting
+   * crawling
+   * database
+   * mbti
+   * myclass
+   * util
 * 리사이클러뷰 관련 클래스(recyclerViewItem, recyclerViewAdapter, viewHolder, decoration .. etc 는 개별 패키지로 관리하지 않고, 편의성을 위해서 activity와 함께 관리)
 
-## Used open source 
+## Development Environment
+* kotlin
+* Firebase Realtime Database
+* Firebase FireStore Database
+* Android Studio @4.2.1
+
+## Application Version
+* minSdkVersion: 26
+* targetSdkVersion: 30
+* GradleVersion: @6.7.1
+* JavaVersion: 11
+* KotlinVersion: @1.5.10
+
+## APIs
+* open MAP API of Kakako (https://apis.map.kakao.com/android/)
+
+## Required Permissions
+* ***android.permission.INTERNET***
+* ***android.permission.CALL_PHONE***
+* ***android.permission.ACCESS_FINE_LOCATION***
+* ***android.permission.ACCESS_COARSE_LOCATION***
+* ***android.permission.READ_EXTERNAL_STORAGE***
+
+## Open source 
 - circle imageview: https://github.com/hdodenhof/CircleImageView
 - custom EditText: https://github.com/florent37/MaterialTextField
 - custom spinner: https://github.com/Chivorns/SmartMaterialSpinner
@@ -33,6 +66,6 @@
 - Custom Progressbar: https://github.com/skydoves/ProgressView
 - Custom Dialog: https://github.com/PatilShreyas/MaterialDialog-Android
 
-<!-- ## Get Started Activity -->
-<!-- ![image](https://user-images.githubusercontent.com/43941383/114131739-1ab4a300-993e-11eb-8497-7c7785d186e0.png)-->
-
+## Application Layout
+<img src="https://user-images.githubusercontent.com/43941383/122704597-ff93d700-d28e-11eb-840a-e0e8ac709636.jpg" width=200 height=400/> 
+*Login Page
