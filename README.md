@@ -3,6 +3,16 @@ Made in MJU Team project class <br />
 * Eamil address: dnr2144@gmail.com
 * Demo video: https://youtu.be/kkeV75rNsuc
 
+## Main features introduction
+* It provides your MBTI charateristics and recomemend a place where suits you.
+* It provides MJU sites that many MJU students use.
+* It provides MJU building locations.
+* It provides fatest MJU shuttle time and shuttle bus stopover.
+* It provides a bulletin board for the subjects you enrolled in this semester. So, students only can access to bulletin boards for subjects enrolled this semester. In each bulletin board you can post your own post and in each post other users can comment their opinion.
+* It provides chatting service with other users. 
+* It provides the basic mail form when you send an email to the professor.
+* Crawling from your LMS account, it provides information on the subjects you have enrolled in this semester (timetables, class hours, professors, attendance rates, assignment submissions). 
+
 ## Android convention rule(resource naming)
 * _Image files: imageType\_(iconOrImage)\_activityNameORfragmentName\_fileName_
     * e.g. _The icon file used in activity\_get\_started.xml: \_ic\_get\_started\_fileName.xml_
@@ -55,7 +65,7 @@ Made in MJU Team project class <br />
    * myclass <br/>
       |-|**Class name**|**Content**|
       |:---:|:---:|:---|  
-      |1|MyClassMailToProfessorActivity|Provides guidlines when you send a main to your professor (e.g. attandance, test ... etc)|
+      |1|MyClassMailToProfessorActivity|Provides the basic mail form when you send an email to the professor. (e.g. attandance, test ... etc)|
       |2|MyClassMainFramgment|MyClass main page|
       |3|MyClassSubjectBulletinBoardDetailsActivity|Show a post and comments specifically|      
       |4|MyClassSubjectBulletinBoardListActivity|Show the post list of a specific bulletin board|
@@ -66,9 +76,9 @@ Made in MJU Team project class <br />
    * util <br/>
       |-|**Class name**|**Content**|
       |:---:|:---:|:---|  
-      |1|AES128|provides methods to encrypt or decrypt a string.|
+      |1|AES128|Provides methods to encrypt or decrypt a string.|
       |2|APP|Provides extern context that can use in any activity or fragment|
-      |3|SharedPrefManger|manage SharePreferences|      
+      |3|SharedPrefManger|Manage SharePreferences|      
       |4|ValidationRegex|Provides regex|
       
    * others
