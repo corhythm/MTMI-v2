@@ -124,9 +124,22 @@ object FirebaseManager {
 
         if (isImageChanged) { // 이미지가 변경됐을 때, 이미지 저장 (이미지 데이터 크기가 크므로 업데이트 완료 순간을 텍스트 데이터 보다는
             // 이미지 데이터로 완료 시점을 잡는 게 좋다.
-            FirebaseStorage.getInstance().reference.child("user_profile_images/")
+            FirebaseStorage.getInstance().reference
+                .child("user_profile_images/")
                 .child(imageFileName)
                 .putFile(filePath) // 이미지 storage에 저장
+
+            FirebaseFirestore.getInstance()
+                .collection("users")
+                .document(currentUserIdx)
+                .set(userData, SetOptions.merge())
+                .addOnSuccessListener { dataBaseCallback.onCallback(true) }
+                .addOnFailureListener { dataBaseCallback.onCallback(false) }
+        } else { // 이미지 변경 말고 다른 사항을 변경할 떄
+            FirebaseFirestore.getInstance()
+                .collection("users")
+                .document(currentUserIdx)
+                .set(userData, SetOptions.merge())
                 .addOnSuccessListener { dataBaseCallback.onCallback(true) }
                 .addOnFailureListener { dataBaseCallback.onCallback(false) }
         }
@@ -176,7 +189,8 @@ object FirebaseManager {
     ) {
         //밀리초 단위로 메시지 푸쉬 -> 키 값으로 사용
         val currentTime = LocalDateTime.now() //현재 시간
-        val chattingMessageIdx = currentTime.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"))
+        val chattingMessageIdx =
+            currentTime.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"))
         val timeStamp = currentTime.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분"))
         val newChattingMessage =
             ChattingMessage(
@@ -337,7 +351,8 @@ object FirebaseManager {
                     val chattingList = ArrayList<ChattingRoomListForm>()
                     snapshot.children.forEach { dataSnapShot ->
                         if (dataSnapShot.key.toString().contains(userIdx)) { // 내가 참여하고 있는 채팅방이면
-                            val chattingListForm = dataSnapShot.getValue(ChattingRoomListForm::class.java)
+                            val chattingListForm =
+                                dataSnapShot.getValue(ChattingRoomListForm::class.java)
                             if (chattingListForm != null) {
                                 chattingList.add(chattingListForm)
                             }
@@ -373,7 +388,6 @@ object FirebaseManager {
     // MBTI 결과 변경
     fun patchMbtiType(mbtiResult: String, dataBaseCallback: DataBaseCallback<Boolean>) {
         val myUid = FirebaseAuth.getInstance().currentUser!!.uid
-
         FirebaseFirestore.getInstance()
             .collection("users")
             .document(myUid)
