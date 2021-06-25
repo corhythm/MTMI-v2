@@ -2,7 +2,7 @@
 Made in MJU Team project class <br />
 * Eamil address: dnr2144@gmail.com
 * Demo video: https://youtu.be/kkeV75rNsuc
-* Play store: https://play.google.com/store/apps/details?id=com.mju.mtmi
+* Google play store: https://play.google.com/store/apps/details?id=com.mju.mtmi
 
 ## Main features introduction
 * It provides your MBTI charateristics and recomemend a place where suits you.
