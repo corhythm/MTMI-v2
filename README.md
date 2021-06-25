@@ -2,6 +2,7 @@
 Made in MJU Team project class <br />
 * Eamil address: dnr2144@gmail.com
 * Demo video: https://youtu.be/kkeV75rNsuc
+* Play store: https://play.google.com/store/apps/details?id=com.mju.mtmi
 
 ## Main features introduction
 * It provides your MBTI charateristics and recomemend a place where suits you.
@@ -103,7 +104,7 @@ Made in MJU Team project class <br />
 * GradleVersion: @6.7.1
 * JavaVersion: 11
 * KotlinVersion: @1.5.10
-
+ 
 ## APIs
 * Open MAP API of Kakako (https://apis.map.kakao.com/android/)
 
