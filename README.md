@@ -103,7 +103,7 @@ Made in MJU Team project class <br />
 * targetSdkVersion: 30
 * GradleVersion: @6.7.1
 * JavaVersion: 11
-* KotlinVersion: <a href="https://velog.io/@colorful-stars" target="_blank"><img src="https://user-images.githubusercontent.com/43941383/123442727-24ca7180-d610-11eb-969c-10974449a69b.png">@1.5.10</a>
+* KotlinVersion: @1.5.10
  
 ## APIs
 * Open MAP API of Kakako (https://apis.map.kakao.com/android/)
@@ -164,4 +164,6 @@ Made in MJU Team project class <br />
 <pre>
 <img src="https://user-images.githubusercontent.com/43941383/122849113-da15d480-d345-11eb-94cc-56f9c661cb25.png" width=200 height=400/>   <img src="https://user-images.githubusercontent.com/43941383/122849146-eb5ee100-d345-11eb-9300-bd7fb803a82b.png" width=200 height=400/>
 </pre>
+
+<img src="https://user-images.githubusercontent.com/43941383/123501126-ae645880-d67d-11eb-9e1c-ee4ef9531ed4.png">
 
