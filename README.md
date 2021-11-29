@@ -1,6 +1,6 @@
 # MTMI(MJU TMI)
 Made in MJU Team project class <br />
-* Eamil address: dnr2144@gmail.com
+* Email address: dnr2144@gmail.com
 * Demo video: https://youtu.be/kkeV75rNsuc
 * Google play store: https://play.google.com/store/apps/details?id=com.mju.mtmi
 
